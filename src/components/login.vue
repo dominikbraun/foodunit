@@ -11,8 +11,11 @@
                 </div>
                 <div class="py-5">
                     <form autocomplete="off">
-                        <div class="form-group mb-0">
+                        <div class="form-group">
                             <input type="text" class="form-control border-0 bg-light rounded shadow-sm text-md px-3 py-4" id="user-email" placeholder="Ihre E-Mail-Adresse" spellcheck="false" />
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control border-0 bg-light rounded shadow-sm text-md px-3 py-4" id="user-name" placeholder="Ihr Name" spellcheck="false" />
                         </div>
                     </form>
                 </div>
