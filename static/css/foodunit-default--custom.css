@@ -1,0 +1,8 @@
+body, html {
+    height: 100%;
+    cursor: default;
+    background: linear-gradient(to bottom,rgba(0,0,0,.68) 0,transparent 12rem), url(../img/227764-P1PRQH-229.JPG) center center no-repeat;
+    background-size: cover;
+}
+
+
