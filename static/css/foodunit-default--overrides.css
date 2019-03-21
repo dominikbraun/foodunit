@@ -11,3 +11,7 @@
 .border-bottom {
     border-bottom: 2px solid #ebebef !important;
 }
+
+h1, .h1 {
+    font-size: 2.8rem;
+}

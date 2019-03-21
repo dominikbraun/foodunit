@@ -25,8 +25,8 @@ body, html {
 }
 
 .text-sm {
-    font-size: .81rem;
-    letter-spacing: 0.12px;
+    font-size: .87rem;
+    letter-spacing: 0.2px;
 }
 
 .text-md {
@@ -43,6 +43,6 @@ body, html {
 
 @media (min-width: 576px) {
     .text-xxl {
-        font-size: 5em;
+        font-size: 4.8em;
     }
 }
