@@ -24,7 +24,8 @@ body, html {
 }
 
 .text-sm {
-    font-size: .79rem;
+    font-size: .81rem;
+    letter-spacing: 0.12px;
 }
 
 .text-md {
