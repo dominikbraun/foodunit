@@ -64,9 +64,17 @@ body, html {
 }
 
 .dish-row {
-    transition: background-color .2s;
+    transition: background-color;
+}
+
+.dish-row .dish-detail {
+    transition: padding .2s;
 }
 
 .dish-row:hover, .dish-row:active {
-    background-color: rgba(25, 26, 32, .84);
+    background-color: rgba(25, 26, 32, .86);
+}
+
+.dish-row:hover .dish-detail, .dish-row:active .dish-detail {
+    padding-left: 0.85rem;
 }

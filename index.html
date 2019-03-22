@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-8">
-                                        <h1 class="text-dark text-theme text-xxl text-center m-0 py-5">Auswahl des Tages</h1>
+                                        <h1 class="text-dark text-theme text-xxl text-center m-0 py-5">Angebot des Tages</h1>
                                     </div>
                                     <div class="col-12 col-xl-2 m-0 p-0"></div>
                                 </div>
@@ -76,18 +76,16 @@
                                         <div class="row m-0 pb-5">
                                             <template v-for="dish in c.dishes">
                                                 <div class="col-12 col-xl-6 text-white">
-                                                    <a class="row m-0 dish-row p-3 rounded">
-                                                        <div class="col-9">
+                                                    <div class="row m-0 dish-row p-3 rounded">
+                                                        <div class="col-8 dish-detail">
                                                             <strong class="text-md">{{ dish.name }}</strong><br />
                                                             <small><i>{{ dish.desc }}</i></small>
                                                         </div>
-                                                        <div class="col-3 text-right text-md">
-                                                            <strong>{{ dish.price }} &euro;</strong>
-                                                            <!--<button class="btn btn-outline-default add-dish text-bold rounded shadow ml-auto">-->
-                                                                <!--&plus; <strong>{{ dish.price }} &euro;</strong>-->
-                                                            <!--</button>-->
+                                                        <div class="col-4 text-right">
+                                                            <strong class="text-md">{{ dish.price }} &euro;</strong><br />
+                                                            <small><a href="" class="text-white">+ hinzufügen</a></small>
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                 </div>
                                             </template>
                                         </div>

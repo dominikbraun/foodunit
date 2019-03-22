@@ -32,7 +32,3 @@ h1, .h1 {
     border: 1px solid #fff !important;
     color: #fff !important;
 }
-
-.btn-outline-default:hover, .btn-outline-default:active, .btn-outline-default:focus {
-    margin-left: .2px;
-}
