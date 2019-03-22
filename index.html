@@ -73,14 +73,14 @@
                                         </div>
                                         <div class="row m-0 pb-5">
                                             <template v-for="dish in c.dishes">
-                                                <div class="col-12 col-lg-6 my-2 text-white">
+                                                <div class="col-12 col-lg-6 mb-4 text-white">
                                                     <div class="row m-0">
                                                         <div class="col-9">
                                                             <strong class="text-md">{{ dish.name }}</strong><br />
                                                             <small><i>{{ dish.desc }}</i></small>
                                                         </div>
-                                                        <div class="col-3 pt-2 text-right">
-                                                            {{ dish.price }} &euro;
+                                                        <div class="col-3 pt-2 text-right text-md">
+                                                            <strong>{{ dish.price }} &euro;</strong>
                                                         </div>
                                                     </div>
                                                 </div>
