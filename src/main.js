@@ -1,4 +1,4 @@
-let validSession = false;
+let validSession = true;
 
 let supplier = {
     name: "McDonald's Straubing",
@@ -9,6 +9,16 @@ let supplier = {
         {
             name: "Hamburger & Co.",
             img: "hamburgers.jpg",
+            dishes: [
+                { name: "Hamburger Royal Käse", price: 4.19 },
+                { name: "Hamburger Royal TS", price: 4.19 },
+                { name: "McRib", price: 3.99 },
+                { name: "Pommes kl.", price: 1.79 },
+            ]
+        },
+        {
+            name: "The Signature Collection",
+            img: "siganture-collection.jpg",
             dishes: [
                 { name: "Hamburger Royal Käse", price: 4.19 },
                 { name: "Hamburger Royal TS", price: 4.19 },

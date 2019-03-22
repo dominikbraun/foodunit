@@ -50,19 +50,21 @@
             <template v-else>
                 <div class="row h-100 m-0">
                     <div class="col-12 col-sm-2 h-100 m-0 p-0 d-none d-sm-block"></div>
-                    <div class="col-12 col-sm-8 h-100 m-0 p-0 justify-content-center align-items-center d-flex">
+                    <div class="col-12 col-sm-8 h-100 m-0 p-0">
                         <div class="w-100">
                             <div class="py-4">
                                 <h1 class="text-dark text-theme text-center text-xxl py-5">Auswahl des Tages</h1>
                             </div>
-                            <div class="bg-dark shadow-lg main-area mb-5 rounded-lg" style="background-image: url('static/img/categories/hamburgers.jpg');background-position: 50% 76%;background-size:cover;">
-                                <div class="bg-dark-tr rounded-lg">
-                                    <div class="py-5">
-                                        <h2 class="text-white text-menu text-center text-xl">Burger &amp; Co.</h2>
+                            <template v-for="c in supplier.cats">
+                                <div class="bg-dark shadow-lg menu-area mb-5 rounded-lg" :style="{ backgroundImage: 'url(\'static/img/categories/' + c.img + '\')' }">
+                                    <div class="bg-dark-tr rounded-lg">
+                                        <div class="py-5">
+                                            <h2 class="text-white text-menu text-center text-xl">{{ c.name }}</h2>
+                                        </div>
+                                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                                     </div>
-                                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                                 </div>
-                            </div>
+                            </template>
                         </div>
                     </div>
                     <div class="col-12 col-sm-2 h-100 m-0 p-0 d-none d-sm-block"></div>
