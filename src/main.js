@@ -1,4 +1,4 @@
-let validSession = true;
+let validSession = true
 
 let supplier = {
     name: "McDonald's Straubing",
@@ -29,12 +29,17 @@ let supplier = {
             ]
         }
     ]
-};
+}
 
 new Vue({
     el: '#app',
     data: {
         loggedIn: validSession,
         supplier: supplier,
+    },
+    methods: {
+        addToOrder() {
+            alert("Added to order")
+        }
     }
-});
+})

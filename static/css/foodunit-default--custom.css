@@ -62,3 +62,8 @@ body, html {
         font-size: 4.8em;
     }
 }
+
+a:hover, a:focus {
+    cursor: pointer;
+    outline: none;
+}
