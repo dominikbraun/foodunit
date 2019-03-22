@@ -27,3 +27,12 @@ h1, .h1 {
 .bg-danger {
     background-color: #E23137 !important;
 }
+
+.btn-outline-default {
+    border: 1px solid #fff !important;
+    color: #fff !important;
+}
+
+.btn-outline-default:hover, .btn-outline-default:active, .btn-outline-default:focus {
+    margin-left: .2px;
+}

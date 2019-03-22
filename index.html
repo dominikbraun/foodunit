@@ -75,16 +75,19 @@
                                         </div>
                                         <div class="row m-0 pb-5">
                                             <template v-for="dish in c.dishes">
-                                                <div class="col-12 col-lg-6 mb-4 text-white">
-                                                    <div class="row m-0">
+                                                <div class="col-12 col-xl-6 text-white">
+                                                    <a class="row m-0 dish-row p-3 rounded">
                                                         <div class="col-9">
                                                             <strong class="text-md">{{ dish.name }}</strong><br />
                                                             <small><i>{{ dish.desc }}</i></small>
                                                         </div>
-                                                        <div class="col-3 pt-2 text-right text-md">
+                                                        <div class="col-3 text-right text-md">
                                                             <strong>{{ dish.price }} &euro;</strong>
+                                                            <!--<button class="btn btn-outline-default add-dish text-bold rounded shadow ml-auto">-->
+                                                                <!--&plus; <strong>{{ dish.price }} &euro;</strong>-->
+                                                            <!--</button>-->
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </div>
                                             </template>
                                         </div>

@@ -1,7 +1,7 @@
 body, html {
     height: 100%;
     cursor: default;
-    //background: linear-gradient(to bottom, rgba(0, 0, 0, .68) 0, transparent 12rem), url(../img/227764-P1PRQH-229.JPG) center center no-repeat;
+/ / background: linear-gradient(to bottom, rgba(0, 0, 0, .68) 0, transparent 12 rem), url(../img/227764-P1PRQH-229.JPG) center center no-repeat;
     background-size: cover;
     background-attachment: fixed;
 }
@@ -63,7 +63,10 @@ body, html {
     }
 }
 
-a:hover, a:focus {
-    cursor: pointer;
-    outline: none;
+.dish-row {
+    transition: background-color .2s;
+}
+
+.dish-row:hover, .dish-row:active {
+    background-color: rgba(25, 26, 32, .84);
 }
