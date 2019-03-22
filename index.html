@@ -53,15 +53,39 @@
                     <div class="col-12 col-sm-8 h-100 m-0 p-0">
                         <div class="w-100">
                             <div class="py-4">
-                                <h1 class="text-dark text-theme text-center text-xxl py-5">Auswahl des Tages</h1>
+                                <div class="row m-0">
+                                    <div class="col-12 col-xl-2 pt-4 pl-0">
+                                        <div class="bg-danger mx-auto ml-xl-0 text-center text-white text-theme h1 p-3 rounded shadow mb-0" style="width: 9rem;">
+                                            Food&nbsp;<br />Unit&nbsp;
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-8">
+                                        <h1 class="text-dark text-theme text-xxl text-center m-0 py-5">Auswahl des Tages</h1>
+                                    </div>
+                                    <div class="col-12 col-xl-2 m-0 p-0"></div>
+                                </div>
                             </div>
                             <template v-for="c in supplier.cats">
-                                <div class="bg-dark shadow-lg menu-area mb-5 rounded-lg" :style="{ backgroundImage: 'url(\'static/img/categories/' + c.img + '\')' }">
+                                <div class="bg-dark shadow-lg menu-area mb-5 rounded-lg shadow" :style="{ backgroundImage: 'url(\'static/img/categories/' + c.img + '\')' }">
                                     <div class="bg-dark-tr rounded-lg">
                                         <div class="py-5">
                                             <h2 class="text-white text-menu text-center text-xl">{{ c.name }}</h2>
                                         </div>
-                                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                        <div class="row m-0 pb-5">
+                                            <template v-for="dish in c.dishes">
+                                                <div class="col-12 col-lg-6 my-2 text-white">
+                                                    <div class="row m-0">
+                                                        <div class="col-9">
+                                                            <strong class="text-md">{{ dish.name }}</strong><br />
+                                                            <small><i>{{ dish.desc }}</i></small>
+                                                        </div>
+                                                        <div class="col-3 pt-2 text-right">
+                                                            {{ dish.price }} &euro;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
                             </template>
@@ -69,6 +93,9 @@
                     </div>
                     <div class="col-12 col-sm-2 h-100 m-0 p-0 d-none d-sm-block"></div>
                 </div>
+                <footer class="text-sm text-dark text-center text-bold mb-5">
+                    &copy; 2019 <a class="text-dark" href="https://github.com/dominikbraun" target="_blank">github.com/dominikbraun</a>
+                </footer>
             </template>
         </div>
         <script src="src/main.js"></script>

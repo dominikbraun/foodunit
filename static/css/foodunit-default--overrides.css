@@ -5,7 +5,7 @@
 }
 
 .rounded-lg {
-    border-radius: .75rem !important;
+    border-radius: .7rem !important;
 }
 
 .border-bottom {
@@ -22,4 +22,8 @@ h1, .h1 {
 
 .text-dark {
     color: #191A20 !important;
+}
+
+.bg-danger {
+    background-color: #E23137 !important;
 }

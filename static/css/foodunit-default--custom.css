@@ -34,7 +34,7 @@ body, html {
 }
 
 .text-md {
-    font-size: .96em;
+    font-size: 1.15em;
 }
 
 .text-xl {
@@ -50,14 +50,14 @@ body, html {
 }
 
 .bg-dark-tr {
-    background-color: rgba(25, 26, 32, .6) !important;
+    background-color: rgba(25, 26, 32, .75) !important;
 }
 
 .bg-beige-tr {
     background-color: rgba(254, 252, 247, .6) !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 820px) {
     .text-xxl {
         font-size: 4.8em;
     }
