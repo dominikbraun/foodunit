@@ -1,13 +1,17 @@
 body, html {
     height: 100%;
     cursor: default;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .68) 0, transparent 12rem), url(../img/227764-P1PRQH-229.JPG) center center no-repeat;
+    //background: linear-gradient(to bottom, rgba(0, 0, 0, .68) 0, transparent 12rem), url(../img/227764-P1PRQH-229.JPG) center center no-repeat;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .text-theme {
     font-family: 'Kaushan Script', cursive;
+}
+
+.text-menu {
+    font-family: 'Fredericka the Great', cursive;
 }
 
 .rounded-0 {
@@ -33,6 +37,10 @@ body, html {
     font-size: .96em;
 }
 
+.text-xl {
+    font-size: 3em !important;
+}
+
 .text-xxl {
     font-size: 3em;
 }
@@ -42,7 +50,11 @@ body, html {
 }
 
 .bg-dark-tr {
-    background-color: rgba(25, 26, 32, .75) !important;
+    background-color: rgba(25, 26, 32, .6) !important;
+}
+
+.bg-beige-tr {
+    background-color: rgba(254, 252, 247, .6) !important;
 }
 
 @media (min-width: 576px) {
