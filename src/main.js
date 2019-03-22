@@ -1,4 +1,4 @@
-let validSession = true;
+let validSession = false;
 
 let supplier = {
     name: "McDonald's Straubing",

@@ -1,5 +1,5 @@
 @media (max-width: 576px) {
-    #login-area, .main-area {
+    #login-area, .main-area, .main-area > div {
         -webkit-border-radius: 0 !important;
         -moz-border-radius: 0 !important;
         border-radius: 0 !important;

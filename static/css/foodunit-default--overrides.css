@@ -8,16 +8,6 @@
     border-radius: .75rem !important;
 }
 
-.rounded-top {
-    border-top-left-radius: .75rem !important;
-    border-top-right-radius: .75rem !important;
-}
-
-.rounded-bottom {
-    border-bottom-left-radius: .75rem !important;
-    border-bottom-right-radius: .75rem !important;
-}
-
 .border-bottom {
     border-bottom: 2px solid #ebebef !important;
 }
