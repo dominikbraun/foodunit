@@ -41,6 +41,10 @@ body, html {
     background-color: #fefcf7;
 }
 
+.bg-dark-tr {
+    background-color: rgba(25, 26, 32, .75) !important;
+}
+
 @media (min-width: 576px) {
     .text-xxl {
         font-size: 4.8em;

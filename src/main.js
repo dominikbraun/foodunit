@@ -8,6 +8,7 @@ let supplier = {
     cats: [
         {
             name: "Hamburger & Co.",
+            img: "hamburgers.jpg",
             dishes: [
                 { name: "Hamburger Royal Käse", price: 4.19 },
                 { name: "Hamburger Royal TS", price: 4.19 },
