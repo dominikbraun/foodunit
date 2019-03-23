@@ -83,7 +83,7 @@
                                                         </div>
                                                         <div class="col-4 text-right">
                                                             <strong class="text-md">{{ dish.price }} &euro;</strong><br />
-                                                            <small><a href="" class="text-white">+ hinzufügen</a></small>
+                                                            <small>+ <a href="" class="text-white">hinzufügen</a></small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-lg-2 h-100 m-0 p-2 p-lg-4">
-                        <div class="bg-white border border-light rounded">
+                        <div class="bg-white border border-light rounded mb-4">
                             <p class="text-sm text-bold text-right mb-0 px-1 py-3">
                                 <a class="text-dark text-sm text-bold" data-toggle="collapse" href="#cart" role="button" aria-expanded="false" aria-controls="cart">
                                     <i class="fas fa-shopping-cart pr-2"></i>8.89 &euro;<i class="fas fa-chevron-down px-3"></i>
@@ -121,16 +121,16 @@
                             </p>
                             <div class="collapse text-sm px-3" id="cart">
                                 <ul class="p-0" id="cart-items">
-                                    <li class="list-inline py-1">Hamburger Royal TS</li>
-                                    <li class="list-inline py-1">Pommes kl.</li>
-                                    <li class="list-inline py-1">Hamburger Royal TS</li>
-                                    <li class="list-inline py-1">Hamburger Royal TS</li>
-                                    <li class="list-inline py-1">McRib</li>
-                                    <li class="list-inline py-1">McRib</li>
-                                    <li class="list-inline py-1">Coca-Cola</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>Hamburger Royal TS</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>Pommes kl.</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>Hamburger Royal TS</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>Hamburger Royal TS</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>McRib</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>McRib</li>
+                                    <li class="list-inline py-1"><a role="button" class="text-dark"><i class="fas fa-times pr-2"></i></a>Coca-Cola</li>
                                 </ul>
-                                <input type="text" class="form-control bg-white border-light rounded mb-3 py-4 text-sm" id="remark" placeholder="Bemerkung" spellcheck="false" />
-                                <button class="btn btn-success mb-3 px-3 py-2 rounded w-100 text-sm text-bold">
+                                <input type="text" class="form-control bg-light border-light rounded mb-3 py-4 text-sm" id="remark" placeholder="Extrawunsch" spellcheck="false" />
+                                <button class="btn btn-success mb-3 px-3 py-2 rounded text-sm text-bold w-100">
                                     Bestellung speichern
                                 </button>
                             </div>
@@ -143,6 +143,5 @@
             </template>
         </div>
         <script src="src/main.js"></script>
-        <script src="src/toggle.js"></script>
     </body>
 </html>
