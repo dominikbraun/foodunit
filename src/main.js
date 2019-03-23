@@ -13,7 +13,7 @@ let supplier = {
                 { name: "Hamburger Royal Käse", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten", price: 4.19 },
                 { name: "Hamburger Royal TS", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten", price: 4.19 },
                 { name: "McRib", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten", price: 3.99 },
-                { name: "Pommes kl.", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten mit Rohkostsalat und gebratenem Speck mit frischem Spiegelei", price: 1.79 },
+                { name: "Pommes kl.", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten mit Rohkostsalat", price: 1.79 },
                 { name: "McRib", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten", price: 3.99 },
                 { name: "Hamburger Royal TS", desc: "Saftiges Rindfleisch mit ausgewählten Zutaten", price: 4.19 },
             ]

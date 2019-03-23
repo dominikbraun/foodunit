@@ -2,7 +2,7 @@
     background-position: 50% 76%;background-size:cover;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 992px) {
     #login-area, .menu-area, .menu-area > div {
         -webkit-border-radius: 0 !important;
         -moz-border-radius: 0 !important;

@@ -72,11 +72,11 @@ body, html {
 }
 
 .dish-row {
-    transition: background-color .25s;
+    transition: background-color .2s;
 }
 
 .dish-row .dish-detail {
-    transition: padding .12s;
+    transition: padding .1s;
 }
 
 .dish-row:hover, .dish-row:active {
@@ -84,5 +84,13 @@ body, html {
 }
 
 .dish-row:hover .dish-detail, .dish-row:active .dish-detail {
-    padding-left: .75rem;
+    padding-left: .78rem;
+}
+
+.z-1 {
+    z-index: 1;
+}
+
+.z-1000 {
+    z-index: 1000;
 }
