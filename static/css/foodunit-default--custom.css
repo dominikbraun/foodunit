@@ -80,7 +80,7 @@ body, html {
 }
 
 .dish-row:hover, .dish-row:active {
-    background-color: rgba(25, 26, 32, .78);
+    background-color: rgba(25, 26, 32, .85);
 }
 
 .dish-row:hover .dish-detail, .dish-row:active .dish-detail {
