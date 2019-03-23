@@ -21,9 +21,9 @@
         <div id="app">
             <template v-if="!loggedIn">
                 <div class="row h-100 m-0">
-                    <div class="col-12 col-sm-4 h-100 m-0 p-0 d-none d-sm-block"></div>
-                    <div class="col-12 col-sm-4 h-100 m-0 p-0 justify-content-center align-items-center d-flex">
-                        <div class="w-100" id="login-area">
+                    <div class="col-12 col-sm-3 h-100 m-0 p-0 d-none d-sm-block"></div>
+                    <div class="col-12 col-sm-6 h-100 m-0 p-0 justify-content-center align-items-center d-flex">
+                        <div class="p-4 p-sm-0 w-100" id="login-area">
                             <div class="bg-danger mx-auto text-center text-white text-theme h1 p-3 rounded shadow mb-0" style="width: 9rem;">
                             Food&nbsp;<br />Unit&nbsp;
                             </div>
@@ -31,10 +31,10 @@
                             <div class="">
                                 <form autocomplete="off">
                                     <div class="form-group">
-                                        <input type="text" class="form-control bg-white border-thick1 border-light rounded px-3 py-4" id="user-email" placeholder="Deine E-Mail" spellcheck="false" />
+                                        <input type="text" class="form-control bg-white border-light rounded px-3 py-4" id="user-email" placeholder="Deine E-Mail" spellcheck="false" />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control bg-white border-thick1 border-light rounded px-3 py-4" id="user-name" placeholder="Dein Name" spellcheck="false" />
+                                        <input type="text" class="form-control bg-white border-light rounded px-3 py-4" id="user-name" placeholder="Dein Name" spellcheck="false" />
                                     </div>
                                     <div class="my-5">
                                         <button class="btn btn-success px-3 py-2 rounded w-100">
@@ -45,13 +45,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-4 h-100 m-0 p-0 d-none d-sm-block"></div>
+                    <div class="col-12 col-sm-3 h-100 m-0 p-0 d-none d-sm-block"></div>
                 </div>
             </template>
             <template v-else>
                 <div class="row h-100 m-0">
-                    <div class="col-12 col-sm-2 h-100 m-0 p-0 d-none d-sm-block"></div>
-                    <div class="col-12 col-sm-8 h-100 m-0 p-0">
+                    <div class="col-12 col-sm-1 col-md-2 h-100 m-0 p-0 d-none d-sm-block"></div>
+                    <div class="col-12 col-sm-10 col-md-8 h-100 m-0 p-0">
                         <div class="w-100">
                             <div class="py-4">
                                 <div class="row m-0">
@@ -91,9 +91,27 @@
                                     </div>
                                 </div>
                             </template>
+                            <div class="bg-white shadow-sm menu-area mb-5 rounded-lg">
+                                <div class="pt-5 text-center">
+                                    <h1 class="bg-danger text-white text-theme px-4 py-3 rounded shadow mx-0 mx-sm-3 my-1 my-sm-3 d-inline-block">
+                                        {{ supplier.name }}
+                                    </h1>
+                                </div>
+                                <div class="pt-4 pb-5 text-center">
+                                    <p class="text-md">
+                                        <i class="fas fa-map-marker-alt pr-2"></i> <span class="text-bold">{{ supplier.st }}<br />94315 Straubing</span>
+                                    </p>
+                                    <p class="text-md">
+                                        <i class="fas fa-store pr-2"></i> <span class="text-bold text-success">{{ supplier.opened }} Uhr</span>
+                                    </p>
+                                    <p class="text-md">
+                                        <i class="fas fa-phone pr-2"></i> <span class="text-bold">{{ supplier.ph }}</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-2 h-100 m-0 p-0 d-none d-sm-block"></div>
+                    <div class="col-12 col-sm-1 col-md-2 h-100 m-0 p-0 d-none d-sm-block"></div>
                 </div>
                 <footer class="text-sm text-dark text-center text-bold mb-5">
                     &copy; 2019 <a class="text-dark" href="https://github.com/dominikbraun" target="_blank">github.com/dominikbraun</a>
