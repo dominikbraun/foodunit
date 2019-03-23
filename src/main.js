@@ -36,10 +36,5 @@ new Vue({
     data: {
         loggedIn: validSession,
         supplier: supplier,
-    },
-    methods: {
-        addToOrder() {
-            alert("Added to order")
-        }
     }
 })
