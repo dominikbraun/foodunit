@@ -3,17 +3,16 @@ let user = {
         return sessionStorage.getItem('loggedin') != null;
     },
     login(email) {
-        let success = false;
+        let success = true;
 
         $.ajax({
             url: 'http://localhost/fu-server',
             data: {
                 action: 'login'
             },
-            success: function() {
-                alert("suc");
+            success: function () {
                 success = true;
-            }
+            },
         });
         return success;
     },

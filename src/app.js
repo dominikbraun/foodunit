@@ -1,9 +1,5 @@
 Vue.component('foodunit-main', {
     template: `
-        <template v-if="confirmEmail">
-            Confirm mail
-        </template>
-        <template v-else>
         <div class="row h-100 m-0" v-if="loggedIn">
             <div class="col-12 col-lg-2 h-100 m-0 p-0 d-none d-sm-block"></div>
             <div class="col-12 col-lg-8 h-100 m-0 p-0">
@@ -106,13 +102,13 @@ Vue.component('foodunit-main', {
                     <div class="">
                         <form autocomplete="off">
                             <div class="form-group">
-                                <input type="text" class="form-control bg-white border-light rounded px-3 py-4" v-model="name" placeholder="Dein Name" spellcheck="false" />
+                                <input type="text" class="form-control bg-white border-light rounded px-3 py-4" v-model="login.name" placeholder="Dein Name" spellcheck="false" />
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control bg-white border-light rounded px-3 py-4" v-model="email" placeholder="Deine E-Mail" spellcheck="false" />
+                                <input type="text" class="form-control bg-white border-light rounded px-3 py-4" v-model="login.email" placeholder="Deine E-Mail" spellcheck="false" />
                             </div>
                             <div class="my-5">
-                                <button class="btn btn-success px-3 py-2 rounded w-100" @click="login">
+                                <button class="btn btn-success px-3 py-2 rounded w-100" @click="requestLogin">
                                     Login anfordern
                                 </button>
                             </div>
@@ -122,23 +118,26 @@ Vue.component('foodunit-main', {
             </div>
             <div class="col-12 col-sm-3 h-100 m-0 p-0 d-none d-sm-block"></div>
         </div>
-        </template>
     `,
     data: function() {
         return {
-            confirmEmail: user.confirmsMail(),
+            confirmed: false,
+            confirmsEmail: user.confirmsMail(),
             loggedIn: user.isLoggedIn(),
             supplier: supplier,
-            name: '',
-            email: '',
+            login: {
+                name: '',
+                email: '',
+            }
         };
     },
     methods: {
-        login() {
-            alert(this.confirmEmail);
-            this.loggedIn = user.login(this.email)
+        requestLogin() {
+            this.loggedIn = user.login(this.login.email);
         }
     }
 });
 
-new Vue({ el: '#app' });
+new Vue({
+    el: '#app'
+});
