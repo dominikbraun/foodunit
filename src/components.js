@@ -62,6 +62,9 @@ Vue.component('foodunit-main', {
                                 </div>
                             </div>
                         </div>
+                        <footer class="text-sm text-dark text-center text-bold mb-5">
+                            &copy; 2019 <a class="text-dark" href="https://github.com/dominikbraun" target="_blank">github.com/dominikbraun</a>
+                        </footer>
                     </div>
                     <div class="col-12 col-lg-2 h-100 m-0 p-2 p-lg-4">
                         <div class="bg-white border border-light rounded mb-4">
@@ -87,10 +90,7 @@ Vue.component('foodunit-main', {
                             </div>
                         </div>
                     </div>
-                </div>
-                <footer class="text-sm text-dark text-center text-bold mb-5">
-                    &copy; 2019 <a class="text-dark" href="https://github.com/dominikbraun" target="_blank">github.com/dominikbraun</a>
-                </footer>`,
+                </div>`,
     data() {
         return supplier;
     }
