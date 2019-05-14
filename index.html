@@ -27,7 +27,7 @@
 	}
 
 	.shadow-sm {
-		box-shadow: .075rem .075rem .5rem rgba(0,0,0,.06) !important;
+		box-shadow: .072rem .09rem .4rem rgba(0,0,0,.045) !important;
 	}
 
 	.shadow {
@@ -170,6 +170,10 @@
 		box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .5) !important;
 	}
 
+	.bg-dark {
+		background-color: #282C30 !important;
+	}
+
 	#dishes {
 		transition: height 10.66s;
 	}
@@ -221,6 +225,14 @@
 							<h2 class="text-hand text-lg text-center px-2 pt-5" id="cat"></h2>
 							<div class="row m-0 pt-4 pb-5" id="dishes"></div>
 						</div>
+						<div class="bg-white rounded shadow-sm text-center my-5 py-3 text-sm">
+							<span class="text-ci text-md text-danger mx-2 py-3" id="supplier-name"></span>
+							<span class="text-strong">
+								/<span class="mx-2" id="supplier-addr"></span>
+								/<span class="mx-2" id="supplier-opened"></span>
+								/<span class="mx-2" id="supplier-phone"></span>
+							</span>
+						</div>
 					</div>
 					<div class="col-1 pt-5 text-right">
 						<button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
@@ -249,7 +261,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		let supplier = ''
+		let supplier = {}
 		let cats = []
 		let catIndex = 0
 		let dishes = []
@@ -265,8 +277,16 @@
 
 		function renderSupplier() {
 			// Ajax request here
-			supplier = 'McDonald\'s Straubing'
-			$('#supplier').text(supplier)
+			supplier.name = 'McDonald\'s Straubing'
+			supplier.addr = 'Ittlingerstr. 119'
+			supplier.phone = '09421 3304948'
+			supplier.opened = '07:00 - 01:00'
+
+			$('#supplier').text(supplier.name)
+			$('#supplier-name').text(supplier.name)
+			$('#supplier-addr').text(supplier.addr)
+			$('#supplier-opened').text(supplier.opened)
+			$('#supplier-phone').text(supplier.phone)
 		}
 
 		function renderCats() {
