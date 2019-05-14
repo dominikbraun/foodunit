@@ -6,6 +6,10 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
 <style>
+	body {
+		cursor: default;
+	}
+
 	.bg-beige {
 		background-color: #FCF9F2;
 	}
@@ -65,7 +69,7 @@
 	}
 
 	.text-xs {
-		font-size: .8rem;
+		font-size: .79rem;
 		letter-spacing: .23px;
 	}
 
@@ -233,6 +237,11 @@
 								/<span class="mx-2" id="supplier-phone"></span>
 							</span>
 						</div>
+						<div class="text-center py-2 text-xs">
+							<span class="text-strong">&copy; 2019 FoodUnit 2</span><br /><br />
+							Vorschl&auml;ge, Kritik, Verbesserungen:
+							<a class="text-dark" href="https://github.com/dominikbraun/foodunit" target="_blank"><i class="fab fa-github mx-1"></i>dominikbraun/foodunit</a>
+						</div>
 					</div>
 					<div class="col-1 pt-5 text-right">
 						<button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
@@ -293,7 +302,7 @@
 			// Ajax request here
 			cats = ['Alkoholfreie Getr\u00e4nke', 'Burger', 'Klassiker', 'Feinschmecker', 'Salate', 'Kinderteller']
 
-			for (var i = 0; i < cats.length; i++) {
+			for (let i = 0; i < cats.length; i++) {
 				let html = '<a class="text-dark mx-2" href="">' + cats[i] + '</a>'
 
 				if (i < cats.length - 1) {
@@ -433,7 +442,7 @@
 			}
 			$('#cat').text(cat)
 
-			for (d of dishes[cat]) {
+			for (let d of dishes[cat]) {
 				let html = '<div class="col-12 col-xl-6 px-5 py-3"><div class="row"><div class="col-12 col-lg-9"><span class="text-md text-very-strong">' + d.name + '</span><br /><span class="text-xs"><i>' + d.desc + '</i></span></div><div class="col-12 col-lg-3 text-right">+ <a class="text-white text-strong" href="">' + Number.parseFloat(d.price).toFixed(2) + ' &euro;</a></div></div></div>'
 				$('#dishes').append(html)
 			}
@@ -465,7 +474,7 @@
 				remark: 'Bitte mit Ketchup',
 			}
 
-			for (i of cart.items) {
+			for (let i of cart.items) {
 				let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name +'</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.id + '">&#10005;</div></div></li>'
 				$('#cart-items').append(html)
 			}
