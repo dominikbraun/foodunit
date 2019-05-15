@@ -1,88 +1,94 @@
 <!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredericka+the+Great"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches"/>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
-        <link rel="stylesheet" href="static/css/foodunit2--default.css"/>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    </head>
-    <body class="bg-beige">
-        <div class="row m-0">
-            <div class="col-12 col-lg-9 col-xl-10 h-100">
-                <div class="container">
-                    <div class="row my-5">
-                        <div class="col-12 col-lg-2 pl-0">
-                            <div class="bg-danger text-white text-ci text-lg logo-square rounded text-center mx-3 py-3 shadow-lg">
-                                Food&nbsp;<br/>
-                                Unit&nbsp;
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-8 text-xl text-center p-2">
-                            <span class="text-ci" id="supplier"></span>
-                            <div class="text-strong text-sm mx-auto my-0" id="cats"></div>
-                        </div>
-                        <div class="col-12 col-lg-2 d-none d-lg-block"></div>
-                    </div>
-                    <div class="row my-5">
-                        <div class="col-1 pt-5 text-left">
-                            <button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                        </div>
-                        <div class="col-10 px-0">
-                            <div class="bg-dark shadow-sm rounded text-white">
-                                <h2 class="text-hand text-lg text-center px-2 pt-5" id="cat"></h2>
-                                <div class="row m-0 pt-4 pb-5" id="dishes"></div>
-                            </div>
-                            <div class="bg-white rounded shadow-sm text-center my-5 py-3 text-sm">
-                                <span class="text-ci text-md text-danger mx-2 py-3" id="supplier-name"></span>
-                                <span class="text-strong">
-                                        /<span class="mx-2" id="supplier-addr"></span>
-                                        /<span class="mx-2" id="supplier-opened"></span>
-                                        /<span class="mx-2" id="supplier-phone"></span>
-                                    </span>
-                            </div>
-                            <div class="text-center py-2 text-xs">
-                                <span class="text-strong">&copy; 2019 FoodUnit 2</span><br/><br/>
-                                Vorschl&auml;ge, Kritik, Verbesserungen:
-                                <a class="text-dark" href="https://github.com/dominikbraun/foodunit" target="_blank"><i
-                                        class="fab fa-github mx-1"></i>dominikbraun/foodunit</a>
-                            </div>
-                        </div>
-                        <div class="col-1 pt-5 text-right">
-                            <button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-3 col-xl-2 h-100 bg-white shadow position-lg-fixed fix-lg-right">
-                <p class="text-strong text-xs text-center py-4 border-bottom">
-                    <i class="fa fa-user mr-2"></i>adrian.brasin@nbsp.de
-                </p>
-                <p class="text-sm text-right my-4">
-                    <i class="fas fa-shopping-cart mr-2"></i><span class="text-strong text-success mr-1">Summe: <span
-                        id="total">0.00</span> &euro;</span>
-                </p>
-                <ul class="p-0" id="cart-items"></ul>
-                <div class="border-top border-bottom">
-                    <input class="bg-light rounded text-xs border-0 w-100 mt-4 px-2 py-3" id="cart-remark" type="text"
-                           placeholder="W&uuml;nsche und Notizen"/>
-                    <button class="btn btn-success rounded text-xs text-strong mt-3 mb-4 w-100 p-2">Bestellung speichern
-                    </button>
-                </div>
-                <div class="bg-light mt-4 p-3 shadow-sm">
-                    <p class="mb-0 text-strong text-center">Rufst du heute an?<i class="fa fa-phone ml-2"></i></p>
-                    <button class="btn btn-white rounded text-xs text-strong mt-4 w-100 p-2">alle Bestellungen anzeigen</button>
-                </div>
-            </div>
-        </div>
-        <script src="scripts/ui/foodunit2.js"></script>
-    </body>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<title>Food Unit</title>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredericka+the+Great">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<link rel="stylesheet" href="./styles.css">
+</head>
+
+<body class="bg-beige">
+	<div class="row m-0">
+		<div class="col-12 col-lg-9 col-xl-10 h-100">
+			<div class="container">
+				<div class="row my-5">
+					<div class="col-12 col-lg-2 pl-0">
+						<div class="bg-danger text-white text-ci text-lg logo-square rounded text-center mx-3 py-3 shadow-lg">
+							Food&nbsp;<br />
+							Unit&nbsp;
+						</div>
+					</div>
+					<div class="col-12 col-lg-8 text-xl text-center p-2">
+						<span class="text-ci" id="supplier"></span>
+						<div class="text-strong text-sm mx-auto my-0" id="cats"></div>
+					</div>
+					<div class="col-12 col-lg-2 d-none d-lg-block"></div>
+				</div>
+				<div class="row my-5">
+					<div class="col-1 pt-5 text-left">
+						<button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
+							<i class="fas fa-chevron-left"></i>
+						</button>
+					</div>
+					<div class="col-10 px-0">
+						<div class="bg-dark shadow-sm rounded text-white">
+							<h2 class="text-hand text-lg text-center px-2 pt-5" id="cat"></h2>
+							<div class="row m-0 pt-4 pb-5" id="dishes"></div>
+						</div>
+						<div class="bg-white rounded shadow-sm text-center my-5 py-3 text-sm">
+							<span class="text-ci text-md text-danger mx-2 py-3" id="supplier-name"></span>
+							<span class="text-strong">
+								/<span class="mx-2" id="supplier-addr"></span>
+								/<span class="mx-2" id="supplier-opened"></span>
+								/<span class="mx-2" id="supplier-phone"></span>
+							</span>
+						</div>
+						<div class="text-center py-2 text-xs">
+							<span class="text-strong">&copy; 2019 FoodUnit 2</span><br /><br />
+							Vorschl&auml;ge, Kritik, Verbesserungen:
+							<a class="text-dark" href="https://github.com/dominikbraun/foodunit" target="_blank"><i
+									class="fab fa-github mx-1"></i>dominikbraun/foodunit</a>
+						</div>
+					</div>
+					<div class="col-1 pt-5 text-right">
+						<button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
+							<i class="fas fa-chevron-right"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-lg-3 col-xl-2 h-100 bg-white shadow position-lg-fixed fix-lg-right">
+			<p class="text-strong text-xs text-center py-4 border-bottom">
+				<i class="fa fa-user mr-2"></i>adrian.brasin@nbsp.de
+			</p>
+			<p class="text-sm text-right my-4">
+				<i class="fas fa-shopping-cart mr-2"></i><span class="text-strong text-success mr-1">Summe: <span
+						id="total">0.00</span> &euro;</span>
+			</p>
+			<ul class="p-0" id="cart-items"></ul>
+			<div class="border-top border-bottom">
+				<input class="bg-light rounded text-xs border-0 w-100 mt-4 px-2 py-3" id="cart-remark" type="text"
+					placeholder="W&uuml;nsche und Notizen" />
+				<button class="btn btn-success rounded text-xs text-strong mt-3 mb-4 w-100 p-2">Bestellung speichern</button>
+			</div>
+			<div class="bg-light mt-4 p-3 shadow-sm">
+				<p class="mb-0 text-strong text-center">Rufst du heute an?<i class="fa fa-phone ml-2"></i></p>
+				<button class="btn btn-white rounded text-xs text-strong mt-4 w-100 p-2">alle Bestellungen anzeigen</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="./scripts.js"></script>
+</body>
+
 </html>
