@@ -1,0 +1,191 @@
+body {
+    cursor: default;
+}
+
+.bg-beige {
+    background-color: #FCF9F2;
+}
+
+.text-beige {
+    background-color: #FCF9F2;
+}
+
+.border-top {
+    border-top: 2px solid #F2F3F4 !important;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #F2F3F4 !important;
+}
+
+.border-left {
+    border-left: 2px solid #F2F3F4 !important;
+}
+
+.shadow-sm {
+    box-shadow: .072rem .09rem .4rem rgba(0, 0, 0, .045) !important;
+}
+
+.shadow {
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, .04) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 .15rem 1.5rem rgba(0, 0, 0, .18) !important;
+}
+
+.text-danger {
+    color: #EF0000 !important;
+}
+
+.bg-danger {
+    background-color: #EF0000 !important;
+}
+
+.text-ci {
+    font-family: 'Kaushan Script';
+}
+
+.text-display {
+    font-family: 'Staatliches';
+}
+
+.logo-square {
+    width: 7.75rem;
+    height: 7.75rem;
+    line-height: 2.85rem;
+}
+
+.fa, .fas {
+    font-size: .85rem;
+}
+
+.text-xs {
+    font-size: .79rem;
+    letter-spacing: .23px;
+}
+
+.text-xs .fa, .text-xs .fas {
+    font-size: .6rem;
+}
+
+.text-sm {
+    font-size: .95rem;
+}
+
+.text-sm .fa, .text-sm .fas {
+    font-size: .76rem;
+}
+
+.text-md {
+    font-size: 1.1rem;
+    letter-spacing: .5px;
+}
+
+.text-lg {
+    font-size: 2.75rem;
+}
+
+.text-xl {
+    font-size: 2.75rem;
+}
+
+@media (min-width: 1200px) {
+    .text-xl {
+        font-size: 4rem !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .position-lg-fixed {
+        position: fixed;
+    }
+
+    .fix-lg-right {
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.text-hand {
+    font-family: 'Fredericka the Great';
+}
+
+.text-strong {
+    font-weight: 600;
+}
+
+.text-very-strong {
+    font-weight: 700;
+}
+
+.bg-light {
+    background-color: #F8F9FA !important;
+}
+
+.btn-white {
+    background-color: #fff;
+}
+
+.btn-white:hover, .btn-white:active {
+    color: #fff;
+    background-color: #343A40;
+}
+
+li:nth-of-type(odd) {
+    background-color: #F8F9FA;
+}
+
+.remove-item:hover, .remove-item:active {
+    color: #fff;
+    background-color: #EF0000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+}
+
+.bg-dark-tr {
+    background-color: rgba(25, 26, 32, .66) !important;
+}
+
+.outline-0, .outline-0:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+.btn-white:hover, .btn-white:focus {
+    background-color: #EF0000 !important;
+}
+
+.btn-white:focus {
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .5) !important;
+}
+
+.bg-dark {
+    background-color: #282C30 !important;
+}
+
+#dishes {
+    transition: height 10.66s;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #CFCFD1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1D1D26;
+}
