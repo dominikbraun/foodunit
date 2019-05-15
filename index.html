@@ -1,485 +1,88 @@
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredericka+the+Great">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-
-<style>
-	body {
-		cursor: default;
-	}
-
-	.bg-beige {
-		background-color: #FCF9F2;
-	}
-
-	.text-beige {
-		background-color: #FCF9F2;
-	}
-
-	.border-top {
-		border-top: 2px solid #F2F3F4 !important;
-	}
-
-	.border-bottom {
-		border-bottom: 2px solid #F2F3F4 !important;
-	}
-
-	.border-left {
-		border-left: 2px solid #F2F3F4 !important;
-	}
-
-	.shadow-sm {
-		box-shadow: .072rem .09rem .4rem rgba(0,0,0,.045) !important;
-	}
-
-	.shadow {
-		box-shadow: 0 0 1.5rem rgba(0,0,0,.04) !important;
-	}
-
-	.shadow-lg {
-		box-shadow: 0 .15rem 1.5rem rgba(0,0,0,.18)!important;
-	}
-
-	.text-danger {
-		color: #EF0000 !important;
-	}
-
-	.bg-danger {
-		background-color: #EF0000 !important;
-	}
-
-	.text-ci {
-		font-family: 'Kaushan Script';
-	}
-
-	.text-display {
-		font-family: 'Staatliches';
-	}
-
-	.logo-square {
-		width: 7.75rem;
-		height: 7.75rem;
-		line-height: 2.85rem;
-	}
-
-	.fa, .fas {
-		font-size: .85rem;
-	}
-
-	.text-xs {
-		font-size: .79rem;
-		letter-spacing: .23px;
-	}
-
-	.text-xs .fa, .text-xs .fas {
-		font-size: .6rem;
-	}
-
-	.text-sm {
-		font-size: .95rem;
-	}
-
-	.text-sm .fa, .text-sm .fas {
-		font-size: .76rem;
-	}
-
-	.text-md {
-		font-size: 1.1rem;
-		letter-spacing: .5px;
-	}
-
-	.text-lg {
-		font-size: 2.75rem;
-	}
-
-	.text-xl {
-		font-size: 2.75rem;
-	}
-
-	@media (min-width: 1200px) {
-		.text-xl {
-			font-size: 4rem !important;
-		}
-	}
-
-	@media (min-width: 992px) {
-		.position-lg-fixed {
-			position: fixed;
-		}
-
-		.fix-lg-right {
-			top: 0;
-			right: 0;
-			bottom: 0;
-		}
-	}
-
-	.text-hand {
-		font-family: 'Fredericka the Great';
-	}
-
-	.text-strong {
-		font-weight: 600;
-	}
-
-	.text-very-strong {
-		font-weight: 700;
-	}
-
-	.bg-light {
-		background-color: #F8F9FA !important;
-	}
-
-	.btn-white {
-		background-color: #fff;
-	}
-
-	.btn-white:hover, .btn-white:active {
-		color: #fff;
-		background-color: #343A40;
-	}
-
-	li:nth-of-type(odd) {
-		background-color: #F8F9FA;
-	}
-
-	.remove-item:hover, .remove-item:active {
-		color: #fff;
-		background-color: #EF0000;
-		text-decoration: none;
-		cursor: pointer;
-	}
-
-	input:focus {
-		outline: none;
-	}
-
-	.bg-dark-tr {
-		background-color: rgba(25, 26, 32, .66) !important;
-	}
-
-	.outline-0, .outline-0:focus {
-		outline: 0 !important;
-		box-shadow: none !important;
-	}
-
-	.btn-white:hover, .btn-white:focus {
-		background-color: #EF0000 !important;
-	}
-
-	.btn-white:focus {
-		color: #fff;
-		box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .5) !important;
-	}
-
-	.bg-dark {
-		background-color: #282C30 !important;
-	}
-
-	#dishes {
-		transition: height 10.66s;
-	}
-
-	::-webkit-scrollbar {
-		width: 10px;
-	}
-
-	::-webkit-scrollbar-track {
-		background: #fff;
-	}
-
-	::-webkit-scrollbar-thumb {
-		background: #CFCFD1;
-	}
-
-	::-webkit-scrollbar-thumb:hover {
-		background: #1D1D26;
-	}
-</style>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<body class="bg-beige">
-	<div class="row m-0">
-		<div class="col-12 col-lg-9 col-xl-10 h-100">
-			<div class="container">
-				<div class="row my-5">
-					<div class="col-12 col-lg-2 pl-0">
-						<div class="bg-danger text-white text-ci text-lg logo-square rounded text-center mx-3 py-3 shadow-lg">
-							Food&nbsp;<br />
-							Unit&nbsp;
-						</div>
-					</div>
-					<div class="col-12 col-lg-8 text-xl text-center p-2">
-						<span class="text-ci" id="supplier"></span>
-						<div class="text-strong text-sm mx-auto my-0" id="cats"></div>
-					</div>
-					<div class="col-12 col-lg-2 d-none d-lg-block"></div>
-				</div>
-				<div class="row my-5">
-					<div class="col-1 pt-5 text-left">
-						<button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
-							<i class="fas fa-chevron-left"></i>
-						</button>
-					</div>
-					<div class="col-10 px-0">
-						<div class="bg-dark shadow-sm rounded text-white">
-							<h2 class="text-hand text-lg text-center px-2 pt-5" id="cat"></h2>
-							<div class="row m-0 pt-4 pb-5" id="dishes"></div>
-						</div>
-						<div class="bg-white rounded shadow-sm text-center my-5 py-3 text-sm">
-							<span class="text-ci text-md text-danger mx-2 py-3" id="supplier-name"></span>
-							<span class="text-strong">
-								/<span class="mx-2" id="supplier-addr"></span>
-								/<span class="mx-2" id="supplier-opened"></span>
-								/<span class="mx-2" id="supplier-phone"></span>
-							</span>
-						</div>
-						<div class="text-center py-2 text-xs">
-							<span class="text-strong">&copy; 2019 FoodUnit 2</span><br /><br />
-							Vorschl&auml;ge, Kritik, Verbesserungen:
-							<a class="text-dark" href="https://github.com/dominikbraun/foodunit" target="_blank"><i class="fab fa-github mx-1"></i>dominikbraun/foodunit</a>
-						</div>
-					</div>
-					<div class="col-1 pt-5 text-right">
-						<button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
-							<i class="fas fa-chevron-right"></i>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-lg-3 col-xl-2 h-100 bg-white shadow position-lg-fixed fix-lg-right">
-			<p class="text-strong text-xs text-center py-4 border-bottom">
-				<i class="fa fa-user mr-2"></i>adrian.brasin@nbsp.de
-			</p>
-			<p class="text-sm text-right my-4">
-				<i class="fas fa-shopping-cart mr-2"></i><span class="text-strong text-success mr-1">Summe: <span id="total">0.00</span> &euro;</span>
-			</p>
-			<ul class="p-0" id="cart-items"></ul>
-			<div class="border-top border-bottom">
-				<input class="bg-light rounded text-xs border-0 w-100 mt-4 px-2 py-3" id="cart-remark" type="text" placeholder="W&uuml;nsche und Notizen" />
-				<button class="btn btn-success rounded text-xs text-strong mt-3 mb-4 w-100 p-2">Bestellung speichern</button>
-			</div>
-			<div class="bg-light mt-4 p-3 shadow-sm">
-				<p class="mb-0 text-strong text-center">Rufst du heute an?<i class="fa fa-phone ml-2"></i></p>
-				<button class="btn btn-white rounded text-xs text-strong mt-4 w-100 p-2">alle Bestellungen anzeigen</button>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript">
-		let supplier = {}
-		let cats = []
-		let catIndex = 0
-		let dishes = []
-
-		let total = 0
-
-		$(function () {
-			renderSupplier()
-			renderCats()
-			renderDishes(catIndex)
-			renderCart()
-		})
-
-		function renderSupplier() {
-			// Ajax request here
-			supplier.name = 'McDonald\'s Straubing'
-			supplier.addr = 'Ittlingerstr. 119'
-			supplier.phone = '09421 3304948'
-			supplier.opened = '07:00 - 01:00'
-
-			$('#supplier').text(supplier.name)
-			$('#supplier-name').text(supplier.name)
-			$('#supplier-addr').text(supplier.addr)
-			$('#supplier-opened').text(supplier.opened)
-			$('#supplier-phone').text(supplier.phone)
-		}
-
-		function renderCats() {
-			// Ajax request here
-			cats = ['Alkoholfreie Getr\u00e4nke', 'Burger', 'Klassiker', 'Feinschmecker', 'Salate', 'Kinderteller']
-
-			for (let i = 0; i < cats.length; i++) {
-				let html = '<a class="text-dark mx-2" href="">' + cats[i] + '</a>'
-
-				if (i < cats.length - 1) {
-					html += '/'
-				}
-				$('#cats').append(html)
-			}
-		}
-
-		function renderDishes(catIndex) {
-			let cat = cats[catIndex]
-
-			if (dishes[cat] === undefined) {
-				// Ajax request here
-				dishes[cat] = [
-					{
-						id: '0',
-						name: 'Hamburger Royal K&auml;se',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '2.2',
-					},
-					{
-						id: '1',
-						name: 'Hamburger',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '2.8',
-					},
-					{
-						id: '2',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '1.0',
-					},
-					{
-						id: '3',
-						name: 'Gro&szlig;e Pommes',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '2.7',
-					},
-					{
-						id: '4',
-						name: 'Hamburger',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '4.0',
-					},
-					{
-						id: '5',
-						name: 'Gro&szlig;e Pommes',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '6',
-						name: 'Hamburger',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '2.2',
-					},
-					{
-						id: '7',
-						name: 'Hamburger Royal K&auml;se',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '8',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '4.0',
-					},
-					{
-						id: '9',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.2',
-					},
-					{
-						id: '5',
-						name: 'Gro&szlig;e Pommes',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '6',
-						name: 'Hamburger',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '2.2',
-					},
-					{
-						id: '7',
-						name: 'Hamburger Royal K&auml;se',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '8',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '4.0',
-					},
-					{
-						id: '9',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.2',
-					},
-					{
-						id: '5',
-						name: 'Gro&szlig;e Pommes',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '6',
-						name: 'Hamburger',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '2.2',
-					},
-					{
-						id: '7',
-						name: 'Hamburger Royal K&auml;se',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '8',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '4.0',
-					},
-					{
-						id: '9',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.2',
-					}
-				]
-			}
-			$('#cat').text(cat)
-
-			for (let d of dishes[cat]) {
-				let html = '<div class="col-12 col-xl-6 px-5 py-3"><div class="row"><div class="col-12 col-lg-9"><span class="text-md text-very-strong">' + d.name + '</span><br /><span class="text-xs"><i>' + d.desc + '</i></span></div><div class="col-12 col-lg-3 text-right">+ <a class="text-white text-strong" href="">' + Number.parseFloat(d.price).toFixed(2) + ' &euro;</a></div></div></div>'
-				$('#dishes').append(html)
-			}
-		}
-
-		function renderCart() {
-			// Ajax request here
-			let cart = {
-				items: [
-					{
-						id: '7',
-						name: 'Hamburger Royal K&auml;se',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.9',
-					},
-					{
-						id: '8',
-						name: '9 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '4.0',
-					},
-					{
-						id: '9',
-						name: '12 Chicken McNuggets',
-						desc: 'Preis und Beschreibung folgen.',
-						price: '3.2',
-					}
-				],
-				remark: 'Bitte mit Ketchup',
-			}
-
-			for (let i of cart.items) {
-				let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name +'</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.id + '">&#10005;</div></div></li>'
-				$('#cart-items').append(html)
-			}
-			$('#cart-remark').val(cart.remark)
-			$('#total').text(Number.parseFloat(total).toFixed(2))
-		}
-	</script>
-<body>
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fredericka+the+Great"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Staatliches"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
+        <link rel="stylesheet" href="static/css/foodunit2--default.css"/>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body class="bg-beige">
+        <div class="row m-0">
+            <div class="col-12 col-lg-9 col-xl-10 h-100">
+                <div class="container">
+                    <div class="row my-5">
+                        <div class="col-12 col-lg-2 pl-0">
+                            <div class="bg-danger text-white text-ci text-lg logo-square rounded text-center mx-3 py-3 shadow-lg">
+                                Food&nbsp;<br/>
+                                Unit&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 text-xl text-center p-2">
+                            <span class="text-ci" id="supplier"></span>
+                            <div class="text-strong text-sm mx-auto my-0" id="cats"></div>
+                        </div>
+                        <div class="col-12 col-lg-2 d-none d-lg-block"></div>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col-1 pt-5 text-left">
+                            <button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                        <div class="col-10 px-0">
+                            <div class="bg-dark shadow-sm rounded text-white">
+                                <h2 class="text-hand text-lg text-center px-2 pt-5" id="cat"></h2>
+                                <div class="row m-0 pt-4 pb-5" id="dishes"></div>
+                            </div>
+                            <div class="bg-white rounded shadow-sm text-center my-5 py-3 text-sm">
+                                <span class="text-ci text-md text-danger mx-2 py-3" id="supplier-name"></span>
+                                <span class="text-strong">
+                                        /<span class="mx-2" id="supplier-addr"></span>
+                                        /<span class="mx-2" id="supplier-opened"></span>
+                                        /<span class="mx-2" id="supplier-phone"></span>
+                                    </span>
+                            </div>
+                            <div class="text-center py-2 text-xs">
+                                <span class="text-strong">&copy; 2019 FoodUnit 2</span><br/><br/>
+                                Vorschl&auml;ge, Kritik, Verbesserungen:
+                                <a class="text-dark" href="https://github.com/dominikbraun/foodunit" target="_blank"><i
+                                        class="fab fa-github mx-1"></i>dominikbraun/foodunit</a>
+                            </div>
+                        </div>
+                        <div class="col-1 pt-5 text-right">
+                            <button class="btn btn-dark py-5 h-25 d-none d-md-inline-block">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 col-xl-2 h-100 bg-white shadow position-lg-fixed fix-lg-right">
+                <p class="text-strong text-xs text-center py-4 border-bottom">
+                    <i class="fa fa-user mr-2"></i>adrian.brasin@nbsp.de
+                </p>
+                <p class="text-sm text-right my-4">
+                    <i class="fas fa-shopping-cart mr-2"></i><span class="text-strong text-success mr-1">Summe: <span
+                        id="total">0.00</span> &euro;</span>
+                </p>
+                <ul class="p-0" id="cart-items"></ul>
+                <div class="border-top border-bottom">
+                    <input class="bg-light rounded text-xs border-0 w-100 mt-4 px-2 py-3" id="cart-remark" type="text"
+                           placeholder="W&uuml;nsche und Notizen"/>
+                    <button class="btn btn-success rounded text-xs text-strong mt-3 mb-4 w-100 p-2">Bestellung speichern
+                    </button>
+                </div>
+                <div class="bg-light mt-4 p-3 shadow-sm">
+                    <p class="mb-0 text-strong text-center">Rufst du heute an?<i class="fa fa-phone ml-2"></i></p>
+                    <button class="btn btn-white rounded text-xs text-strong mt-4 w-100 p-2">alle Bestellungen anzeigen</button>
+                </div>
+            </div>
+        </div>
+        <script src="scripts/ui/foodunit2.js"></script>
+    </body>
+</html>
