@@ -149,7 +149,7 @@ input:focus {
 }
 
 .bg-dark-tr {
-  background-color: rgba(25, 26, 32, .66) !important;
+  background-color: rgba(40, 44, 48, .5) !important;
 }
 
 .outline-0, .outline-0:focus {
@@ -172,6 +172,10 @@ input:focus {
 
 #dishes {
   transition: height 10.66s;
+}
+
+#bg-container {
+  background-position: 50% 15%;
 }
 
 ::-webkit-scrollbar {
