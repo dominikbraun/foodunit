@@ -2,6 +2,7 @@
 
 namespace foodunit\core;
 
+require_once 'ResponseDispatcher.php';
 require_once 'services/OfferService.php';
 require_once 'services/SupplierService.php';
 
@@ -17,10 +18,16 @@ use Slim\Http\Response;
 class RouteHandler
 {
     /**
+     * @var ResponseDispatcher
+     */
+    private $dispatcher;
+
+    /**
      * RouteHandler constructor.
      */
     public function __construct()
     {
+        $this->dispatcher = new ResponseDispatcher();
     }
 
     /**
@@ -42,6 +49,8 @@ class RouteHandler
     {
         $supplierId = $args['supplier'];
         $dishes = (new SupplierService($supplierId))->getDishes();
+
+        $this->dispatcher->run($dishes);
     }
 
     /**
