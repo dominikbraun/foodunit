@@ -11,12 +11,28 @@ class Context
     /**
      * @var string
      */
+    private static $userKey = 'foodunit_key';
+
+    /**
+     * @var string
+     */
     private static $userCookie = 'foodunit_user';
 
     /**
      * @var string
      */
     private static $sessCookie = 'foodunit_sess';
+
+    /**
+     * @return string|null
+     */
+    public static function userKey()
+    {
+        if (!isset($_COOKIE[self::$userKey])) {
+            return null;
+        }
+        return $_COOKIE[self::$userKey];
+    }
 
     /**
      * @return string|null

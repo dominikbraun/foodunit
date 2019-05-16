@@ -9,7 +9,7 @@ namespace foodunit\conf;
 class Conf
 {
     /**
-     * @var array $conf
+     * @var array
      */
     private static $conf;
 
