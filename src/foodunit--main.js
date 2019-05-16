@@ -4,6 +4,19 @@ let catIndex = 0
 let total = 0
 
 $(function () {
+
+    $('#prev').on('click', function () {
+        if (catIndex > 0) {
+            renderDishes(--catIndex)
+        }
+    })
+
+    $('#next').on('click', function () {
+        if (catIndex < cats.length - 1) {
+            renderDishes(++catIndex)
+        }
+    })
+
     renderSupplier()
     renderCats()
     renderDishes(catIndex)
@@ -30,6 +43,47 @@ function renderCats() {
         {
             name: 'Alkoholfreie Getr\u00e4nke',
             img: 'cooled-drinks.jpg',
+            dishes: [
+                {
+                    id: '0',
+                    name: 'Cola',
+                    desc: 'Preis und Beschreibung folgen.',
+                    price: '2.2',
+                },
+                {
+                    id: '1',
+                    name: 'Fanta',
+                    desc: 'Preis und Beschreibung folgen.',
+                    price: '2.2',
+                },
+                {
+                    id: '2',
+                    name: 'Cola (Dose)',
+                    desc: 'Preis und Beschreibung folgen.',
+                    price: '2.0',
+                },
+                {
+                    id: '3',
+                    name: 'Fanta (Dose)',
+                    desc: 'Preis und Beschreibung folgen.',
+                    price: '1.7',
+                },
+                {
+                    id: '4',
+                    name: 'Wasser',
+                    desc: 'Preis und Beschreibung folgen.',
+                    price: '2.0',
+                },
+                {
+                    id: '5',
+                    name: 'Spezi',
+                    desc: 'Preis und Beschreibung folgen.',
+                    price: '1.9',
+                }
+            ]
+        },
+        {
+            name: 'Burger',
             dishes: [
                 {
                     id: '0',
@@ -151,11 +205,7 @@ function renderCats() {
                     desc: 'Preis und Beschreibung folgen.',
                     price: '3.2',
                 }
-            ]
-        },
-        {
-            name: 'Burger',
-            dishes: [],
+            ],
         },
         {
             name: 'Klassiker',
@@ -188,7 +238,9 @@ function renderCats() {
 function renderDishes(i) {
     $('#cat').text(cats[i].name)
 
-    $('#bg-container').css('background-image', './static/img/' + cats[i].img)
+    $('#bg-container').css('background-image', 'static/img/' + cats[i].img)
+
+    $('#dishes').empty()
 
     for (let d of cats[i].dishes) {
         let html = '<div class="col-12 col-xl-6 px-5 py-3"><div class="row"><div class="col-12 col-lg-9"><span class="text-md text-very-strong">' + d.name + '</span><br /><span class="text-xs"><i>' + d.desc + '</i></span></div><div class="col-12 col-lg-3 text-right">+ <a class="text-white text-strong" href="">' + Number.parseFloat(d.price).toFixed(2) + ' &euro;</a></div></div></div>'
