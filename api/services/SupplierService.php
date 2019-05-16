@@ -17,7 +17,7 @@ class SupplierService
      * SupplierService constructor.
      * @param int $supplierId
      */
-    public function __construct(int $supplierId)
+    public function __construct(\int $supplierId)
     {
         $this->supplierId = $supplierId;
     }

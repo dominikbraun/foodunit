@@ -27,7 +27,7 @@ class OfferService
      * @param int $offerId
      * @return array
      */
-    public function getAllOrders(int $offerId)
+    public function getAllOrders(\int $offerId)
     {
         return [];
     }
@@ -37,7 +37,7 @@ class OfferService
      * @param string $userEmail
      * @return array
      */
-    public function getUserOrder(int $offerId, string $userKey)
+    public function getUserOrder(\int $offerId, \string $userKey)
     {
         return [];
     }
@@ -48,7 +48,7 @@ class OfferService
      * @param string $userEmail
      * @return bool
      */
-    public function addDishToOrder(int $offerId, int $dishId, string $userKey)
+    public function addDishToOrder(\int $offerId, \int $dishId, \string $userKey)
     {
         return true;
     }
@@ -59,7 +59,7 @@ class OfferService
      * @param string $userEmail
      * @return bool
      */
-    public function deleteDishFromOrder(int $offerId, int $dishId, string $userKey)
+    public function deleteDishFromOrder(\int $offerId, \int $dishId, \string $userKey)
     {
         return true;
     }
