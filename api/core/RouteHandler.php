@@ -3,6 +3,7 @@
 namespace foodunit\core;
 
 require_once 'ResponseDispatcher.php';
+require_once 'Context.php';
 require_once 'services/OfferService.php';
 require_once 'services/SupplierService.php';
 
@@ -38,6 +39,7 @@ class RouteHandler
     public function offers(Request $req, Response $res, array $args)
     {
         $offers = (new OfferService())->getActiveOffers();
+        $this->dispatcher->run($offers);
     }
 
     /**
@@ -60,6 +62,10 @@ class RouteHandler
      */
     public function orders(Request $req, Response $res, array $args)
     {
+        $offerId = $args['offer'];
+        $orders = (new OfferService())->getAllOrders($offerId);
+
+        $this->dispatcher->run($orders);
     }
 
     /**
@@ -69,6 +75,12 @@ class RouteHandler
      */
     public function userOrder(Request $req, Response $res, array $args)
     {
+        $offerId = $args['offer'];
+        $user = Context::user();
+
+        $userOrder = (new OfferService())->getUserOrder($offerId, $user);
+
+        $this->dispatcher->run($userOrder);
     }
 
     /**
@@ -78,6 +90,13 @@ class RouteHandler
      */
     public function add(Request $req, Response $res, array $args)
     {
+        $offerId = $args['offer'];
+        $dishId = $args['dish'];
+        $user = Context::user();
+
+        $res = (new OfferService())->addDishToOrder($offerId, $dishId, $user);
+
+        $this->dispatcher->run($res);
     }
 
     /**

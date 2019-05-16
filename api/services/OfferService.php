@@ -22,4 +22,34 @@ class OfferService
     {
         return [];
     }
+
+    /**
+     * @param int $offerId
+     * @return array
+     */
+    public function getAllOrders(int $offerId)
+    {
+        return [];
+    }
+
+    /**
+     * @param int $offerId
+     * @param string $userEmail
+     * @return array
+     */
+    public function getUserOrder(int $offerId, string $userEmail)
+    {
+        return [];
+    }
+
+    /**
+     * @param int $offerId
+     * @param int $dishId
+     * @param string $userEmail
+     * @return bool
+     */
+    public function addDishToOrder(int $offerId, int $dishId, string $userEmail)
+    {
+        return true;
+    }
 }
