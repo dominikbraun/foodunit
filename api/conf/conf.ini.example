@@ -1,0 +1,6 @@
+; This file may be used as a template for the actual configuration file.
+; Fill in appropriate values, copy this file and and rename it to conf.ini.
+
+db_con_str = ''
+db_user = ''
+db_pass = ''
