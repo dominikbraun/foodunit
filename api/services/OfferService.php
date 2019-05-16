@@ -2,6 +2,10 @@
 
 namespace foodunit\services;
 
+require_once 'database/Connection.php';
+
+use foodunit\database\Connection;
+
 /**
  * Class OfferService
  * @package foodunit\services
@@ -9,10 +13,16 @@ namespace foodunit\services;
 class OfferService
 {
     /**
+     * @var Connection
+     */
+    private $db;
+
+    /**
      * OfferService constructor.
      */
     public function __construct()
     {
+        $this->db = new Connection();
     }
 
     /**
@@ -20,7 +30,12 @@ class OfferService
      */
     public function getActiveOffers()
     {
-        return [];
+        $res = $this->db->query(/** @lang text */'
+            SELECT  *
+            FROM    offers
+            WHERE   active = 1
+        ');
+        return $res;
     }
 
     /**
