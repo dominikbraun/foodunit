@@ -96,7 +96,7 @@ class RouteHandler
 
         $res = (new OfferService())->addDishToOrder($offerId, $dishId, $user);
 
-        $this->dispatcher->run($res);
+        $this->dispatcher->run([$res]);
     }
 
     /**
@@ -104,7 +104,14 @@ class RouteHandler
      * @param Response $res
      * @param array $args
      */
-    public function del(Request $req, Response $res, array $args)
+    public function delete(Request $req, Response $res, array $args)
     {
+        $offerId = $args['offer'];
+        $dishId = $args['dish'];
+        $user = Context::user();
+
+        $res = (new OfferService())->deleteDishFromOrder($offerId, $dishId, $user);
+
+        $this->dispatcher->run([$res]);
     }
 }

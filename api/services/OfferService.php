@@ -52,4 +52,15 @@ class OfferService
     {
         return true;
     }
+
+    /**
+     * @param int $offerId
+     * @param int $dishId
+     * @param string $userEmail
+     * @return bool
+     */
+    public function deleteDishFromOrder(int $offerId, int $dishId, string $userEmail)
+    {
+        return true;
+    }
 }

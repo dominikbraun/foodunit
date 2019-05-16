@@ -37,13 +37,13 @@ class RouteManager
     private function loadMappings()
     {
         return [
-            '/offers'                       => 'foodunit\core\RouteHandler:offers',
-            '/dishes/{supplier}'            => 'foodunit\core\RouteHandler:dishes',
-            '/orders/{offer}'               => 'foodunit\core\RouteHandler:orders',
-            '/user-order/{offer}'           => 'foodunit\core\RouteHandler:userOrder',
-            '/add/{offer}/{dish}'           => 'foodunit\core\RouteHandler:add',
-            '/del/{offer}/{dish}'           => 'foodunit\core\RouteHandler:del',
-            '/remark/{offer}'               => 'foodunit\core\RouteHandler:remark'
+            '/offers'               => 'foodunit\core\RouteHandler:offers',
+            '/dishes/{supplier}'    => 'foodunit\core\RouteHandler:dishes',
+            '/orders/{offer}'       => 'foodunit\core\RouteHandler:orders',
+            '/user-order/{offer}'   => 'foodunit\core\RouteHandler:userOrder',
+            '/add/{offer}/{dish}'   => 'foodunit\core\RouteHandler:add',
+            '/del/{offer}/{dish}'   => 'foodunit\core\RouteHandler:delete',
+            '/remark/{offer}'       => 'foodunit\core\RouteHandler:remark'
         ];
     }
 }
