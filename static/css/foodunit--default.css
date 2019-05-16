@@ -31,7 +31,7 @@ body {
 }
 
 .shadow {
-  box-shadow: 0 0 1.5rem rgba(0,0,0,.04) !important;
+  box-shadow: 0 0 1.5rem rgba(0,0,0,.03) !important;
 }
 
 .shadow-lg {
