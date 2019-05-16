@@ -163,7 +163,7 @@ input:focus {
 
 .btn-white:focus {
   color: #fff;
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .5) !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .7) !important;
 }
 
 .bg-dark {
