@@ -19,3 +19,4 @@ class Conf
         return self::$conf[$key];
     }
 }
+Conf::init();
