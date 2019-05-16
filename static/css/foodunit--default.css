@@ -182,6 +182,10 @@ input:focus {
   background-position: 50% 15%;
 }
 
+#prev, #next {
+  height: 14rem !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
