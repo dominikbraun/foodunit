@@ -30,7 +30,7 @@ class OfferService
      */
     public function getActiveOffers()
     {
-        $res = $this->db->query(/** @lang text */'
+        $res = $this->db->query(/** @lang sql */'
             SELECT  *
             FROM    offers
             WHERE   active = 1
