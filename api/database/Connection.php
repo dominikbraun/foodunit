@@ -2,6 +2,8 @@
 
 namespace foodunit\database;
 
+require_once 'conf/Conf.php';
+
 use foodunit\conf\Conf;
 
 /**
@@ -25,10 +27,14 @@ class Connection
      */
     public function __construct()
     {
-        $con = Conf::get('db_con_str');
         try {
-            $this->pdo = new \PDO($con, Conf::get('user'), Conf::get('pass'));
+            $this->pdo = new \PDO(
+                Conf::get('db_con_str'),
+                Conf::get('user'),
+                Conf::get('pass')
+            );
         } catch (\PDOException $e) {
+            echo Conf::get('err_db_con');
         }
         $this->okCode = '00000';
     }
