@@ -1,5 +1,5 @@
 # FoodUnit API
-> Das Server-Backend von FoodUnit
+> Das Server-Backend von FoodUnit.
 
 ## Voraussetzungen
 
@@ -18,7 +18,7 @@ Bei Fragen zu Composer steht [Ablont](https://github.com/ablont) zur Verfügung.
 
 ### Datenbank
 
-Die Datenbank lässt sich mit dem Skript `database/setup.sql` einfach einrichten.
+Die MySQL-Datenbank lässt sich mit dem Skript `database/setup.sql` einfach einrichten.
 
 ### Projekt-Konfiguration
 
