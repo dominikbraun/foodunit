@@ -20,4 +20,8 @@ Bei Fragen zu Composer steht [Ablont](https://github.com/ablont) zur Verfügung.
 
 Die Datenbank lässt sich mit dem Skript `database/setup.sql` einfach einrichten.
 
+### Projekt-Konfiguration
+
+Umgebungsspezifische Konfigurationen, z. B. der Datenbank-Nutzername, müssen in `conf/conf.ini.example` eingetragen werden. Anschließend kann die Datei kopiert und in `conf.ini` umbenannt werden.
+
 Fertig!
