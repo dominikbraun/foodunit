@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `dishes` (
   `supplier_id` int(10) unsigned NOT NULL,
   `cat_id` int(10) unsigned NOT NULL,
   `name` text NOT NULL,
-  `desc` text NOT NULL,
+  `description` text NOT NULL,
   `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
