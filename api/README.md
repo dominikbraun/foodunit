@@ -18,6 +18,6 @@ Bei Fragen zu Composer steht [Ablont](https://github.com/ablont) zur Verfügung.
 
 ### Datenbank
 
-Die Datenbank lässt sich mit dem Skript `setup.sql` einfach einrichten.
+Die Datenbank lässt sich mit dem Skript `database/setup.sql` einfach einrichten.
 
 Fertig!
