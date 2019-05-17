@@ -7,7 +7,7 @@ Jeder Mitarbeiter kann beliebige Verbesserungen umsetzen und sie mit einem Pull-
 Das Projekt lokal klonen:
 
 ```
-$ git clone git@github.com:dominikbraun/foodunit.git
+$ git clone https://github.com/dominikbraun/foodunit.git
 ```
 
 Deinen GitHub-Account mit dem Repository verknüpfen (so wirst du als Contributor gelistet):
