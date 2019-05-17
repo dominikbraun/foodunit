@@ -50,10 +50,10 @@ class OfferService
 
     /**
      * @param int $offerId
-     * @param string $userKey
+     * @param string $key
      * @return array
      */
-    public function getUserOrder(\int $offerId, \string $userKey)
+    public function getUserOrder(\int $offerId, \string $key)
     {
         return [];
     }
@@ -61,10 +61,10 @@ class OfferService
     /**
      * @param int $offerId
      * @param int $dishId
-     * @param string $userKey
+     * @param string $key
      * @return bool
      */
-    public function addDishToOrder(\int $offerId, \int $dishId, \string $userKey)
+    public function addDishToOrder(\int $offerId, \int $dishId, \string $key)
     {
         return true;
     }
@@ -72,10 +72,10 @@ class OfferService
     /**
      * @param int $offerId
      * @param int $dishId
-     * @param string $userKey
+     * @param string $key
      * @return bool
      */
-    public function deleteDishFromOrder(\int $offerId, \int $dishId, \string $userKey)
+    public function deleteDishFromOrder(\int $offerId, \int $dishId, \string $key)
     {
         return true;
     }
