@@ -43,7 +43,9 @@ class RouteManager
             '/user-order/{offer}'   => 'foodunit\core\RouteHandler:userOrder',
             '/add/{offer}/{dish}'   => 'foodunit\core\RouteHandler:add',
             '/del/{offer}/{dish}'   => 'foodunit\core\RouteHandler:delete',
-            '/remark/{offer}'       => 'foodunit\core\RouteHandler:remark'
+            '/remark/{offer}'       => 'foodunit\core\RouteHandler:remark',
+            '/sso/{email}'          => 'foodunit\core\RouteHandler:sso',
+            '/confirm/{token}'      => 'foodunit\core\RouteHandler:confirm',
         ];
     }
 }
