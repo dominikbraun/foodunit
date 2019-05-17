@@ -19,23 +19,23 @@ class Context
     private static $email = 'foodunit_email';
 
     /**
-     * @return string|null
+     * @return string|bool
      */
     public static function key()
     {
         if (!isset($_COOKIE[self::$key])) {
-            return null;
+            return false;
         }
         return $_COOKIE[self::$key];
     }
 
     /**
-     * @return string|null
+     * @return string|bool
      */
     public static function email()
     {
         if (!isset($_COOKIE[self::$email])) {
-            return null;
+            return false;
         }
         return $_COOKIE[self::$email];
     }
