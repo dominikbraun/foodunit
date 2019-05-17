@@ -114,4 +114,24 @@ class RouteHandler
 
         $this->dispatcher->run([$res]);
     }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
+    public function sso(Request $req, Response $res, array $args)
+    {
+        $this->dispatcher->run([]);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
+    public function confirm(Request $req, Response $res, array $args)
+    {
+        $this->dispatcher->run([]);
+    }
 }
