@@ -40,13 +40,45 @@ class SupplierService
         $bindings = [
             'supplier_id' => $this->supplierId
         ];
-        $res = $this->db->query(/** @lang sql */'
+        $dishes = $this->db->query(/** @lang sql */'
             SELECT      id, cat_id, name, description, price
             FROM        dishes
             WHERE       supplier_id = :supplier_id
             ORDER BY    id DESC
         ', $bindings);
 
-        return $res;
+        $cats = [];
+
+        foreach ($dishes as $row) {
+            $catId = $row['cat_id'];
+
+            if (!isset($cats[$catId])) {
+                $bindings = [
+                    'id' => $catId
+                ];
+                $cat = $this->db->query(/** @lang sql */'
+                    SELECT      id, name, img
+                    FROM        cats
+                    WHERE       id = :id      
+                ', $bindings);
+                $cat = $cat[0];
+
+                $cats[$catId] = [
+                    'id' => $cat['id'],
+                    'name' => $cat['name'],
+                    'img' => $cat['img'],
+                    'dishes' => []
+                ];
+            }
+            $dish = [
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'desc' => $row['description'],
+                'price' => $row['price']
+            ];
+            $cats[$catId]['dishes'][] = $dish;
+        }
+
+        return $cats;
     }
 }
