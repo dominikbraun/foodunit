@@ -30,11 +30,11 @@ class Connection
         try {
             $this->pdo = new \PDO(
                 Conf::get('db_con_str'),
-                Conf::get('user'),
-                Conf::get('pass')
+                Conf::get('db_user'),
+                Conf::get('db_pass')
             );
         } catch (\PDOException $e) {
-            echo Conf::get('err_db_con');
+            echo $e->getMessage();
         }
         $this->okCode = '00000';
     }

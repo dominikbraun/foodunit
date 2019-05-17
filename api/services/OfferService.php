@@ -31,10 +31,10 @@ class OfferService
     public function getActiveOffers()
     {
         $res = $this->db->query(/** @lang sql */'
-            SELECT      *
-            FROM        offers  
-            ORDER BY    id DESC
-            LIMIT       1
+            SELECT    id, supplier_id
+            FROM      offers
+            ORDER BY  id DESC
+            LIMIT     1
         ');
         return $res;
     }
