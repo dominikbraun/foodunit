@@ -134,4 +134,15 @@ class RouteHandler
     {
         $this->dispatcher->run([]);
     }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
+    public function email(Request $req, Response $res, array $args)
+    {
+        $email = Context::email();
+        $this->dispatcher->run([$email]);
+    }
 }
