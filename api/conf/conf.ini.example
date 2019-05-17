@@ -1,6 +1,13 @@
 ; This file may be used as a template for the actual configuration file.
 ; Fill in appropriate values, copy this file and and rename it to conf.ini.
 
+; The PDO connection string. Given 'foodunit2' as a MySQL database running
+; on the localhost, it would be 'mysql:host=localhost;dbname=foodunit2'.
 db_con_str = ''
+
+; The database user used by FoodUnit. It is recommended to create a dedicated
+; user for each application.
 db_user = ''
+
+; The database user's password.
 db_pass = ''
