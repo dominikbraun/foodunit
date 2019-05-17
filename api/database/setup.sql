@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 CREATE TABLE IF NOT EXISTS `sessions` (
 `id` int(10) unsigned NOT NULL,
   `key` text NOT NULL,
-  `displayname` text NOT NULL,
+  `email` text NOT NULL,
   `valid` tinyint(1) NOT NULL DEFAULT '0',
   `confirmation_token` text NOT NULL,
   `confirmed` tinyint(1) NOT NULL DEFAULT '0'
