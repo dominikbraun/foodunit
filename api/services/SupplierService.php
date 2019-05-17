@@ -2,6 +2,10 @@
 
 namespace foodunit\services;
 
+require_once 'database/Connection.php';
+
+use foodunit\database\Connection;
+
 /**
  * Class SupplierService
  * @package foodunit\services
@@ -14,12 +18,18 @@ class SupplierService
     private $supplierId;
 
     /**
+     * @var Connection
+     */
+    private $db;
+
+    /**
      * SupplierService constructor.
      * @param int $supplierId
      */
     public function __construct(int $supplierId)
     {
         $this->supplierId = $supplierId;
+        $this->db = new Connection();
     }
 
     /**
@@ -27,6 +37,16 @@ class SupplierService
      */
     public function getDishes()
     {
-        return [];
+        $bindings = [
+            'supplier_id' => $this->supplierId
+        ];
+        $res = $this->db->query(/** @lang sql */'
+            SELECT      id, cat_id, name, description, price
+            FROM        dishes
+            WHERE       supplier_id = :supplier_id
+            ORDER BY    id DESC
+        ', $bindings);
+
+        return $res;
     }
 }
