@@ -58,4 +58,13 @@ class Connection
 
         return $stmt->errorCode() === $this->okCode;
     }
+
+    /**
+     * @return bool
+     */
+    public function close()
+    {
+        $this->pdo = null;
+        return true;
+    }
 }
