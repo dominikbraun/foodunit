@@ -78,7 +78,6 @@ class SupplierService
             ];
             $cats[$catId]['dishes'][] = $dish;
         }
-
         return $cats;
     }
 }
