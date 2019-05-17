@@ -26,8 +26,10 @@ class Connection
     public function __construct()
     {
         $con = Conf::get('db_con_str');
-
-        $this->pdo = new \PDO($con, Conf::get('user'), Conf::get('pass'));
+        try {
+            $this->pdo = new \PDO($con, Conf::get('user'), Conf::get('pass'));
+        } catch (\PDOException $e) {
+        }
         $this->okCode = '00000';
     }
 
