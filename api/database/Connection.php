@@ -49,7 +49,7 @@ class Connection
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($bindings);
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
