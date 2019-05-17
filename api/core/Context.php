@@ -11,48 +11,32 @@ class Context
     /**
      * @var string
      */
-    private static $userKey = 'foodunit_key';
+    private static $key = 'foodunit_key';
 
     /**
      * @var string
      */
-    private static $userCookie = 'foodunit_user';
-
-    /**
-     * @var string
-     */
-    private static $sessCookie = 'foodunit_sess';
+    private static $email = 'foodunit_email';
 
     /**
      * @return string|null
      */
-    public static function userKey()
+    public static function key()
     {
-        if (!isset($_COOKIE[self::$userKey])) {
+        if (!isset($_COOKIE[self::$key])) {
             return null;
         }
-        return $_COOKIE[self::$userKey];
+        return $_COOKIE[self::$key];
     }
 
     /**
      * @return string|null
      */
-    public static function user()
+    public static function email()
     {
-        if (!isset($_COOKIE[self::$userCookie])) {
+        if (!isset($_COOKIE[self::$email])) {
             return null;
         }
-        return $_COOKIE[self::$userCookie];
-    }
-
-    /**
-     * @return string|null
-     */
-    public static function sess()
-    {
-        if (!isset($_COOKIE[self::$sessCookie])) {
-            return null;
-        }
-        return $_COOKIE[self::$sessCookie];
+        return $_COOKIE[self::$email];
     }
 }

@@ -76,7 +76,7 @@ class RouteHandler
     public function userOrder(Request $req, Response $res, array $args)
     {
         $offerId = $args['offer'];
-        $userKey = Context::userKey();
+        $userKey = Context::key();
 
         $userOrder = (new OfferService())->getUserOrder($offerId, $userKey);
 
@@ -92,7 +92,7 @@ class RouteHandler
     {
         $offerId = $args['offer'];
         $dishId = $args['dish'];
-        $userKey = Context::userKey();
+        $userKey = Context::key();
 
         $res = (new OfferService())->addDishToOrder($offerId, $dishId, $userKey);
 
@@ -108,7 +108,7 @@ class RouteHandler
     {
         $offerId = $args['offer'];
         $dishId = $args['dish'];
-        $userKey = Context::userKey();
+        $userKey = Context::key();
 
         $res = (new OfferService())->deleteDishFromOrder($offerId, $dishId, $userKey);
 
