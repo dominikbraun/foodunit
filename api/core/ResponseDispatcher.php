@@ -17,8 +17,9 @@ class ResponseDispatcher
 
     /**
      * @param array $response
+     * @param int $status
      */
-    public function run(array $response)
+    public function run(array $response, $status = 200)
     {
         echo json_encode($response);
     }
