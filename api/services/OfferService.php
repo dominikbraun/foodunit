@@ -45,7 +45,37 @@ class OfferService
      */
     public function getAllOrders(int $offerId)
     {
-        return [];
+        $bindings = [
+            'offer_id' => $offerId
+        ];
+        $positions = $this->db->query(/** @lang sql */'
+            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name
+            FROM        orders o
+            INNER JOIN  sessions s
+            ON          o.session_id = s.key
+            INNER JOIN  dishes d
+            ON          o.dish_id = d.id
+            WHERE       offer_id = :offer_id
+        ', $bindings);
+
+        $orders = [];
+
+        foreach ($positions as $row) {
+            $email = $row['email'];
+
+            if (!isset($orders[$email])) {
+                $orders[$email] = [
+                    'email' => $email,
+                    'positions' => []
+                ];
+            }
+            $position = [
+                'dish_id' => $row['dish_id'],
+                'name' => $row['name']
+            ];
+            $orders[$email]['positions'][] = $position;
+        }
+        return $orders;
     }
 
     /**
