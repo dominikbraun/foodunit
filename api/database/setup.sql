@@ -1,15 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.12deb2+deb8u1
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Datenbank: `foodunit2`
@@ -21,8 +23,8 @@ SET time_zone = "+00:00";
 -- Tabellenstruktur für Tabelle `cats`
 --
 
-CREATE TABLE IF NOT EXISTS `cats` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `cats` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` text NOT NULL,
   `img` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -33,10 +35,10 @@ CREATE TABLE IF NOT EXISTS `cats` (
 -- Tabellenstruktur für Tabelle `dishes`
 --
 
-CREATE TABLE IF NOT EXISTS `dishes` (
-`id` int(10) unsigned NOT NULL,
-  `supplier_id` int(10) unsigned NOT NULL,
-  `cat_id` int(10) unsigned NOT NULL,
+CREATE TABLE `dishes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `supplier_id` int(10) UNSIGNED NOT NULL,
+  `cat_id` int(10) UNSIGNED NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
   `price` double NOT NULL
@@ -48,9 +50,9 @@ CREATE TABLE IF NOT EXISTS `dishes` (
 -- Tabellenstruktur für Tabelle `offers`
 --
 
-CREATE TABLE IF NOT EXISTS `offers` (
-`id` int(10) unsigned NOT NULL,
-  `supplier_id` int(10) unsigned NOT NULL,
+CREATE TABLE `offers` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `supplier_id` int(10) UNSIGNED NOT NULL,
   `start` datetime DEFAULT NULL,
   `end` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -61,11 +63,24 @@ CREATE TABLE IF NOT EXISTS `offers` (
 -- Tabellenstruktur für Tabelle `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
-`id` int(10) unsigned NOT NULL,
-  `offer_id` int(10) unsigned NOT NULL,
-  `dish_id` int(10) unsigned NOT NULL,
-  `session_id` int(10) unsigned NOT NULL
+CREATE TABLE `orders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `offer_id` int(10) UNSIGNED NOT NULL,
+  `dish_id` int(10) UNSIGNED NOT NULL,
+  `session_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `remarks`
+--
+
+CREATE TABLE `remarks` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `offer_id` int(10) UNSIGNED NOT NULL,
+  `session_id` int(10) UNSIGNED NOT NULL,
+  `remark` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -74,8 +89,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Tabellenstruktur für Tabelle `sessions`
 --
 
-CREATE TABLE IF NOT EXISTS `sessions` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `sessions` (
+  `id` int(10) UNSIGNED NOT NULL,
   `key` text NOT NULL,
   `email` text NOT NULL,
   `valid` tinyint(1) NOT NULL DEFAULT '0',
@@ -89,8 +104,8 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- Tabellenstruktur für Tabelle `suppliers`
 --
 
-CREATE TABLE IF NOT EXISTS `suppliers` (
-`id` int(10) unsigned NOT NULL,
+CREATE TABLE `suppliers` (
+  `id` int(10) UNSIGNED NOT NULL,
   `name` text NOT NULL,
   `address` text NOT NULL,
   `phone` text NOT NULL,
@@ -109,37 +124,43 @@ CREATE TABLE IF NOT EXISTS `suppliers` (
 -- Indizes für die Tabelle `cats`
 --
 ALTER TABLE `cats`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `dishes`
 --
 ALTER TABLE `dishes`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `offers`
 --
 ALTER TABLE `offers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `orders`
 --
 ALTER TABLE `orders`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `remarks`
+--
+ALTER TABLE `remarks`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `sessions`
 --
 ALTER TABLE `sessions`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `suppliers`
 --
 ALTER TABLE `suppliers`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -149,32 +170,45 @@ ALTER TABLE `suppliers`
 -- AUTO_INCREMENT für Tabelle `cats`
 --
 ALTER TABLE `cats`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT für Tabelle `dishes`
 --
 ALTER TABLE `dishes`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT für Tabelle `offers`
 --
 ALTER TABLE `offers`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT für Tabelle `orders`
 --
 ALTER TABLE `orders`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `remarks`
+--
+ALTER TABLE `remarks`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT für Tabelle `sessions`
 --
 ALTER TABLE `sessions`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT für Tabelle `suppliers`
 --
 ALTER TABLE `suppliers`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
