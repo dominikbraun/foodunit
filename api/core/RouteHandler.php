@@ -115,6 +115,11 @@ class RouteHandler
         $this->dispatcher->run([$res]);
     }
 
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
     public function getRemark(Request $req, Response $res, array $args)
     {
         $offerId = $args['offer'];
