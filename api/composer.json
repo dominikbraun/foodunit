@@ -1,6 +1,7 @@
 {
   "require": {
     "slim/slim": "^3.12",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "sendgrid/sendgrid": "^7.3"
   }
 }

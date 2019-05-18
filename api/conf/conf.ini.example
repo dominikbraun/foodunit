@@ -11,3 +11,6 @@ db_user = ''
 
 ; The database user's password.
 db_pass = ''
+
+; The API key for SendGrid which can be obtained after creating a SG account.
+sg_api_key = ''
