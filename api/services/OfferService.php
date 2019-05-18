@@ -109,7 +109,18 @@ class OfferService
      */
     public function addDishToOrder(int $offerId, int $dishId, string $key)
     {
-        return true;
+        $bindings = [
+            'offer_id' => $offerId,
+            'dish_id' => $dishId,
+            'session_id' => $key
+        ];
+        $success = $this->db->exec(/** @lang sql */'
+            INSERT INTO orders
+                        (offer_id, dish_id, session_id)
+            VALUES      (:offer_id, :dish_id, :session_id)
+        ', $bindings);
+
+        return $success;
     }
 
     /**
