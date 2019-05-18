@@ -16,10 +16,10 @@ class ResponseDispatcher
     }
 
     /**
-     * @param array $response
+     * @param mixed $response
      * @param int $status
      */
-    public function run(array $response, $status = 200)
+    public function run($response, $status = 200)
     {
         echo json_encode($response);
     }
