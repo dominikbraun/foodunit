@@ -52,7 +52,7 @@ class OfferService
             SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name
             FROM        orders o
             INNER JOIN  sessions s
-            ON          o.session_id = s.key
+            ON          o.session_id = s.id
             INNER JOIN  dishes d
             ON          o.dish_id = d.id
             WHERE       offer_id = :offer_id
@@ -87,15 +87,20 @@ class OfferService
     {
         $bindings = [
             'offer_id' => $offerId,
-            'session_id' => $key
+            'key' => $key
         ];
         $res = $this->db->query(/** @lang sql */'
             SELECT      o.dish_id, d.name
             FROM        orders o
             INNER JOIN  dishes d
             ON          o.dish_id = d.id
-            WHERE       o.id = :offer_id
-            AND         o.session_id = :session_id
+            WHERE       o.offer_id = :offer_id
+            AND         o.session_id = (
+                SELECT  s.id
+                FROM    sessions s
+                WHERE   s.key = :key
+                LIMIT   1
+            )
         ', $bindings);
 
         return $res;
@@ -112,12 +117,14 @@ class OfferService
         $bindings = [
             'offer_id' => $offerId,
             'dish_id' => $dishId,
-            'session_id' => $key
+            'key' => $key
         ];
         $success = $this->db->exec(/** @lang sql */'
-            INSERT INTO orders
-                        (offer_id, dish_id, session_id)
-            VALUES      (:offer_id, :dish_id, :session_id)
+            INSERT INTO orders (offer_id, dish_id, session_id)
+            SELECT      :offer_id, :dish_id, id
+            FROM        sessions s
+            WHERE       s.key = :key
+            LIMIT       1
         ', $bindings);
 
         return $success;
@@ -134,13 +141,18 @@ class OfferService
         $bindings = [
             'offer_id' => $offerId,
             'dish_id' => $dishId,
-            'session_id' => $key
+            'key' => $key
         ];
         $success = $this->db->exec(/** @lang sql */'
             DELETE FROM orders
             WHERE       offer_id = :offer_id
             AND         dish_id = :dish_id
-            AND         session_id = :session_id
+            AND         session_id = (
+                SELECT  s.id
+                FROM    sessions s
+                WHERE   s.key = :key
+                LIMIT   1
+            )
         ', $bindings);
 
         return $success;
