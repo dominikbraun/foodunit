@@ -11,6 +11,3 @@ db_user = ''
 
 ; The database user's password.
 db_pass = ''
-
-; Error messages.
-err_db_con = 'The database connection could not be established.'
