@@ -86,6 +86,7 @@ class OfferService
     public function getUserOrder(int $offerId, string $key)
     {
         $bindings = [
+            'offer_id' => $offerId,
             'session_id' => $key
         ];
         $res = $this->db->query(/** @lang sql */'
@@ -93,7 +94,8 @@ class OfferService
             FROM        orders o
             INNER JOIN  dishes d
             ON          o.dish_id = d.id
-            WHERE       o.session_id = :session_id
+            WHERE       o.id = :offer_id
+            AND         o.session_id = :session_id
         ', $bindings);
 
         return $res;
