@@ -85,7 +85,18 @@ class OfferService
      */
     public function getUserOrder(int $offerId, string $key)
     {
-        return [];
+        $bindings = [
+            'session_id' => $key
+        ];
+        $res = $this->db->query(/** @lang sql */'
+            SELECT      o.dish_id, d.name
+            FROM        orders o
+            INNER JOIN  dishes d
+            ON          o.dish_id = d.id
+            WHERE       o.session_id = :session_id
+        ', $bindings);
+
+        return $res;
     }
 
     /**
