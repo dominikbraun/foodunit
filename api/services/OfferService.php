@@ -131,6 +131,18 @@ class OfferService
      */
     public function deleteDishFromOrder(int $offerId, int $dishId, string $key)
     {
-        return true;
+        $bindings = [
+            'offer_id' => $offerId,
+            'dish_id' => $dishId,
+            'session_id' => $key
+        ];
+        $success = $this->db->exec(/** @lang sql */'
+            DELETE FROM orders
+            WHERE       offer_id = :offer_id
+            AND         dish_id = :dish_id
+            AND         session_id = :session_id
+        ', $bindings);
+
+        return $success;
     }
 }
