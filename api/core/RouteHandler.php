@@ -115,6 +115,32 @@ class RouteHandler
         $this->dispatcher->run([$res]);
     }
 
+    public function getRemark(Request $req, Response $res, array $args)
+    {
+        $offerId = $args['offer'];
+        $key = Context::key();
+
+        $remark = (new OfferService())->getRemark($offerId, $key);
+
+        $this->dispatcher->run($remark);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
+    public function insertRemark(Request $req, Response $res, array $args)
+    {
+        $offerId = $args['offer'];
+        $remark = $args['remark'];
+        $key = Context::key();
+
+        $res = (new OfferService())->insertRemark($offerId, $remark, $key);
+
+        $this->dispatcher->run([$res]);
+    }
+
     /**
      * @param Request $req
      * @param Response $res

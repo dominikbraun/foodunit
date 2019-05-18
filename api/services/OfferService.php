@@ -157,4 +157,58 @@ class OfferService
 
         return $success;
     }
+
+    /**
+     * @param int $offerId
+     * @param string $key
+     * @return string
+     */
+    public function getRemark(int $offerId, string $key)
+    {
+        $bindings = [
+            'offer_id' => $offerId,
+            'key' => $key
+        ];
+        $remark = $this->db->query(/** @lang sql */'
+            SELECT      r.remark
+            FROM        remarks r
+            WHERE       r.offer_id = :offer_id
+            AND         r.session_id = (
+                SELECT  s.id
+                FROM    sessions s
+                WHERE   s.key = :key
+                LIMIT   1
+            )
+            ORDER BY    r.id DESC
+            LIMIT       1
+        ', $bindings);
+
+        $remark = $remark[0]['remark'];
+
+        return $remark;
+    }
+
+    /**
+     * @param int $offerId
+     * @param string $remark
+     * @param string $key
+     * @return bool
+     */
+    public function insertRemark(int $offerId, string $remark, string $key)
+    {
+        $bindings = [
+            'offer_id' => $offerId,
+            'remark' => $remark,
+            'key' => $key
+        ];
+        $success = $this->db->exec(/** @lang sql */'
+            INSERT INTO remarks (offer_id, session_id, remark)
+            SELECT      :offer_id, id, :remark
+            FROM        sessions s
+            WHERE       s.key = :key
+            LIMIT       1
+        ', $bindings);
+
+        return $success;
+    }
 }
