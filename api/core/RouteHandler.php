@@ -156,7 +156,7 @@ class RouteHandler
     public function sso(Request $req, Response $res, array $args)
     {
         $email = $args['email'];
-        $res = (new Manager())->newSession($email);
+        $res = (new Manager())->startSession($email);
 
         $this->dispatcher->run($res);
     }

@@ -31,7 +31,7 @@ class Manager
      * @param string $email
      * @return bool
      */
-    public function newSession(string $email)
+    public function startSession(string $email)
     {
         $from = Conf::get('mail_from');
         $subject = Conf::get('mail_subject');
@@ -39,7 +39,7 @@ class Manager
         $token = self::generateUniqueString();
 
         self::createSession($email, $token);
-        $url = self::confirmationUrl($token);
+        $url = self::getConfirmationUrl($token);
 
         $success = (new Mail($from, $email))
             ->setSubject($subject)
@@ -53,7 +53,7 @@ class Manager
      * @param string $token
      * @return string
      */
-    private function confirmationUrl(string $token)
+    private function getConfirmationUrl(string $token)
     {
         $api = Conf::get('api_url');
         $url = $api . '/confirm/' . $token;
