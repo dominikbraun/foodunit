@@ -20,3 +20,6 @@ mail_from = ''
 
 ; The subject of the confirmation mail.
 mail_subject = ''
+
+; The public API URL (must end with /api)
+api_url = ''

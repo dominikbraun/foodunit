@@ -5,6 +5,7 @@ namespace foodunit\session;
 require_once 'util/Mail.php';
 
 use foodunit\conf\Conf;
+use foodunit\database\Connection;
 use foodunit\util\Mail;
 
 /**
@@ -14,10 +15,16 @@ use foodunit\util\Mail;
 class Manager
 {
     /**
+     * @var Connection
+     */
+    private $db;
+
+    /**
      * Manager constructor.
      */
     public function __construct()
     {
+        $this->db = new Connection();
     }
 
     /**
@@ -29,7 +36,10 @@ class Manager
         $from = Conf::get('mail_from');
         $subject = Conf::get('mail_subject');
 
-        $url = self::confirmationUrl($email);
+        $token = self::confirmationToken();
+
+        self::createSession($email, $token);
+        $url = self::confirmationUrl($token);
 
         $success = (new Mail($from, $email))
             ->setSubject($subject)
@@ -40,11 +50,47 @@ class Manager
     }
 
     /**
-     * @param string $email
+     * @param string $token
      * @return string
      */
-    private function confirmationUrl(string $email)
+    private function confirmationUrl(string $token)
     {
-        return '...';
+        $api = Conf::get('api_url');
+        $url = $api . '/confirm/' . $token;
+
+        return $url;
+    }
+
+    /**
+     * @return bool|string
+     */
+    private function confirmationToken()
+    {
+        try {
+            $token = bin2hex(random_bytes(16));
+            return $token;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param string $email
+     * @param string $token
+     * @return bool
+     */
+    private function createSession(string $email, string $token)
+    {
+        $bindings = [
+            'email' => $email,
+            'confirmation_token' => $token
+        ];
+        $success = $this->db->exec(/** @lang sql */'
+            INSERT INTO sessions
+                        (_key, email, valid, confirmation_token, confirmed)
+            VALUES      (\'\', :email, 0, :confirmation_token, 0)
+        ', $bindings);
+
+        return $success;
     }
 }
