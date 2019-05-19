@@ -168,7 +168,10 @@ class RouteHandler
      */
     public function confirmSession(Request $req, Response $res, array $args)
     {
-        $this->dispatcher->run([]);
+        $token = $args['token'];
+        $res = (new Manager())->confirmSession($token);
+
+        $this->dispatcher->run($res);
     }
 
     /**

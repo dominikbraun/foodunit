@@ -36,7 +36,7 @@ class Manager
         $from = Conf::get('mail_from');
         $subject = Conf::get('mail_subject');
 
-        $token = self::confirmationToken();
+        $token = self::generateUniqueString();
 
         self::createSession($email, $token);
         $url = self::confirmationUrl($token);
@@ -62,19 +62,6 @@ class Manager
     }
 
     /**
-     * @return bool|string
-     */
-    private function confirmationToken()
-    {
-        try {
-            $token = bin2hex(random_bytes(16));
-            return $token;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-
-    /**
      * @param string $email
      * @param string $token
      * @return bool
@@ -92,5 +79,41 @@ class Manager
         ', $bindings);
 
         return $success;
+    }
+
+    /**
+     * @param string $token
+     * @return bool
+     */
+    public function confirmSession(string $token)
+    {
+        $key = self::generateUniqueString();
+
+        $bindings = [
+            'key' => $key,
+            'confirmation_token' => $token
+        ];
+        $success = $this->db->exec(/** @lang sql */'
+            UPDATE  sessions
+            SET     _key = :key,
+                    valid = 1,
+                    confirmed = 1
+            WHERE   confirmation_token = :confirmation_token
+        ', $bindings);
+
+        return $success;
+    }
+
+    /**
+     * @return bool|string
+     */
+    private function generateUniqueString()
+    {
+        try {
+            $token = bin2hex(random_bytes(16));
+            return $token;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
