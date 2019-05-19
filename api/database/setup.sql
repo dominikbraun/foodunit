@@ -91,7 +91,7 @@ CREATE TABLE `remarks` (
 
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
-  `key` text NOT NULL,
+  `_key` text NOT NULL,
   `email` text NOT NULL,
   `valid` tinyint(1) NOT NULL DEFAULT '0',
   `confirmation_token` text NOT NULL,

@@ -98,7 +98,7 @@ class OfferService
             AND         o.session_id = (
                 SELECT  s.id
                 FROM    sessions s
-                WHERE   s.key = :key
+                WHERE   s._key = :key
                 LIMIT   1
             )
         ', $bindings);
@@ -123,7 +123,7 @@ class OfferService
             INSERT INTO orders (offer_id, dish_id, session_id)
             SELECT      :offer_id, :dish_id, id
             FROM        sessions s
-            WHERE       s.key = :key
+            WHERE       s._key = :key
             LIMIT       1
         ', $bindings);
 
@@ -150,7 +150,7 @@ class OfferService
             AND         session_id = (
                 SELECT  s.id
                 FROM    sessions s
-                WHERE   s.key = :key
+                WHERE   s._key = :key
                 LIMIT   1
             )
         ', $bindings);
@@ -176,7 +176,7 @@ class OfferService
             AND         r.session_id = (
                 SELECT  s.id
                 FROM    sessions s
-                WHERE   s.key = :key
+                WHERE   s._key = :key
                 LIMIT   1
             )
             ORDER BY    r.id DESC
@@ -205,7 +205,7 @@ class OfferService
             INSERT INTO remarks (offer_id, session_id, remark)
             SELECT      :offer_id, id, :remark
             FROM        sessions s
-            WHERE       s.key = :key
+            WHERE       s._key = :key
             LIMIT       1
         ', $bindings);
 
