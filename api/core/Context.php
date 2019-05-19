@@ -14,11 +14,6 @@ class Context
     private static $key = 'foodunit_key';
 
     /**
-     * @var string
-     */
-    private static $email = 'foodunit_email';
-
-    /**
      * @return string|bool
      */
     public static function key()
@@ -30,13 +25,10 @@ class Context
     }
 
     /**
-     * @return string|bool
+     * @param string $key
      */
-    public static function email()
+    public static function set(string $key)
     {
-        if (!isset($_COOKIE[self::$email])) {
-            return false;
-        }
-        return $_COOKIE[self::$email];
+        setcookie(self::$key, $key);
     }
 }

@@ -5,6 +5,7 @@ namespace foodunit\session;
 require_once 'util/Mail.php';
 
 use foodunit\conf\Conf;
+use foodunit\core\Context;
 use foodunit\database\Connection;
 use foodunit\util\Mail;
 
@@ -101,6 +102,9 @@ class Manager
             WHERE   confirmation_token = :confirmation_token
         ', $bindings);
 
+        if ($success) {
+            Context::set($key);
+        }
         return $success;
     }
 

@@ -181,7 +181,7 @@ class RouteHandler
      */
     public function email(Request $req, Response $res, array $args)
     {
-        $email = Context::email();
+        $email = '';
         $this->dispatcher->run($email);
     }
 }
