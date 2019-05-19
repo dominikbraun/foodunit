@@ -29,6 +29,6 @@ class Context
      */
     public static function set(string $key)
     {
-        setcookie(self::$key, $key);
+        setcookie(self::$key, $key, 0, '/');
     }
 }
