@@ -1,0 +1,17 @@
+language: go
+
+go:
+- 1.8.x
+
+os:
+- windows
+
+env:
+#- CODECOV_TOKEN="4a2560b8-8579-4f94-8eda-99609f7b1f35"
+- GO111MODULE=off
+
+before_install:
+- go get -t -v ./...
+
+script:
+after_success:
