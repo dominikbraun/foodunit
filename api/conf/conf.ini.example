@@ -14,3 +14,9 @@ db_pass = ''
 
 ; The API key for SendGrid which can be obtained after creating a SG account.
 sg_api_key = ''
+
+; The sender of the confirmation mail.
+mail_from = ''
+
+; The subject of the confirmation mail.
+mail_subject = ''

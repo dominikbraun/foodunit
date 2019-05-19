@@ -6,9 +6,11 @@ require_once 'ResponseDispatcher.php';
 require_once 'Context.php';
 require_once 'services/OfferService.php';
 require_once 'services/SupplierService.php';
+require_once 'session/Manager.php';
 
 use foodunit\services\OfferService;
 use foodunit\services\SupplierService;
+use foodunit\session\Manager;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -96,7 +98,7 @@ class RouteHandler
 
         $res = (new OfferService())->addDishToOrder($offerId, $dishId, $key);
 
-        $this->dispatcher->run([$res]);
+        $this->dispatcher->run($res);
     }
 
     /**
@@ -112,7 +114,7 @@ class RouteHandler
 
         $res = (new OfferService())->deleteDishFromOrder($offerId, $dishId, $key);
 
-        $this->dispatcher->run([$res]);
+        $this->dispatcher->run($res);
     }
 
     /**
@@ -143,7 +145,7 @@ class RouteHandler
 
         $res = (new OfferService())->insertRemark($offerId, $remark, $key);
 
-        $this->dispatcher->run([$res]);
+        $this->dispatcher->run($res);
     }
 
     /**
@@ -153,7 +155,10 @@ class RouteHandler
      */
     public function sso(Request $req, Response $res, array $args)
     {
-        $this->dispatcher->run([]);
+        $email = $args['email'];
+        $res = (new Manager())->newSession($email);
+
+        $this->dispatcher->run($res);
     }
 
     /**
@@ -161,7 +166,7 @@ class RouteHandler
      * @param Response $res
      * @param array $args
      */
-    public function confirm(Request $req, Response $res, array $args)
+    public function confirmSession(Request $req, Response $res, array $args)
     {
         $this->dispatcher->run([]);
     }
@@ -174,6 +179,6 @@ class RouteHandler
     public function email(Request $req, Response $res, array $args)
     {
         $email = Context::email();
-        $this->dispatcher->run([$email]);
+        $this->dispatcher->run($email);
     }
 }

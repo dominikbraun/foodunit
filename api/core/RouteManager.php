@@ -46,7 +46,7 @@ class RouteManager
             '/remark/{offer}'           => 'foodunit\core\RouteHandler:getRemark',
             '/remark/{offer}/{remark}'  => 'foodunit\core\RouteHandler:insertRemark',
             '/sso/{email}'              => 'foodunit\core\RouteHandler:sso',
-            '/confirm/{token}'          => 'foodunit\core\RouteHandler:confirm',
+            '/confirm/{token}'          => 'foodunit\core\RouteHandler:confirmSession',
             '/email'                    => 'foodunit\core\RouteHandler:email',
         ];
     }
