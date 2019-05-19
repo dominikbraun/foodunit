@@ -49,7 +49,7 @@ class OfferService
             'offer_id' => $offerId
         ];
         $positions = $this->db->query(/** @lang sql */'
-            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name
+            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name, d.price
             FROM        orders o
             INNER JOIN  sessions s
             ON          o.session_id = s.id
@@ -66,7 +66,8 @@ class OfferService
             if (!isset($orders[$email])) {
                 $orders[$email] = [
                     'email' => $email,
-                    'positions' => []
+                    'positions' => [],
+                    'total' => 0,
                 ];
             }
             $position = [
@@ -74,6 +75,7 @@ class OfferService
                 'name' => $row['name']
             ];
             $orders[$email]['positions'][] = $position;
+            $orders[$email]['total'] += $row['price'];
         }
         return $orders;
     }
