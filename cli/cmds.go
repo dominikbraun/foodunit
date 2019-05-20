@@ -8,14 +8,14 @@ var root = &cobra.Command{
 	Run:   Handler("root"),
 }
 
-var suppliers = &cobra.Command{
-	Use:   "suppliers",
-	Short: "List all suppliers",
-	Run:   Handler("suppliers"),
+var offers = &cobra.Command{
+	Use:   "offers",
+	Short: "List all offers",
+	Run:   Handler("offers"),
 }
 
 func init() {
-	root.AddCommand(suppliers)
+	root.AddCommand(offers)
 }
 
 func Exec() error {
