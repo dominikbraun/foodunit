@@ -3,202 +3,215 @@ html {
 }
 
 body {
-  cursor: default;
+    cursor: default;
 }
 
 .bg-beige {
-  /*background-color: #FCF9F2;*/
+    /*background-color: #FCF9F2;*/
     background-color: #fffbf4;
 }
 
 .text-beige {
-  background-color: #FCF9F2;
+    background-color: #FCF9F2;
 }
 
 .border-top {
-  border-top: 2px solid #F2F3F4 !important;
+    border-top: 2px solid #F2F3F4 !important;
 }
 
 .border-bottom {
-  border-bottom: 2px solid #F2F3F4 !important;
+    border-bottom: 2px solid #F2F3F4 !important;
 }
 
 .border-left {
-  border-left: 2px solid #F2F3F4 !important;
+    border-left: 2px solid #F2F3F4 !important;
 }
 
 .shadow-sm {
-  box-shadow: .072rem .09rem .4rem rgba(0,0,0,.045) !important;
+    box-shadow: .072rem .09rem .4rem rgba(0, 0, 0, .045) !important;
 }
 
 .shadow {
-  box-shadow: 0 0 1.5rem rgba(0,0,0,.03) !important;
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, .03) !important;
 }
 
 .shadow-lg {
-  box-shadow: 0 .15rem 1.5rem rgba(0,0,0,.18)!important;
+    box-shadow: 0 .15rem 1.5rem rgba(0, 0, 0, .18) !important;
 }
 
 .text-danger {
-  color: #EF0000 !important;
+    color: #EF0000 !important;
 }
 
 .bg-danger {
-  background-color: #EF0000 !important;
+    background-color: #EF0000 !important;
 }
 
 .text-ci {
-  font-family: 'Kaushan Script';
+    font-family: 'Kaushan Script';
 }
 
 .text-display {
-  font-family: 'Staatliches';
+    font-family: 'Staatliches';
 }
 
 .logo-square {
-  width: 7.75rem;
-  height: 7.75rem;
-  line-height: 2.85rem;
+    width: 7.75rem;
+    height: 7.75rem;
+    line-height: 2.85rem;
 }
 
 .fa, .fas {
-  font-size: .85rem;
+    font-size: .85rem;
 }
 
 .text-xs {
-  font-size: .79rem;
-  letter-spacing: .23px;
+    font-size: .79rem;
+    letter-spacing: .23px;
 }
 
 .text-xs .fa, .text-xs .fas {
-  font-size: .6rem;
+    font-size: .6rem;
 }
 
 .text-sm {
-  font-size: .95rem;
+    font-size: .95rem;
 }
 
 .text-sm .fa, .text-sm .fas {
-  font-size: .76rem;
+    font-size: .76rem;
 }
 
 .text-md {
-  font-size: 1.1rem;
-  letter-spacing: .5px;
+    font-size: 1.1rem;
+    letter-spacing: .5px;
 }
 
 .text-lg {
-  font-size: 2.75rem;
+    font-size: 2.75rem;
 }
 
 .text-xl {
-  font-size: 2.75rem;
+    font-size: 2.75rem;
 }
 
 @media (min-width: 1200px) {
-  .text-xl {
-    font-size: 4rem !important;
-  }
+    .text-xl {
+        font-size: 4rem !important;
+    }
 }
 
 @media (min-width: 992px) {
-  .position-lg-fixed {
-    position: fixed;
-  }
+    .position-lg-fixed {
+        position: fixed;
+    }
 
-  .fix-lg-right {
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
+    .fix-lg-right {
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 .text-hand {
-  font-family: 'Fredericka the Great';
+    font-family: 'Fredericka the Great';
 }
 
 .text-strong {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .text-very-strong {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 .bg-light {
-  background-color: #F8F9FA !important;
+    background-color: #F8F9FA !important;
 }
 
 .btn-white {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .btn-white:hover, .btn-white:active {
-  color: #fff;
-  background-color: #343A40;
+    color: #fff;
+    background-color: #343A40;
 }
 
 li:nth-of-type(odd) {
-  background-color: #F8F9FA;
+    background-color: #F8F9FA;
 }
 
 .remove-item:hover, .remove-item:active {
-  color: #fff;
-  background-color: #EF0000;
-  text-decoration: none;
-  cursor: pointer;
+    color: #fff;
+    background-color: #EF0000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.add-item {
+    transition: padding .12s;
+}
+
+.add-item:hover, .add-item:active {
+    padding-left: 3.12rem !important;
+    cursor: pointer;
+}
+
+.add-item:hover .price, .add-item:active .price {
+    text-decoration: underline;
 }
 
 input:focus {
-  outline: none;
+    outline: none;
 }
 
 .bg-dark-tr {
-  background-color: rgba(40, 44, 48, .5) !important;
+    background-color: rgba(40, 44, 48, .5) !important;
 }
 
 .outline-0, .outline-0:focus {
-  outline: 0 !important;
-  box-shadow: none !important;
+    outline: 0 !important;
+    box-shadow: none !important;
 }
 
 .btn-white:hover, .btn-white:focus {
-  background-color: #EF0000 !important;
+    background-color: #EF0000 !important;
 }
 
 .btn-white:focus {
-  color: #fff;
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .7) !important;
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .7) !important;
 }
 
 .bg-dark {
-  background-color: #282C30 !important;
+    background-color: #282C30 !important;
 }
 
 #dishes {
-  transition: height 10.66s;
+    transition: height 10.66s;
 }
 
 #bg-container {
-  background-position: 50% 15%;
+    background-position: 50% 15%;
 }
 
 #prev, #next {
-  height: 14rem !important;
+    height: 14rem !important;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff;
+    background: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CFCFD1;
+    background: #CFCFD1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1D1D26;
+    background: #1D1D26;
 }
