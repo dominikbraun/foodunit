@@ -39,6 +39,9 @@ class Manager
 
         $token = self::generateUniqueString();
 
+        if ($token === false) {
+            return false;
+        }
         self::createSession($email, $token);
         $url = self::getConfirmationUrl($token);
 
