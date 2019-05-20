@@ -93,6 +93,9 @@ class Manager
     {
         $key = self::generateUniqueString();
 
+        if ($key === false) {
+            return false;
+        }
         $bindings = [
             'key' => $key,
             'confirmation_token' => $token
