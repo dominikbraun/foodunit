@@ -5,12 +5,13 @@ import "github.com/spf13/cobra"
 var root = &cobra.Command{
 	Use:   "foodunit",
 	Short: "FoodUnit CLI",
-	Run:   Action("root"),
+	Run:   Handler("root"),
 }
 
 var suppliers = &cobra.Command{
 	Use:   "suppliers",
 	Short: "List all suppliers",
+	Run:   Handler("suppliers"),
 }
 
 func init() {
