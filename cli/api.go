@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+var StdApi *Api
+
 type Api struct {
 	url    string
 	client *http.Client
@@ -27,4 +29,11 @@ func (a *Api) req(endpoint string) (*http.Response, error) {
 
 func (a *Api) reqBody(res *http.Response) io.ReadCloser {
 	return res.Body
+}
+
+func init() {
+	StdApi = &Api{
+		url:    ApiUrl,
+		client: &http.Client{},
+	}
 }
