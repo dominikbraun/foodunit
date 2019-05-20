@@ -39,6 +39,9 @@ class Manager
 
         $token = self::generateUniqueString();
 
+        if ($token === false) {
+            return false;
+        }
         self::createSession($email, $token);
         $url = self::getConfirmationUrl($token);
 
@@ -90,6 +93,9 @@ class Manager
     {
         $key = self::generateUniqueString();
 
+        if ($key === false) {
+            return false;
+        }
         $bindings = [
             'key' => $key,
             'confirmation_token' => $token
