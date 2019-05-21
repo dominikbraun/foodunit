@@ -62,20 +62,28 @@ class OfferService
 
         foreach ($positions as $row) {
             $email = $row['email'];
-
-            if (!isset($orders[$email])) {
-                $orders[$email] = [
-                    'email' => $email,
-                    'positions' => [],
-                    'total' => 0,
-                ];
-            }
             $position = [
                 'dish_id' => $row['dish_id'],
                 'name' => $row['name']
             ];
-            $orders[$email]['positions'][] = $position;
-            $orders[$email]['total'] += $row['price'];
+            $found = false;
+
+            foreach ($orders as &$o) {
+                if ($o['email'] === $email) {
+                    $o['positions'][] = $position;
+                    $o['total'] += $row['price'];
+                    $found = true;
+                }
+            }
+            if (!$found) {
+                $orders[] = [
+                    'email' => $email,
+                    'positions' => [
+                        $position
+                    ],
+                    'total' => $row['price'],
+                ];
+            }
         }
         return $orders;
     }
