@@ -1,5 +1,5 @@
 ; This file may be used as a template for the actual configuration file.
-; Fill in appropriate values, copy this file and and rename it to conf.ini.
+; Copy this file, rename the copy to conf.ini and fill in appropriate values.
 
 ; The PDO connection string. Given 'foodunit2' as a MySQL database running
 ; on the localhost, it would be 'mysql:host=localhost;dbname=foodunit2'.
