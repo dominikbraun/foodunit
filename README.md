@@ -20,4 +20,6 @@ $ git config user.name "<dein Anzeigename bei GitHub>"
 
 Nachdem du deine Änderungen vorgenommen und gepusht hast, kannst du einen [Pull-Request erstellen](https://github.com/dominikbraun/foodunit/pulls) und deine Änderungen kommen ins Code-Review.
 
+Erstellter PHP-Code muss [PSR-2-konform sein](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
+
 [Diese Nerds machen bereits mit](https://github.com/dominikbraun/foodunit/graphs/contributors)
