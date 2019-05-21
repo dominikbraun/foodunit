@@ -51,8 +51,21 @@ class SupplierService
 
         foreach ($dishes as $row) {
             $catId = $row['cat_id'];
+            $dish = [
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'desc' => $row['description'],
+                'price' => $row['price']
+            ];
+            $found = false;
 
-            if (!isset($cats[$catId])) {
+            foreach ($cats as &$c) {
+                if ($c['id'] === $catId) {
+                    $c['dishes'][] = $dish;
+                    $found = true;
+                }
+            }
+            if (!$found) {
                 $bindings = [
                     'id' => $catId
                 ];
@@ -61,22 +74,18 @@ class SupplierService
                     FROM        cats
                     WHERE       id = :id      
                 ', $bindings);
+
                 $cat = $cat[0];
 
-                $cats[$catId] = [
+                $cats[] = [
                     'id' => $cat['id'],
                     'name' => $cat['name'],
                     'img' => $cat['img'],
-                    'dishes' => []
+                    'dishes' => [
+                        $dish
+                    ]
                 ];
             }
-            $dish = [
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'desc' => $row['description'],
-                'price' => $row['price']
-            ];
-            $cats[$catId]['dishes'][] = $dish;
         }
         return $cats;
     }
