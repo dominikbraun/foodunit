@@ -39,6 +39,7 @@ class RouteManager
         return [
             '/offers'                   => 'foodunit\core\RouteHandler:offers',
             '/dishes/{supplier}'        => 'foodunit\core\RouteHandler:dishes',
+            '/supplier/{supplier}'      => 'foodunit\core\RouteHandler:supplier',
             '/orders/{offer}'           => 'foodunit\core\RouteHandler:orders',
             '/user-order/{offer}'       => 'foodunit\core\RouteHandler:userOrder',
             '/add/{offer}/{dish}'       => 'foodunit\core\RouteHandler:add',

@@ -32,6 +32,22 @@ class SupplierService
         $this->db = new Connection();
     }
 
+    public function getSupplierInfo()
+    {
+        $bindings = [
+            'id' => $this->supplierId
+        ];
+        $supplierInfo = $this->db->query(/** @lang sql */'
+            SELECT      id, name, address, phone, mon, tue, wed, thu, fri
+            FROM        suppliers
+            WHERE       id = :id
+        ', $bindings);
+
+        $supplierInfo = count($supplierInfo) ? $supplierInfo[0] : [];
+
+        return $supplierInfo;
+    }
+
     /**
      * @return array
      */
