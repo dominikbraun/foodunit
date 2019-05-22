@@ -11,8 +11,8 @@ type Offer struct {
 
 // Returns a formatted String representing an Offer instance.
 func (o Offer) String() string {
-	s := fmt.Sprintf("#%s\tSupplier: %s", o.ID, o.SupplierID)
-	return s
+	str := fmt.Sprintf("#%s\tSupplier: %s", o.ID, o.SupplierID)
+	return str
 }
 
 // Order represents a collection of positions that are associated with
@@ -42,6 +42,24 @@ type Supplier struct {
 	Fri     string `json:"fri"`
 }
 
+func (s Supplier) String() string {
+	str := fmt.Sprintf("#%s\tName: %s\n", s.ID, s.Name)
+	str += fmt.Sprintf("\tAdress: %s\n", s.Address)
+	str += fmt.Sprintf("\tPhone: %s\n", s.Phone)
+
+	opened := map[string]string{
+		"Mon": s.Mon,
+		"Tue": s.Tue,
+		"Wed": s.Wed,
+		"Thu": s.Thu,
+		"Fri": s.Fri,
+	}
+	for day, time := range opened {
+		str += fmt.Sprintf("\t%s: %s\n", day, time)
+	}
+	return str
+}
+
 // Cat represents the category a dish is associated to. While it may
 // be used by multiple suppliers at once, the individual dishes belong
 // to only one category and one supplier. When receiving a supplier's
@@ -56,12 +74,12 @@ type Cat struct {
 
 // Returns a formatted String representing an Cat instance.
 func (c Cat) String() string {
-	s := fmt.Sprintf("#%s\tName: %s\n", c.ID, c.Name)
+	str := fmt.Sprintf("#%s\tName: %s\n", c.ID, c.Name)
 
 	for _, d := range c.Dishes {
-		s += fmt.Sprintf("\t%s\n", d)
+		str += fmt.Sprintf("\t%s\n", d)
 	}
-	return s
+	return str
 }
 
 // Dish represents a menu item and is therefore associated with a certain
@@ -77,6 +95,6 @@ type Dish struct {
 
 // Returns a formatted String representing an Dish instance.
 func (d Dish) String() string {
-	s := fmt.Sprintf("#%s\tName: %s\tPrice: %s", d.ID, d.Name, d.Price)
-	return s
+	str := fmt.Sprintf("#%s\tName: %s\tPrice: %s", d.ID, d.Name, d.Price)
+	return str
 }
