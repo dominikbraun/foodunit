@@ -42,6 +42,7 @@ type Supplier struct {
 	Fri     string `json:"fri"`
 }
 
+// Returns a formatted String representing an Supplier instance.
 func (s Supplier) String() string {
 	str := fmt.Sprintf("#%s\tName: %s\n", s.ID, s.Name)
 	str += fmt.Sprintf("\tAdress: %s\n", s.Address)
