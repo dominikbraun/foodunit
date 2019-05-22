@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 type api struct {
@@ -37,8 +38,7 @@ func (a *api) lastResBytes() ([]byte, error) {
 
 var StdApi *api
 
-var rootHandler = func(cmd *cobra.Command, args []string) {
-}
+var rootHandler = func(cmd *cobra.Command, args []string) {}
 
 var offerHandler = func(cmd *cobra.Command, args []string) {
 	rsrc := "/offers"
@@ -56,6 +56,38 @@ var offerHandler = func(cmd *cobra.Command, args []string) {
 	for _, o := range offers {
 		fmt.Println(o)
 	}
+}
+
+var dishesHandler = func(cmd *cobra.Command, args []string) {
+
+	supplier := flagOrExit(cmd, "supplier", `No supplier given.`)
+	rsrc := "/dishes/" + supplier
+
+	_, err := StdApi.request(rsrc)
+
+	if err != nil {
+		log.Println(err)
+	}
+	body, _ := StdApi.lastResBytes()
+	var cats []Cat
+
+	if err := json.Unmarshal(body, &cats); err != nil {
+		log.Println(err)
+	}
+	for _, c := range cats {
+		fmt.Println(c)
+	}
+}
+
+func flagOrExit(cmd *cobra.Command, name string, msg string) string {
+	desired := cmd.Flag(name)
+	val := desired.Value.String()
+
+	if val == "" {
+		log.Println(msg)
+		os.Exit(1)
+	}
+	return val
 }
 
 func init() {

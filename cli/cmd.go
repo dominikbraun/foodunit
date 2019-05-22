@@ -14,8 +14,18 @@ var offers = &cobra.Command{
 	Run:   offerHandler,
 }
 
+var dishes = &cobra.Command{
+	Use:   `dishes`,
+	Short: `Lists all dishes for a given supplier`,
+	Run:   dishesHandler,
+}
+
 func Execute() error {
+	dishes.Flags().String("supplier", "", `The ID of the supplier.`)
+
 	root.AddCommand(offers)
+	root.AddCommand(dishes)
+
 	err := root.Execute()
 	return err
 }
