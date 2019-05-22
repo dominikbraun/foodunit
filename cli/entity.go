@@ -1,10 +1,17 @@
 package main
 
+import "fmt"
+
 // Offer represents someone's suggestion to order food from a certain
 // supplier. An Offer therefore holds the corresponding supplier's ID.
 type Offer struct {
 	ID         string `json:"id"`
 	SupplierID string `json:"supplier_id"`
+}
+
+func (o Offer) String() string {
+	s := fmt.Sprintf("#%s\tSupplier: %s", o.ID, o.SupplierID)
+	return s
 }
 
 // Order represents a collection of positions that are associated with
