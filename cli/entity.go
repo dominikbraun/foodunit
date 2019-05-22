@@ -1,11 +1,11 @@
 package main
 
-type Offer []struct {
+type Offer struct {
 	ID         string `json:"id"`
 	SupplierID string `json:"supplier_id"`
 }
 
-type Order []struct {
+type Order struct {
 	Email     string `json:"email"`
 	Positions []struct {
 		DishID string `json:"dish_id"`
@@ -26,7 +26,7 @@ type Supplier struct {
 	Fri     string `json:"fri"`
 }
 
-type Cat []struct {
+type Cat struct {
 	ID     string `json:"id"`
 	Name   string `json:"name"`
 	Img    string `json:"img"`
