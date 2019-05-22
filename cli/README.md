@@ -5,7 +5,7 @@
 
 ### Go Toolchain
 
-Das CLI-Tool ist in Go geschrieben. Um das Tool kompilieren zu können, muss die [Go Toolchain](https://golang.org/) installiert werden.
+Das CLI-Tool ist in Go geschrieben. Um das Tool kompilieren zu können, muss die [Go Toolchain](https://golang.org/dl) installiert werden.
 
 Anschließend lässt sich eine ausführbare Datei erzeugen:
 
