@@ -9,6 +9,7 @@ type Offer struct {
 	SupplierID string `json:"supplier_id"`
 }
 
+// Returns a formatted String representing an Offer instance.
 func (o Offer) String() string {
 	s := fmt.Sprintf("#%s\tSupplier: %s", o.ID, o.SupplierID)
 	return s
