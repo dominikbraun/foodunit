@@ -79,6 +79,25 @@ var dishesHandler = func(cmd *cobra.Command, args []string) {
 	}
 }
 
+var supplierHandler = func(cmd *cobra.Command, args []string) {
+
+	supplier := flagOrExit(cmd, "supplier", `No supplier given.`)
+	rsrc := "/supplier/" + supplier
+
+	_, err := StdApi.request(rsrc)
+
+	if err != nil {
+		log.Println(err)
+	}
+	body, _ := StdApi.lastResBytes()
+	var sup Supplier
+
+	if err := json.Unmarshal(body, &sup); err != nil {
+		log.Println(err)
+	}
+	fmt.Println(sup)
+}
+
 func flagOrExit(cmd *cobra.Command, name string, msg string) string {
 	desired := cmd.Flag(name)
 	val := desired.Value.String()
