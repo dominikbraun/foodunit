@@ -54,6 +54,16 @@ type Cat struct {
 	Dishes []Dish `json:"dishes"`
 }
 
+// Returns a formatted String representing an Cat instance.
+func (c Cat) String() string {
+	s := fmt.Sprintf("#%s\tName: %s\n", c.ID, c.Name)
+
+	for _, d := range c.Dishes {
+		s += fmt.Sprintf("\t%s\n", d)
+	}
+	return s
+}
+
 // Dish represents a menu item and is therefore associated with a certain
 // supplier. However, this information won't be depicted in the entity
 // because the API actually returns the menu as a list of all categories,
@@ -63,4 +73,10 @@ type Dish struct {
 	Name  string `json:"name"`
 	Desc  string `json:"desc"`
 	Price string `json:"price"`
+}
+
+// Returns a formatted String representing an Dish instance.
+func (d Dish) String() string {
+	s := fmt.Sprintf("#%s\tName: %s\tPrice: %s", d.ID, d.Name, d.Price)
+	return s
 }
