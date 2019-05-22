@@ -1,13 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "log"
 
 func main() {
-	if err := Exec(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+	if err := Execute(); err != nil {
+		log.Println(err)
 	}
 }
