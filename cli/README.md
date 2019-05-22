@@ -11,7 +11,7 @@ Anschließend lässt sich eine ausführbare Datei erzeugen:
 
 ```
 $ cd cli
-$ go build -o foodunit.exe admin.go
+$ go build -o foodunit.exe main.go
 ```
 
 Fertig!
