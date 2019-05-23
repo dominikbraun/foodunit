@@ -61,11 +61,11 @@ func (s Supplier) String() string {
 	return str
 }
 
-// Cat represents the category a dish is associated to. While it may
-// be used by multiple suppliers at once, the individual dishes belong
-// to only one category and one supplier. When receiving a supplier's
-// menu, the API will return a list of categories, each containing the
-// dishes that are associated with respective category and supplier.
+// Cat represents the category a dish is associated to. While it may be
+// used by multiple suppliers at once, the individual dishes belong to
+// only one category and one supplier. When receiving a supplier's menu,
+// the API will return a list of categories, each containing the dishes
+// that are associated with respective category and supplier.
 type Cat struct {
 	ID     string `json:"id"`
 	Name   string `json:"name"`
