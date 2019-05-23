@@ -3,7 +3,7 @@
 
 ## Voraussetzungen
 
-### Konfig anpassen
+### Konfiguration
 
 Die Konfigurationsdatei `conf.go.example` muss kopiert, in `conf.go` umbenannt und ausgefüllt werden.
 
