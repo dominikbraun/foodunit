@@ -3,9 +3,19 @@
 
 ## Voraussetzungen
 
+### Konfig anpassen
+
+Die Konfigurationsdatei `conf.go.example` muss kopiert, in `conf.go` umbenannt und ausgefüllt werden.
+
 ### Go Toolchain
 
 Das CLI-Tool ist in Go geschrieben. Um das Tool kompilieren zu können, muss die [Go Toolchain](https://golang.org/dl) installiert werden.
+
+Falls noch nicht vorhanden, muss die Cobra-Library installiert werden.
+
+```
+$ go get github.com/spf13/cobra
+```
 
 Anschließend lässt sich eine ausführbare Datei erzeugen:
 
