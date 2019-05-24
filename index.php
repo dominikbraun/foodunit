@@ -7,7 +7,7 @@ dispatch();
  */
 function dispatch()
 {
-    if (isLoggedIn()) {
+    if (hasKey()) {
         render('app');
     } else {
         render('login');
@@ -18,7 +18,7 @@ function dispatch()
 /**
  * @return bool
  */
-function isLoggedIn()
+function hasKey()
 {
     return $_COOKIE['foodunit_key'] !== null;
 }
