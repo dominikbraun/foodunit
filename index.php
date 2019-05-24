@@ -24,13 +24,13 @@ function isLoggedIn()
 }
 
 /**
- * @param string $file
+ * @param string $tpl
  */
-function render(string $file)
+function render(string $tpl)
 {
     $dir = 'static/templates/';
     $ext = '.html';
 
     /** @noinspection PhpIncludeInspection */
-    include_once $dir . $file . $ext;
+    include_once $dir . $tpl . $ext;
 }
