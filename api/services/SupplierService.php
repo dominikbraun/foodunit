@@ -69,8 +69,8 @@ class SupplierService
             $catId = $row['cat_id'];
             $dish = [
                 'id' => $row['id'],
-                'name' => $row['name'],
-                'desc' => $row['description'],
+                'name' => utf8_encode($row['name']),
+                'desc' => utf8_encode($row['description']),
                 'price' => $row['price']
             ];
             $found = false;
@@ -95,7 +95,7 @@ class SupplierService
 
                 $cats[] = [
                     'id' => $cat['id'],
-                    'name' => $cat['name'],
+                    'name' => utf8_encode($cat['name']),
                     'img' => $cat['img'],
                     'dishes' => [
                         $dish
