@@ -57,12 +57,28 @@ class RouteHandler
         $this->dispatcher->run($menu);
     }
 
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
     public function supplier(Request $req, Response $res, array $args)
     {
         $supplierId = $args['supplier'];
         $supplierInfo = (new SupplierService($supplierId))->getSupplierInfo();
 
         $this->dispatcher->run($supplierInfo);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
+    public function allData(Request $req, Response $res, array $args)
+    {
+        $supplierId = $args['supplier'];
+        $this->dispatcher->run(true);
     }
 
     /**
