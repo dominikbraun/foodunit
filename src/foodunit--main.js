@@ -96,4 +96,12 @@ function renderCart(offerId) {
             $('#total').text(Number.parseFloat(total).toFixed(2))
         }
     })
+    $.ajax({
+        url: 'api/email',
+        type: 'get',
+        success: function (res) {
+            let email = JSON.parse(res)
+            $('#user-email').text(email)
+        }
+    })
 }
