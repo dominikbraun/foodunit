@@ -5,18 +5,15 @@ let total = 0
 $(function () {
     $('#prev').on('click', function () {
         if (catIndex > 0) {
-            renderDishes(--catIndex)
+            renderMenuPage(--catIndex)
         }
     })
-
     $('#next').on('click', function () {
         if (catIndex < cats.length - 1) {
-            renderDishes(++catIndex)
+            renderMenuPage(++catIndex)
         }
     })
-
     renderPage()
-    renderCart()
 })
 
 function renderPage() {
@@ -27,6 +24,7 @@ function renderPage() {
             let offers = JSON.parse(res)
             let supplierId = offers[0].supplier_id
             renderSupplier(supplierId)
+            renderCart(offers[0].id)
         }
     })
 }
@@ -39,16 +37,16 @@ function renderSupplier(supplierId) {
             let supplier = JSON.parse(res)
             $('#supplier').text(supplier.name)
             $('#supplier-name').text(supplier.name)
-            $('#supplier-addr').text(supplier.addr)
-            $('#supplier-opened').text(supplier.opened)
+            $('#supplier-addr').text(supplier.address)
+            $('#supplier-opened').text(supplier.mon)
             $('#supplier-phone').text(supplier.phone)
 
-            renderCats(supplierId)
+            renderMenu(supplierId)
         }
     })
 }
 
-function renderCats(supplierId) {
+function renderMenu(supplierId) {
     $.ajax({
         url: 'api/menu/' + supplierId,
         type: 'get',
@@ -64,12 +62,12 @@ function renderCats(supplierId) {
                 $('#cats').append(html)
             }
 
-            renderDishes(catIndex)
+            renderMenuPage(catIndex)
         }
     })
 }
 
-function renderDishes(i) {
+function renderMenuPage(i) {
     $('#cat').text(cats[i].name)
 
     $('#bg-container').css('background-image', 'static/img/' + cats[i].img)
@@ -82,36 +80,20 @@ function renderDishes(i) {
     }
 }
 
-function renderCart() {
-    // Ajax request here
-    let cart = {
-        items: [
-            {
-                id: '7',
-                name: 'Hamburger Royal K&auml;se',
-                desc: 'Preis und Beschreibung folgen.',
-                price: '3.9',
-            },
-            {
-                id: '8',
-                name: '9 Chicken McNuggets',
-                desc: 'Preis und Beschreibung folgen.',
-                price: '4.0',
-            },
-            {
-                id: '9',
-                name: '12 Chicken McNuggets',
-                desc: 'Preis und Beschreibung folgen.',
-                price: '3.2',
-            }
-        ],
-        remark: 'Bitte mit Ketchup',
-    }
+function renderCart(offerId) {
+    $.ajax({
+        url: 'api/user-order/' + offerId,
+        type: 'get',
+        success: function (res) {
+            let cart = {}
+            cart.items = JSON.parse(res)
 
-    for (let i of cart.items) {
-        let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.id + '">&#10005;</div></div></li>'
-        $('#cart-items').append(html)
-    }
-    $('#cart-remark').val(cart.remark)
-    $('#total').text(Number.parseFloat(total).toFixed(2))
+            for (let i of cart.items) {
+                let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.id + '">&#10005;</div></div></li>'
+                $('#cart-items').append(html)
+            }
+            $('#cart-remark').val(cart.remark)
+            $('#total').text(Number.parseFloat(total).toFixed(2))
+        }
+    })
 }
