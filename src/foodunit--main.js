@@ -1,4 +1,3 @@
-let supplier = {}
 let cats = []
 let catIndex = 0
 let total = 0
@@ -17,222 +16,58 @@ $(function () {
         }
     })
 
-    renderSupplier()
-    renderCats()
-    renderDishes(catIndex)
+    renderData()
     renderCart()
 })
 
-function renderSupplier() {
-    // Ajax request here
-    supplier.name = 'McDonald\'s Straubing'
-    supplier.addr = 'Ittlingerstr. 119'
-    supplier.phone = '09421 3304948'
-    supplier.opened = '07:00 - 01:00'
-
-    $('#supplier').text(supplier.name)
-    $('#supplier-name').text(supplier.name)
-    $('#supplier-addr').text(supplier.addr)
-    $('#supplier-opened').text(supplier.opened)
-    $('#supplier-phone').text(supplier.phone)
+function renderData() {
+    $.ajax({
+        url: 'api/offers',
+        type: 'get',
+        success: function (res) {
+            let offers = JSON.parse(res)
+            let supplierId = offers[0].supplier_id
+            renderSupplier(supplierId)
+        }
+    })
 }
 
-function renderCats() {
-    // Ajax request here
-    cats = [
-        {
-            name: 'Alkoholfreie Getr\u00e4nke',
-            img: 'cooled-drinks.jpg',
-            dishes: [
-                {
-                    id: '0',
-                    name: 'Cola',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.2',
-                },
-                {
-                    id: '1',
-                    name: 'Fanta',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.2',
-                },
-                {
-                    id: '2',
-                    name: 'Cola (Dose)',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.0',
-                },
-                {
-                    id: '3',
-                    name: 'Fanta (Dose)',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '1.7',
-                },
-                {
-                    id: '4',
-                    name: 'Wasser',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.0',
-                },
-                {
-                    id: '5',
-                    name: 'Spezi',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '1.9',
-                }
-            ]
-        },
-        {
-            name: 'Burger',
-            dishes: [
-                {
-                    id: '0',
-                    name: 'Hamburger Royal K&auml;se',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.2',
-                },
-                {
-                    id: '1',
-                    name: 'Hamburger',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.8',
-                },
-                {
-                    id: '2',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '1.0',
-                },
-                {
-                    id: '3',
-                    name: 'Gro&szlig;e Pommes',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.7',
-                },
-                {
-                    id: '4',
-                    name: 'Hamburger',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '4.0',
-                },
-                {
-                    id: '5',
-                    name: 'Gro&szlig;e Pommes',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.9',
-                },
-                {
-                    id: '6',
-                    name: 'Hamburger',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.2',
-                },
-                {
-                    id: '7',
-                    name: 'Hamburger Royal K&auml;se',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.9',
-                },
-                {
-                    id: '8',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '4.0',
-                },
-                {
-                    id: '9',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.2',
-                },
-                {
-                    id: '5',
-                    name: 'Gro&szlig;e Pommes',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.9',
-                },
-                {
-                    id: '6',
-                    name: 'Hamburger',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.2',
-                },
-                {
-                    id: '7',
-                    name: 'Hamburger Royal K&auml;se',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.9',
-                },
-                {
-                    id: '8',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '4.0',
-                },
-                {
-                    id: '9',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.2',
-                },
-                {
-                    id: '5',
-                    name: 'Gro&szlig;e Pommes',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.9',
-                },
-                {
-                    id: '6',
-                    name: 'Hamburger',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '2.2',
-                },
-                {
-                    id: '7',
-                    name: 'Hamburger Royal K&auml;se',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.9',
-                },
-                {
-                    id: '8',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '4.0',
-                },
-                {
-                    id: '9',
-                    name: '9 Chicken McNuggets',
-                    desc: 'Preis und Beschreibung folgen.',
-                    price: '3.2',
-                }
-            ],
-        },
-        {
-            name: 'Klassiker',
-            dishes: [],
-        },
-        {
-            name: 'Feinschmecker',
-            dishes: [],
-        },
-        {
-            name: 'Salate',
-            dishes: [],
-        },
-        {
-            name: 'Kinderteller',
-            dishes: [],
-        }
-    ]
+function renderSupplier(supplierId) {
+    $.ajax({
+        url: 'api/supplier/' + supplierId,
+        type: 'get',
+        success: function (res) {
+            let supplier = JSON.parse(res)
+            $('#supplier').text(supplier.name)
+            $('#supplier-name').text(supplier.name)
+            $('#supplier-addr').text(supplier.addr)
+            $('#supplier-opened').text(supplier.opened)
+            $('#supplier-phone').text(supplier.phone)
 
-    for (let i = 0; i < cats.length; i++) {
-        let html = '<a class="text-dark mx-2" href="">' + cats[i].name + '</a>'
-
-        if (i < cats.length - 1) {
-            html += '/'
+            renderCats(supplierId)
         }
-        $('#cats').append(html)
-    }
+    })
+}
+
+function renderCats(supplierId) {
+    $.ajax({
+        url: 'api/dishes/' + supplierId,
+        type: 'get',
+        success: function (res) {
+            cats = JSON.parse(res)
+
+            for (let i = 0; i < cats.length; i++) {
+                let html = '<a class="text-dark mx-2" href="">' + cats[i].name + '</a>'
+
+                if (i < cats.length - 1) {
+                    html += '/'
+                }
+                $('#cats').append(html)
+            }
+
+            renderDishes(catIndex)
+        }
+    })
 }
 
 function renderDishes(i) {
