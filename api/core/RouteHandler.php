@@ -205,7 +205,9 @@ class RouteHandler
      */
     public function email(Request $req, Response $res, array $args)
     {
-        $email = '';
+        $key = Context::key();
+        $email = (new Manager())->getEmail($key);
+
         $this->dispatcher->run($email);
     }
 }

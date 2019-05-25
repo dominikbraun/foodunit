@@ -28,6 +28,23 @@ class Manager
         $this->db = new Connection();
     }
 
+    public function getEmail(string $key)
+    {
+        $bindings = [
+            'key' => $key
+        ];
+        $email = $this->db->query('
+            SELECT      email
+            FROM        sessions
+            WHERE       _key = :key
+        ', $bindings);
+
+        if (count($email) > 0) {
+            return $email[0]['email'];
+        }
+        return '';
+    }
+
     /**
      * @param string $email
      * @return bool
