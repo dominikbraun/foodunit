@@ -51,7 +51,7 @@ class SupplierService
     /**
      * @return array
      */
-    public function getDishes()
+    public function getMenu()
     {
         $bindings = [
             'supplier_id' => $this->supplierId

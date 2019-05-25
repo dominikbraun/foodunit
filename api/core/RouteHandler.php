@@ -49,12 +49,12 @@ class RouteHandler
      * @param Response $res
      * @param array $args
      */
-    public function dishes(Request $req, Response $res, array $args)
+    public function menu(Request $req, Response $res, array $args)
     {
         $supplierId = $args['supplier'];
-        $dishes = (new SupplierService($supplierId))->getDishes();
+        $menu = (new SupplierService($supplierId))->getMenu();
 
-        $this->dispatcher->run($dishes);
+        $this->dispatcher->run($menu);
     }
 
     public function supplier(Request $req, Response $res, array $args)
