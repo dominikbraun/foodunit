@@ -3,7 +3,6 @@ let catIndex = 0
 let total = 0
 
 $(function () {
-
     $('#prev').on('click', function () {
         if (catIndex > 0) {
             renderDishes(--catIndex)
@@ -16,11 +15,11 @@ $(function () {
         }
     })
 
-    renderData()
+    renderPage()
     renderCart()
 })
 
-function renderData() {
+function renderPage() {
     $.ajax({
         url: 'api/offers',
         type: 'get',
@@ -51,7 +50,7 @@ function renderSupplier(supplierId) {
 
 function renderCats(supplierId) {
     $.ajax({
-        url: 'api/dishes/' + supplierId,
+        url: 'api/menu/' + supplierId,
         type: 'get',
         success: function (res) {
             cats = JSON.parse(res)
