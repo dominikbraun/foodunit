@@ -71,11 +71,11 @@ var offerHandler = func(cmd *cobra.Command, args []string) {
 	}
 }
 
-// Processes the dishes command.
-var dishesHandler = func(cmd *cobra.Command, args []string) {
+// Processes the menu command.
+var menuHandler = func(cmd *cobra.Command, args []string) {
 
 	supplier := flagOrExit(cmd, "supplier", `No supplier given.`)
-	rsrc := "/dishes/" + supplier
+	rsrc := "/menu/" + supplier
 
 	_, err := StdApi.request(rsrc)
 

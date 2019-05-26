@@ -17,12 +17,12 @@ var offers = &cobra.Command{
 	Run:   offerHandler,
 }
 
-// `dishes` displays the menu for a given supplier. The supplier ID may
+// `menu` displays the menu for a given supplier. The supplier ID may
 // be obtained by running `offers` before for example.
-var dishes = &cobra.Command{
-	Use:   `dishes`,
-	Short: `Lists all dishes for a given supplier`,
-	Run:   dishesHandler,
+var menu = &cobra.Command{
+	Use:   `menu`,
+	Short: `Lists all menu for a given supplier`,
+	Run:   menuHandler,
 }
 
 // `supplier` fetches all important data for a given supplier. Its ID
@@ -36,11 +36,11 @@ var supplier = &cobra.Command{
 // Execute creates all necessary flags for each command and then attaches
 // the commands to the root command. The root command is then executed.
 func Execute() error {
-	dishes.Flags().String("supplier", "", `The ID of the supplier`)
+	menu.Flags().String("supplier", "", `The ID of the supplier`)
 	supplier.Flags().String("supplier", "", `The ID of the supplier`)
 
 	root.AddCommand(offers)
-	root.AddCommand(dishes)
+	root.AddCommand(menu)
 	root.AddCommand(supplier)
 
 	err := root.Execute()
