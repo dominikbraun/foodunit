@@ -32,7 +32,7 @@ function buildPage() {
 
 function buildSupplier(supplierId) {
     $.ajax({
-        url: 'api/all-data/' + supplierId,
+        url: 'api/supplier-mono/' + supplierId,
         type: 'get',
         success: function (res) {
             let s = JSON.parse(res)
