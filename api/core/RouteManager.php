@@ -40,7 +40,7 @@ class RouteManager
             '/offers'                   => 'foodunit\core\RouteHandler:offers',
             '/menu/{supplier}'          => 'foodunit\core\RouteHandler:menu',
             '/supplier/{supplier}'      => 'foodunit\core\RouteHandler:supplier',
-            '/all-data/{supplier}'      => 'foodunit\core\RouteHandler:allData',
+            '/supplier-mono/{supplier}' => 'foodunit\core\RouteHandler:supplierMono',
             '/orders/{offer}'           => 'foodunit\core\RouteHandler:orders',
             '/user-order/{offer}'       => 'foodunit\core\RouteHandler:userOrder',
             '/add/{offer}/{dish}'       => 'foodunit\core\RouteHandler:add',

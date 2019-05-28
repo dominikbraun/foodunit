@@ -75,7 +75,7 @@ class RouteHandler
      * @param Response $res
      * @param array $args
      */
-    public function allData(Request $req, Response $res, array $args)
+    public function supplierMono(Request $req, Response $res, array $args)
     {
         $supplierId = $args['supplier'];
         $service = new SupplierService($supplierId);
