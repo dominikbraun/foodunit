@@ -13,37 +13,50 @@ $(function () {
             renderMenuPage(++catIndex)
         }
     })
-    renderPage()
+    chooseOfferAndRenderPage()
 })
 
-function renderPage() {
+function chooseOfferAndRenderPage() {
     $.ajax({
         url: 'api/offers',
         type: 'get',
         success: function (res) {
             let offers = JSON.parse(res)
             let supplierId = offers[0].supplier_id
-            renderSupplier(supplierId)
+            buildSupplier(supplierId)
             renderCart(offers[0].id)
         }
     })
 }
 
-function renderSupplier(supplierId) {
+function buildSupplier(supplierId) {
     $.ajax({
-        url: 'api/supplier/' + supplierId,
+        url: 'api/all-data/' + supplierId,
         type: 'get',
         success: function (res) {
-            let supplier = JSON.parse(res)
-            $('#supplier').text(supplier.name)
-            $('#supplier-name').text(supplier.name)
-            $('#supplier-addr').text(supplier.address)
-            $('#supplier-opened').text(supplier.mon)
-            $('#supplier-phone').text(supplier.phone)
-
-            renderMenu(supplierId)
+            let s = JSON.parse(res)
+            renderSupplierInfo(s.name, s.address, s.mon, s.phone)
         }
     })
+}
+
+function renderSupplierInfo(name, address, opened, phone) {
+    $('#supplier').text(name)
+    $('#supplier-name').text(name)
+    $('#supplier-addr').text(address)
+    $('#supplier-opened').text(opened)
+    $('#supplier-phone').text(phone)
+}
+
+function renderCats(cats) {
+    for (let i = 0; i < cats.length; i++) {
+        let html = '<a class="text-dark mx-2" href="">' + cats[i].name + '</a>'
+
+        if (i < cats.length - 1) {
+            html += '/'
+        }
+        $('#cats').append(html)
+    }
 }
 
 function renderMenu(supplierId) {
