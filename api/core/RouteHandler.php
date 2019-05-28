@@ -78,7 +78,16 @@ class RouteHandler
     public function allData(Request $req, Response $res, array $args)
     {
         $supplierId = $args['supplier'];
-        $this->dispatcher->run(true);
+        $service = new SupplierService($supplierId);
+
+        $supplier = $service->getSupplierInfo();
+        $menu = $service->getMenu();
+
+        $allData = [
+            'supplier' => $supplier,
+            'menu' => $menu,
+        ];
+        $this->dispatcher->run($allData);
     }
 
     /**
