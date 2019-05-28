@@ -83,11 +83,9 @@ class RouteHandler
         $supplier = $service->getSupplierInfo();
         $menu = $service->getMenu();
 
-        $allData = [
-            'supplier' => $supplier,
-            'menu' => $menu,
-        ];
-        $this->dispatcher->run($allData);
+        $supplier['menu'] = $menu;
+
+        $this->dispatcher->run($supplier);
     }
 
     /**
