@@ -111,6 +111,11 @@ body {
         right: 0;
         bottom: 0;
     }
+
+    .fix-lg {
+        top: 0;
+        bottom: 0;
+    }
 }
 
 .text-hand {
