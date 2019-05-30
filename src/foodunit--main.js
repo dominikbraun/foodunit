@@ -82,13 +82,24 @@ function buildCart(offerId) {
         type: 'get',
         success: function (res) {
             let cart = JSON.parse(res)
-
-            for (let i of cart.dishes) {
-                let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.id + '">&#10005;</div></div></li>'
-                $('#cart-items').append(html)
-            }
-            $('#user-email').text(cart.email)
-            $('#cart-remark').val(cart.remark)
+            renderCartDishes(cart.dishes)
+            renderEmail(cart.email)
+            renderRemark(cart.remark)
         }
     })
+}
+
+function renderEmail(email) {
+    $('#user-email').text(email)
+}
+
+function renderCartDishes(dishes) {
+    for (let i of dishes) {
+        let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.id + '">&#10005;</div></div></li>'
+        $('#cart-items').append(html)
+    }
+}
+
+function renderRemark(remark) {
+    $('#cart-remark').val(remark)
 }
