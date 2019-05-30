@@ -184,6 +184,28 @@ class RouteHandler
      * @param Response $res
      * @param array $args
      */
+    public function cartMono(Request $req, Response $res, array $args)
+    {
+        $offerId = $args['offer'];
+        $key = Context::key();
+
+        $email = (new Manager())->getEmail($key);
+        $dishes = (new OfferService())->getUserOrder($offerId, $key);
+        $remark = (new OfferService())->getRemark($offerId, $key);
+
+        $cart = [
+            'email' => $email,
+            'dishes' => $dishes,
+            'remark' => $remark,
+        ];
+        $this->dispatcher->run($cart);
+    }
+
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     */
     public function sso(Request $req, Response $res, array $args)
     {
         $email = $args['email'];

@@ -47,6 +47,7 @@ class RouteManager
             '/del/{offer}/{dish}'       => 'foodunit\core\RouteHandler:delete',
             '/remark/{offer}'           => 'foodunit\core\RouteHandler:getRemark',
             '/remark/{offer}/{remark}'  => 'foodunit\core\RouteHandler:insertRemark',
+            '/cart-mono/{offer}'        => 'foodunit\core\RouteHandler:cartMono',
             '/sso/{email}'              => 'foodunit\core\RouteHandler:sso',
             '/confirm/{token}'          => 'foodunit\core\RouteHandler:confirmSession',
             '/email'                    => 'foodunit\core\RouteHandler:email',
