@@ -12,10 +12,10 @@ $(function () {
             renderMenuPage(++page)
         }
     })
-    buildPage()
+    build()
 })
 
-function buildPage() {
+function build() {
     $.ajax({
         url: 'api/offers',
         type: 'get',
