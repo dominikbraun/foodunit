@@ -1,6 +1,8 @@
 let menu = []
 let page = 0
 
+let offer = 0
+
 $(function () {
     $('#prev').on('click', function () {
         if (page > 0) {
@@ -12,21 +14,25 @@ $(function () {
             renderMenuPage(++page)
         }
     })
-    build()
+    getOfferId(build)
 })
 
-function build() {
+function getOfferId(buildFn) {
     $.ajax({
         url: 'api/offers',
         type: 'get',
         success: function (res) {
             let offers = JSON.parse(res)
-            let supplierId = offers[0].supplier_id
+            offer = offers[0].supplier_id
 
-            buildSupplier(supplierId)
-            buildCart(offers[0].id)
+            buildFn()
         }
     })
+}
+
+function build() {
+   buildSupplier(offer)
+   buildCart(offer)
 }
 
 function buildSupplier(supplierId) {
