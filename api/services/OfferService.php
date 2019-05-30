@@ -193,8 +193,11 @@ class OfferService
             LIMIT       1
         ', $bindings);
 
-        $remark = utf8_encode($remark[0]['remark']);
-
+        if (count($remark)) {
+            $remark = utf8_encode($remark[0]['remark']);
+        } else {
+            $remark = '';
+        }
         return $remark;
     }
 
