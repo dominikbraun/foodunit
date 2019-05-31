@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="h-100">
 
 <head>
     <meta charset="UTF-8">
@@ -14,20 +14,39 @@
     <link rel="stylesheet" href="static/css/foodunit--default.css">
 </head>
 
-<body class="bg-beige">
+<body class="bg-beige h-100">
     <div class="row m-0 h-100">
-        <div class="col-12 col-sm-4 h-100 m-0 p-0 d-none d-sm-block"></div>
-        <div class="col-12 col-sm-4 h-100 m-0 p-0 justify-content-center align-items-center d-flex">
-            <div class="p-4 p-sm-0 w-100">
-                ...
+        <div class="col-12 col-lg-4 h-100 d-none d-lg-block"></div>
+        <div class="col-12 col-lg-4 bg-white shadow h-100 px-5">
+            <div class="my-5 py-4">
+                <div class="bg-danger text-white text-ci text-lg logo-square rounded text-center mx-auto py-3 shadow-lg">
+                    Food&nbsp;<br />
+                    Unit<sub class="text-md">2</sub>
+                </div>
+            </div>
+            <h1 class="text-ci text-lg text-center border-top pt-5">Bevor du bestellst...</h1>
+            <form class="py-4">
+                <input class="bg-light rounded text-xs border-0 w-100 mt-4 px-2 py-3 text-center text-strong"
+                       id="email" type="email" placeholder="Deine E-Mail-Adresse" autocomplete="off" spellcheck="false"
+                />
+                <button type="submit" class="btn btn-success rounded text-xs text-strong mt-3 mb-4 w-100 p-2" id="login">Login anfordern</button>
+            </form>
+            <div class="text-center text-muted text-xs py-3">
+                Steffi's Imbiss <span class="px-1">&middot;</span>
+                McDonald's Straubing <span class="px-1">&middot;</span>
+                Pizzeria Venezia <span class="px-1">&middot;</span>
+                Imbiss Media
+            </div>
+            <div class="text-center py-4 text-xs">
+                <span class="text-strong">&copy; 2019 FoodUnit 2</span>
             </div>
         </div>
-        <div class="col-12 col-sm-4 h-100 m-0 p-0 d-none d-sm-block"></div>
+        <div class="col-12 col-lg-4 h-100 d-none d-lg-block"></div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="src/foodunit--main.js"></script>
+    <script src="src/foodunit--handlers.js"></script>
 </body>
 
 </html>
