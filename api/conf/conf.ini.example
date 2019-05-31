@@ -23,3 +23,6 @@ mail_subject = ''
 
 ; The public API URL (must end with /api)
 api_url = ''
+
+; The url the user is redirected to after confirming his e-mail address
+redirect_url = ''
