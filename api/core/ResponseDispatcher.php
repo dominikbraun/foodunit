@@ -23,4 +23,13 @@ class ResponseDispatcher
     {
         echo json_encode($response);
     }
+
+    /**
+     * @param string $url
+     */
+    public function redirect(string $url)
+    {
+        header('Location: ' . $url);
+        exit();
+    }
 }

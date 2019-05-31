@@ -33,7 +33,7 @@ class Manager
         $bindings = [
             'key' => $key
         ];
-        $email = $this->db->query('
+        $email = $this->db->query(/** @lang sql */'
             SELECT      email
             FROM        sessions
             WHERE       _key = :key
@@ -51,15 +51,16 @@ class Manager
      */
     public function startSession(string $email)
     {
-        $from = Conf::get('mail_from');
-        $subject = Conf::get('mail_subject');
-
         $token = self::generateUniqueString();
 
         if ($token === false) {
             return false;
         }
         self::createSession($email, $token);
+
+        $from = Conf::get('mail_from');
+        $subject = Conf::get('mail_subject');
+
         $url = self::getConfirmationUrl($token);
 
         $success = (new Mail($from, $email))

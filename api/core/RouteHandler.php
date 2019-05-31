@@ -8,6 +8,7 @@ require_once 'services/OfferService.php';
 require_once 'services/SupplierService.php';
 require_once 'session/Manager.php';
 
+use foodunit\conf\Conf;
 use foodunit\services\OfferService;
 use foodunit\services\SupplierService;
 use foodunit\session\Manager;
@@ -224,7 +225,9 @@ class RouteHandler
         $token = $args['token'];
         $res = (new Manager())->confirmSession($token);
 
-        $this->dispatcher->run($res);
+        $url = Conf::get('redirect_url');
+
+        $this->dispatcher->redirect($url);
     }
 
     /**
