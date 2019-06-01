@@ -59,7 +59,7 @@ function buildCart(offerId) {
         type: 'get',
         success: function (res) {
             let cart = JSON.parse(res)
-            renderCartDishes(cart.dishes)
+            renderCartDishes(cart.dishes, true)
             renderEmail(cart.email)
             renderRemark(cart.remark)
         }
