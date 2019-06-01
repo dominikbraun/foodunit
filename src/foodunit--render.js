@@ -38,16 +38,15 @@ function renderTotal(total) {
     $('#total').text(total)
 }
 
-function renderCartDishes(dishes) {
+function renderCartDishes(dishes, isFromServer) {
     for (let i of dishes) {
-        addToCart(i.dish_id)
-        let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.dish_id + '">&#10005;</div></div></li>'
+        let html = '<li class="list-inline text-xs text-strong" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.dish_id + '" data-from-server="' + isFromServer + '">&#10005;</div></div></li>'
         $('#cart-items').append(html)
     }
 }
 
 function renderAddedCartDish(dish) {
-    renderCartDishes([dish])
+    renderCartDishes([dish], false)
 }
 
 function renderRemovedCartDish(e) {
