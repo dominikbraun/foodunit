@@ -194,7 +194,7 @@ class OfferService
         ', $bindings);
 
         if (count($remark)) {
-            $remark = utf8_encode($remark[0]['remark']);
+            $remark = $remark[0]['remark'];
         } else {
             $remark = '';
         }
