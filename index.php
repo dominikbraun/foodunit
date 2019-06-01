@@ -20,7 +20,7 @@ function dispatch()
  */
 function hasKey()
 {
-    return $_COOKIE['foodunit_key'] !== null;
+    return isset($_COOKIE['foodunit_key']);
 }
 
 /**
