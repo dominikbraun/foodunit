@@ -12,6 +12,11 @@ function registerCartHandlers() {
 
     $('#cart-items').on('click', removeItemLink, removeItem)
 
+    $('#cart-remark').on('keydown', function () {
+        $(saveBtn).attr('disabled', false)
+        $(saveBtn).html('Bestellung speichern')
+    })
+
     $(saveBtn).on('click', function (e) {
         e.preventDefault()
         $(saveBtn).attr('disabled', true)
@@ -65,6 +70,22 @@ function saveCart() {
     })
 
     let calls = 0
+
+    let remark = $('#cart-remark').val()
+
+    $.ajax({
+        url: 'api/remark/' + offer + '/' + remark,
+        type: 'get',
+        beforeSend: function(xhr) {
+            calls++;
+        },
+        success: function (res) {
+            calls--;
+            if (calls === 0) {
+                $(saveBtn).html('Bestellung gespeichert')
+            }
+        }
+    })
 
     for (let id in cart) {
         for (let i = 0; i < cart[id]; i++) {
