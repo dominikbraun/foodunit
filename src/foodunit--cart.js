@@ -5,6 +5,8 @@ const saveBtn = '#save-cart'
 let cart = []
 let explicitRemoves = []
 
+let total = 0
+
 $(registerCartHandlers)
 
 function registerCartHandlers() {

@@ -62,6 +62,8 @@ function buildCart(offerId) {
             renderCartDishes(cart.dishes, true)
             renderEmail(cart.email)
             renderRemark(cart.remark)
+            total = cart.total
+            renderTotal(total)
         }
     })
 }
