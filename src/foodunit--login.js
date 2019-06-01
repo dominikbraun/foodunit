@@ -1,15 +1,13 @@
 const loginBtn = '#login'
 const emailInp = '#email'
-const saveBtn = '#save-cart'
 
-$(register)
+$(registerLoginHandlers)
 
-function register() {
+function registerLoginHandlers() {
     $(loginBtn).on('click', function (e) {
         e.preventDefault()
         login()
     })
-    $(saveBtn).on('click', saveCart)
 }
 
 function login() {
@@ -26,16 +24,5 @@ function login() {
         } else {
             $(loginBtn).html('Es ist ein Fehler aufgetreten.')
         }
-    })
-}
-
-function saveCart() {}
-
-function req(endpoint, success) {
-    console.log(endpoint)
-    $.ajax({
-        url: 'api' + endpoint,
-        type: 'get',
-        success: success
     })
 }
