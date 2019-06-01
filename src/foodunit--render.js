@@ -8,7 +8,7 @@ function renderSupplierInfo(name, address, opened, phone) {
 
 function renderCats(cats) {
     for (let i = 0; i < cats.length; i++) {
-        let html = '<a class="text-dark mx-2" href="">' + cats[i] + '</a>'
+        let html = '<a class="text-dark mx-2 select-cat" data-page="' + i +'">' + cats[i] + '</a>'
 
         if (i < cats.length - 1) {
             html += '/'

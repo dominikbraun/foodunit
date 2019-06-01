@@ -14,6 +14,10 @@ $(function () {
             renderMenuPage(++page)
         }
     })
+    $('#cats').on('click', '.select-cat', function () {
+        page = $(this).attr('data-page')
+        renderMenuPage(page)
+    })
     getOfferId(build)
 })
 

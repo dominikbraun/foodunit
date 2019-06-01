@@ -167,6 +167,11 @@ li:nth-of-type(odd) {
     text-decoration: underline;
 }
 
+.select-cat:hover, .select-cat:active {
+    cursor: pointer;
+    text-decoration: underline !important;
+}
+
 input:focus {
     outline: none;
 }
