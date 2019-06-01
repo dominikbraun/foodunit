@@ -169,7 +169,7 @@ li:nth-of-type(odd) {
 
 .select-cat:hover, .select-cat:active {
     cursor: pointer;
-    text-decoration: underline !important;
+    border-bottom: 2px solid #343A40;
 }
 
 input:focus {
