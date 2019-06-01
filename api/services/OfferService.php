@@ -49,7 +49,14 @@ class OfferService
             'offer_id' => $offerId
         ];
         $positions = $this->db->query(/** @lang sql */'
-            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name, d.price
+            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name, d.price, (
+                SELECT      r.remark
+                FROM        remarks r
+                WHERE       r.offer_id = :offer_id
+                AND         r.session_id = o.session_id
+                ORDER BY    r.id DESC
+                LIMIT       1
+            )           remark
             FROM        orders o
             INNER JOIN  sessions s
             ON          o.session_id = s.id
@@ -81,6 +88,7 @@ class OfferService
                     'positions' => [
                         $position
                     ],
+                    'remark' => $row['remark'],
                     'total' => $row['price'],
                 ];
             }
