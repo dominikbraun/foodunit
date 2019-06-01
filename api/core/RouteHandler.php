@@ -194,10 +194,17 @@ class RouteHandler
         $dishes = (new OfferService())->getUserOrder($offerId, $key);
         $remark = (new OfferService())->getRemark($offerId, $key);
 
+        $total = 0;
+
+        foreach ($dishes as $d) {
+            $total += $d['price'];
+        }
+
         $cart = [
             'email' => $email,
             'dishes' => $dishes,
             'remark' => $remark,
+            'total' => $total,
         ];
         $this->dispatcher->run($cart);
     }

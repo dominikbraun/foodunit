@@ -100,7 +100,7 @@ class OfferService
             'key' => $key
         ];
         $res = $this->db->query(/** @lang sql */'
-            SELECT      o.dish_id, d.name
+            SELECT      o.dish_id, d.name, d.price
             FROM        orders o
             INNER JOIN  dishes d
             ON          o.dish_id = d.id
