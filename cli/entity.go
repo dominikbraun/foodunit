@@ -21,11 +21,21 @@ func (o Offer) String() string {
 type Order struct {
 	Email     string `json:"email"`
 	Positions []struct {
-		DishID string `json:"dish_id"`
-		Name   string `json:"name"`
+		DishID string  `json:"dish_id"`
+		Name   string  `json:"name"`
 		Price  float64 `json:"price"`
 	} `json:"positions"`
 	Total float64 `json:"total"`
+}
+
+func (o Order) String() string {
+	str := fmt.Sprintf("E-Mail: %s\n", o.Email)
+
+	for _, p := range o.Positions {
+		str += fmt.Sprintf("\t#%s\tName: %s\tPrice: %f\n €", p.DishID, p.Name, p.Price)
+	}
+	str += fmt.Sprintf("Gesamt: %f €", o.Total)
+	return str
 }
 
 // Supplier represents a restaurant, takeaway or even supermarket. Any
@@ -89,14 +99,14 @@ func (c Cat) String() string {
 // because the API actually returns the menu as a list of all categories,
 // holding a list of corresponding dishes - the supplier ID isn't needed.
 type Dish struct {
-	ID    string `json:"id"`
-	Name  string `json:"name"`
-	Desc  string `json:"desc"`
+	ID    string  `json:"id"`
+	Name  string  `json:"name"`
+	Desc  string  `json:"desc"`
 	Price float64 `json:"price"`
 }
 
 // Returns a formatted String representing an Dish instance.
 func (d Dish) String() string {
-	str := fmt.Sprintf("#%s\tName: %s\tPrice: %s", d.ID, d.Name, d.Price)
+	str := fmt.Sprintf("#%s\tName: %s\tPrice: %f €", d.ID, d.Name, d.Price)
 	return str
 }
