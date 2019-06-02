@@ -207,7 +207,7 @@ input:focus {
 }
 
 #prev, #next {
-    height: 14rem !important;
+    height: 12rem !important;
 }
 
 ::-webkit-scrollbar {
