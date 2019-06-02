@@ -30,6 +30,7 @@ function registerCartHandlers() {
 function addItem() {
     let id = $(this).attr('data-dish-id')
     let name = $(this).attr('data-dish-name')
+    let price = $(this).attr('data-dish-price')
 
     if (cart[id] !== undefined) {
         cart[id]++
@@ -40,6 +41,9 @@ function addItem() {
     let dish = {dish_id: id, name: name}
     renderAddedCartDish(dish)
 
+    total += parseFloat(price)
+    renderTotal(total)
+
     $(saveBtn).attr('disabled', false)
     $(saveBtn).html('Bestellung speichern')
 }
@@ -47,6 +51,7 @@ function addItem() {
 function removeItem() {
     let id = $(this).attr('data-dish-id')
     let isFromServer = $(this).attr('data-from-server')
+    let price = $(this).attr('data-dish-price')
 
     if (isFromServer === "true") {
         explicitRemoves.push(id)
@@ -54,6 +59,9 @@ function removeItem() {
         cart[id]--
     }
     renderRemovedCartDish($(this).parent())
+
+    total -= parseFloat(price)
+    renderTotal(total)
 
     $(saveBtn).attr('disabled', false)
     $(saveBtn).html('Bestellung speichern')
