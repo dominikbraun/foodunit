@@ -73,14 +73,14 @@ class OfferService
             $position = [
                 'dish_id' => $row['dish_id'],
                 'name' => $row['name'],
-                'price' => $row['price']
+                'price' => (float) $row['price']
             ];
             $found = false;
 
             foreach ($orders as &$o) {
                 if ($o['key'] === $key) {
                     $o['positions'][] = $position;
-                    $o['total'] += $row['price'];
+                    $o['total'] += (float) $row['price'];
                     $found = true;
                 }
             }
@@ -95,7 +95,7 @@ class OfferService
                         $position
                     ],
                     'remark' => $row['remark'],
-                    'total' => $row['price'],
+                    'total' => (float) $row['price'],
                 ];
             }
         }
