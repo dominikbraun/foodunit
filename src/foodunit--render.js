@@ -22,12 +22,14 @@ function renderMenuPage(i) {
 
     $('#bg-container').css('background-image', 'static/img/' + menu[i].img)
 
-    $('#dishes').empty()
-
-    for (let d of menu[i].dishes) {
-        let html = '<div class="col-12 col-xl-6 px-5 py-3 add-item" data-dish-id="' + d.id + '" data-dish-name="' + d.name + '" data-dish-price="' + d.price + '"><div class="row"><div class="col-12 col-lg-9"><span class="text-md text-very-strong">' + d.name + '</span><br /><span class="text-xs"><i>' + d.desc + '</i></span></div><div class="col-12 col-lg-3 text-right">+ <span class="text-white text-strong price">' + Number.parseFloat(d.price).toFixed(2) + ' &euro;</span></div></div></div>'
-        $('#dishes').append(html)
-    }
+    $('#dishes').fadeOut(120, function () {
+        $(this).empty()
+        for (let d of menu[i].dishes) {
+            let html = '<div class="col-12 col-xl-6 px-5 py-3 add-item" data-dish-id="' + d.id + '" data-dish-name="' + d.name + '" data-dish-price="' + d.price + '"><div class="row"><div class="col-12 col-lg-9"><span class="text-md text-very-strong">' + d.name + '</span><br /><span class="text-xs"><i>' + d.desc + '</i></span></div><div class="col-12 col-lg-3 text-right">+ <span class="text-white text-strong price">' + Number.parseFloat(d.price).toFixed(2) + ' &euro;</span></div></div></div>'
+            $(this).append(html)
+        }
+        $(this).fadeIn(120)
+    })
 }
 
 function renderEmail(email) {
