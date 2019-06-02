@@ -71,7 +71,7 @@ class SupplierService
                 'id' => $row['id'],
                 'name' => utf8_encode($row['name']),
                 'desc' => utf8_encode($row['description']),
-                'price' => $row['price']
+                'price' => (float) $row['price']
             ];
             $found = false;
 

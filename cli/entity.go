@@ -23,7 +23,7 @@ type Order struct {
 	Positions []struct {
 		DishID string `json:"dish_id"`
 		Name   string `json:"name"`
-		Price  string `json:"price"`
+		Price  float64 `json:"price"`
 	} `json:"positions"`
 	Total float64 `json:"total"`
 }
@@ -92,7 +92,7 @@ type Dish struct {
 	ID    string `json:"id"`
 	Name  string `json:"name"`
 	Desc  string `json:"desc"`
-	Price string `json:"price"`
+	Price float64 `json:"price"`
 }
 
 // Returns a formatted String representing an Dish instance.
