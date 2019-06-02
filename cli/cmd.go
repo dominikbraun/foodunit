@@ -33,6 +33,8 @@ var supplier = &cobra.Command{
 	Run:   supplierHandler,
 }
 
+// `orders` lists all saved orders that were done in the context of
+// a certain offer.
 var orders = &cobra.Command{
 	Use:   `orders`,
 	Short: `Lists all orders associated with a given offer`,
