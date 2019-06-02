@@ -85,6 +85,9 @@ class OfferService
                 }
             }
             if (!$found) {
+                if (is_null($row['remark'])) {
+                    $row['remark'] = '';
+                }
                 $orders[] = [
                     'key' => $key,
                     'email' => $row['email'],
