@@ -1,6 +1,7 @@
 const addItemLink = '.add-item'
 const removeItemLink = '.remove-item'
 const saveBtn = '#save-cart'
+const allOrdersBtn = '#show-all-orders'
 
 let cart = []
 let explicitRemoves = []
@@ -25,6 +26,8 @@ function registerCartHandlers() {
         $(saveBtn).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>')
         saveCart()
     })
+
+    $(allOrdersBtn).on('click', loadAllOrders)
 }
 
 function addItem() {
@@ -132,4 +135,31 @@ function saveCart() {
             }
         })
     }
+}
+
+function loadAllOrders() {
+    if (offerId === 0) {
+        $.ajax({
+            url: 'api/offers',
+            type: 'get',
+            success: function (res) {
+                let offers = JSON.parse(res)
+                offerId = offers[0].supplier_id
+                continueAllOrders()
+            }
+        })
+    } else {
+        continueAllOrders()
+    }
+}
+
+function continueAllOrders() {
+    $.ajax({
+        url: 'api/orders/' + offerId,
+        type: 'get',
+        success: function (res) {
+            let orders = JSON.parse(res)
+            renderAllOrders(orders)
+        }
+    })
 }
