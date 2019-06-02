@@ -113,6 +113,27 @@ var supplierHandler = func(cmd *cobra.Command, args []string) {
 	fmt.Println(sup)
 }
 
+// Processes the orders command.
+var ordersHandler = func(cmd *cobra.Command, args []string) {
+
+	offer := flagOrExit(cmd, "offer", `No offer given.`)
+	rsrc := "/orders/" + offer
+	_, err := StdApi.request(rsrc)
+
+	if err != nil {
+		log.Println(err)
+	}
+	body, _ := StdApi.lastResBytes()
+	var orders []Order
+
+	if err := json.Unmarshal(body, &orders); err != nil {
+		log.Println(err)
+	}
+	for _, o := range orders {
+		fmt.Println(o)
+	}
+}
+
 // flagOrExit can be used to obtain a certain flag value of any command.
 // If the flag was not provided, the program exits (all flags are set
 // to "" by default).

@@ -33,15 +33,23 @@ var supplier = &cobra.Command{
 	Run:   supplierHandler,
 }
 
+var orders = &cobra.Command{
+	Use:   `orders`,
+	Short: `Lists all orders associated with a given offer`,
+	Run:   ordersHandler,
+}
+
 // Execute creates all necessary flags for each command and then attaches
 // the commands to the root command. The root command is then executed.
 func Execute() error {
 	menu.Flags().String("supplier", "", `The ID of the supplier`)
 	supplier.Flags().String("supplier", "", `The ID of the supplier`)
+	orders.Flags().String("offer", "", `The ID of the offer`)
 
 	root.AddCommand(offers)
 	root.AddCommand(menu)
 	root.AddCommand(supplier)
+	root.AddCommand(orders)
 
 	err := root.Execute()
 	return err

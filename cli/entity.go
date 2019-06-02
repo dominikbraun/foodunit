@@ -23,6 +23,7 @@ type Order struct {
 	Positions []struct {
 		DishID string `json:"dish_id"`
 		Name   string `json:"name"`
+		Price  string `json:"price"`
 	} `json:"positions"`
 	Total float64 `json:"total"`
 }
