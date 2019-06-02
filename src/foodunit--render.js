@@ -1,9 +1,9 @@
 function renderSupplierInfo(name, address, opened, phone) {
     $('#supplier').text(name)
-    $('#supplier-name').text(name)
-    $('#supplier-addr').text(address)
-    $('#supplier-opened').text(opened)
-    $('#supplier-phone').text(phone)
+    $('.supplier-name').text(name)
+    $('.supplier-addr').text(address)
+    $('.supplier-opened').text(opened)
+    $('.supplier-phone').text(phone)
 }
 
 function renderCats(cats) {
@@ -55,4 +55,36 @@ function renderRemovedCartDish(e) {
 
 function renderRemark(remark) {
     $('#cart-remark').val(remark)
+}
+
+function renderAllOrders(orders) {
+    $('#all-orders-list').empty()
+
+    for (let o of orders) {
+        let html = '<div class="border-bottom my-4 pb-2"><p class="text-sm text-strong mb-4"><i class="fa fa-user mr-2"></i>'
+        html += o.email
+        html += '</p><ul class="p-0">'
+
+        for (let d of o.positions) {
+            html += '<li class="list-inline text-xs text-strong"><div class="row m-0"><div class="col-9 px-2 py-3">'
+            html += d.name
+            html += '</div><div class="col-3 py-3 text-right">'
+            html += '0'//d.price
+            html += ' &euro;</div></div></li>'
+        }
+
+        html += '<li class="list-inline text-xs text-strong"><div class="row m-0"><div class="col-7 px-2 py-3 text-muted"><i>Gesamt</i></div><div class="col-5 py-3 text-right text-muted"><i class="fas fa-shopping-cart mr-2"></i><i>'
+        html += parseFloat(o.total).toFixed(2)
+        html += ' &euro;</i></div></div></li>'
+        html += '</ul><p class="text-xs text-dark text-strong"><i class="fas fa-comment mr-2"></i><i>&quot;'
+        html += o.remark
+        html += '&quot;</i></p></div>'
+
+        $('#all-orders-list').append(html)
+    }
+
+    window.setTimeout(function () {
+        $('#loader-all-orders').removeClass('d-flex').addClass('d-none')
+        $('#loaded-content-all-orders').removeClass('d-none')
+    }, 500)
 }
