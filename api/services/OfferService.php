@@ -49,7 +49,7 @@ class OfferService
             'offer_id' => $offerId
         ];
         $positions = $this->db->query(/** @lang sql */'
-            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name, d.price, (
+            SELECT      o.id, o.offer_id, o.dish_id, s.email, d.name, d.price, s.id session_id, (
                 SELECT      r.remark
                 FROM        remarks r
                 WHERE       r.offer_id = :offer_id
@@ -68,7 +68,8 @@ class OfferService
         $orders = [];
 
         foreach ($positions as $row) {
-            $email = $row['email'];
+            $key = $row['session_id'];
+
             $position = [
                 'dish_id' => $row['dish_id'],
                 'name' => $row['name'],
@@ -77,7 +78,7 @@ class OfferService
             $found = false;
 
             foreach ($orders as &$o) {
-                if ($o['email'] === $email) {
+                if ($o['key'] === $key) {
                     $o['positions'][] = $position;
                     $o['total'] += $row['price'];
                     $found = true;
@@ -85,7 +86,8 @@ class OfferService
             }
             if (!$found) {
                 $orders[] = [
-                    'email' => $email,
+                    'key' => $key,
+                    'email' => $row['email'],
                     'positions' => [
                         $position
                     ],
