@@ -231,7 +231,7 @@ input:focus {
 }
 
 .new-cart-item {
-    animation: animateElement linear .2s;
+    animation: animateElement linear .16s;
     animation-iteration-count: 1;
 }
 
