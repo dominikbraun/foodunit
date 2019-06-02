@@ -1,5 +1,5 @@
 html {
-    overflow-y: scroll;
+    //overflow-y: scroll;
 }
 
 body {
@@ -51,10 +51,6 @@ body {
     font-family: 'Kaushan Script';
 }
 
-.text-display {
-    font-family: 'Staatliches';
-}
-
 .logo-square {
     width: 7.75rem;
     height: 7.75rem;
@@ -66,7 +62,7 @@ body {
 }
 
 .text-xs {
-    font-size: .79rem;
+    font-size: .81rem;
     letter-spacing: .23px;
 }
 
@@ -75,7 +71,7 @@ body {
 }
 
 .text-sm {
-    font-size: .95rem;
+    font-size: .88rem;
 }
 
 .text-sm .fa, .text-sm .fas {
@@ -177,7 +173,7 @@ input:focus {
 }
 
 .bg-dark-tr {
-    background-color: rgba(40, 44, 48, .5) !important;
+    background-color: rgba(40, 44, 48, .7) !important;
 }
 
 .outline-0, .outline-0:focus {
@@ -208,6 +204,14 @@ input:focus {
 
 #prev, #next {
     height: 12rem !important;
+}
+
+#all-orders {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 ::-webkit-scrollbar {
