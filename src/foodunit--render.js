@@ -79,9 +79,14 @@ function renderAllOrders(orders) {
         html += '<li class="list-inline text-xs text-strong"><div class="row m-0"><div class="col-7 px-2 py-3 text-muted"><i>Gesamt</i></div><div class="col-5 py-3 text-right text-muted"><i class="fas fa-shopping-cart mr-2"></i><i>'
         html += parseFloat(o.total).toFixed(2)
         html += ' &euro;</i></div></div></li>'
-        html += '</ul><p class="text-xs text-dark text-strong"><i class="fas fa-comment mr-2"></i><i>&quot;'
-        html += o.remark
-        html += '&quot;</i></p></div>'
+        html += '</ul>'
+
+        if (o.remark !== '') {
+            html += '<p class="text-xs text-dark text-strong"><i class="fas fa-comment mr-2"></i><i>&quot;'
+            html += o.remark
+            html += '&quot;</i></p>'
+        }
+        html += '</div>'
 
         $('#all-orders-list').append(html)
     }
