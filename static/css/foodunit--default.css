@@ -229,3 +229,19 @@ input:focus {
 ::-webkit-scrollbar-thumb:hover {
     background: #1D1D26;
 }
+
+.new-cart-item {
+    animation: animateElement linear .2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes animateElement {
+    0% {
+        opacity: 0;
+        transform: translate(0px, -8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0px, 0px);
+    }
+}
