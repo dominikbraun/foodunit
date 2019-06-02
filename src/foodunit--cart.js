@@ -84,7 +84,9 @@ function saveCart() {
         success: function (res) {
             calls--;
             if (calls === 0) {
-                $(saveBtn).html('Bestellung gespeichert')
+                window.setTimeout(function () {
+                    $(saveBtn).html('Bestellung gespeichert')
+                }, 500)
             }
         }
     })
