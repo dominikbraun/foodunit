@@ -49,6 +49,11 @@ function buildSupplier(supplierId) {
             renderSupplierInfo(s.name, s.address, s.mon, s.phone)
             renderCats(menu.map(c => c.name))
             renderMenuPage(page)
+
+            window.setTimeout(function () {
+                $('#loader-main').removeClass('d-flex').addClass('d-none')
+                $('#loaded-content-main').removeClass('d-none')
+            }, 450)
         }
     })
 }
@@ -64,6 +69,11 @@ function buildCart(offerId) {
             renderRemark(cart.remark)
             total = cart.total
             renderTotal(total)
+
+            window.setTimeout(function () {
+                $('#loader-cart').removeClass('d-flex').addClass('d-none')
+                $('#loaded-content-cart').removeClass('d-none')
+            }, 450)
         }
     })
 }
