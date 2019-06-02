@@ -73,56 +73,65 @@ function removeItem() {
 let offerId = 0
 
 function saveCart() {
-    $.ajax({
-        url: 'api/offers',
-        type: 'get',
-        success: function (res) {
-            let offers = JSON.parse(res)
-            offerId = offers[0].supplier_id
-        }
-    })
-
-    let calls = 0
-
-    let remark = $('#cart-remark').val()
-
-    $.ajax({
-        url: 'api/remark/' + offer + '/' + remark,
-        type: 'get',
-        beforeSend: function(xhr) {
-            calls++;
-        },
-        success: function (res) {
-            calls--;
-            if (calls === 0) {
-                window.setTimeout(function () {
-                    $(saveBtn).html('Bestellung gespeichert')
-                }, 500)
+    if (offerId === 0) {
+        $.ajax({
+            url: 'api/offers',
+            type: 'get',
+            success: function (res) {
+                let offers = JSON.parse(res)
+                offerId = offers[0].supplier_id
+                continueSaveCart()
             }
-        }
-    })
+        })
+    } else {
+        continueSaveCart()
+    }
+}
 
+function continueSaveCart() {
+    let calls = 0
+    let remark = $('#cart-remark').text()
+
+    if (remark !== '') {
+        $.ajax({
+            url: 'api/remark/' + offerId + '/' + remark,
+            type: 'get',
+            beforeSend: function(xhr) {
+                calls++;
+            },
+            success: function (res) {
+                calls--;
+                if (calls === 0) {
+                    window.setTimeout(function () {
+                        $(saveBtn).html('Bestellung gespeichert')
+                    }, 500)
+                }
+            }
+        })
+    }
     for (let id in cart) {
         for (let i = 0; i < cart[id]; i++) {
             $.ajax({
-                url: 'api/add/' + offer + '/' + id,
+                url: 'api/add/' + offerId + '/' + id,
                 type: 'get',
                 beforeSend: function(xhr) {
                     calls++;
                 },
                 success: function (res) {
                     calls--;
+
                     if (calls === 0) {
-                        $(saveBtn).html('Bestellung gespeichert')
+                        window.setTimeout(function () {
+                            $(saveBtn).html('Bestellung gespeichert')
+                        }, 500)
                     }
                 }
             })
         }
     }
-
     for (let id of explicitRemoves) {
         $.ajax({
-            url: 'api/del/' + offer + '/' + id,
+            url: 'api/del/' + offerId + '/' + id,
             type: 'get',
             beforeSend: function(xhr) {
                 calls++;
