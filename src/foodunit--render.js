@@ -35,6 +35,9 @@ function renderEmail(email) {
 }
 
 function renderTotal(total) {
+    if (total < 0) {
+        total = 0
+    }
     $('#total').text(total.toFixed(2))
 }
 

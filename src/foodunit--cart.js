@@ -41,7 +41,7 @@ function addItem() {
         cart[id] = 1
     }
 
-    let dish = {dish_id: id, name: name}
+    let dish = {dish_id: id, name: name, price: price}
     renderAddedCartDish(dish)
 
     total += parseFloat(price)
