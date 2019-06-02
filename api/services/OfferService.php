@@ -71,7 +71,8 @@ class OfferService
             $email = $row['email'];
             $position = [
                 'dish_id' => $row['dish_id'],
-                'name' => $row['name']
+                'name' => $row['name'],
+                'price' => $row['price']
             ];
             $found = false;
 

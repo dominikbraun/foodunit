@@ -69,7 +69,7 @@ function renderAllOrders(orders) {
             html += '<li class="list-inline text-xs text-strong"><div class="row m-0"><div class="col-9 px-2 py-3">'
             html += d.name
             html += '</div><div class="col-3 py-3 text-right">'
-            html += '0'//d.price
+            html += parseFloat(d.price).toFixed(2)
             html += ' &euro;</div></div></li>'
         }
 
