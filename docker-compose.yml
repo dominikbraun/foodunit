@@ -7,3 +7,5 @@ services:
     image: foodunit
     ports:
     - 8080:80
+    volumes:
+    - .:/srv/app/public
