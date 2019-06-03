@@ -29,6 +29,7 @@ class Context
      */
     public static function set(string $key)
     {
-        setcookie(self::$key, $key, 0, '/', '', false, true);
+        $expires = time() + 60 * 60 * 24 * 30;
+        setcookie(self::$key, $key, $expires, '/', '', false, true);
     }
 }
