@@ -64,12 +64,14 @@ function buildCart(offerId) {
         type: 'get',
         success: function (res) {
             let cart = JSON.parse(res)
-            renderCartDishes(cart.dishes, true)
+
             renderEmail(cart.email)
             renderRemark(cart.remark)
-            total = cart.total
-            renderTotal(total)
 
+            for (let item of cart.dishes) {
+                item.fromServer = true
+                addToCart(item)
+            }
             window.setTimeout(function () {
                 $('#loader-cart').removeClass('d-flex').addClass('d-none')
                 $('#loaded-content-cart').removeClass('d-none')
