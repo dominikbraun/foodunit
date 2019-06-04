@@ -12,6 +12,8 @@ $(function () {
         e.preventDefault()
         saveHandler()
     })
+    $('#show-all-orders').on('click', showAllOrders)
+    $('#cart-remark').on('keydown', enableSaveBtn)
 })
 
 function addHandler() {
@@ -61,7 +63,7 @@ function removeFromCart(item, element) {
 }
 
 function saveHandler() {
-    let remark = $('#cart-remark').text()
+    let remark = $('#cart-remark').val()
     saveCart(remark)
 }
 
@@ -136,6 +138,33 @@ function finishSaveCart() {
         cart[i].fromServer = true
     }
     disableSaveBtn()
+}
+
+function showAllOrders() {
+    if (offerId === -1) {
+        $.ajax({
+            url: 'api/offers',
+            type: 'get',
+            success: function (res) {
+                let offers = JSON.parse(res)
+                offerId = offers[0].supplier_id
+                continueShowAllOrders()
+            }
+        })
+    } else {
+        continueShowAllOrders()
+    }
+}
+
+function continueShowAllOrders() {
+    $.ajax({
+        url: 'api/orders/' + offerId,
+        type: 'get',
+        success: function (res) {
+            let orders = JSON.parse(res)
+            renderAllOrders(orders)
+        }
+    })
 }
 
 function enableSaveBtn() {
