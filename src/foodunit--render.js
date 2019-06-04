@@ -47,7 +47,7 @@ function renderTotal(total) {
 
 function renderCartDishes(dishes, isFromServer) {
     for (let i of dishes) {
-        let html = '<li class="list-inline text-xs text-strong new-cart-item" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-10 px-2 py-3">' + i.name + '</div><div class="col-2 py-3 remove-item text-center" data-dish-id="' + i.dish_id + '" data-from-server="' + isFromServer + '" data-dish-price="' + i.price + '">&#10005;</div></div></li>'
+        let html = '<li class="list-inline text-xs text-strong new-cart-item" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-7 col-lg-6 px-2 py-3">' + i.name + '</div><div class="col-3 col-lg-3 px-1 py-3 text-right">' + parseFloat(i.price).toFixed(2) + ' &euro;</div><div class="col-2 col-lg-3 py-3 remove-item text-center" data-dish-id="' + i.dish_id + '" data-from-server="' + isFromServer + '" data-dish-price="' + i.price + '">&#10005;</div></div></li>'
         $('#cart-items').append(html)
     }
 }
