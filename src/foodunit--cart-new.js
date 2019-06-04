@@ -86,25 +86,27 @@ function continueSaveCart(remark) {
     let calls = 0
 
     for (let item of cart) {
-        $.ajax({
-            url: 'api/add/' + offerId + '/' + item.dish_id,
-            type: 'get',
-            beforeSend: function () {
-                calls++
-            },
-            success: function () {
-                if (--calls === 0) {
-                    finishSaveCart()
+        if (item.fromServer === false) {
+            $.ajax({
+                url: 'api/add/' + offerId + '/' + item.dish_id,
+                type: 'get',
+                beforeSend: function () {
+                    calls++
+                },
+                success: function () {
+                    if (--calls === 0) {
+                        finishSaveCart()
+                    }
                 }
-            }
-        })
+            })
+        }
     }
     for (let item of removes) {
         $.ajax({
             url: 'api/del/' + offerId + '/' + item.dish_id,
             type: 'get',
-            beforeSend: function() {
-                calls++;
+            beforeSend: function () {
+                calls++
             },
             success: function () {
                 if (--calls === 0) {
@@ -117,8 +119,8 @@ function continueSaveCart(remark) {
         $.ajax({
             url: 'api/remark/' + offerId + '/' + remark,
             type: 'get',
-            beforeSend: function() {
-                calls++;
+            beforeSend: function () {
+                calls++
             },
             success: function () {
                 if (--calls === 0) {
@@ -147,6 +149,8 @@ function animateSaveBtn() {
 }
 
 function disableSaveBtn() {
-    let markup = 'Bestellung gespeichert'
-    $('#save-cart').attr('disabled', true).html(markup)
+    window.setTimeout(function () {
+        let markup = 'Bestellung gespeichert'
+        $('#save-cart').attr('disabled', true).html(markup)
+    }, 350)
 }

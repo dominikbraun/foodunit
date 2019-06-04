@@ -49,15 +49,15 @@ function renderTotal(total) {
     })
 }
 
-function renderCartDishes(dishes, isFromServer) {
+function renderCartDishes(dishes) {
     for (let i of dishes) {
-        let html = '<li class="list-inline text-xs text-strong new-cart-item" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-8 col-lg-7 col-xl-7 px-2 py-3">' + i.name + '</div><div class="col-2 col-lg-3 col-xl-3 px-1 py-3">' + parseFloat(i.price).toFixed(2) + ' &euro;</div><div class="col-2 col-lg-2 col-xl-2 py-3 remove-item text-center" data-dish-id="' + i.dish_id + '" data-from-server="' + isFromServer + '" data-dish-price="' + i.price + '">&#10005;</div></div></li>'
+        let html = '<li class="list-inline text-xs text-strong new-cart-item" data-dish-id="' + i.dish_id + '"><div class="row m-0"><div class="col-8 col-lg-7 col-xl-7 px-2 py-3">' + i.name + '</div><div class="col-2 col-lg-3 col-xl-3 px-1 py-3">' + parseFloat(i.price).toFixed(2) + ' &euro;</div><div class="col-2 col-lg-2 col-xl-2 py-3 remove-item text-center" data-dish-id="' + i.dish_id + '" data-from-server="' + i.fromServer + '" data-dish-price="' + i.price + '">&#10005;</div></div></li>'
         $('#cart-items').append(html)
     }
 }
 
 function renderAddedCartDish(dish) {
-    renderCartDishes([dish], false)
+    renderCartDishes([dish])
 }
 
 function renderRemovedCartDish(e) {
