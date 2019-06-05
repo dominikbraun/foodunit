@@ -224,9 +224,11 @@ class OfferService
      */
     public function insertRemark(int $offerId, string $remark, string $key)
     {
+        $r = $remark === '@none' ? '' : $remark;
+
         $bindings = [
             'offer_id' => $offerId,
-            'remark' => $remark,
+            'remark' => $r,
             'key' => $key
         ];
         $success = $this->db->exec(/** @lang sql */'

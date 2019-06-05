@@ -117,20 +117,20 @@ function continueSaveCart(remark) {
             }
         })
     }
-    if (remark !== '') {
-        $.ajax({
-            url: 'api/remark/' + offerId + '/' + remark,
-            type: 'get',
-            beforeSend: function () {
-                calls++
-            },
-            success: function () {
-                if (--calls === 0) {
-                    finishSaveCart()
-                }
+    let r = remark === '' ? '@none' : remark
+
+    $.ajax({
+        url: 'api/remark/' + offerId + '/' + r,
+        type: 'get',
+        beforeSend: function () {
+            calls++
+        },
+        success: function () {
+            if (--calls === 0) {
+                finishSaveCart()
             }
-        })
-    }
+        }
+    })
 }
 
 function finishSaveCart() {
