@@ -1,28 +1,37 @@
 const loginBtn = '#login'
 const emailInp = '#email'
 
-$(registerLoginHandlers)
-
-function registerLoginHandlers() {
+$(function registerLoginHandlers() {
     $(loginBtn).on('click', function (e) {
         e.preventDefault()
-        login()
+        loginHandler()
+    })
+})
+
+function loginHandler() {
+    animateLoginBtn()
+    let email = $(emailInp).val()
+
+    $.ajax({
+        url: 'api/sso/' + email,
+        type: 'get',
+        success: function (res) {
+            let ok = JSON.parse(res) === true
+            if (JSON.parse(res) === true) {
+                disableLoginBtn('E-Mail gesendet')
+            } else {
+                disableLoginBtn('Es ist ein Fehler aufgetreten.')
+            }
+        }
     })
 }
 
-function login() {
-    $(loginBtn).attr('disabled', true)
-    $(loginBtn).html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>')
+function animateLoginBtn() {
+    let markup = '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+    $(loginBtn).attr('disabled', true).html(markup)
+}
 
-    let email = $(emailInp).val()
-    let endpoint = '/sso/' + email
-
-    req(endpoint, function (res) {
-        let ok = JSON.parse(res) === true
-        if (ok) {
-            $(loginBtn).html('E-Mail gesendet')
-        } else {
-            $(loginBtn).html('Es ist ein Fehler aufgetreten.')
-        }
-    })
+function disableLoginBtn(msg) {
+    let markup = msg
+    $(loginBtn).attr('disabled', true).html(markup)
 }
