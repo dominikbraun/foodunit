@@ -33,7 +33,7 @@ function removeHandler() {
     let item = {
         dish_id: e.attr('data-dish-id'),
         price: e.attr('data-dish-price'),
-        fromServer: e.attr('data-from-server')
+        fromServer: e.attr('data-from-server') === 'true'
     }
     removeFromCart(item, e.parent())
     enableSaveBtn()
@@ -54,7 +54,7 @@ function removeFromCart(item, element) {
             break
         }
     }
-    if (item.fromServer) {
+    if (item.fromServer === true) {
         removes.push(item)
     }
     total -= parseFloat(item.price)
