@@ -137,6 +137,7 @@ function finishSaveCart() {
     for (let i = 0; i < cart.length; i++) {
         cart[i].fromServer = true
     }
+    $('.remove-item').attr('data-from-server', 'true')
     disableSaveBtn()
 }
 
