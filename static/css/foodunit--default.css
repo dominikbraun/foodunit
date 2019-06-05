@@ -7,7 +7,6 @@ body {
 }
 
 .bg-beige {
-    /*background-color: #FCF9F2;*/
     background-color: #fffbf4;
 }
 
@@ -173,7 +172,7 @@ input:focus {
 }
 
 .bg-dark-tr {
-    background-color: rgba(40, 44, 48, .5) !important;
+    background-color: rgba(40, 44, 48, .3) !important;
 }
 
 .outline-0, .outline-0:focus {

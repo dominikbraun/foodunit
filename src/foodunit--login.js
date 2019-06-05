@@ -32,6 +32,5 @@ function animateLoginBtn() {
 }
 
 function disableLoginBtn(msg) {
-    let markup = msg
-    $(loginBtn).attr('disabled', true).html(markup)
+    $(loginBtn).attr('disabled', true).html(msg)
 }
