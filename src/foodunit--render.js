@@ -18,20 +18,18 @@ function renderCats(cats) {
 }
 
 function renderMenuPage(i) {
-    $('#cat').fadeOut(100, function () {
-        $(this).text(menu[i].name)
-        $(this).fadeIn(100)
-    })
+    $('#menu-page').fadeOut(110, function () {
+        $('#cat').text(menu[i].name)
 
-    $('#bg-container').css('background-image', 'static/img/' + menu[i].img)
+        $('#bg-container').css('background-image', 'url(static/img/' + menu[i].img + ')')
 
-    $('#dishes').fadeOut(100, function () {
-        $(this).empty()
+        $('#dishes').empty()
+
         for (let d of menu[i].dishes) {
             let html = '<div class="col-12 col-xl-6 px-5 py-3 add-item" data-dish-id="' + d.id + '" data-dish-name="' + d.name + '" data-dish-price="' + d.price + '"><div class="row"><div class="col-12 col-lg-9"><span class="text-md text-very-strong">' + d.name + '</span><br /><span class="text-xs"><i>' + d.desc + '</i></span></div><div class="col-12 col-lg-3 text-right">+ <span class="text-white text-strong price">' + Number.parseFloat(d.price).toFixed(2) + ' &euro;</span></div></div></div>'
-            $(this).append(html)
+            $('#dishes').append(html)
         }
-        $(this).fadeIn(100)
+        $(this).fadeIn(160)
     })
 }
 
