@@ -177,6 +177,7 @@ class OfferService
                 WHERE   s._key = :key
                 LIMIT   1
             )
+            LIMIT 1
         ', $bindings);
 
         return $success;
