@@ -2,7 +2,8 @@
 ; Copy this file, rename the copy to conf.ini and fill in appropriate values.
 
 ; The PDO connection string. Given 'foodunit2' as a MySQL database running
-; on the localhost, it would be 'mysql:host=localhost;dbname=foodunit2'.
+; on the localhost, it would be 'mysql:host=localhost;dbname=foodunit2;charset=utf8'.
+; Note: The connection string has to contain the 'charset=utf8' setting!
 db_con_str = ''
 
 ; The database user used by FoodUnit. It is recommended to create a dedicated
@@ -21,8 +22,8 @@ mail_from = ''
 ; The subject of the confirmation mail.
 mail_subject = ''
 
-; The public API URL (must end with /api)
+; The public API URL (must end with /api).
 api_url = ''
 
-; The url the user is redirected to after confirming his e-mail address
+; The url the user is redirected to after confirming his e-mail address.
 redirect_url = ''
