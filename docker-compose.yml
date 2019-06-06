@@ -24,6 +24,7 @@ services:
       - funet
     volumes:
     - .:/srv/app/public
+    - /srv/app/public/api/vendor
     depends_on:
     - db
 networks:
