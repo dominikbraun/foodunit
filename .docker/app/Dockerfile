@@ -12,7 +12,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY . /srv/app/public
 
 # Explicitly override the default configuration.
-COPY .docker/php/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY .docker/app/vhost.conf /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /srv/app/public
 
