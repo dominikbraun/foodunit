@@ -10,22 +10,25 @@ services:
       MYSQL_PASSWORD: app
       MYSQL_ROOT_PASSWORD: foodunit2
     networks:
-      - funet
+    - funet
     volumes:
     - .docker/sql:/docker-entrypoint-initdb.d
+    restart: on-failure
   app:
     build:
       context: .
-      dockerfile: .docker/php/Dockerfile
+      dockerfile: .docker/app/Dockerfile
     image: foodunit
     ports:
     - "8080:80"
     networks:
-      - funet
+    - funet
     volumes:
     - .:/srv/app/public
     - /srv/app/public/api/vendor
     depends_on:
     - db
+    restart: on-failure
 networks:
   funet:
+    driver: bridge
