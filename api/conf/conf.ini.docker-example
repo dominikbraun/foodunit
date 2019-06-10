@@ -1,0 +1,29 @@
+; This file may be used as a template for the actual configuration file.
+; Copy this file, rename the copy to conf.ini and fill in appropriate values.
+
+; The PDO connection string. Given 'foodunit2' as a MySQL database running
+; on the localhost, it would be 'mysql:host=localhost;dbname=foodunit2;charset=utf8'.
+; Note: The connection string has to contain the 'charset=utf8' setting!
+db_con_str = 'mysql:host=db;dbname=foodunit2;charset=utf8'
+
+; The database user used by FoodUnit. It is recommended to create a dedicated
+; user for each application.
+db_user = 'app'
+
+; The database user's password.
+db_pass = 'app'
+
+; The API key for SendGrid which can be obtained after creating a SG account.
+sg_api_key = ''
+
+; The sender of the confirmation mail.
+mail_from = ''
+
+; The subject of the confirmation mail.
+mail_subject = 'Dein FoodUnit-Login'
+
+; The public API URL (must end with /api).
+api_url = 'http://localhost/fu/api'
+
+; The url the user is redirected to after confirming his e-mail address.
+redirect_url = 'http://localhost/fu'
