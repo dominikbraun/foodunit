@@ -1,5 +1,5 @@
 # FoodUnit
-> Eine Webanwendung zum Anbieten und Bestellen von Essen.
+> Biete und bestelle Essen für dein Team.
 
 ## Verbesserungen vornehmen oder Issues selbst beheben
 Jeder Mitarbeiter kann beliebige Verbesserungen umsetzen und sie mit einem Pull-Request in das Projekt übernehmen lassen - sodass man nicht mehr für jede Kleinigkeit ein Issue öffnen muss.
