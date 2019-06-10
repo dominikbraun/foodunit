@@ -23,7 +23,7 @@ mail_from = ''
 mail_subject = 'Dein FoodUnit-Login'
 
 ; The public API URL (must end with /api).
-api_url = 'http://localhost/fu/api'
+api_url = 'http://localhost:8080/api'
 
 ; The url the user is redirected to after confirming his e-mail address.
-redirect_url = 'http://localhost/fu'
+redirect_url = 'http://localhost:8080'
