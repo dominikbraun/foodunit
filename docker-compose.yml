@@ -25,3 +25,13 @@ services:
     depends_on:
     - db
     restart: on-failure
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - "8282:80"
+    volumes:
+      - /sessions
