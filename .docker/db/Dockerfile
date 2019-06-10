@@ -2,7 +2,7 @@
 # FoodUnit database
 #
 
-FROM mysql:5.7
+FROM mariadb:10.3.15
 
 # Mount the directory in order to provide a set of SQL files to execute.
 ADD .docker/sql /docker-entrypoint-initdb.d
