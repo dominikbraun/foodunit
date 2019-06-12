@@ -66,7 +66,7 @@ function renderRemark(remark) {
     $('#cart-remark').val(remark)
 }
 
-function renderAllOrders(orders) {
+function renderAllOrders(orders, total) {
     $('#all-orders-list').empty()
 
     for (let o of orders) {
@@ -96,6 +96,8 @@ function renderAllOrders(orders) {
 
         $('#all-orders-list').append(html)
     }
+
+    $('#all-orders-total').text(parseFloat(total).toFixed(2))
 
     window.setTimeout(function () {
         $('#loader-all-orders').removeClass('d-flex').addClass('d-none')

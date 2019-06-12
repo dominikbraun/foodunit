@@ -66,6 +66,7 @@ class OfferService
         ', $bindings);
 
         $orders = [];
+        $total = 0;
 
         foreach ($positions as $row) {
             $key = $row['session_id'];
@@ -75,6 +76,7 @@ class OfferService
                 'name' => $row['name'],
                 'price' => (float) $row['price']
             ];
+            $total += (float) $row['price'];
             $found = false;
 
             foreach ($orders as &$o) {
@@ -99,7 +101,11 @@ class OfferService
                 ];
             }
         }
-        return $orders;
+        $res = [
+            'orders' => $orders,
+            'total' => $total,
+        ];
+        return $res;
     }
 
     /**
