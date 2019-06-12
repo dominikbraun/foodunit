@@ -60,7 +60,7 @@ class SupplierService
             SELECT      id, cat_id, name, description, price
             FROM        dishes
             WHERE       supplier_id = :supplier_id
-            ORDER BY    id DESC
+            ORDER BY    id ASC
         ', $bindings);
 
         $cats = [];
