@@ -14,6 +14,7 @@ $(function () {
     })
     $('#show-all-orders').on('click', showAllOrders)
     $('#cart-remark').on('keydown', enableSaveBtn)
+    $('#phone-view').on('change', handlePhoneView)
 })
 
 function addHandler() {
@@ -142,6 +143,7 @@ function finishSaveCart() {
 }
 
 function showAllOrders() {
+
     if (offerId === -1) {
         $.ajax({
             url: 'api/offers',
@@ -163,7 +165,8 @@ function continueShowAllOrders() {
         type: 'get',
         success: function (res) {
             let orders = JSON.parse(res)
-            renderAllOrders(orders)
+            //hideScrollbar()
+            renderAllOrders(orders.orders, orders.total)
         }
     })
 }
@@ -183,4 +186,22 @@ function disableSaveBtn() {
         let markup = 'Bestellung gespeichert'
         $('#save-cart').attr('disabled', true).html(markup)
     }, 350)
+}
+
+function hideScrollbar() {
+    $('html').css('overflow-y', 'hidden')
+}
+
+function handlePhoneView() {
+    if ($(this).is(':checked')) {
+        $('#loaded-content-all-orders').fadeOut(90, function () {
+            $('[data-opt]').css('display', 'none')
+            $(this).fadeIn(100)
+        })
+    } else {
+        $('#loaded-content-all-orders').fadeOut(90, function () {
+            $('[data-opt]').css('display', 'block')
+            $(this).fadeIn(100)
+        })
+    }
 }

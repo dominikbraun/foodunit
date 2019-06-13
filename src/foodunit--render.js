@@ -8,7 +8,7 @@ function renderSupplierInfo(name, address, opened, phone) {
 
 function renderCats(cats) {
     for (let i = 0; i < cats.length; i++) {
-        let html = '<a class="text-dark mx-2 select-cat" data-page="' + i +'">' + cats[i] + '</a>'
+        let html = '<a class="text-dark mx-2 py-1 select-cat" data-page="' + i +'">' + cats[i] + '</a>'
 
         if (i < cats.length - 1) {
             html += '/'
@@ -20,6 +20,8 @@ function renderCats(cats) {
 function renderMenuPage(i) {
     $('#menu-page').fadeOut(110, function () {
         $('#cat').text(menu[i].name)
+        $('.select-cat').css('border-bottom', 'none')
+        $('[data-page=' + i + ']').css('border-bottom', '2px solid #212529')
 
         $('#bg-container').css('background-image', 'url(static/img/' + menu[i].img + ')')
 
@@ -70,25 +72,25 @@ function renderAllOrders(orders, total) {
     $('#all-orders-list').empty()
 
     for (let o of orders) {
-        let html = '<div class="border-bottom my-4 pb-2"><p class="text-sm text-strong mb-4"><i class="fa fa-user mr-2"></i>'
+        let html = '<div class="border-bottom my-4 pb-2"><p class="text-sm text-strong mb-4" data-opt><i class="fa fa-user mr-2"></i>'
         html += o.email
         html += '</p><ul class="p-0">'
 
         for (let d of o.positions) {
             html += '<li class="list-inline text-xs text-strong"><div class="row m-0"><div class="col-9 px-2 py-3">'
             html += d.name
-            html += '</div><div class="col-3 py-3 text-right">'
+            html += '</div><div class="col-3 py-3 text-right" data-opt>'
             html += parseFloat(d.price).toFixed(2)
             html += ' &euro;</div></div></li>'
         }
 
-        html += '<li class="list-inline text-xs text-strong"><div class="row m-0"><div class="col-7 px-2 py-3 text-muted"><i>Gesamt</i></div><div class="col-5 py-3 text-right text-muted"><i class="fas fa-shopping-cart mr-2"></i><i>'
+        html += '<li class="list-inline text-xs text-strong" data-opt><div class="row m-0"><div class="col-7 px-2 py-3 text-muted"><i>Gesamt</i></div><div class="col-5 py-3 text-right text-muted"><i class="fas fa-shopping-cart mr-2"></i><i>'
         html += parseFloat(o.total).toFixed(2)
         html += ' &euro;</i></div></div></li>'
         html += '</ul>'
 
         if (o.remark !== '') {
-            html += '<p class="text-xs text-dark text-strong"><i class="fas fa-comment mr-2"></i><i>&quot;'
+            html += '<p class="text-xs text-dark text-strong"><i class="fas fa-comment mr-2" data-opt></i><i>&quot;'
             html += o.remark
             html += '&quot;</i></p>'
         }
