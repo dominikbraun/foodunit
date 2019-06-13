@@ -5,7 +5,7 @@ INSERT INTO suppliers	(id, name, address, phone, mon, tue, wed, thu, fri) VALUES
 						(4, "Pizzeria Venezia", "Ostpreußische Str. 7", "09421 968696", "--:-- - --:--", "10:00 - 14:00, 17:00 - 22:00", "10:00 - 14:00, 17:00 - 22:00", "10:00 - 14:00, 17:00 - 22:00", "10:00 - 14:00, 17:00 - 22:00"),
 						(5, "Asia Aroma", "", "", "", "", "", "", "");
 						
-INSERT INTO cats		(id, name, img) VALUES
+INSERT INTO cats (id, name, img) VALUES
 						(1, 'Feinschmecker', 'burgers1.jpg'),
 						(2, 'Fisch', 'fish.jpg'),
 						(3, 'Klassiker', 'classics.jpg'),
@@ -17,10 +17,10 @@ INSERT INTO cats		(id, name, img) VALUES
 						(9, 'Extra-Zutaten', 'pizza2.jpg'),
 						(10, 'Nudelgerichte', 'pasta.jpg'),
 						(11, 'Tagesangebote', 'restaurant1.jpg'),
-						(12, 'Getränke', 'cooled-drinks.jpg'),
+						(12, 'Kalte Getränke', 'cooled-drinks.jpg'),
 						(13, 'Salate', 'green-salad.jpg');
 						
-INSERT INTO dishes		(id, supplier_id, cat_id, name, description, price) VALUES
+INSERT INTO dishes (id, supplier_id, cat_id, name, description, price) VALUES
 						(1, 1, 1, 'Schnitzel mit Pommes', 'paniertes Schweineschnitzel', 6.2),
 						(2, 1, 1, 'Schnitzel "Schweizer Art"', 'mit Käse überbacken, mit Kroketten', 6.7),
 						(3, 1, 1, 'Gyrosteller vom Schwein', 'Pfannengyros mit Krautsalat, Tzatziki und Pommes', 6.8),
@@ -211,9 +211,14 @@ INSERT INTO dishes		(id, supplier_id, cat_id, name, description, price) VALUES
 						(188, 1, 12, 'Coca Cola light', 'Coca Cola light in der 0,5l-Flasche', 2),
 						(189, 1, 12, 'Fanta', 'Fanta in der 0,5l-Flasche', 2),
 						(190, 1, 12, 'Sprite', 'Sprite in der 0,5l-Flasche', 2),
-						(191, 1, 12, 'Coca Cola (Dose)', 'Coca Cola aus der 0,25l-Dose', 1.4),
-						(192, 1, 12, 'Red Bull', 'Red Bull aus der Dose', 2.5),
-						(193, 1, 12, 'Apfelschorle', 'Apfelschorle aus der 0,5l-Flasche', 2),
-						(194, 1, 12, 'Apfel-Kirsche', 'Apfel-Kirsche aus der 0,5l-Flasche', 2),
-						(195, 1, 12, 'Eistee', 'Eistee aus der 0,5l-Flasche', 2),
-						(196, 4, 12, 'Stilles Wasser', 'Vio in der 0,5l-Flasche, ohne Kohlensäure', 2);
+						(191, 1, 12, 'Coca Cola (Dose)', 'Coca Cola in der 0,25l-Dose', 1.4),
+						(192, 1, 12, 'Red Bull', 'Red Bull in der Dose', 2.5),
+						(193, 1, 12, 'Apfelschorle', 'Apfelschorle in der 0,5l-Flasche', 2),
+						(194, 1, 12, 'Apfel-Kirsche', 'Apfel-Kirsche in der 0,5l-Flasche', 2),
+						(195, 1, 12, 'Eistee', 'Eistee in der 0,5l-Flasche', 2),
+						(196, 4, 12, 'Stilles Wasser', 'Vio in der 0,5l-Flasche, ohne Kohlensäure', 2),
+            (197, 2, 12, 'Coca Cola (Dose)', 'Coca Cola in der 0,33l-Dose', 2),
+            (198, 2, 12, 'Coca Cola light (Dose)', 'Coca Cola light in der 0,33l-Dose', 2),
+            (199, 2, 12, 'Fanta (Dose)', 'Fanta Orange in der 0,33l-Dose', 2),
+            (200, 2, 12, 'Fanta Exotic (Dose)', 'Fanta Exotic in der 0,33l-Dose', 2),
+            (201, 2, 12, 'Uludağ (Dose)', 'Uludağ Gazoz in der 0,33l-Dose', 2);
