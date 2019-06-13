@@ -11,11 +11,12 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 	<link rel="stylesheet" href="static/css/foodunit--default.css">
+    <link rel="stylesheet" href="static/css/foodunit--print-all-orders.css" media="print" />
 </head>
 
 <body class="bg-beige">
 
-	<div class="row m-0">
+	<div class="row m-0" id="app">
 		<div class="col-12 col-lg-8 col-xl-10 h-100">
 			<div class="container">
 				<div class="d-flex justify-content-center my-5 py-4" id="loader-main">
@@ -103,7 +104,13 @@
 					<div class="spinner-grow text-dark" role="status"></div>
 				</div>
 				<div class="d-none" id="loaded-content-all-orders">
-					<h1 class="text-ci text-lg text-center m-0 py-5">Alle Bestellungen</h1>
+                    <div class="my-3 text-right">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="phone-view">
+                            <label class="custom-control-label text-sm text-strong pr-3" for="phone-view">Bestellansicht</label>
+                        </div>
+                    </div>
+					<h1 class="text-ci text-lg text-center m-0 pt-3 pb-5" data-opt>Alle Bestellungen</h1>
 					<div class="bg-light rounded text-center py-4">
 						<h5 class="text-ci text-danger supplier-name"></h5>
 						<p class="text-strong mb-0">

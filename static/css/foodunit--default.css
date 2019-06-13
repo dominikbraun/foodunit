@@ -199,6 +199,7 @@ input:focus {
 
 #bg-container {
     background-position: 50% 75%;
+    background-size: cover;
 }
 
 #prev, #next {
