@@ -21,6 +21,7 @@ class ResponseDispatcher
      */
     public function run($response, $status = 200)
     {
+        header('Content-type: application/json');
         echo json_encode($response);
     }
 

@@ -75,7 +75,7 @@ function saveCart(remark) {
             type: 'get',
             success: function (res) {
                 let offers = JSON.parse(res)
-                offerId = offers[0].supplier_id
+                offerId = offers[0].id
                 continueSaveCart(remark)
             }
         })
@@ -118,7 +118,7 @@ function continueSaveCart(remark) {
             }
         })
     }
-    let r = remark === '' ? '@none' : remark
+    let r = remark === '' ? '@none' : encodeURI(remark)
 
     $.ajax({
         url: 'api/remark/' + offerId + '/' + r,
