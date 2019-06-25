@@ -150,7 +150,7 @@ function showAllOrders() {
             type: 'get',
             success: function (res) {
                 let offers = JSON.parse(res)
-                offerId = offers[0].supplier_id
+                offerId = offers[0].id
                 continueShowAllOrders()
             }
         })

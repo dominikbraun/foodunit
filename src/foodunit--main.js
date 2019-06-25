@@ -2,6 +2,7 @@ let menu = []
 let page = 0
 
 let offer = 0
+let supplier = 0
 
 $(function () {
     $('#prev').on('click', function () {
@@ -27,7 +28,8 @@ function getOfferId(buildFn) {
         type: 'get',
         success: function (res) {
             let offers = JSON.parse(res)
-            offer = offers[0].supplier_id
+            offer = offers[0].id
+            supplier = offers[0].supplier_id
 
             buildFn()
         }
@@ -35,7 +37,7 @@ function getOfferId(buildFn) {
 }
 
 function build() {
-   buildSupplier(offer)
+   buildSupplier(supplier)
    buildCart(offer)
 }
 
