@@ -231,6 +231,7 @@ class OfferService
     public function insertRemark(int $offerId, string $remark, string $key)
     {
         $r = $remark === '@none' ? '' : $remark;
+        $r = $this->frittenValidation($r);
 
         $bindings = [
             'offer_id' => $offerId,
@@ -246,5 +247,17 @@ class OfferService
         ', $bindings);
 
         return $success;
+    }
+
+    /**
+     * @param string $remark
+     * @return mixed|string
+     */
+    public function frittenValidation(string $remark)
+    {
+        $remark = str_replace('fritten', 'pommes', $remark);
+        $remark = str_replace('Fritten', 'Pommes', $remark);
+
+        return $remark;
     }
 }
