@@ -1,3 +1,4 @@
 .idea/
-static/img/
+api/conf/*.ini
 api/vendor/
+static/img/*

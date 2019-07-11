@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  db:
+    image: mariadb:10.3.15
+    ports:
+    - "9906:3306"
+    environment:
+      MYSQL_DATABASE: foodunit2
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_PASSWORD: foodunit2
+    volumes:
+    - .docker/sql:/docker-entrypoint-initdb.d
+    restart: on-failure
+  app:
+    build:
+      context: .
+      dockerfile: .docker/app/Dockerfile
+    image: foodunit
+    ports:
+    - "8080:80"
+    volumes:
+    - .:/srv/app/public
+    - /srv/app/public/api/vendor
+    depends_on:
+    - db
+    restart: on-failure
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - "8282:80"
+    volumes:
+      - /sessions

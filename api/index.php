@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Registers all handler functions for the corresponding API endpoints.
+ */
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use \foodunit\core\RouteManager as RouteManager;

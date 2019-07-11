@@ -37,13 +37,20 @@ class RouteManager
     private function loadMappings()
     {
         return [
-            '/offers'                       => 'foodunit\core\RouteHandler:offers',
-            '/dishes/{supplier}'            => 'foodunit\core\RouteHandler:dishes',
-            '/orders/{offer}'               => 'foodunit\core\RouteHandler:orders',
-            '/user-order/{offer}'           => 'foodunit\core\RouteHandler:userOrder',
-            '/add/{offer}/{dish}'           => 'foodunit\core\RouteHandler:add',
-            '/del/{offer}/{dish}'           => 'foodunit\core\RouteHandler:del',
-            '/remark/{offer}'               => 'foodunit\core\RouteHandler:remark'
+            '/offers'                   => 'foodunit\core\RouteHandler:offers',
+            '/menu/{supplier}'          => 'foodunit\core\RouteHandler:menu',
+            '/supplier/{supplier}'      => 'foodunit\core\RouteHandler:supplier',
+            '/supplier-mono/{supplier}' => 'foodunit\core\RouteHandler:supplierMono',
+            '/orders/{offer}'           => 'foodunit\core\RouteHandler:orders',
+            '/user-order/{offer}'       => 'foodunit\core\RouteHandler:userOrder',
+            '/add/{offer}/{dish}'       => 'foodunit\core\RouteHandler:add',
+            '/del/{offer}/{dish}'       => 'foodunit\core\RouteHandler:delete',
+            '/remark/{offer}'           => 'foodunit\core\RouteHandler:getRemark',
+            '/remark/{offer}/{remark}'  => 'foodunit\core\RouteHandler:insertRemark',
+            '/cart-mono/{offer}'        => 'foodunit\core\RouteHandler:cartMono',
+            '/sso/{email}'              => 'foodunit\core\RouteHandler:sso',
+            '/confirm/{token}'          => 'foodunit\core\RouteHandler:confirmSession',
+            '/email'                    => 'foodunit\core\RouteHandler:email',
         ];
     }
 }
