@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="ArtBoard1" x="0" y="0" width="500" height="500" style="fill:none;"/>
+    <g id="ArtBoard11" serif:id="ArtBoard1">
+        <g transform="matrix(0.96,0,0,0.96,10,10)">
+            <path d="M500,31.25C500,14.003 485.997,0 468.75,0L31.25,0C14.003,0 0,14.003 0,31.25L0,468.75C0,485.997 14.003,500 31.25,500L468.75,500C485.997,500 500,485.997 500,468.75L500,31.25Z" style="fill:rgb(239,0,0);"/>
+        </g>
+        <g transform="matrix(15.1436,0,0,15.1436,-1388.1,-2397.71)">
+            <text x="95.955px" y="173.322px" style="font-family:'KaushanScript-Regular', 'Kaushan Script', cursive;font-size:12px;fill:white;">F<tspan x="102.399px " y="173.322px ">o</tspan>od</text>
+            <text x="95.955px" y="185.322px" style="font-family:'KaushanScript-Regular', 'Kaushan Script', cursive;font-size:12px;fill:white;">U<tspan x="104.163px " y="185.322px ">n</tspan>it</text>
+        </g>
+    </g>
+</svg>
