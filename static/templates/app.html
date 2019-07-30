@@ -91,11 +91,12 @@
                 <ul class="p-0" id="cart-items"></ul>
                 <form class="border-top border-bottom">
                     <input class="bg-light rounded text-xs border-0 w-100 mt-4 px-2 py-3" id="cart-remark" type="text" placeholder="W&uuml;nsche und Notizen" />
-                    <button class="btn btn-success rounded text-xs text-strong mt-3 mb-4 w-100 p-2" id="save-cart" disabled>Bestellung gespeichert</button>
+                    <button class="btn btn-success rounded text-xs text-strong mt-3 w-100 p-2" id="save-cart" disabled>Bestellung gespeichert</button>
+                    <div class="alert alert-danger p-2 my-3">
+                        <small><i>Hinweise wie &quot;mit Ketchup&quot; sind verboten, wenn Ketchup standardm&auml;&szlig;ig zum Gericht geh&ouml;rt.</i></small>
+                    </div>
                 </form>
-                <p class="text-danger my-3">
-                    <small><i>Hinweise wie &quot;mit Ketchup&quot; sind verboten, wenn Ketchup standardm&auml;&szlig;ig zum Gericht geh&ouml;rt.</i></small>
-                </p>
+
                 <div class="bg-light mt-4 p-3 shadow-sm">
                     <p class="mb-0 text-strong text-center">Rufst du heute an?<i class="fa fa-phone ml-2"></i></p>
                     <button class="btn btn-white rounded text-xs text-strong mt-4 w-100 p-2" data-toggle="modal" data-target="#all-orders" id="show-all-orders">alle Bestellungen anzeigen</button>
