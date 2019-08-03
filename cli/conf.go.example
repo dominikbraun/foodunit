@@ -1,9 +1,0 @@
-package main
-
-// This file may be used as a template for the actual configuration file.
-// Fill in appropriate values, copy this file and and rename it to conf.go.
-
-const (
-    // The public API URL (must end with /api)
-	ApiUrl = "http://localhost/fu/api"
-)
