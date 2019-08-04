@@ -10,3 +10,7 @@
 
 # Dependency directories
 # vendor/
+
+# FoodUnit binary
+foodunit
+foodunit.exe
