@@ -3,26 +3,29 @@ package service
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 const (
-	defaultCharset string = "utf8"
+	charset string = "utf8"
 )
 
-var cachedInstance *gorm.DB = nil
+var cachedDB *gorm.DB = nil
 
-func NewDatabase(dialect, user, pass, db string) (*gorm.DB, error) {
-	if cachedInstance == nil {
-		conn := fmt.Sprintf("%s:%s@/%s?charset=%s", user, pass, db, defaultCharset)
+func DB() (*gorm.DB, error) {
+	if cachedDB == nil {
 
-		gdb, err := gorm.Open(dialect, conn)
+		c, err := Conf()
 		if err != nil {
 			return nil, err
 		}
 
-		cachedInstance = gdb
-	}
+		conn := fmt.Sprintf("%s:%s@/%s?charset=%s", c.Get("dbuser"), c.Get("dbpass"), c.Get("dbname"), charset)
 
-	return cachedInstance, nil
+		db, err := gorm.Open(c.Get("dbsys").(string), conn)
+		if err != nil {
+			return nil, err
+		}
+		cachedDB = db
+	}
+	return cachedDB, nil
 }

@@ -11,7 +11,7 @@ import (
 
 func routeHandlers() *chi.Mux {
 	r := chi.NewRouter()
-	
+
 	r.Use(
 		render.SetContentType(render.ContentTypeJSON),
 		middleware.Logger,
@@ -20,7 +20,7 @@ func routeHandlers() *chi.Mux {
 		middleware.Recoverer,
 	)
 
-	r.Route("/v1", func (r chi.Router) {
+	r.Route("/v1", func(r chi.Router) {
 		// r.Mount("/user", user.Routes())
 		// r.Mount("/offer", offer.Routes())
 		// r.Mount("/supplier", supplier.Routes())
@@ -33,7 +33,7 @@ func routeHandlers() *chi.Mux {
 
 func Start() error {
 	r := chi.NewRouter()
-	
+
 	walk := func(method string, route string, handle http.Handler, middlewares ...func(http.Handler) http.Handler) error {
 		log.Printf("%s %s\n", method, route)
 		return nil
@@ -42,7 +42,7 @@ func Start() error {
 	if err := chi.Walk(r, walk); err != nil {
 		return err
 	}
-	
+
 	if err := http.ListenAndServe(":8000", r); err != nil {
 		return err
 	}
