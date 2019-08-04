@@ -19,7 +19,11 @@ func DB() (*gorm.DB, error) {
 			return nil, err
 		}
 
-		conn := fmt.Sprintf("%s:%s@/%s?charset=%s", c.Get("dbuser"), c.Get("dbpass"), c.Get("dbname"), charset)
+		user := c.Get("dbuser")
+		pass := c.Get("dbpass")
+		dbname := c.Get("dbname")
+
+		conn := fmt.Sprintf("%s:%s@/%s?charset=%s", user, pass, dbname, charset)
 
 		db, err := gorm.Open(c.Get("dbsys").(string), conn)
 		if err != nil {
