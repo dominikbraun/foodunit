@@ -17,7 +17,7 @@ type Supplier struct {
 	OpenSat    string     `gorm:"type:varchar(50)"`
 	OpenSun    string     `gorm:"type:varchar(50)"`
 	Website    string     `gorm:"type:varchar(253)"`
-	Menu       []Category `gorm:"many2many:supplier_category;"`
+	Menu       []Category `gorm:"foreignkey:SupplierID"`
 }
 
 // `SupplierRepository` provides methods for typical CRUD operations. Its
@@ -31,10 +31,11 @@ type SupplierRepository interface {
 
 // `Category` represents the category or menu's section a dish belongs to.
 type Category struct {
-	ID      uint   `gorm:"primary_key"`
-	Name    string `gorm:"type:varchar(50)"`
-	ImgPath string `gorm:"type:varchar(255)"`
-	Dishes  []Dish `gorm:"foreignkey:CategoryID"`
+	ID         uint   `gorm:"primary_key"`
+	SupplierID uint   `gorm:""`
+	Name       string `gorm:"type:varchar(50)"`
+	ImgPath    string `gorm:"type:varchar(255)"`
+	Dishes     []Dish `gorm:"foreignkey:CategoryID"`
 }
 
 // `CategoryRepository` provides methods for typical CRUD operations. Its
@@ -49,8 +50,8 @@ type CategoryRepository interface {
 // `Dish` represents a meal or food in general that is offered by a `Supplier`,
 // where it is listed as a menu item.
 type Dish struct {
-	ID          uint `gorm:"primary_key"`
-	CategoryID  uint
+	ID          uint   `gorm:"primary_key"`
+	CategoryID  uint   `gorm:""`
 	Name        string `gorm:"type:varchar(50)"`
 	Description string `gorm:"type:varchar(100)"`
 	Price       uint   `gorm:"type:varchar(50)"`
