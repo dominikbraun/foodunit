@@ -17,3 +17,6 @@ foodunit.exe
 
 # FoodUnit config
 server.yaml
+
+# IDE files
+.idea
