@@ -1,6 +1,5 @@
+// Package dl provides Domain Language entities and rules.
 package dl
-
-// DL description for `Supplier`, `Category`, `Dish` and their ORM repositories.
 
 // `Supplier` represents a food supplier like a restaurant or delivery service.
 type Supplier struct {

@@ -1,6 +1,5 @@
+// Package dl provides Domain Language entities and rules.
 package dl
-
-// DL description for `User` and its ORM repository.
 
 // `User` represents a person which can login, create offers and order food.
 type User struct {

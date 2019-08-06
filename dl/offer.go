@@ -1,8 +1,7 @@
+// Package dl provides Domain Language entities and rules.
 package dl
 
 import "time"
-
-// DL description for `Offer`, `Order`, `Position` and their ORM repositories.
 
 // `Offer` represents an `User`'s offer to order food for their team.
 type Offer struct {
