@@ -3,9 +3,9 @@ package dl
 
 // `User` represents a person which can login, create offers and order food.
 type User struct {
-	ID   uint   `gorm:"primary_key"`
-	Mail string `gorm:"type:varchar(254);unique"`
-	Name string `gorm:"type:varchar(100)"`
+	ID   uint
+	Mail string
+	Name string
 }
 
 // `UserRepository` provides methods for typical CRUD operations. Its

@@ -3,20 +3,20 @@ package dl
 
 // `Supplier` represents a food supplier like a restaurant or delivery service.
 type Supplier struct {
-	ID         uint       `gorm:"primary_key"`
-	Name       string     `gorm:"type:varchar(100)"`
-	Street     string     `gorm:"type:varchar(100)"`
-	PostalCode string     `gorm:"type:varchar(50)"`
-	City       string     `gorm:"type:varchar(100)"`
-	OpenMon    string     `gorm:"type:varchar(50)"`
-	OpenTue    string     `gorm:"type:varchar(50)"`
-	OpenWed    string     `gorm:"type:varchar(50)"`
-	OpenThu    string     `gorm:"type:varchar(50)"`
-	OpenFri    string     `gorm:"type:varchar(50)"`
-	OpenSat    string     `gorm:"type:varchar(50)"`
-	OpenSun    string     `gorm:"type:varchar(50)"`
-	Website    string     `gorm:"type:varchar(253)"`
-	Menu       []Category `gorm:"foreignkey:SupplierID"`
+	ID         uint
+	Name       string
+	Street     string
+	PostalCode string
+	City       string
+	OpenMon    string
+	OpenTue    string
+	OpenWed    string
+	OpenThu    string
+	OpenFri    string
+	OpenSat    string
+	OpenSun    string
+	Website    string
+	Menu       []Category
 }
 
 // `SupplierRepository` provides methods for typical CRUD operations. Its
@@ -30,11 +30,11 @@ type SupplierRepository interface {
 
 // `Category` represents the category or menu's section a dish belongs to.
 type Category struct {
-	ID         uint   `gorm:"primary_key"`
-	SupplierID uint   `gorm:""`
-	Name       string `gorm:"type:varchar(50)"`
-	ImgPath    string `gorm:"type:varchar(255)"`
-	Dishes     []Dish `gorm:"foreignkey:CategoryID"`
+	ID         uint
+	SupplierID uint
+	Name       string
+	ImgPath    string
+	Dishes     []Dish
 }
 
 // `CategoryRepository` provides methods for typical CRUD operations. Its
@@ -49,11 +49,11 @@ type CategoryRepository interface {
 // `Dish` represents a meal or food in general that is offered by a `Supplier`,
 // where it is listed as a menu item.
 type Dish struct {
-	ID          uint   `gorm:"primary_key"`
-	CategoryID  uint   `gorm:""`
-	Name        string `gorm:"type:varchar(50)"`
-	Description string `gorm:"type:varchar(100)"`
-	Price       uint   `gorm:"type:varchar(50)"`
+	ID          uint
+	CategoryID  uint
+	Name        string
+	Description string
+	Price       uint
 }
 
 // `DishRepository` provides methods for typical CRUD operations. Its

@@ -5,14 +5,13 @@ import "time"
 
 // `Offer` represents an `User`'s offer to order food for their team.
 type Offer struct {
-	ID         uint      `gorm:"primary_key"`
-	CreatedBy  User      `gorm:"foreignkey:ID"`
-	Supplier   Supplier  `gorm:"foreignkey:ID"`
-	From       time.Time `gorm:""`
-	To         time.Time `gorm:""`
-	IsPlaced   bool      `gorm:""`
-	PickupInfo string    `gorm:"type:varchar(100)"`
-	Orders     []Order   `gorm:""`
+	ID         uint
+	UserID     uint
+	SupplierID uint
+	From       time.Time
+	To         time.Time
+	IsPlaced   bool
+	PickupInfo string
 }
 
 // `OfferRepository` provides methods for typical CRUD operations. Its
@@ -27,9 +26,9 @@ type OfferRepository interface {
 // `Order` represents an `User`'s order that was placed as part of
 // an `Offer`. The list of ordered food is depicted in `Positions`.
 type Order struct {
-	ID        uint       `gorm:"primary_key"`
-	User      User       `gorm:"foreignkey:ID"`
-	Positions []Position `gorm:""`
+	ID      uint
+	UserID  uint
+	OfferID uint
 }
 
 // `OrderRepository` provides methods for typical CRUD operations. Its
@@ -43,10 +42,10 @@ type OrderRepository interface {
 
 // `Position` represents one of multiple items contained in an `Order`.
 type Position struct {
-	ID      uint   `gorm:"primary_key"`
-	OrderID uint   `gorm:""`
-	DishID  uint   `gorm:""`
-	Note    string `gorm:"type:varchar(50)"`
+	ID      uint
+	OrderID uint
+	DishID  uint
+	Note    string
 }
 
 // `PositionRepository` provides methods for typical CRUD operations. Its
