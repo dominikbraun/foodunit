@@ -3,7 +3,7 @@ package dl
 
 // `User` represents a person which can login, create offers and order food.
 type User struct {
-	ID   uint
+	ID   uint64
 	Mail string
 	Name string
 }

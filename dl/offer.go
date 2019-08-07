@@ -5,9 +5,9 @@ import "time"
 
 // `Offer` represents an `User`'s offer to order food for their team.
 type Offer struct {
-	ID         uint
-	UserID     uint
-	SupplierID uint
+	ID         uint64
+	UserID     uint64
+	SupplierID uint64
 	From       time.Time
 	To         time.Time
 	IsPlaced   bool
@@ -17,42 +17,42 @@ type Offer struct {
 // `OfferRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type OfferRepository interface {
-	Create(u *Offer) error
-	Find(id uint) *Offer
-	Update(u *Offer) error
-	Delete(u *Offer) error
+	Create(o *Offer) error
+	Find(id uint64) *Offer
+	Update(o *Offer) error
+	Delete(o *Offer) error
 }
 
 // `Order` represents an `User`'s order that was placed as part of
 // an `Offer`. The list of ordered food is depicted in `Positions`.
 type Order struct {
-	ID      uint
-	UserID  uint
-	OfferID uint
+	ID      uint64
+	UserID  uint64
+	OfferID uint64
 }
 
 // `OrderRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type OrderRepository interface {
-	Create(u *Order) error
-	Find(id uint) *Order
-	Update(u *Order) error
-	Delete(u *Order) error
+	Create(o *Order) error
+	Find(id uint64) *Order
+	Update(o *Order) error
+	Delete(o *Order) error
 }
 
 // `Position` represents one of multiple items contained in an `Order`.
 type Position struct {
-	ID      uint
-	OrderID uint
-	DishID  uint
+	ID      uint64
+	OrderID uint64
+	DishID  uint64
 	Note    string
 }
 
 // `PositionRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type PositionRepository interface {
-	Create(u *Position) error
-	Find(id uint) *Position
-	Update(u *Position) error
-	Delete(u *Position) error
+	Create(p *Position) error
+	Find(id uint64) *Position
+	Update(p *Position) error
+	Delete(p *Position) error
 }
