@@ -3,9 +3,9 @@ package dl
 
 // `User` represents a person which can login, create offers and order food.
 type User struct {
-	ID   uint64
-	Mail string
-	Name string
+	ID   uint64 `db:"id"`
+	Mail string `db:"mail"`
+	Name string `db:"name"`
 }
 
 // `UserRepository` provides methods for typical CRUD operations. Its
