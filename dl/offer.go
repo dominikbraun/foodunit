@@ -8,8 +8,8 @@ type Offer struct {
 	ID         uint64    `db:"id"`
 	UserID     uint64    `db:"user_id"`
 	SupplierID uint64    `db:"supplier_id"`
-	From       time.Time `db:"from"`
-	To         time.Time `db:"to"`
+	ValidFrom  time.Time `db:"valid_from"`
+	ValidTo    time.Time `db:"valid_to"`
 	IsPlaced   bool      `db:"is_placed"`
 	PickupInfo string    `db:"pickup_info"`
 }
