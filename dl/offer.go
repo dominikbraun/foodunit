@@ -1,4 +1,4 @@
-// Package dl provides Domain Language entities and rules.
+// Package `dl` provides Domain Language entities and rules.
 package dl
 
 import "time"

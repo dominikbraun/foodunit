@@ -1,4 +1,4 @@
-// Package dl provides Domain Language entities and rules.
+// Package `dl` provides Domain Language entities and rules.
 package dl
 
 // `Supplier` represents a food supplier like a restaurant or delivery service.

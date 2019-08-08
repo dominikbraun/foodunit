@@ -1,4 +1,4 @@
-// Package dl provides Domain Language entities and rules.
+// Package `dl` provides Domain Language entities and rules.
 package dl
 
 // `User` represents a person which can login, create offers and order food.
