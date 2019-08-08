@@ -19,6 +19,7 @@ type Offer struct {
 type OfferRepository interface {
 	Create(o *Offer) error
 	Find(id uint64) *Offer
+	FindAllActive() []*Offer
 	Update(o *Offer) error
 	Delete(o *Offer) error
 }
@@ -36,6 +37,7 @@ type Order struct {
 type OrderRepository interface {
 	Create(o *Order) error
 	Find(id uint64) *Order
+	FindAllForOffer(offerID uint64) []*Order
 	Update(o *Order) error
 	Delete(o *Order) error
 }
@@ -53,6 +55,7 @@ type Position struct {
 type PositionRepository interface {
 	Create(p *Position) error
 	Find(id uint64) *Position
+	FindAllForOrder(orderID uint64) []*Position
 	Update(p *Position) error
 	Delete(p *Position) error
 }
