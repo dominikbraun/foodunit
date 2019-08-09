@@ -5,6 +5,7 @@ package core
 import (
 	"github.com/dominikbraun/foodunit/core/load"
 	"github.com/dominikbraun/foodunit/dl"
+	"github.com/pkg/errors"
 )
 
 // `OfferInteractor` represents an interface to be used by the adapters
@@ -16,12 +17,18 @@ type OfferInteractor struct {
 }
 
 // Creates a new `OfferInteractor` instance.
-func NewOfferInteractor() *OfferInteractor {
-	return &OfferInteractor{
-		offers:    load.OfferRepository(),
-		orders:    load.OrderRepository(),
-		positions: load.PositionRepository(),
+func NewOfferInteractor() (*OfferInteractor, error) {
+	loader := load.RepositoryLoader
+
+	if !loader.IsReady {
+		return nil, errors.New("repository loader has to be initialized first")
 	}
+
+	return &OfferInteractor{
+		offers:    loader.Offers(),
+		orders:    loader.Orders(),
+		positions: loader.Positions(),
+	}, nil
 }
 
 // `GetOrders` returns all saved orders for a given offer.

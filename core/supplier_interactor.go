@@ -5,6 +5,7 @@ package core
 import (
 	"github.com/dominikbraun/foodunit/core/load"
 	"github.com/dominikbraun/foodunit/dl"
+	"github.com/pkg/errors"
 )
 
 // `SupplierInteractor` represents an interface to be used by the adapters
@@ -16,10 +17,16 @@ type SupplierInteractor struct {
 }
 
 // Creates a new `SupplierInteractor` instance.
-func NewSupplierInteractor() *SupplierInteractor {
-	return &SupplierInteractor{
-		suppliers:  load.SupplierRepository(),
-		categories: load.CategoryRepository(),
-		dishes:     load.DishRepository(),
+func NewSupplierInteractor() (*SupplierInteractor, error) {
+	loader := load.RepositoryLoader
+
+	if !loader.IsReady {
+		return nil, errors.New("repository loader has to be initialized first")
 	}
+
+	return &SupplierInteractor{
+		suppliers:  loader.Suppliers(),
+		categories: loader.Categories(),
+		dishes:     loader.Dishes(),
+	}, nil
 }

@@ -5,6 +5,7 @@ package core
 import (
 	"github.com/dominikbraun/foodunit/core/load"
 	"github.com/dominikbraun/foodunit/dl"
+	"github.com/pkg/errors"
 )
 
 // `UserInteractor` represents an interface to be used by the adapters
@@ -14,8 +15,14 @@ type UserInteractor struct {
 }
 
 // Creates a new `UserInteractor` instance.
-func NewUserInteractor(r dl.UserRepository) *UserInteractor {
+func NewUserInteractor(r dl.UserRepository) (*UserInteractor, error) {
+	loader := load.RepositoryLoader
+
+	if !loader.IsReady {
+		return nil, errors.New("repository loader has to be initialized first")
+	}
+
 	return &UserInteractor{
 		users: load.UserRepository(),
-	}
+	}, nil
 }
