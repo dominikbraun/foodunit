@@ -24,6 +24,7 @@ func NewOfferInteractor() *OfferInteractor {
 	}
 }
 
+// `GetOrders` returns all saved orders for a given offer.
 func (o *OfferInteractor) GetOrders(offerID uint64) []*dl.Order {
 	orders := o.orders.FindByOfferID(offerID)
 	return orders
