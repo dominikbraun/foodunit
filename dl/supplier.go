@@ -40,7 +40,7 @@ type Category struct {
 type CategoryRepository interface {
 	Create(c *Category) error
 	Find(id uint64) *Category
-	FindAllForSupplier(supplierID uint64) []*Category
+	FindBySupplierID(supplierID uint64) []*Category
 	Update(c *Category) error
 	Delete(c *Category) error
 }
@@ -60,7 +60,7 @@ type Dish struct {
 type DishRepository interface {
 	Create(d *Dish) error
 	Find(id uint64) *Dish
-	FindAllForCategory(categoryID uint64) []*Dish
+	FindByCategoryID(categoryID uint64) []*Dish
 	Update(d *Dish) error
 	Delete(d *Dish) error
 }
