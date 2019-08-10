@@ -11,6 +11,7 @@ type User struct {
 // `UserRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type UserRepository interface {
+	Migrate() error
 	Create(u *User) (uint64, error)
 	Find(id uint) (*User, error)
 	FindByMail(mail string) (*User, error)

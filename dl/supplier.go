@@ -21,6 +21,7 @@ type Supplier struct {
 // `SupplierRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type SupplierRepository interface {
+	Migrate() error
 	Create(s *Supplier) (uint64, error)
 	Find(id uint64) (*Supplier, error)
 	Update(s *Supplier) error
@@ -38,6 +39,7 @@ type Category struct {
 // `CategoryRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type CategoryRepository interface {
+	Migrate() error
 	Create(c *Category) (uint64, error)
 	Find(id uint64) (*Category, error)
 	FindBySupplierID(supplierID uint64) ([]*Category, error)
@@ -58,6 +60,7 @@ type Dish struct {
 // `DishRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type DishRepository interface {
+	Migrate() error
 	Create(d *Dish) (uint64, error)
 	Find(id uint64) (*Dish, error)
 	FindByCategoryID(categoryID uint64) ([]*Dish, error)
