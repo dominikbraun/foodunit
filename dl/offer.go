@@ -17,7 +17,7 @@ type Offer struct {
 // `OfferRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type OfferRepository interface {
-	Create(o *Offer) error
+	Create(o *Offer) (uint64, error)
 	Find(id uint64) *Offer
 	FindAllActive() []*Offer
 	Update(o *Offer) error
@@ -35,9 +35,9 @@ type Order struct {
 // `OrderRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type OrderRepository interface {
-	Create(o *Order) error
-	Find(id uint64) *Order
-	FindByOfferID(offerID uint64) []*Order
+	Create(o *Order) (uint64, error)
+	Find(id uint64) (*Order, error)
+	FindByOfferID(offerID uint64) ([]*Order, error)
 	Update(o *Order) error
 	Delete(o *Order) error
 }
@@ -53,9 +53,9 @@ type Position struct {
 // `PositionRepository` provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type PositionRepository interface {
-	Create(p *Position) error
-	Find(id uint64) *Position
-	FindByOrderID(orderID uint64) []*Position
+	Create(p *Position) (uint64, error)
+	Find(id uint64) (*Position, error)
+	FindByOrderID(orderID uint64) ([]*Position, error)
 	Update(p *Position) error
 	Delete(p *Position) error
 }
