@@ -16,7 +16,26 @@ type (
 
 // `Migrate` implements `dl.OfferRepository.`.
 func (o OfferRepository) Migrate() error {
-	panic("implement me")
+	schema := `
+CREATE TABLE offers (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id BIGINT UNSIGNED,
+	supplier_id BIGINT UNSIGNED,
+	valid_from DATETIME,
+	valid_to DATETIME,
+	is_placed BIT(1),
+	pickup_info VARCHAR(100)
+)`
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.Exec(schema); err != nil {
+		return err
+	}
+	return nil
 }
 
 // `Create` implements `dl.OfferRepository.Create`.
@@ -46,7 +65,22 @@ func (o OfferRepository) Delete(offer *dl.Offer) error {
 
 // `Migrate` implements `dl.OrderRepository.Migrate`.
 func (o OrderRepository) Migrate() error {
-	panic("implement me")
+	schema := `
+CREATE TABLE orders (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id BIGINT UNSIGNED,
+	offer_id BIGINT UNSIGNED
+)`
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.Exec(schema); err != nil {
+		return err
+	}
+	return nil
 }
 
 // `Create` implements `dl.OrderRepository.Create`.
@@ -76,7 +110,23 @@ func (o OrderRepository) Delete(order *dl.Order) error {
 
 // `Migrate` implements `dl.PositionRepository.Migrate`.
 func (p PositionRepository) Migrate() error {
-	panic("implement me")
+	schema := `
+CREATE TABLE positions (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	order_id BIGINT UNSIGNED,
+	dish_id BIGINT UNSIGNED,
+	note VARCHAR(100)
+)`
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.Exec(schema); err != nil {
+		return err
+	}
+	return nil
 }
 
 // `Create` implements `dl.PositionRepository.Create`.

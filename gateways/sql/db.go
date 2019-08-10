@@ -20,9 +20,9 @@ func Connect(driver, dbname, user, pass string) error {
 	return nil
 }
 
-func Instance() (*sqlx.DB, error) {
+func GetDB() (*sqlx.DB, error) {
 	if instance == nil {
-		return nil, errors.New("invalid database instance - call `sql.Connect` first")
+		return nil, errors.New("invalid database instance - call `Connect` first")
 	}
 	return instance, nil
 }
