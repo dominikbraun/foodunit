@@ -21,7 +21,7 @@ type OfferRepository interface {
 	Create(o *Offer) (uint64, error)
 	Find(id uint64) (*Offer, error)
 	FindAllActive() ([]*Offer, error)
-	Update(id uint64, o *Offer) error
+	Update(o *Offer) error
 	Delete(o *Offer) error
 }
 
@@ -40,7 +40,7 @@ type OrderRepository interface {
 	Create(o *Order) (uint64, error)
 	Find(id uint64) (*Order, error)
 	FindByOfferID(offerID uint64) ([]*Order, error)
-	Update(id uint64, o *Order) error
+	Update(o *Order) error
 	Delete(o *Order) error
 }
 
@@ -59,6 +59,6 @@ type PositionRepository interface {
 	Create(p *Position) (uint64, error)
 	Find(id uint64) (*Position, error)
 	FindByOrderID(orderID uint64) ([]*Position, error)
-	Update(id uint64, p *Position) error
+	Update(p *Position) error
 	Delete(p *Position) error
 }
