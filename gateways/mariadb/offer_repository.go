@@ -181,7 +181,7 @@ func (o OrderRepository) Delete(order *dl.Order) error {
 func (p PositionRepository) Migrate() error {
 	schema := `
 CREATE TABLE positions (
-	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	order_id	BIGINT UNSIGNED,
 	dish_id		BIGINT UNSIGNED,
 	note		VARCHAR(100)
