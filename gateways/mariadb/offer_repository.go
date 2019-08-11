@@ -19,13 +19,13 @@ type (
 func (o OfferRepository) Migrate() error {
 	schema := `
 CREATE TABLE offers (
-	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id BIGINT UNSIGNED,
-	supplier_id BIGINT UNSIGNED,
-	valid_from DATETIME,
-	valid_to DATETIME,
-	is_placed BIT(1),
-	pickup_info VARCHAR(100)
+	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id		BIGINT UNSIGNED,
+	supplier_id	BIGINT UNSIGNED,
+	valid_from	DATETIME,
+	valid_to	DATETIME,
+	is_placed	BIT(1),
+	pickup_info	VARCHAR(100)
 )`
 
 	db, err := GetDB()
@@ -40,8 +40,9 @@ CREATE TABLE offers (
 // Create implements dl.OfferRepository.Create.
 func (o OfferRepository) Create(offer *dl.Offer) (uint64, error) {
 	query := `
-INSERT INTO offers (user_id, supplier_id, valid_from, valid_to, is_placed, pickup_info)
-VALUES (:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info)`
+INSERT INTO offers
+    		(user_id, supplier_id, valid_from, valid_to, is_placed, pickup_info)
+VALUES		(:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info)`
 
 	db, err := GetDB()
 	if err != nil {
@@ -60,7 +61,9 @@ VALUES (:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info
 func (o OfferRepository) Find(id uint64) (*dl.Offer, error) {
 	var offer dl.Offer
 	query := `
-SELECT * FROM offers WHERE id = ?`
+SELECT	*
+FROM	offers
+WHERE	id = ?`
 
 	db, err := GetDB()
 	if err != nil {
@@ -75,7 +78,11 @@ SELECT * FROM offers WHERE id = ?`
 func (o OfferRepository) FindAllActive() ([]*dl.Offer, error) {
 	var offers []*dl.Offer
 	query := `
-SELECT * FROM offers WHERE valid_from <= ? AND valid_to > ? AND NOT is_placed`
+SELECT	*
+FROM	offers
+WHERE	valid_from <= ?
+	AND	valid_to > ?
+	AND NOT	is_placed`
 
 	db, err := GetDB()
 	if err != nil {
@@ -102,14 +109,14 @@ SELECT * FROM offers WHERE valid_from <= ? AND valid_to > ? AND NOT is_placed`
 // Update implements dl.OfferRepository.Update.
 func (o OfferRepository) Update(offer *dl.Offer) error {
 	query := `
-UPDATE offers SET
-user_id = :user_id,
-supplier_id = :supplier_id,
-valid_from = :valid_from,
-valid_to = :valid_to,
-is_replaced = :is_replaced,
-pickup_info = :pickup_info
-WHERE id = :id`
+UPDATE	offers
+SET		user_id = :user_id,
+		supplier_id = :supplier_id,
+		valid_from = :valid_from,
+		valid_to = :valid_to,
+		is_replaced = :is_replaced,
+		pickup_info = :pickup_info
+WHERE	id = :id`
 
 	db, err := GetDB()
 	if err != nil {
@@ -131,9 +138,9 @@ func (o OfferRepository) Delete(offer *dl.Offer) error {
 func (o OrderRepository) Migrate() error {
 	schema := `
 CREATE TABLE orders (
-	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id BIGINT UNSIGNED,
-	offer_id BIGINT UNSIGNED
+	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id		BIGINT UNSIGNED,
+	offer_id	BIGINT UNSIGNED
 )`
 
 	db, err := GetDB()
@@ -174,10 +181,10 @@ func (o OrderRepository) Delete(order *dl.Order) error {
 func (p PositionRepository) Migrate() error {
 	schema := `
 CREATE TABLE positions (
-	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	order_id BIGINT UNSIGNED,
-	dish_id BIGINT UNSIGNED,
-	note VARCHAR(100)
+	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	order_id	BIGINT UNSIGNED,
+	dish_id		BIGINT UNSIGNED,
+	note		VARCHAR(100)
 )`
 
 	db, err := GetDB()
