@@ -3,6 +3,7 @@ package mariadb
 
 import (
 	"github.com/dominikbraun/foodunit/dl"
+	"time"
 )
 
 type (
@@ -56,18 +57,69 @@ VALUES (:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info
 }
 
 // Find implements dl.OfferRepository.Find.
-func (o OfferRepository) Find(id uint64) *dl.Offer {
-	panic("implement me")
+func (o OfferRepository) Find(id uint64) (*dl.Offer, error) {
+	var offer dl.Offer
+	query := `
+SELECT * FROM offers WHERE id = ?`
+
+	db, err := GetDB()
+	if err != nil {
+		return nil, err
+	}
+
+	_ = db.QueryRowx(query, id).StructScan(&offer)
+	return &offer, nil
 }
 
 // FindAllActive implements dl.OfferRepository.FindAllActive.
-func (o OfferRepository) FindAllActive() []*dl.Offer {
-	panic("implement me")
+func (o OfferRepository) FindAllActive() ([]*dl.Offer, error) {
+	var offers []*dl.Offer
+	query := `
+SELECT * FROM offers WHERE valid_from <= ? AND valid_to > ? AND NOT is_placed`
+
+	db, err := GetDB()
+	if err != nil {
+		return nil, err
+	}
+
+	now := time.Now().Format(time.RFC3339)
+
+	rows, err := db.Queryx(query, now, now)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var offer dl.Offer
+		// ToDo: The error value of Scan has to be handled.
+		_ = rows.Scan(&offer)
+		offers = append(offers, &offer)
+	}
+
+	return offers, nil
 }
 
 // Update implements dl.OfferRepository.Update.
 func (o OfferRepository) Update(offer *dl.Offer) error {
-	panic("implement me")
+	query := `
+UPDATE offers SET
+user_id = :user_id,
+supplier_id = :supplier_id,
+valid_from = :valid_from,
+valid_to = :valid_to,
+is_replaced = :is_replaced,
+pickup_info = :pickup_info
+WHERE id = :id`
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.NamedExec(query, &offer); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Delete implements dl.OfferRepository.Delete.
