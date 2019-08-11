@@ -19,7 +19,7 @@ type (
 func (o OfferRepository) Migrate() error {
 	schema := `
 CREATE TABLE offers (
-	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user_id		BIGINT UNSIGNED,
 	supplier_id	BIGINT UNSIGNED,
 	valid_from	DATETIME,
@@ -138,7 +138,7 @@ func (o OfferRepository) Delete(offer *dl.Offer) error {
 func (o OrderRepository) Migrate() error {
 	schema := `
 CREATE TABLE orders (
-	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user_id		BIGINT UNSIGNED,
 	offer_id	BIGINT UNSIGNED
 )`

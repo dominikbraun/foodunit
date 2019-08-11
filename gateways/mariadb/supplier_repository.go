@@ -18,7 +18,7 @@ type (
 func (s SupplierRepository) Migrate() error {
 	schema := `
 CREATE TABLE suppliers (
-	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	name		VARCHAR(50),
 	street		VARCHAR(50),
 	postal_code	VARCHAR(10),
@@ -66,7 +66,7 @@ func (s SupplierRepository) Delete(supplier *dl.Supplier) error {
 func (c CategoryRepository) Migrate() error {
 	schema := `
 CREATE TABLE categories (
-	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	supplier_id	BIGINT UNSIGNED,
 	name		VARCHAR(25),
 	img_path	VARCHAR(255)
@@ -110,7 +110,7 @@ func (c CategoryRepository) Delete(category *dl.Category) error {
 func (d DishRepository) Migrate() error {
 	schema := `
 CREATE TABLE dishes (
-	id			BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	category_id	BIGINT UNSIGNED,
 	name		VARCHAR(25),
 	description VARCHAR(50),
