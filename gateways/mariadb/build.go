@@ -8,10 +8,10 @@ import (
 
 // namedFields represents multiple field names (keys) mapped against their
 // corresponding placeholder (values).
-type namedFields map[string]string
+type fieldMap map[string]string
 
 // buildInsert builds a MariaDB-compatible query string with placeholders.
-func buildInsert(table string, fields namedFields) string {
+func buildInsert(table string, fields fieldMap) string {
 	var buf bytes.Buffer
 	i := 0
 
@@ -40,7 +40,8 @@ func buildInsert(table string, fields namedFields) string {
 	return buf.String()
 }
 
-func buildCreate(table string, fields namedFields) string {
+// buildInsert builds a MariaDB-compatible query string with column types.
+func buildCreate(table string, fields fieldMap) string {
 	var buf bytes.Buffer
 	i := 0
 

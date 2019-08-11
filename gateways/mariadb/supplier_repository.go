@@ -16,7 +16,7 @@ type (
 
 // Migrate implements dl.SupplierRepository.Migrate.
 func (s SupplierRepository) Migrate() error {
-	schema := buildCreate("suppliers", namedFields{
+	schema := buildCreate("suppliers", fieldMap{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"name":        "VARCHAR(50)",
 		"street":      "VARCHAR(10)",
@@ -63,7 +63,7 @@ func (s SupplierRepository) Delete(supplier *dl.Supplier) error {
 
 // Migrate implements dl.CategoryRepository.Migrate.
 func (c CategoryRepository) Migrate() error {
-	schema := buildCreate("categories", namedFields{
+	schema := buildCreate("categories", fieldMap{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"supplier_id": "BIGINT UNSIGNED",
 		"name":        "VARCHAR(25)",
@@ -106,7 +106,7 @@ func (c CategoryRepository) Delete(category *dl.Category) error {
 
 // Migrate implements dl.DishRepository.Migrate.
 func (d DishRepository) Migrate() error {
-	schema := buildCreate("dishes", namedFields{
+	schema := buildCreate("dishes", fieldMap{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"category_id": "BIGINT UNSIGNED",
 		"name":        "VARCHAR(25)",

@@ -17,7 +17,7 @@ type (
 
 // Migrate implements dl.OfferRepository..
 func (o OfferRepository) Migrate() error {
-	schema := buildCreate("offers", namedFields{
+	schema := buildCreate("offers", fieldMap{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"user_id":     "BIGINT UNSIGNED",
 		"supplier_id": "BIGINT UNSIGNED",
@@ -38,7 +38,7 @@ func (o OfferRepository) Migrate() error {
 
 // Create implements dl.OfferRepository.Create.
 func (o OfferRepository) Create(offer *dl.Offer) (uint64, error) {
-	query := buildInsert("offers", namedFields{
+	query := buildInsert("offers", fieldMap{
 		"user_id":     ":user_id",
 		"supplier_id": ":supplier_id",
 		"valid_from":  ":valid_from",
@@ -139,7 +139,7 @@ func (o OfferRepository) Delete(offer *dl.Offer) error {
 
 // Migrate implements dl.OrderRepository.Migrate.
 func (o OrderRepository) Migrate() error {
-	schema := buildCreate("orders", namedFields{
+	schema := buildCreate("orders", fieldMap{
 		"id":       "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"user_id":  "BIGINT UNSIGNED",
 		"offer_id": "BIGINT UNSIGNED",
@@ -181,7 +181,7 @@ func (o OrderRepository) Delete(order *dl.Order) error {
 
 // Migrate implements dl.PositionRepository.Migrate.
 func (p PositionRepository) Migrate() error {
-	schema := buildCreate("positions", namedFields{
+	schema := buildCreate("positions", fieldMap{
 		"id":       "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"order_id": "BIGINT UNSIGNED",
 		"dish_id":  "BIGINT UNSIGNED",
