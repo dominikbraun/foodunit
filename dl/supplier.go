@@ -24,7 +24,7 @@ type SupplierRepository interface {
 	Migrate() error
 	Create(s *Supplier) (uint64, error)
 	Find(id uint64) (*Supplier, error)
-	Update(s *Supplier) error
+	Update(id uint64, s *Supplier) error
 	Delete(s *Supplier) error
 }
 
@@ -43,7 +43,7 @@ type CategoryRepository interface {
 	Create(c *Category) (uint64, error)
 	Find(id uint64) (*Category, error)
 	FindBySupplierID(supplierID uint64) ([]*Category, error)
-	Update(c *Category) error
+	Update(id uint64, c *Category) error
 	Delete(c *Category) error
 }
 
@@ -64,6 +64,6 @@ type DishRepository interface {
 	Create(d *Dish) (uint64, error)
 	Find(id uint64) (*Dish, error)
 	FindByCategoryID(categoryID uint64) ([]*Dish, error)
-	Update(d *Dish) error
+	Update(id uint64, d *Dish) error
 	Delete(d *Dish) error
 }
