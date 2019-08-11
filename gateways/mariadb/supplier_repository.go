@@ -113,7 +113,7 @@ CREATE TABLE dishes (
 	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	category_id	BIGINT UNSIGNED,
 	name		VARCHAR(25),
-	description VARCHAR(50),
+	description	VARCHAR(50),
 	price		INT(8) UNSIGNED
 )`
 
