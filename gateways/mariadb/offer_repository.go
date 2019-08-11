@@ -52,11 +52,7 @@ VALUES (:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info
 		return 0, err
 	}
 
-	id, err := r.LastInsertId()
-	if err != nil {
-		return 0, err
-	}
-	return uint64(id), nil
+	return lastInsertID(r)
 }
 
 // Find implements dl.OfferRepository.Find.
