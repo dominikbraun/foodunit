@@ -39,10 +39,14 @@ CREATE TABLE offers (
 
 // Create implements dl.OfferRepository.Create.
 func (o OfferRepository) Create(offer *dl.Offer) (uint64, error) {
-	query := `
-INSERT INTO offers
-    		(user_id, supplier_id, valid_from, valid_to, is_placed, pickup_info)
-VALUES		(:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info)`
+	query := buildInsert("offers", namedFields{
+		"user_id":     ":user_id",
+		"supplier_id": ":supplier_id",
+		"valid_from":  ":valid_from",
+		"valid_to":    ":valid_to",
+		"is_placed":   ":is_placed",
+		"pickup_info": ":pickup_info",
+	})
 
 	db, err := GetDB()
 	if err != nil {

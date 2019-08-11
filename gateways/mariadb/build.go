@@ -6,7 +6,8 @@ import (
 	"fmt"
 )
 
-// namedFields represents multiple field names mapped against placeholders.
+// namedFields represents multiple field names (keys) mapped against their
+// corresponding placeholder (values).
 type namedFields map[string]string
 
 // buildInsert builds a MariaDB-compatible query string with placeholders.
