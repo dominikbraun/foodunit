@@ -17,16 +17,15 @@ type (
 
 // Migrate implements dl.OfferRepository..
 func (o OfferRepository) Migrate() error {
-	schema := `
-CREATE TABLE offers (
-	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id		BIGINT UNSIGNED,
-	supplier_id	BIGINT UNSIGNED,
-	valid_from	DATETIME,
-	valid_to	DATETIME,
-	is_placed	BIT(1),
-	pickup_info	VARCHAR(100)
-)`
+	schema := buildCreate("offers", namedFields{
+		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
+		"user_id":     "BIGINT UNSIGNED",
+		"supplier_id": "BIGINT UNSIGNED",
+		"valid_from":  "DATETIME",
+		"valid_to":    "DATETIME",
+		"is_placed":   "BIT(1)",
+		"pickup_info": "VARCHAR(100)",
+	})
 
 	db, err := GetDB()
 	if err != nil {
@@ -140,12 +139,11 @@ func (o OfferRepository) Delete(offer *dl.Offer) error {
 
 // Migrate implements dl.OrderRepository.Migrate.
 func (o OrderRepository) Migrate() error {
-	schema := `
-CREATE TABLE orders (
-	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	user_id		BIGINT UNSIGNED,
-	offer_id	BIGINT UNSIGNED
-)`
+	schema := buildCreate("orders", namedFields{
+		"id":       "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
+		"user_id":  "BIGINT UNSIGNED",
+		"offer_id": "BIGINT UNSIGNED",
+	})
 
 	db, err := GetDB()
 	if err != nil {
@@ -183,13 +181,12 @@ func (o OrderRepository) Delete(order *dl.Order) error {
 
 // Migrate implements dl.PositionRepository.Migrate.
 func (p PositionRepository) Migrate() error {
-	schema := `
-CREATE TABLE positions (
-	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	order_id	BIGINT UNSIGNED,
-	dish_id		BIGINT UNSIGNED,
-	note		VARCHAR(100)
-)`
+	schema := buildCreate("positions", namedFields{
+		"id":       "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
+		"order_id": "BIGINT UNSIGNED",
+		"dish_id":  "BIGINT UNSIGNED",
+		"note":     "VARCHAR(100)",
+	})
 
 	db, err := GetDB()
 	if err != nil {

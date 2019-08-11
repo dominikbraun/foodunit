@@ -16,22 +16,21 @@ type (
 
 // Migrate implements dl.SupplierRepository.Migrate.
 func (s SupplierRepository) Migrate() error {
-	schema := `
-CREATE TABLE suppliers (
-	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	name		VARCHAR(50),
-	street		VARCHAR(50),
-	postal_code	VARCHAR(10),
-	city		VARCHAR(25),
-	open_mon	VARCHAR(25),
-	open_tue	VARCHAR(25),
-	open_wed	VARCHAR(25),
-	open_thu	VARCHAR(25),
-	open_fri	VARCHAR(25),
-	open_sat	VARCHAR(25),
-	open_sun	VARCHAR(25),
-	website		VARCHAR(50)
-)`
+	schema := buildCreate("suppliers", namedFields{
+		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
+		"name":        "VARCHAR(50)",
+		"street":      "VARCHAR(10)",
+		"postal_code": "VARCHAR(25)",
+		"city":        "VARCHAR(25)",
+		"open_mon":    "VARCHAR(25)",
+		"open_tue":    "VARCHAR(25)",
+		"open_wed":    "VARCHAR(25)",
+		"open_thu":    "VARCHAR(25)",
+		"open_fri":    "VARCHAR(25)",
+		"open_sat":    "VARCHAR(25)",
+		"open_sun":    "VARCHAR(25)",
+		"website":     "VARCHAR(25)",
+	})
 
 	db, err := GetDB()
 	if err != nil {
@@ -64,13 +63,12 @@ func (s SupplierRepository) Delete(supplier *dl.Supplier) error {
 
 // Migrate implements dl.CategoryRepository.Migrate.
 func (c CategoryRepository) Migrate() error {
-	schema := `
-CREATE TABLE categories (
-	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	supplier_id	BIGINT UNSIGNED,
-	name		VARCHAR(25),
-	img_path	VARCHAR(255)
-)`
+	schema := buildCreate("categories", namedFields{
+		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
+		"supplier_id": "BIGINT UNSIGNED",
+		"name":        "VARCHAR(25)",
+		"img_path":    "VARCHAR(255)",
+	})
 
 	db, err := GetDB()
 	if err != nil {
@@ -108,14 +106,13 @@ func (c CategoryRepository) Delete(category *dl.Category) error {
 
 // Migrate implements dl.DishRepository.Migrate.
 func (d DishRepository) Migrate() error {
-	schema := `
-CREATE TABLE dishes (
-	id		BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	category_id	BIGINT UNSIGNED,
-	name		VARCHAR(25),
-	description	VARCHAR(50),
-	price		INT(8) UNSIGNED
-)`
+	schema := buildCreate("dishes", namedFields{
+		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
+		"category_id": "BIGINT UNSIGNED",
+		"name":        "VARCHAR(25)",
+		"description": "VARCHAR(50)",
+		"price":       "INT(8) UNSIGNED",
+	})
 
 	db, err := GetDB()
 	if err != nil {

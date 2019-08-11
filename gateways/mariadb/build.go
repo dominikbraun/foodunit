@@ -39,3 +39,21 @@ func buildInsert(table string, fields namedFields) string {
 	buf.WriteString(")")
 	return buf.String()
 }
+
+func buildCreate(table string, fields namedFields) string {
+	var buf bytes.Buffer
+	i := 0
+
+	buf.WriteString(fmt.Sprintf("CREATE TABLE %s (", table))
+
+	for f, t := range fields {
+		buf.WriteString(fmt.Sprintf("%s %s", f, t))
+		if i < len(fields)-1 {
+			buf.WriteString(", ")
+		}
+		i++
+	}
+
+	buf.WriteString(")")
+	return buf.String()
+}
