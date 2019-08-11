@@ -38,9 +38,7 @@ CREATE TABLE suppliers (
 		return err
 	}
 
-	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
+	_ = db.MustExec(schema)
 	return nil
 }
 
@@ -79,9 +77,7 @@ CREATE TABLE categories (
 		return err
 	}
 
-	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
+	_ = db.MustExec(schema)
 	return nil
 }
 
@@ -126,9 +122,7 @@ CREATE TABLE dishes (
 		return err
 	}
 
-	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
+	_ = db.MustExec(schema)
 	return nil
 }
 

@@ -32,15 +32,31 @@ CREATE TABLE offers (
 		return err
 	}
 
-	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
+	_ = db.MustExec(schema)
 	return nil
 }
 
 // `Create` implements `dl.OfferRepository.Create`.
 func (o OfferRepository) Create(offer *dl.Offer) (uint64, error) {
-	panic("implement me")
+	query := `
+INSERT INTO offers (user_id, supplier_id, valid_from, valid_to, is_placed, pickup_info)
+VALUES (:user_id, :supplier_id, :valid_from, :valid_to, :is_placed, :pickup_info)`
+
+	db, err := GetDB()
+	if err != nil {
+		return 0, err
+	}
+
+	r, err := db.NamedExec(query, offer)
+	if err != nil {
+		return 0, err
+	}
+
+	id, err := r.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+	return uint64(id), nil
 }
 
 // `Find` implements `dl.OfferRepository.Find`.
@@ -77,9 +93,7 @@ CREATE TABLE orders (
 		return err
 	}
 
-	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
+	_ = db.MustExec(schema)
 	return nil
 }
 
@@ -123,9 +137,7 @@ CREATE TABLE positions (
 		return err
 	}
 
-	if _, err = db.Exec(schema); err != nil {
-		return err
-	}
+	_ = db.MustExec(schema)
 	return nil
 }
 
