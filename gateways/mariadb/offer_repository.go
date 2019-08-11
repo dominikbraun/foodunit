@@ -1,5 +1,5 @@
-// package `sql` provides repository implementations as SQL gateways.
-package sql
+// package `mariadb` provides repository implementations as SQL gateways.
+package mariadb
 
 import (
 	"github.com/dominikbraun/foodunit/dl"
@@ -10,7 +10,7 @@ type (
 	OfferRepository struct{}
 	// `OrderRepository` holds methods of `dl.OrderRepository`.
 	OrderRepository struct{}
-	// `PositionRepository` holds methods of `dl.PositionRepository`.
+	// PositionRepository holds methods of `dl.PositionRepository`.
 	PositionRepository struct{}
 )
 

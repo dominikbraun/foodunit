@@ -1,5 +1,5 @@
-// package `sql` provides repository implementations as SQL gateways.
-package sql
+// package `mariadb` provides repository implementations as SQL gateways.
+package mariadb
 
 import (
 	"github.com/dominikbraun/foodunit/dl"
