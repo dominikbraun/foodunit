@@ -19,8 +19,8 @@ type Offer struct {
 type OfferRepository interface {
 	Migrate() error
 	Create(o *Offer) (uint64, error)
-	Find(id uint64) *Offer
-	FindAllActive() []*Offer
+	Find(id uint64) (*Offer, error)
+	FindAllActive() ([]*Offer, error)
 	Update(o *Offer) error
 	Delete(o *Offer) error
 }
