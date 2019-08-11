@@ -1,4 +1,4 @@
-// Package `core` provides types for interacting with the core business
+// Package core provides types for interacting with the core business
 // logic. It depicts the default use case of FoodUnit.
 package core
 
@@ -8,11 +8,11 @@ import (
 	"github.com/pkg/errors"
 )
 
-// `PositionMap` holds multiple positions in an user's order. The key
-// represents the `DishID`, while the value depicts the `Note`.
+// PositionMap holds multiple positions in an user's order. The key
+// represents the DishID, while the value depicts the Note.
 type PositionMap map[uint64]string
 
-// `OfferInteractor` represents an interface to be used by the adapters
+// OfferInteractor represents an interface to be used by the adapters
 // for triggering the core business logic and receiving the results.
 type OfferInteractor struct {
 	offers    dl.OfferRepository
@@ -20,7 +20,7 @@ type OfferInteractor struct {
 	positions dl.PositionRepository
 }
 
-// Creates a new `OfferInteractor` instance.
+// Creates a new OfferInteractor instance.
 func NewOfferInteractor() (*OfferInteractor, error) {
 	loader := load.RepositoryLoader
 
@@ -35,7 +35,7 @@ func NewOfferInteractor() (*OfferInteractor, error) {
 	}, nil
 }
 
-// `SaveOrder` persists a new order that contains the given positions.
+// SaveOrder persists a new order that contains the given positions.
 func (o *OfferInteractor) SaveOrder(userID, offerID uint64, pos PositionMap) error {
 	order := dl.Order{
 		UserID:  userID,
@@ -54,13 +54,13 @@ func (o *OfferInteractor) SaveOrder(userID, offerID uint64, pos PositionMap) err
 			DishID:  id,
 			Note:    note,
 		}
-		// ToDo: The error value of `Create` has to be handled.
+		// ToDo: The error value of Create has to be handled.
 		_, _ = o.positions.Create(&position)
 	}
 	return nil
 }
 
-// `GetOrders` returns all saved orders for a given offer.
+// GetOrders returns all saved orders for a given offer.
 func (o *OfferInteractor) GetOrders(offerID uint64) ([]*dl.Order, error) {
 	orders, err := o.orders.FindByOfferID(offerID)
 	return orders, err

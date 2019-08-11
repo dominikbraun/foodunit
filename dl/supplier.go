@@ -1,7 +1,7 @@
-// Package `dl` provides Domain Language entities and rules.
+// Package dl provides Domain Language entities and rules.
 package dl
 
-// `Supplier` represents a food supplier like a restaurant or delivery service.
+// Supplier represents a food supplier like a restaurant or delivery service.
 type Supplier struct {
 	ID         uint64 `db:"id"`
 	Name       string `db:"name"`
@@ -18,7 +18,7 @@ type Supplier struct {
 	Website    string `db:"website"`
 }
 
-// `SupplierRepository` provides methods for typical CRUD operations. Its
+// SupplierRepository provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type SupplierRepository interface {
 	Migrate() error
@@ -28,7 +28,7 @@ type SupplierRepository interface {
 	Delete(s *Supplier) error
 }
 
-// `Category` represents the category or menu's section a dish belongs to.
+// Category represents the category or menu's section a dish belongs to.
 type Category struct {
 	ID         uint64 `db:"id"`
 	SupplierID uint64 `db:"supplier_id"`
@@ -36,7 +36,7 @@ type Category struct {
 	ImgPath    string `db:"img_path"`
 }
 
-// `CategoryRepository` provides methods for typical CRUD operations. Its
+// CategoryRepository provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type CategoryRepository interface {
 	Migrate() error
@@ -47,7 +47,7 @@ type CategoryRepository interface {
 	Delete(c *Category) error
 }
 
-// `Dish` represents a meal or food in general that is offered by a `Supplier`,
+// Dish represents a meal or food in general that is offered by a Supplier,
 // where it is listed as a menu item.
 type Dish struct {
 	ID          uint64 `db:"id"`
@@ -57,7 +57,7 @@ type Dish struct {
 	Price       uint8  `db:"price"`
 }
 
-// `DishRepository` provides methods for typical CRUD operations. Its
+// DishRepository provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type DishRepository interface {
 	Migrate() error

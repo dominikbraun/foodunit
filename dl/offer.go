@@ -1,9 +1,9 @@
-// Package `dl` provides Domain Language entities and rules.
+// Package dl provides Domain Language entities and rules.
 package dl
 
 import "time"
 
-// `Offer` represents an `User`'s offer to order food for their team.
+// Offer represents an User's offer to order food for their team.
 type Offer struct {
 	ID         uint64    `db:"id"`
 	UserID     uint64    `db:"user_id"`
@@ -14,7 +14,7 @@ type Offer struct {
 	PickupInfo string    `db:"pickup_info"`
 }
 
-// `OfferRepository` provides methods for typical CRUD operations. Its
+// OfferRepository provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type OfferRepository interface {
 	Migrate() error
@@ -25,15 +25,15 @@ type OfferRepository interface {
 	Delete(o *Offer) error
 }
 
-// `Order` represents an `User`'s order that was placed as part of
-// an `Offer`. The list of ordered food is depicted in `Positions`.
+// Order represents an User's order that was placed as part of
+// an Offer. The list of ordered food is depicted in Positions.
 type Order struct {
 	ID      uint64 `db:"id"`
 	UserID  uint64 `db:"user_id"`
 	OfferID uint64 `db:"offer_id"`
 }
 
-// `OrderRepository` provides methods for typical CRUD operations. Its
+// OrderRepository provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type OrderRepository interface {
 	Migrate() error
@@ -44,7 +44,7 @@ type OrderRepository interface {
 	Delete(o *Order) error
 }
 
-// `Position` represents one of multiple items contained in an `Order`.
+// Position represents one of multiple items contained in an Order.
 type Position struct {
 	ID      uint64 `db:"id"`
 	OrderID uint64 `db:"order_id"`
@@ -52,7 +52,7 @@ type Position struct {
 	Note    string `db:"note"`
 }
 
-// `PositionRepository` provides methods for typical CRUD operations. Its
+// PositionRepository provides methods for typical CRUD operations. Its
 // implementations are stored in the /gateways package.
 type PositionRepository interface {
 	Migrate() error
