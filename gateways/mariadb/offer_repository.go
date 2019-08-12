@@ -15,7 +15,7 @@ type (
 	PositionRepository struct{}
 )
 
-// Migrate implements dl.OfferRepository..
+// Migrate implements dl.OfferRepository.Migrate.
 func (o OfferRepository) Migrate() error {
 	schema := buildCreate("offers", fieldMap{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
@@ -63,10 +63,9 @@ func (o OfferRepository) Create(offer *dl.Offer) (uint64, error) {
 // Find implements dl.OfferRepository.Find.
 func (o OfferRepository) Find(id uint64) (*dl.Offer, error) {
 	var offer dl.Offer
-	query := `
-SELECT	*
-FROM	offers
-WHERE	id = ?`
+	query := buildSelect("offers", []string{"*"}, nil, conditionMap{
+		"id": "= ?",
+	})
 
 	db, err := GetDB()
 	if err != nil {
@@ -80,12 +79,11 @@ WHERE	id = ?`
 // FindAllActive implements dl.OfferRepository.FindAllActive.
 func (o OfferRepository) FindAllActive() ([]*dl.Offer, error) {
 	var offers []*dl.Offer
-	query := `
-SELECT	*
-FROM	offers
-WHERE	valid_from <= ?
-	AND	valid_to > ?
-	AND NOT	is_placed`
+	query := buildSelect("offers", []string{"*"}, nil, conditionMap{
+		"valid_from":   "<= ?",
+		"AND valid_to": "> ?",
+		"AND NOT":      "is_placed",
+	})
 
 	db, err := GetDB()
 	if err != nil {
@@ -111,15 +109,14 @@ WHERE	valid_from <= ?
 
 // Update implements dl.OfferRepository.Update.
 func (o OfferRepository) Update(offer *dl.Offer) error {
-	query := `
-UPDATE	offers
-SET		user_id = :user_id,
-		supplier_id = :supplier_id,
-		valid_from = :valid_from,
-		valid_to = :valid_to,
-		is_replaced = :is_replaced,
-		pickup_info = :pickup_info
-WHERE	id = :id`
+	query := buildUpdate("offers", fieldMap{
+		"user_id":     ":user_id",
+		"supplier_id": ":supplier_id",
+		"valid_from":  ":valid_from",
+		"valid_to":    ":valid_to",
+		"is_replaced": ":is_replaced",
+		"pickup_info": ":pickup_info",
+	}, conditionMap{"id": "= :id"})
 
 	db, err := GetDB()
 	if err != nil {
