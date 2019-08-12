@@ -111,7 +111,7 @@ func buildUpdate(table string, set fieldMap, where conditionMap) string {
 
     for f, v := range set {
         buf.WriteString(fmt.Sprintf("%s = %s", f, v))
-        if i < len(fields)-1 {
+        if i < len(set)-1 {
         	buf.WriteString(", ")
         }
         i++
@@ -122,7 +122,7 @@ func buildUpdate(table string, set fieldMap, where conditionMap) string {
 
     for f, c := range where {
     	buf.WriteString(fmt.Sprintf("%s %s", f, c))
-    	if i < len(fields)-1 {
+    	if i < len(where)-1 {
     		buf.WriteString(" ")
     	}
     }
