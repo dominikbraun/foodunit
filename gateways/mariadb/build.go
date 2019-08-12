@@ -98,33 +98,52 @@ func buildSelect(table string, fields []string, joins joinMap, where conditionMa
 		if i < len(fields)-1 {
 			buf.WriteString(" ")
 		}
+		i++
 	}
 	return buf.String()
 }
 
 // buildUpdate builds a MariaDB-compatible SQL statement for updating rows.
 func buildUpdate(table string, set fieldMap, where conditionMap) string {
-    var buf bytes.Buffer
+	var buf bytes.Buffer
 
-    i := 0
-    buf.WriteString(fmt.Sprintf("UPDATE %s SET ", table))
+	i := 0
+	buf.WriteString(fmt.Sprintf("UPDATE %s SET ", table))
 
-    for f, v := range set {
-        buf.WriteString(fmt.Sprintf("%s = %s", f, v))
-        if i < len(set)-1 {
-        	buf.WriteString(", ")
-        }
-        i++
-    }
+	for f, v := range set {
+		buf.WriteString(fmt.Sprintf("%s = %s", f, v))
+		if i < len(set)-1 {
+			buf.WriteString(", ")
+		}
+		i++
+	}
 
-    i = 0
-    buf.WriteString(" WHERE ")
+	i = 0
+	buf.WriteString(" WHERE ")
 
-    for f, c := range where {
-    	buf.WriteString(fmt.Sprintf("%s %s", f, c))
-    	if i < len(where)-1 {
-    		buf.WriteString(" ")
-    	}
-    }
-    return buf.String()
+	for f, c := range where {
+		buf.WriteString(fmt.Sprintf("%s %s", f, c))
+		if i < len(where)-1 {
+			buf.WriteString(" ")
+		}
+		i++
+	}
+	return buf.String()
+}
+
+// buildDelete builds a MariaDB-compatible SQL statement for deleting rows.
+func buildDelete(table string, where conditionMap) string {
+	var buf bytes.Buffer
+
+	i := 0
+	buf.WriteString(fmt.Sprintf("DELETE FROM %s WHERE ", table))
+
+	for f, c := range where {
+		buf.WriteString(fmt.Sprintf("%s %s", f, c))
+		if i < len(where)-1 {
+			buf.WriteString(" ")
+		}
+		i++
+	}
+	return buf.String()
 }
