@@ -8,7 +8,7 @@ import (
 
 type (
 	// fieldMap represents a list of field names mapped against their
-	// corresponding placeholder (INSERT) or data type (CREATE).
+	// corresponding placeholder (INSERT) or data type (CREATE TABLE).
 	fieldMap map[string]string
 	// joinMap represents a list of JOIN types including the table name
 	// mapped against an ON condition.
@@ -18,11 +18,11 @@ type (
 	conditionMap map[string]string
 )
 
-// buildInsert builds a MariaDB-compatible query string with placeholders.
+// buildInsert builds a MariaDB-compatible SQL statement with placeholders.
 func buildInsert(table string, fields fieldMap) string {
 	var buf bytes.Buffer
-	i := 0
 
+	i := 0
 	buf.WriteString(fmt.Sprintf("INSERT INTO %s (", table))
 
 	for f, _ := range fields {
@@ -48,11 +48,11 @@ func buildInsert(table string, fields fieldMap) string {
 	return buf.String()
 }
 
-// buildInsert builds a MariaDB-compatible query string with column types.
+// buildInsert builds a MariaDB-compatible SQL statement with column types.
 func buildCreate(table string, fields fieldMap) string {
 	var buf bytes.Buffer
-	i := 0
 
+	i := 0
 	buf.WriteString(fmt.Sprintf("CREATE TABLE %s (", table))
 
 	for f, t := range fields {
@@ -67,12 +67,12 @@ func buildCreate(table string, fields fieldMap) string {
 	return buf.String()
 }
 
-// buildSelect builds a MariaDB-compatible query string with multiple fields,
+// buildSelect builds a MariaDB-compatible SQL statement with multiple fields,
 // joined tables and WHERE conditions.
 func buildSelect(table string, fields []string, joins joinMap, where conditionMap) string {
 	var buf bytes.Buffer
-	i := 0
 
+	i := 0
 	buf.WriteString("SELECT ")
 
 	for _, f := range fields {
@@ -100,4 +100,31 @@ func buildSelect(table string, fields []string, joins joinMap, where conditionMa
 		}
 	}
 	return buf.String()
+}
+
+// buildUpdate builds a MariaDB-compatible SQL statement for updating rows.
+func buildUpdate(table string, set fieldMap, where conditionMap) string {
+    var buf bytes.Buffer
+
+    i := 0
+    buf.WriteString(fmt.Sprintf("UPDATE %s SET ", table))
+
+    for f, v := range set {
+        buf.WriteString(fmt.Sprintf("%s = %s", f, v))
+        if i < len(fields)-1 {
+        	buf.WriteString(", ")
+        }
+        i++
+    }
+
+    i = 0
+    buf.WriteString(" WHERE ")
+
+    for f, c := range where {
+    	buf.WriteString(fmt.Sprintf("%s %s", f, c))
+    	if i < len(fields)-1 {
+    		buf.WriteString(" ")
+    	}
+    }
+    return buf.String()
 }
