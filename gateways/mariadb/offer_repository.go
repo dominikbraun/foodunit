@@ -131,7 +131,19 @@ func (o OfferRepository) Update(offer *dl.Offer) error {
 
 // Delete implements dl.OfferRepository.Delete.
 func (o OfferRepository) Delete(offer *dl.Offer) error {
-	panic("implement me")
+	query := buildDelete("offers", conditionMap{
+		"id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.Exec(query, offer.ID); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Migrate implements dl.OrderRepository.Migrate.
@@ -153,17 +165,67 @@ func (o OrderRepository) Migrate() error {
 
 // Create implements dl.OrderRepository.Create.
 func (o OrderRepository) Create(order *dl.Order) (uint64, error) {
-	panic("implement me")
+	query := buildInsert("orders", fieldMap{
+		"user_id":  ":user_id",
+		"offer_id": ":offer_id",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return 0, err
+	}
+
+	r, err := db.NamedExec(query, order)
+	if err != nil {
+		return 0, err
+	}
+
+	return lastInsertID(r)
 }
 
 // Find implements dl.OrderRepository.Find.
 func (o OrderRepository) Find(id uint64) (*dl.Order, error) {
-	panic("implement me")
+	var order dl.Order
+	query := buildSelect("orders", []string{"*"}, nil, conditionMap{
+		"id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return nil, err
+	}
+
+	_ = db.QueryRowx(query, id).StructScan(&order)
+	return &order, nil
 }
 
 // FindByOfferID implements dl.OrderRepository.FindByOfferID.
 func (o OrderRepository) FindByOfferID(offerID uint64) ([]*dl.Order, error) {
-	panic("implement me")
+	var orders []*dl.Order
+	query := buildSelect("orders", []string{"*"}, nil, conditionMap{
+		"offer_id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return nil, err
+	}
+
+	now := time.Now().Format(time.RFC3339)
+
+	rows, err := db.Queryx(query, now, now)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var order dl.Order
+		// ToDo: The error value of Scan has to be handled.
+		_ = rows.Scan(&order)
+		orders = append(orders, &order)
+	}
+
+	return orders, nil
 }
 
 // Update implements dl.OrderRepository.Update.
