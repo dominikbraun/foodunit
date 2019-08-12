@@ -1,4 +1,4 @@
-// package load provides concrete interface implementations prescribed
+// Package load provides concrete interface implementations prescribed
 // by the Domain Language.
 package load
 

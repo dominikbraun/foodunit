@@ -1,4 +1,4 @@
-// package mariadb provides repository implementations as SQL gateways.
+// Package mariadb provides repository implementations as SQL gateways.
 package mariadb
 
 import (
