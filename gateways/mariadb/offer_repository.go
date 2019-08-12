@@ -211,9 +211,7 @@ func (o OrderRepository) FindByOfferID(offerID uint64) ([]*dl.Order, error) {
 		return nil, err
 	}
 
-	now := time.Now().Format(time.RFC3339)
-
-	rows, err := db.Queryx(query, now, now)
+	rows, err := db.Queryx(query, offerID)
 	if err != nil {
 		return nil, err
 	}
@@ -230,12 +228,37 @@ func (o OrderRepository) FindByOfferID(offerID uint64) ([]*dl.Order, error) {
 
 // Update implements dl.OrderRepository.Update.
 func (o OrderRepository) Update(order *dl.Order) error {
-	panic("implement me")
+	query := buildUpdate("orders", fieldMap{
+		"user_id":  ":user_id",
+		"offer_id": ":offer_id",
+	}, conditionMap{"id": "= :id"})
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.NamedExec(query, &order); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Delete implements dl.OrderRepository.Delete.
 func (o OrderRepository) Delete(order *dl.Order) error {
-	panic("implement me")
+	query := buildDelete("orders", conditionMap{
+		"id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.Exec(query, order.ID); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Migrate implements dl.PositionRepository.Migrate.
@@ -258,25 +281,100 @@ func (p PositionRepository) Migrate() error {
 
 // Create implements dl.PositionRepository.Create.
 func (p PositionRepository) Create(position *dl.Position) (uint64, error) {
-	panic("implement me")
+	query := buildInsert("positions", fieldMap{
+		"order_id": ":order_id",
+		"dish_id":  ":dish_id",
+		"note":     ":note",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return 0, err
+	}
+
+	r, err := db.NamedExec(query, position)
+	if err != nil {
+		return 0, err
+	}
+
+	return lastInsertID(r)
 }
 
 // Find implements dl.PositionRepository.Find.
 func (p PositionRepository) Find(id uint64) (*dl.Position, error) {
-	panic("implement me")
+	var position dl.Position
+	query := buildSelect("positions", []string{"*"}, nil, conditionMap{
+		"id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return nil, err
+	}
+
+	_ = db.QueryRowx(query, id).StructScan(&position)
+	return &position, nil
 }
 
 // FindByOrderID implements dl.PositionRepository.FindByOrderID.
 func (p PositionRepository) FindByOrderID(orderID uint64) ([]*dl.Position, error) {
-	panic("implement me")
+	var positions []*dl.Position
+	query := buildSelect("positions", []string{"*"}, nil, conditionMap{
+		"order_id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return nil, err
+	}
+
+	rows, err := db.Queryx(query, orderID)
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var position dl.Position
+		// ToDo: The error value of Scan has to be handled.
+		_ = rows.Scan(&position)
+		positions = append(positions, &position)
+	}
+
+	return positions, nil
 }
 
 // Update implements dl.PositionRepository.Update.
 func (p PositionRepository) Update(position *dl.Position) error {
-	panic("implement me")
+	query := buildUpdate("positions", fieldMap{
+		"order_id": ":user_id",
+		"dish_id":  ":dish_id",
+		"note":     ":note",
+	}, conditionMap{"id": "= :id"})
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.NamedExec(query, &position); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Delete implements dl.PositionRepository.Delete.
 func (p PositionRepository) Delete(position *dl.Position) error {
-	panic("implement me")
+	query := buildDelete("positions", conditionMap{
+		"id": "= ?",
+	})
+
+	db, err := GetDB()
+	if err != nil {
+		return err
+	}
+
+	if _, err = db.Exec(query, position.ID); err != nil {
+		return err
+	}
+	return nil
 }
