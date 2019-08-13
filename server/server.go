@@ -3,7 +3,6 @@ package server
 
 import (
 	"context"
-	"github.com/go-chi/chi"
 	"log"
 	"net/http"
 	"os"
@@ -14,7 +13,7 @@ import (
 // Start creates and starts new server instance which will expose
 // the REST API. Ctrl + C will attempt a graceful shutdown.
 func Start() {
-	r := chi.NewRouter()
+	r := routes()
 
 	server := &http.Server{
 		Addr:    ":8282",
