@@ -24,20 +24,20 @@ const (
 
 type Server struct {
 	*http.Server
-	router      *chi.Mux
-	conf        *gateways.Conf
-	initGateway func() error
-	interrupt   chan os.Signal
-	sessMode    SessionMode
+	router       *chi.Mux
+	conf         *gateways.Conf
+	initGateways func() error
+	interrupt    chan os.Signal
+	sessMode     SessionMode
 }
 
 func New(conf *gateways.Conf, sessMode SessionMode) *Server {
 	srv := Server{
-		router:      createRouter(),
-		conf:        conf,
-		initGateway: registerGateways,
-		interrupt:   make(chan os.Signal),
-		sessMode:    sessMode,
+		router:       createRouter(),
+		conf:         conf,
+		initGateways: registerGateways,
+		interrupt:    make(chan os.Signal),
+		sessMode:     sessMode,
 	}
 
 	srv.Server = &http.Server{
@@ -50,6 +50,7 @@ func New(conf *gateways.Conf, sessMode SessionMode) *Server {
 
 func (srv *Server) Start() {
 	srv.mountRoutes()
+	_ = srv.initGateways()
 
 	if err := mariadb.Connect(srv.conf); err != nil {
 		log.Fatalf("could not connect to '%s' as %s\n", srv.conf.DBName, srv.conf.User)
