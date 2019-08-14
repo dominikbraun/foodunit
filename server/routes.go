@@ -20,9 +20,29 @@ func routeTree() *chi.Mux {
 
 			r.Route("/orders", func(r chi.Router) {
 				r.Get("/", http.GetOrders)
-				r.Put("/", http.PutOrder)
 
+				r.Route("/mine", func(r chi.Router) {
+					r.Post("/", http.F)
+					r.Get("/", http.F)
+					r.Put("/", http.F)
+				})
 			})
+		})
+	})
+
+	r.Route("/suppliers", func(r chi.Router) {
+		r.Route("/{id}", func(r chi.Router) {
+			r.Get("/", http.F)
+		})
+	})
+
+	r.Route("/users", func(r chi.Router) {
+		r.Post("/register", http.F)
+		r.Post("/login", http.F)
+		r.Get("/logout", http.F)
+
+		r.Route("/{id}", func(r chi.Router) {
+			r.Get("/", http.F)
 		})
 	})
 
