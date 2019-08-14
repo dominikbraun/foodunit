@@ -11,13 +11,13 @@ var RepositoryLoader *repositoryLoader
 // repositoryLoader holds functions providing repository implementations.
 type repositoryLoader struct {
 	IsReady    bool
-	Users      func() dl.UserRepository
-	Suppliers  func() dl.SupplierRepository
-	Categories func() dl.CategoryRepository
-	Dishes     func() dl.DishRepository
-	Offers     func() dl.OfferRepository
-	Orders     func() dl.OrderRepository
-	Positions  func() dl.PositionRepository
+	Users      dl.UserRepository
+	Suppliers  dl.SupplierRepository
+	Categories dl.CategoryRepository
+	Dishes     dl.DishRepository
+	Offers     dl.OfferRepository
+	Orders     dl.OrderRepository
+	Positions  dl.PositionRepository
 }
 
 // init initializes the global repositoryLoader instance so that it

@@ -23,6 +23,6 @@ func NewUserInteractor(r dl.UserRepository) (*UserInteractor, error) {
 	}
 
 	return &UserInteractor{
-		users: load.UserRepository(),
+		users: loader.Users,
 	}, nil
 }

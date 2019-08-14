@@ -29,9 +29,9 @@ func NewOfferInteractor() (*OfferInteractor, error) {
 	}
 
 	return &OfferInteractor{
-		offers:    loader.Offers(),
-		orders:    loader.Orders(),
-		positions: loader.Positions(),
+		offers:    loader.Offers,
+		orders:    loader.Orders,
+		positions: loader.Positions,
 	}, nil
 }
 

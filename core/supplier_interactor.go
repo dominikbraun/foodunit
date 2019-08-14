@@ -25,8 +25,8 @@ func NewSupplierInteractor() (*SupplierInteractor, error) {
 	}
 
 	return &SupplierInteractor{
-		suppliers:  loader.Suppliers(),
-		categories: loader.Categories(),
-		dishes:     loader.Dishes(),
+		suppliers:  loader.Suppliers,
+		categories: loader.Categories,
+		dishes:     loader.Dishes,
 	}, nil
 }
