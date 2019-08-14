@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"github.com/dominikbraun/foodunit/gateways"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -16,10 +17,10 @@ var instance *sqlx.DB = nil
 
 // Connect establishes a database connection using the given parameters. It
 // will initialize the global database instance used by all repositories.
-func Connect(driver, dbname, user, pass string) error {
-	dsn := fmt.Sprintf("user=%s dbname=%s sslmode=disable", user, dbname)
+func Connect(c *gateways.Conf) error {
+	dsn := fmt.Sprintf("user=%s dbname=%s sslmode=disable", c.User, c.DBName)
 
-	db, err := sqlx.Connect(driver, dsn)
+	db, err := sqlx.Connect(c.Driver, dsn)
 	if err != nil {
 		return err
 	}
