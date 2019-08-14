@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"time"
 )
 
@@ -55,6 +56,8 @@ func (srv *Server) Start() {
 	if err := mariadb.Connect(srv.conf); err != nil {
 		log.Fatalf("could not connect to '%s' as %s\n", srv.conf.DBName, srv.conf.User)
 	}
+
+	signal.Notify(srv.interrupt, os.Interrupt)
 
 	go func() {
 		<-srv.interrupt
