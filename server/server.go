@@ -3,6 +3,9 @@ package server
 
 import (
 	"context"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/render"
 	"log"
 	"net/http"
 	"os"
@@ -13,7 +16,8 @@ import (
 // Start creates and starts new server instance which will expose
 // the REST API. Ctrl + C will attempt a graceful shutdown.
 func Start() {
-	r := routes()
+	r := newRouter()
+	r.Mount("/", routeTree())
 
 	srv := &http.Server{
 		Addr:    ":8000",
@@ -35,4 +39,16 @@ func Start() {
 	}()
 
 	log.Fatal(srv.ListenAndServe())
+}
+
+func newRouter() *chi.Mux {
+	r := chi.NewRouter()
+	r.Use(
+		middleware.Logger,
+		middleware.DefaultCompress,
+		middleware.RedirectSlashes,
+		middleware.Recoverer,
+		render.SetContentType(render.ContentTypeJSON),
+	)
+	return r
 }

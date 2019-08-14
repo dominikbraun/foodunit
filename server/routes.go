@@ -4,29 +4,24 @@ package server
 import (
 	"github.com/dominikbraun/foodunit/controllers/http"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
 )
 
-// routes builds the API routes and returns the app's router.
-func routes() *chi.Mux {
+// routeTree builds all API routes and registers the responsible handlers.
+func routeTree() *chi.Mux {
 	r := chi.NewRouter()
-	r.Use(
-		middleware.Logger,
-		middleware.DefaultCompress,
-		middleware.RedirectSlashes,
-		middleware.Recoverer,
-		render.SetContentType(render.ContentTypeJSON),
-	)
 
 	r.Route("/offers", func(r chi.Router) {
+		r.Post("/new", http.PostOffer)
+
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/", http.GetOffer)
 			r.Put("/", http.PutOffer)
+			r.Delete("/", http.DeleteOffer)
 
 			r.Route("/orders", func(r chi.Router) {
 				r.Get("/", http.GetOrders)
 				r.Put("/", http.PutOrder)
+
 			})
 		})
 	})
