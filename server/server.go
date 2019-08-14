@@ -15,8 +15,8 @@ import (
 func Start() {
 	r := routes()
 
-	server := &http.Server{
-		Addr:    ":8282",
+	srv := &http.Server{
+		Addr:    ":8000",
 		Handler: r,
 	}
 
@@ -27,13 +27,12 @@ func Start() {
 		<-interrupt
 		ctx, cancelFn := context.WithTimeout(context.Background(), time.Second)
 
-		err := server.Shutdown(ctx)
-
+		err := srv.Shutdown(ctx)
 		if err != nil && err != http.ErrServerClosed {
 			log.Println(err)
 		}
 		defer cancelFn()
 	}()
 
-	log.Fatal(server.ListenAndServe())
+	log.Fatal(srv.ListenAndServe())
 }
