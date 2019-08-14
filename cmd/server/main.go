@@ -7,5 +7,5 @@ import (
 
 // main delegates all listening/serving tasks to the server package.
 func main() {
-	server.Start()
+	server.New(nil, server.Resume).Start()
 }

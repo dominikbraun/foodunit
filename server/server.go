@@ -3,32 +3,60 @@ package server
 
 import (
 	"context"
+	"github.com/dominikbraun/foodunit/core/load"
+	"github.com/dominikbraun/foodunit/gateways"
+	"github.com/dominikbraun/foodunit/gateways/mariadb"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
 	"time"
 )
 
-// Start creates and starts new server instance which will expose
-// the REST API. Ctrl + C will attempt a graceful shutdown.
-func Start() {
-	r := newRouter()
-	r.Mount("/", routeTree())
+type SessionMode int
 
-	srv := &http.Server{
-		Addr:    ":8000",
-		Handler: r,
+const (
+	Resume  SessionMode = 0
+	Discard SessionMode = 1
+)
+
+type Server struct {
+	*http.Server
+	router      *chi.Mux
+	conf        *gateways.Conf
+	initGateway func() error
+	interrupt   chan os.Signal
+	sessMode    SessionMode
+}
+
+func New(conf *gateways.Conf, sessMode SessionMode) *Server {
+	srv := Server{
+		router:      createRouter(),
+		conf:        conf,
+		initGateway: registerGateways,
+		interrupt:   make(chan os.Signal),
+		sessMode:    sessMode,
 	}
 
-	interrupt := make(chan os.Signal)
-	signal.Notify(interrupt, os.Interrupt)
+	srv.Server = &http.Server{
+		Addr:    ":8000",
+		Handler: srv.router,
+	}
+
+	return &srv
+}
+
+func (srv *Server) Start() {
+	srv.mountRoutes()
+
+	if err := mariadb.Connect(srv.conf); err != nil {
+		log.Fatalf("could not connect to '%s' as %s\n", srv.conf.DBName, srv.conf.User)
+	}
 
 	go func() {
-		<-interrupt
+		<-srv.interrupt
 		ctx, cancelFn := context.WithTimeout(context.Background(), time.Second)
 
 		err := srv.Shutdown(ctx)
@@ -41,7 +69,7 @@ func Start() {
 	log.Fatal(srv.ListenAndServe())
 }
 
-func newRouter() *chi.Mux {
+func createRouter() *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(
 		middleware.Logger,
@@ -51,4 +79,17 @@ func newRouter() *chi.Mux {
 		render.SetContentType(render.ContentTypeJSON),
 	)
 	return r
+}
+
+func registerGateways() error {
+	load.RepositoryLoader.Users = mariadb.UserRepository{}
+	load.RepositoryLoader.Suppliers = mariadb.SupplierRepository{}
+	load.RepositoryLoader.Categories = mariadb.CategoryRepository{}
+	load.RepositoryLoader.Dishes = mariadb.DishRepository{}
+	load.RepositoryLoader.Offers = mariadb.OfferRepository{}
+	load.RepositoryLoader.Orders = mariadb.OrderRepository{}
+	load.RepositoryLoader.Positions = mariadb.PositionRepository{}
+	load.RepositoryLoader.IsReady = true
+
+	return nil
 }

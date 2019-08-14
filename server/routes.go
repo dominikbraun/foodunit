@@ -6,8 +6,8 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// routeTree builds all API routes and registers the responsible handlers.
-func routeTree() *chi.Mux {
+// mountRoutes builds all API routes and registers the responsible handlers.
+func (srv *Server) mountRoutes() {
 	r := chi.NewRouter()
 
 	r.Route("/offers", func(r chi.Router) {
@@ -20,12 +20,12 @@ func routeTree() *chi.Mux {
 
 			r.Route("/orders", func(r chi.Router) {
 				r.Get("/", http.GetOrders)
+			})
 
-				r.Route("/mine", func(r chi.Router) {
-					r.Post("/", http.F)
-					r.Get("/", http.F)
-					r.Put("/", http.F)
-				})
+			r.Route("/order", func(r chi.Router) {
+				r.Post("/", http.F)
+				r.Get("/", http.F)
+				r.Put("/", http.F)
 			})
 		})
 	})
@@ -46,5 +46,5 @@ func routeTree() *chi.Mux {
 		})
 	})
 
-	return r
+	srv.router.Mount("/", r)
 }
