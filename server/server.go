@@ -33,8 +33,8 @@ import (
 type SessionMode int
 
 const (
-	Resume  SessionMode = 0
-	Discard SessionMode = 1
+	ResumeSessions  SessionMode = 0
+	DiscardSessions SessionMode = 1
 )
 
 type Server struct {
