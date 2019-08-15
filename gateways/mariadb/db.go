@@ -23,10 +23,9 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// instance represents the database connection to be used by all repositories.
-// It has to be initialized with Connect by the gateway or framework which
-// utilizes this instance first.
-// This object should be exclusively accessed via GetDB().
+// instance represents the database connection to be used by all repositories
+// and has to be initialized by the utilizing service with Connect first. This
+// object should be exclusively accessed via GetDB().
 var instance *sqlx.DB = nil
 
 // Connect establishes a database connection using the given parameters. It
@@ -44,8 +43,7 @@ func Connect(c *gateways.Conf) error {
 }
 
 // GetDB returns the global database instance. It is recommended to call
-// this function instead of accessing the instance directly since it checks
-// if the database connection has been established yet.
+// this function instead of accessing the instance directly.
 func GetDB() (*sqlx.DB, error) {
 	if instance == nil {
 		return nil, errors.New("invalid database instance - call `Connect` first")
