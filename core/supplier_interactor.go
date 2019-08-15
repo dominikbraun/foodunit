@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package core provides types for interacting with the core business
-// logic. It depicts the default use case of FoodUnit.
+// Package core provides types for interacting with the core business logic.
+// It depicts the default use case of FoodUnit.
 package core
 
 import (
