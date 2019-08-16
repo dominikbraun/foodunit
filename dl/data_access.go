@@ -15,12 +15,18 @@
 // Package dl provides Domain Language entities and rules.
 package dl
 
-// DataAccess currently provides all necessary repository interfaces as
-// methods. Multiple concrete repository implementations can be grouped
-// together in an own type - implementing DataAccess - which can be injected
-// as a single dependency, instead of multiple separate implementations as
-// multiple dependencies.
+// DataAccess provides methods for retrieving all repository interfaces.
+// A type implementing this interface wraps all repository implementations
+// and therefore can be injected as a single dependency - instead of each
+// repository implementation separately.
 type DataAccess interface {
+	// Open sets up a database connection or opens a file, depending on
+	// the gateway. conf is a custom config providing user credentials,
+	// filename or database name etc.
+	Open(conf interface{}) error
+	// Migrate performs a database schema migration if necessary. 
+	Migrate() error
+	// The following methods will provide a repository implementation.
 	Offers() OfferRepository
 	Orders() OrderRepository
 	Positions() PositionRepository
