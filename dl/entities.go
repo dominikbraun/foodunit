@@ -13,7 +13,6 @@
 // limitations under the License.
 
 // Package dl provides domain language entities and rules.
-
 package dl
 
 import "time"
@@ -52,6 +51,20 @@ type Dish struct {
 	Price       uint8  `db:"price"`
 }
 
+// Characteristic represents a user-configurable product feature.
+type Characteristic struct {
+	ID       uint64 `db:"id"`
+	Name     string `db:"name"`
+	Multiple bool   `db:"multiple"`
+}
+
+// Variant represents a discrete value of a characteristic.
+type Variant struct {
+	ID               uint64 `db:"id"`
+	CharacteristicID uint64 `db:"characteristic_id"`
+	Value            string `db:"value"`
+}
+
 // User represents a person that creates offers and orders food.
 type User struct {
 	ID   uint64 `db:"id"`
@@ -70,12 +83,13 @@ type Offer struct {
 	PickupInfo string    `db:"pickup_info"`
 }
 
-// Order represents an User's order that was placed as part of
-// an Offer. The list of ordered food is depicted in Positions.
+// Order represents an User's order that was placed as part of an Offer. The
+// list of ordered food is depicted in Positions.
 type Order struct {
 	ID      uint64 `db:"id"`
 	UserID  uint64 `db:"user_id"`
 	OfferID uint64 `db:"offer_id"`
+	IsPaid  bool   `db:"is_paid"`
 }
 
 // Position represents one of multiple items contained in an Order.
