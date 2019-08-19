@@ -32,7 +32,7 @@ type DataAccess interface {
 type SupplierRepository interface {
 	Migrate() error
 	Create(s *Supplier) (uint64, error)
-	Find(id uint64) (*Supplier, error)
+	FindByID(id uint64) (Supplier, error)
 	Update(s *Supplier) error
 	Delete(s *Supplier) error
 }
@@ -41,8 +41,8 @@ type SupplierRepository interface {
 type CategoryRepository interface {
 	Migrate() error
 	Create(c *Category) (uint64, error)
-	Find(id uint64) (*Category, error)
-	FindBySupplierID(supplierID uint64) ([]*Category, error)
+	FindByID(id uint64) (Category, error)
+	FindBySupplierID(supplierID uint64) ([]Category, error)
 	Update(c *Category) error
 	Delete(c *Category) error
 }
@@ -51,8 +51,8 @@ type CategoryRepository interface {
 type DishRepository interface {
 	Migrate() error
 	Create(d *Dish) (uint64, error)
-	Find(id uint64) (*Dish, error)
-	FindByCategoryID(categoryID uint64) ([]*Dish, error)
+	FindByID(id uint64) (Dish, error)
+	FindByCategoryID(categoryID uint64) ([]Dish, error)
 	Update(d *Dish) error
 	Delete(d *Dish) error
 }
@@ -61,8 +61,8 @@ type DishRepository interface {
 type UserRepository interface {
 	Migrate() error
 	Create(u *User) (uint64, error)
-	Find(id uint) (*User, error)
-	FindByMail(mail string) (*User, error)
+	FindByID(id uint) (User, error)
+	FindByMail(mail string) (User, error)
 	Update(u *User) error
 	Delete(u *User) error
 }
@@ -71,8 +71,8 @@ type UserRepository interface {
 type OfferRepository interface {
 	Migrate() error
 	Create(o *Offer) (uint64, error)
-	Find(id uint64) (*Offer, error)
-	FindAllActive() ([]*Offer, error)
+	FindByID(id uint64) (Offer, error)
+	FindAllActive() ([]Offer, error)
 	Update(o *Offer) error
 	Delete(o *Offer) error
 }
@@ -81,8 +81,8 @@ type OfferRepository interface {
 type OrderRepository interface {
 	Migrate() error
 	Create(o *Order) (uint64, error)
-	Find(id uint64) (*Order, error)
-	FindByOfferID(offerID uint64) ([]*Order, error)
+	FindByID(id uint64) (Order, error)
+	FindByOfferID(offerID uint64) ([]Order, error)
 	Update(o *Order) error
 	Delete(o *Order) error
 }
@@ -91,8 +91,8 @@ type OrderRepository interface {
 type PositionRepository interface {
 	Migrate() error
 	Create(p *Position) (uint64, error)
-	Find(id uint64) (*Position, error)
-	FindByOrderID(orderID uint64) ([]*Position, error)
+	FindByID(id uint64) (Position, error)
+	FindByOrderID(orderID uint64) ([]Position, error)
 	Update(p *Position) error
 	Delete(p *Position) error
 }
