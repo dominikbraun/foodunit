@@ -24,16 +24,20 @@ import (
 
 const driver string = "mysql"
 
+// Config represents database credentials.
 type Config struct {
-	User   string
-	Pass   string
-	DBName string
+	User   string `json:"user"`
+	Pass   string `json:"pass"`
+	DBName string `json:"dbname"`
 }
 
+// MariaDB wraps all individual repository implementations and provides
+// a method for each repository, meaning that it implements DataAccess.
 type MariaDB struct {
 	db *sqlx.DB
 }
 
+// Open implements dl.DataAccess.Open.
 func (m *MariaDB) Open(config interface{}) error {
 	c, ok := config.(*Config)
 	if !ok {
@@ -49,34 +53,42 @@ func (m *MariaDB) Open(config interface{}) error {
 	return nil
 }
 
+// MigrateAll implements dl.DataAccess.MigrateAll.
 func (m *MariaDB) MigrateAll() error {
 	return nil
 }
 
+// Offers implements dl.DataAccess.Offers.
 func (m *MariaDB) Offers() dl.OfferRepository {
 	panic("implement me")
 }
 
+// Orders implements dl.DataAccess.Orders.
 func (m *MariaDB) Orders() dl.OrderRepository {
 	panic("implement me")
 }
 
+// Positions implements dl.DataAccess.Positions.
 func (m *MariaDB) Positions() dl.PositionRepository {
 	panic("implement me")
 }
 
+// Suppliers implements dl.DataAccess.Suppliers.
 func (m *MariaDB) Suppliers() dl.SupplierRepository {
 	panic("implement me")
 }
 
+// Categories implements dl.DataAccess.Categories.
 func (m *MariaDB) Categories() dl.CategoryRepository {
 	panic("implement me")
 }
 
+// Dishes implements dl.DataAccess.Dishes.
 func (m *MariaDB) Dishes() dl.DishRepository {
 	panic("implement me")
 }
 
+// Users implements dl.DataAccess.Users.
 func (m *MariaDB) Users() dl.UserRepository {
 	panic("implement me")
 }
