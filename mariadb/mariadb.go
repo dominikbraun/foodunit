@@ -15,42 +15,68 @@
 // Package mariadb provides a dl.DataAccess implementation for MariaDB.
 package mariadb
 
-import "github.com/dominikbraun/foodunit/dl"
+import (
+	"fmt"
+	"github.com/dominikbraun/foodunit/dl"
+	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
+)
 
-type MariaDB struct{}
+const driver string = "mysql"
 
-func (m MariaDB) Open(conf interface{}) error {
+type Config struct {
+	User   string
+	Pass   string
+	DBName string
+}
+
+type MariaDB struct {
+	db *sqlx.DB
+}
+
+func (m *MariaDB) Open(config interface{}) error {
+	c, ok := config.(*Config)
+	if !ok {
+		return errors.New("config has to be of type *mariadb.Config")
+	}
+
+	dsn := fmt.Sprintf("user=%s dbname=%s sslmode=disable", c.User, c.DBName)
+	var err error
+
+	if m.db, err = sqlx.Connect(driver, dsn); err != nil {
+		return errors.New(err.Error())
+	}
 	return nil
 }
 
-func (m MariaDB) MigrateAll() error {
+func (m *MariaDB) MigrateAll() error {
 	return nil
 }
 
-func (m MariaDB) Offers() dl.OfferRepository {
+func (m *MariaDB) Offers() dl.OfferRepository {
 	panic("implement me")
 }
 
-func (m MariaDB) Orders() dl.OrderRepository {
+func (m *MariaDB) Orders() dl.OrderRepository {
 	panic("implement me")
 }
 
-func (m MariaDB) Positions() dl.PositionRepository {
+func (m *MariaDB) Positions() dl.PositionRepository {
 	panic("implement me")
 }
 
-func (m MariaDB) Suppliers() dl.SupplierRepository {
+func (m *MariaDB) Suppliers() dl.SupplierRepository {
 	panic("implement me")
 }
 
-func (m MariaDB) Categories() dl.CategoryRepository {
+func (m *MariaDB) Categories() dl.CategoryRepository {
 	panic("implement me")
 }
 
-func (m MariaDB) Dishes() dl.DishRepository {
+func (m *MariaDB) Dishes() dl.DishRepository {
 	panic("implement me")
 }
 
-func (m MariaDB) Users() dl.UserRepository {
+func (m *MariaDB) Users() dl.UserRepository {
 	panic("implement me")
 }

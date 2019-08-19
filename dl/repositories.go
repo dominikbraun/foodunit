@@ -19,9 +19,9 @@ package dl
 // interface serves as a wrapper for all repository implementations, and can
 // therefore be required and injected as a single dependency.
 type DataAccess interface {
-	// Open establishes a database connection or opens a file. conf represents
+	// Open establishes a database connection or opens a file. config represents
 	// a custom configuration type (for example database credentials).
-	Open(conf interface{}) error
+	Open(config interface{}) error
 	// MigrateAll creates a table schema in case the storage is a database.
 	MigrateAll() error
 	Offers() OfferRepository
