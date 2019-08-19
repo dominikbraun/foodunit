@@ -57,6 +57,25 @@ type DishRepository interface {
 	Delete(d *Dish) error
 }
 
+// CharacteristicRepository provides CRUD methods used by the corresponding service.
+type CharacteristicRepository interface {
+	Migrate() error
+	Create(c *Characteristic) (uint64, error)
+	FindByID(id uint64) (Characteristic, error)
+	Update(c *Characteristic) error
+	Delete(c *Characteristic) error
+}
+
+// VariantRepository provides CRUD methods used by the corresponding service.
+type VariantRepository interface {
+	Migrate() error
+	Create(v *Variant) (uint64, error)
+	FindByID(id uint64) (Variant, error)
+	FindByCharacteristicID(id uint64) ([]Variant, error)
+	Update(v *Variant) error
+	Delete(v *Variant) error
+}
+
 // UserRepository provides CRUD methods used by the corresponding service.
 type UserRepository interface {
 	Migrate() error
