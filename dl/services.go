@@ -17,7 +17,7 @@ package dl
 
 // SupplierService provides use cases that are implemented in the core package.
 type SupplierService interface {
-	Get(id uint64) Supplier
+	Get(id uint64) (Supplier, error)
 }
 
 // SupplierService provides use cases that are implemented in the core package.
@@ -26,12 +26,12 @@ type DishService interface{}
 // SupplierService provides use cases that are implemented in the core package.
 type UserService interface {
 	// Get returns the user which is associated with the session.
-	// Get() User
+	// Get() (User, error)
 }
 
 // SupplierService provides use cases that are implemented in the core package.
 type OfferService interface {
 	// Get(id uint64)
 	// GetActive returns all currently active offers.
-	// GetActive() []Offer
+	// GetActive() ([]Offer, error)
 }
