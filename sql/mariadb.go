@@ -18,6 +18,7 @@ package sql
 import (
 	"fmt"
 	"github.com/dominikbraun/foodunit/dl"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )
@@ -26,6 +27,7 @@ const driver string = "mysql"
 
 // Config represents database credentials.
 type Config struct {
+	Addr   string `json:"host"`
 	User   string `json:"user"`
 	Pass   string `json:"pass"`
 	DBName string `json:"dbname"`
@@ -44,7 +46,7 @@ func (m *MariaDB) Open(config interface{}) error {
 		return errors.New("config has to be of type *sql.Config")
 	}
 
-	dsn := fmt.Sprintf("user=%s dbname=%s sslmode=disable", c.User, c.DBName)
+	dsn := fmt.Sprintf("%s:%s@(%s)/%s", c.User, c.Pass, c.Addr, c.DBName)
 	var err error
 
 	if m.db, err = sqlx.Connect(driver, dsn); err != nil {
