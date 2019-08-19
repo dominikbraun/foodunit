@@ -26,17 +26,17 @@ type (
 	QueryBuilder struct{}
 	// fieldMap represents a list of field names mapped against their
 	// corresponding placeholder (INSERT) or data type (CREATE TABLE).
-	fieldMap map[string]string
+	FieldMap map[string]string
 	// joinMap represents a list of JOIN types including the table name
 	// mapped against an ON condition.
-	joinMap map[string]string
+	JoinMap map[string]string
 	// conditionMap represents a list of field names mapped against their
 	// corresponding operator and condition.
-	conditionMap map[string]string
+	ConditionMap map[string]string
 )
 
 // Insert builds a MariaDB-compatible SQL statement with placeholders.
-func (QueryBuilder) Insert(table string, fields fieldMap) string {
+func (QueryBuilder) Insert(table string, fields FieldMap) string {
 	var buf bytes.Buffer
 
 	i := 0
@@ -66,7 +66,7 @@ func (QueryBuilder) Insert(table string, fields fieldMap) string {
 }
 
 // Create builds a MariaDB-compatible SQL statement with column types.
-func (QueryBuilder) Create(table string, fields fieldMap) string {
+func (QueryBuilder) Create(table string, fields FieldMap) string {
 	var buf bytes.Buffer
 
 	i := 0
@@ -86,7 +86,7 @@ func (QueryBuilder) Create(table string, fields fieldMap) string {
 
 // Select builds a MariaDB-compatible SQL statement with multiple fields,
 // joined tables and WHERE conditions.
-func (QueryBuilder) Select(table string, fields []string, joins joinMap, where conditionMap) string {
+func (QueryBuilder) Select(table string, fields []string, joins JoinMap, where ConditionMap) string {
 	var buf bytes.Buffer
 
 	i := 0
@@ -121,7 +121,7 @@ func (QueryBuilder) Select(table string, fields []string, joins joinMap, where c
 }
 
 // Update builds a MariaDB-compatible SQL statement for updating rows.
-func (QueryBuilder) Update(table string, set fieldMap, where conditionMap) string {
+func (QueryBuilder) Update(table string, set FieldMap, where ConditionMap) string {
 	var buf bytes.Buffer
 
 	i := 0
@@ -149,7 +149,7 @@ func (QueryBuilder) Update(table string, set fieldMap, where conditionMap) strin
 }
 
 // Delete builds a MariaDB-compatible SQL statement for deleting rows.
-func (QueryBuilder) Delete(table string, where conditionMap) string {
+func (QueryBuilder) Delete(table string, where ConditionMap) string {
 	var buf bytes.Buffer
 
 	i := 0

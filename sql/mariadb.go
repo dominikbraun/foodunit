@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package mariadb provides a dl.DataAccess implementation for MariaDB.
-package mariadb
+// Package sql provides a dl.DataAccess implementation for MariaDB.
+package sql
 
 import (
 	"fmt"
@@ -41,7 +41,7 @@ type MariaDB struct {
 func (m *MariaDB) Open(config interface{}) error {
 	c, ok := config.(*Config)
 	if !ok {
-		return errors.New("config has to be of type *mariadb.Config")
+		return errors.New("config has to be of type *sql.Config")
 	}
 
 	dsn := fmt.Sprintf("user=%s dbname=%s sslmode=disable", c.User, c.DBName)
