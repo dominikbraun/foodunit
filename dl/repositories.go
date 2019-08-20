@@ -24,13 +24,15 @@ type DataAccess interface {
 	Open(config interface{}) error
 	// MigrateAll creates a table schema in case the storage is a database.
 	MigrateAll() error
-	Offers() OfferRepository
-	Orders() OrderRepository
-	Positions() PositionRepository
 	Suppliers() SupplierRepository
 	Categories() CategoryRepository
 	Dishes() DishRepository
 	Users() UserRepository
+	Characteristics() CharacteristicRepository
+	Variants() VariantRepository
+	Offers() OfferRepository
+	Orders() OrderRepository
+	Positions() PositionRepository
 }
 
 // SupplierRepository provides CRUD methods used by the corresponding service.
