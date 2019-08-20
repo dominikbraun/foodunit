@@ -60,37 +60,56 @@ func (m *MariaDB) MigrateAll() error {
 	return nil
 }
 
-// Offers implements dl.DataAccess.Offers.
-func (m *MariaDB) Offers() dl.OfferRepository {
-	panic("implement me")
-}
-
-// Orders implements dl.DataAccess.Orders.
-func (m *MariaDB) Orders() dl.OrderRepository {
-	panic("implement me")
-}
-
-// Positions implements dl.DataAccess.Positions.
-func (m *MariaDB) Positions() dl.PositionRepository {
-	panic("implement me")
-}
-
 // Suppliers implements dl.DataAccess.Suppliers.
 func (m *MariaDB) Suppliers() dl.SupplierRepository {
-	panic("implement me")
+	s := supplierRepository{}
+	return s
 }
 
 // Categories implements dl.DataAccess.Categories.
 func (m *MariaDB) Categories() dl.CategoryRepository {
-	panic("implement me")
+	c := categoryRepository{}
+	return c
 }
 
 // Dishes implements dl.DataAccess.Dishes.
 func (m *MariaDB) Dishes() dl.DishRepository {
-	panic("implement me")
+	d := dishRepository{}
+	return d
+}
+
+// Characteristics implements dl.DataAccess.Characteristics.
+func (m *MariaDB) Characteristics() dl.CharacteristicRepository {
+	c := characteristicRepository{}
+	return c
+}
+
+// Variants implements dl.DataAccess.Variants.
+func (m *MariaDB) Variants() dl.VariantRepository {
+	v := variantRepository{}
+	return v
 }
 
 // Users implements dl.DataAccess.Users.
 func (m *MariaDB) Users() dl.UserRepository {
-	panic("implement me")
+	u := userRepository{}
+	return u
+}
+
+// Offers implements dl.DataAccess.Offers.
+func (m *MariaDB) Offers() dl.OfferRepository {
+	o := offerRepository{}
+	return o
+}
+
+// Orders implements dl.DataAccess.Orders.
+func (m *MariaDB) Orders() dl.OrderRepository {
+	o := orderRepository{}
+	return o
+}
+
+// Positions implements dl.DataAccess.Positions.
+func (m *MariaDB) Positions() dl.PositionRepository {
+	p := positionRepository{}
+	return p
 }
