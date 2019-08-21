@@ -17,14 +17,22 @@ package dl
 
 import "time"
 
-// Entity represents a data type which can be stored in a repository.
+// Entity represents a type whose instances will be stored in a repository.
 type Entity struct {
-	ID uint64 `db:"id"`
+	ID string `db:"id"`
 }
 
 // GetID returns an entity's ID and makes Entity implement the Item interface.
-func (e *Entity) GetID() uint64 {
+func (e *Entity) GetID() string {
 	return e.ID
+}
+
+// SetID sets an entity's ID and can be called directly on a fresh entity.
+// Returning the instance enables calls like
+// 		e := MyEntity{}.SetID(42)
+func (e Entity) SetID(id string) Entity {
+	e.ID = id
+	return e
 }
 
 // Supplier represents a food supplier like a restaurant or delivery service.
