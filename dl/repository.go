@@ -17,15 +17,21 @@ package dl
 
 // Item represents a repository item any CRUD operations can be applied to.
 type Item interface {
-	ID() uint64
+	GetID() uint64
 }
 
 // Repository represents a type of data storage which holds several Items
 // and provides methods to CRUD them. A typical example is a MySQL database.
 type Repository interface {
+	// Create stores an item into the respective table or bucket.
 	Create(Item) error
+	// Find reads an item from its table or bucket, usually by comparing IDs.
 	Find(Item) (Item, error)
+	// FindBy reads all items that match the condition field = val.
 	FindBy(i Item, field, val string) ([]Item, error)
+	// Update updates the item with the corresponding ID and sets all field
+	// values to the values of the given item.
 	Update(Item) error
+	// Delete deletes the item with the corresponding ID.
 	Delete(Item) error
 }
