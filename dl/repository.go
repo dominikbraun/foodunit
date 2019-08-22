@@ -23,15 +23,14 @@ type Item interface {
 // Repository represents a type of data storage which holds several Items
 // and provides methods to CRUD them. A typical example is a MySQL database.
 type Repository interface {
-	// Create stores an item into the respective table or bucket.
-	Create(i Item) error
-	// Find reads an item from its table or bucket, usually by comparing IDs.
-	Find(i Item) (Item, error)
+	// Store stores an item into the respective table or bucket.
+	Store(Item) error
+	// Find finds the item with the corresponding ID.
+	Find(id uint64) (Item, error)
 	// FindBy reads all items that match the condition field = val.
-	FindBy(i Item, field, val string) ([]Item, error)
-	// Update updates the item with the corresponding ID and sets all field
-	// values to the values of the given item.
-	Update(i Item) error
+	FindBy(field, val string) ([]Item, error)
+	// Update updates the item with the corresponding ID.
+	Update(Item) error
 	// Delete deletes the item with the corresponding ID.
-	Delete(i Item) error
+	Delete(Item) error
 }

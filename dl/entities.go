@@ -27,14 +27,6 @@ func (e *Entity) GetID() string {
 	return e.ID
 }
 
-// SetID sets an entity's ID and can be called directly on a fresh entity.
-// Returning the instance enables calls like
-// 		e := MyEntity{}.SetID(42)
-func (e Entity) SetID(id string) Entity {
-	e.ID = id
-	return e
-}
-
 // Supplier represents a food supplier like a restaurant or delivery service.
 type Supplier struct {
 	Entity
