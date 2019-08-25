@@ -24,7 +24,7 @@ import (
 type Repository interface {
 	Create(dl.Entity) error
 	Find(id uint64, dest dl.Entity) error
-	FindBy(field, val string, dests []dl.Entity) error
+	FindBy(field, val string, dests *[]dl.Entity) error
 	Update(dl.Entity) error
 	Delete(dl.Entity) error
 }
