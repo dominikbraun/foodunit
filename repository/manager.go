@@ -57,12 +57,12 @@ func (m Manager) Characteristics() dl.CharacteristicRepository {
 	return m.characteristics
 }
 
-// Users returns the default CharacteristicsRepository implementation.
+// Users returns the default UserRepository implementation.
 func (m Manager) Users() dl.UserRepository {
 	return m.users
 }
 
-// Offers returns the default CharacteristicsRepository implementation.
+// Offers returns the default OfferRepository implementation.
 func (m Manager) Offers() dl.OfferRepository {
 	return m.offers
 }
