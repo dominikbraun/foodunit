@@ -34,7 +34,7 @@ func (c CharacteristicRepository) Create(characteristic dl.Characteristic) error
 
 // FindBy implements dl.DishRepository.FindBy.
 func (c CharacteristicRepository) FindBy(field, val string) ([]dl.Characteristic, error) {
-	var entities []dl.Entity
+	entities := []dl.Entity{dl.Supplier{}}
 
 	if err := c.storage.FindBy(field, val, &entities); err != nil {
 		return nil, err

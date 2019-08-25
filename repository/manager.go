@@ -26,6 +26,8 @@ type Manager struct {
 	suppliers       dl.SupplierRepository
 	dishes          dl.DishRepository
 	characteristics dl.CharacteristicRepository
+	users           dl.UserRepository
+	offers          dl.OfferRepository
 }
 
 // NewManager creates and returns a Manager instance.
@@ -34,6 +36,8 @@ func NewManager(storage storage.Repository) Manager {
 		suppliers:       SupplierRepository{storage: storage},
 		dishes:          DishRepository{storage: storage},
 		characteristics: CharacteristicRepository{storage: storage},
+		users:           UserRepository{storage: storage},
+		offers:          OfferRepository{storage: storage},
 	}
 	return manager
 }
@@ -51,4 +55,14 @@ func (m Manager) Dishes() dl.DishRepository {
 // Characteristics returns the default CharacteristicsRepository implementation.
 func (m Manager) Characteristics() dl.CharacteristicRepository {
 	return m.characteristics
+}
+
+// Users returns the default CharacteristicsRepository implementation.
+func (m Manager) Users() dl.UserRepository {
+	return m.users
+}
+
+// Offers returns the default CharacteristicsRepository implementation.
+func (m Manager) Offers() dl.OfferRepository {
+	return m.offers
 }
