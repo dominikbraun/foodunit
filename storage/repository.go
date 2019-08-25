@@ -15,14 +15,16 @@
 // Package storage provides storage implementations for managing entities.
 package storage
 
-import "github.com/dominikbraun/foodunit/dl"
+import (
+	"github.com/dominikbraun/foodunit/dl"
+)
 
 // Repository provides methods to perform CRUD operations on entities.
 // Mapping the entity type against a table or bucket is up to the implementation.
 type Repository interface {
 	Create(dl.Entity) error
-	Find(id uint64) (dl.Entity, error)
-	FindBy(field, val string) ([]dl.Entity, error)
+	Find(id uint64, dest dl.Entity) error
+	FindBy(field, val string, dests []dl.Entity) error
 	Update(dl.Entity) error
 	Delete(dl.Entity) error
 }
