@@ -86,9 +86,9 @@ type Variant struct {
 // User represents a person that creates offers and orders food.
 type User struct {
 	Model
-	Mail       string `db:"mail" json:""`
-	Name       string `db:"name" json:""`
-	PayPalMail string `db:"pay_pal_mail" json:""`
+	Mail       string `db:"mail" json:"mail"`
+	Name       string `db:"name" json:"name"`
+	PayPalMail string `db:"pay_pal_mail" json:"pay_pal_mail"`
 }
 
 // Offer represents an User's offer to order food for their team.
