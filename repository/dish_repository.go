@@ -34,7 +34,7 @@ func (d DishRepository) Create(dish dl.Dish) error {
 
 // FindBy implements dl.DishRepository.FindBy.
 func (d DishRepository) FindBy(field, val string) ([]dl.Dish, error) {
-	var entities []dl.Entity
+	entities := []dl.Entity{dl.Dish{}}
 
 	if err := d.storage.FindBy(field, val, &entities); err != nil {
 		return nil, err
@@ -56,4 +56,23 @@ func (d DishRepository) FindBy(field, val string) ([]dl.Dish, error) {
 func (d DishRepository) Update(dish dl.Dish) error {
 	err := d.storage.Update(dish)
 	return err
+}
+
+// FindCategoryBy implements dl.DishRepository.FindCategoryBy.
+func (d DishRepository) FindCategoryBy(field, val string) ([]dl.Category, error) {
+	entities := []dl.Entity{dl.Category{}}
+
+	if err := d.storage.FindBy(field, val, &entities); err != nil {
+		return nil, err
+	}
+	categories := make([]dl.Category, len(entities))
+
+	for i, e := range entities {
+		category, ok := e.(dl.Category)
+		if !ok {
+			return nil, errors.New("received entity is not of type Category")
+		}
+		categories[i] = category
+	}
+	return categories, nil
 }

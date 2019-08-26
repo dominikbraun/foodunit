@@ -36,6 +36,7 @@ func (s SupplierInteractor) GetInfo(id uint64) (Supplier, error) {
 	return supplier, nil
 }
 
+// GetMenu implements dl.SupplierService.GetMenu.
 func (s SupplierInteractor) GetMenu(id uint64) (Menu, error) {
 	supplierID := strconv.Itoa(int(id))
 
