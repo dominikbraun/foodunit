@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package dl provides domain language entities and rules.
-package dl
+// Package core provides business services and use case methods.
+package core
 
 // SupplierService provides methods for Supplier-related use cases.
 type SupplierService interface {
-	GetInfo(id uint64) Supplier
-	//GetMenu(id uint64) []Category
+	GetInfo(id uint64) (Supplier, error)
+	GetMenu(id uint64) (Menu, error)
 }
 
 // DishService provides methods for Dish-related use cases.
 type DishService interface {
-	//GetCharacteristics(id uint64) []Characteristic
+	//GetCharacteristics(id uint64) ([]Characteristic, error)
 }
 
 // UserService provides methods for User-related use cases.
 type UserService interface {
 	//Login(user, pass string) error
 	//Register(email, name, pass string) error
-	//GetInfo(id uint64) User
+	//GetInfo(id uint64) (User, error)
 }
