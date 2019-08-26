@@ -67,6 +67,7 @@ type Dish struct {
 	Name        string `db:"name" json:"name"`
 	Description string `db:"description" json:"description"`
 	Price       uint8  `db:"price" json:"price"`
+	IsUncertain bool   `db:"is_uncertain" json:"is_uncertain"`
 }
 
 // Characteristic represents a user-configurable product feature.
