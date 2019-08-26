@@ -28,6 +28,7 @@ type DishRepository interface {
 	Create(Dish) error
 	FindBy(field, val string) ([]Dish, error)
 	Update(Dish) error
+	FindCategoryBy(field, val string) ([]Category, error)
 }
 
 // CharacteristicRepository provides methods for managing Characteristic-related data.
