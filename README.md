@@ -2,7 +2,7 @@
 <br />
 <br />
 <p align="center">
-  <img align="center" src="https://sternentstehung.de/foodunit-3.PNG">
+  <img align="center" src="https://sternentstehung.de/foodunit-readme.png">
 </p>
 <br />
 <br />
