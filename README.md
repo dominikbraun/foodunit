@@ -1,9 +1,2 @@
-<br />
-<br />
-<br />
-<p align="center">
-  <img align="center" src="https://sternentstehung.de/foodunit-readme.png">
-</p>
-<br />
-<br />
-<br />
+<h2>FoodUnit 3</h2>
+A self-hosted web application for offering and ordering food.
