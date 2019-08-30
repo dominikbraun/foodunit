@@ -94,6 +94,7 @@ type User struct {
 	Name           string `db:"name" json:"name"`
 	IsAdmin        bool   `db:"is_admin" json:"is_admin"`
 	PayPalMailAddr string `db:"pay_pal_mail_addr" json:"pay_pal_mail_addr"`
+	Score          int
 }
 
 // Offer represents an user's offer to order food for their friends or team.
