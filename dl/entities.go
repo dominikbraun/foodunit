@@ -92,6 +92,7 @@ type User struct {
 	Model
 	MailAddr       string `db:"mail_addr" json:"mail_addr"`
 	Name           string `db:"name" json:"name"`
+	IsAdmin        bool   `db:"is_admin" json:"is_admin"`
 	PayPalMailAddr string `db:"pay_pal_mail_addr" json:"pay_pal_mail_addr"`
 }
 
