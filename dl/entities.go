@@ -25,11 +25,11 @@ type Entity interface {
 // Model represents an Entity implementation. It can be embedded in any
 // struct so that it becomes a storable entity.
 type Model struct {
-	ID uint64 `db:"id" json:"id"`
+	ID uint32 `db:"id" json:"id"`
 }
 
 // GetID implements Entity.GetID.
-func (m Model) GetID() uint64 {
+func (m Model) GetID() uint32 {
 	return m.ID
 }
 
