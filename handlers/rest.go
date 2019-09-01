@@ -18,18 +18,13 @@ package handlers
 import (
 	"github.com/dominikbraun/foodunit/core"
 	"github.com/dominikbraun/foodunit/storage"
+	"github.com/go-chi/render"
 	"net/http"
 	"strconv"
 )
 
-// Renderer represents a type which writes any struct as a JSON object.
-type Renderer interface {
-	JSON(http.ResponseWriter, *http.Request, interface{})
-}
-
 // REST represents the common handler for REST API requests.
 type REST struct {
-	render      Renderer
 	restaurants storage.RestaurantModel
 }
 
@@ -45,5 +40,5 @@ func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
 		// ToDo: Handle model error properly
 		return
 	}
-	rest.render.JSON(w, r, restaurantInfo)
+	render.JSON(w, r, restaurantInfo)
 }
