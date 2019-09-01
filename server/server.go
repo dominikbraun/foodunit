@@ -31,7 +31,7 @@ import (
 type Server struct {
 	*http.Server
 	router    *chi.Mux
-	handler   handlers.REST
+	rest      handlers.REST
 	interrupt chan os.Signal
 }
 
@@ -40,7 +40,7 @@ func New() *Server {
 	s := Server{
 		Server:    nil,
 		router:    newRouter(),
-		handler:   handlers.REST{},
+		rest:      handlers.REST{},
 		interrupt: make(chan os.Signal),
 	}
 	s.Server = &http.Server{
@@ -62,9 +62,9 @@ func (s *Server) Run() {
 	}()
 
 	<-s.interrupt
-	c, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	timeout, cancel := context.WithTimeout(context.Background(), time.Second*5)
 
-	if err := s.Shutdown(c); err != nil {
+	if err := s.Shutdown(timeout); err != nil {
 		log.Println(err)
 	}
 	defer cancel()
