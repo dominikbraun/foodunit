@@ -34,19 +34,16 @@ type REST struct {
 }
 
 // GetRestaurantInfo is responsible for calling core.GetRestaurantInfo.
-func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) http.Handler {
-	fn := func(w http.ResponseWriter, r *http.Request) {
-		id, err := strconv.Atoi(r.Header.Get("id"))
-		if err != nil {
-			// ToDo: Handle type error properly
-			return
-		}
-		restaurantInfo, err := core.GetRestaurantInfo(uint32(id), rest.restaurants)
-		if err != nil {
-			// ToDo: Handle model error properly
-			return
-		}
-		rest.render.JSON(w, r, restaurantInfo)
+func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.Header.Get("id"))
+	if err != nil {
+		// ToDo: Handle type error properly
+		return
 	}
-	return http.HandlerFunc(fn)
+	restaurantInfo, err := core.GetRestaurantInfo(uint32(id), rest.restaurants)
+	if err != nil {
+		// ToDo: Handle model error properly
+		return
+	}
+	rest.render.JSON(w, r, restaurantInfo)
 }
