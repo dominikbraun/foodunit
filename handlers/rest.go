@@ -16,16 +16,17 @@
 package handlers
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/dominikbraun/foodunit/core"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/go-chi/render"
-	"net/http"
-	"strconv"
 )
 
 // REST represents the common handler for REST API requests.
 type REST struct {
-	restaurants storage.RestaurantModel
+	Restaurants storage.RestaurantModel
 }
 
 // GetRestaurantInfo is responsible for calling core.GetRestaurantInfo.
@@ -35,7 +36,7 @@ func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
 		// ToDo: Handle type error properly
 		return
 	}
-	restaurantInfo, err := core.GetRestaurantInfo(uint64(id), rest.restaurants)
+	restaurantInfo, err := core.GetRestaurantInfo(uint64(id), rest.Restaurants)
 	if err != nil {
 		// ToDo: Handle model error properly
 		return

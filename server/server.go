@@ -17,14 +17,19 @@ package server
 
 import (
 	"context"
-	"github.com/dominikbraun/foodunit/handlers"
-	"github.com/go-chi/chi"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/dominikbraun/foodunit/handlers"
+	"github.com/go-chi/chi"
+	"github.com/jmoiron/sqlx"
+	"github.com/pkg/errors"
 )
+
+var DB *sqlx.DB
 
 // Server represents an API server that offers endpoints for data related
 // with restaurants, users, offers and orders.
@@ -36,9 +41,8 @@ type Server struct {
 }
 
 // New creates a Server instance and returns a reference to it.
-func New() *Server {
+func New(driver, dsn string) (*Server, error) {
 	s := Server{
-		Server:    nil,
 		router:    newRouter(),
 		rest:      handlers.REST{},
 		interrupt: make(chan os.Signal),
@@ -48,7 +52,29 @@ func New() *Server {
 		Handler: s.router,
 	}
 
-	return &s
+	if err := s.connect(driver, dsn); err != nil {
+		return nil, err
+	}
+
+	return &s, nil
+}
+
+// connect establishes a database connection using the sqlx library.
+func (s *Server) connect(driver, dsn string) error {
+	var err error
+
+	DB, err = sqlx.Connect(driver, dsn)
+	if err != nil {
+		return errors.Wrap(err, "connection failed")
+	}
+
+	return nil
+}
+
+// RunMigration sets up all tables by invoking the individual Migrate() methods.
+func (s *Server) RunMigration() error {
+	err := s.rest.Restaurants.Migrate()
+	return err
 }
 
 // Run mounts all API routes, establishes a database connection and starts
@@ -67,5 +93,7 @@ func (s *Server) Run() {
 	if err := s.Shutdown(timeout); err != nil {
 		log.Println(err)
 	}
+
+	DB.Close()
 	defer cancel()
 }

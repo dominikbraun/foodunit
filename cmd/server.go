@@ -15,8 +15,17 @@
 // Package main provides functions serving as entry point for compilation.
 package main
 
-import "github.com/dominikbraun/foodunit/server"
+import (
+	"log"
+
+	"github.com/dominikbraun/foodunit/server"
+)
 
 func main() {
-	server.New().Run()
+	server, err := server.New("", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	server.Run()
 }
