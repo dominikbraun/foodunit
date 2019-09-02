@@ -26,11 +26,12 @@ import (
 	"github.com/dominikbraun/foodunit/handlers"
 	"github.com/dominikbraun/foodunit/storage/mariadb"
 	"github.com/go-chi/chi"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
 )
 
-var DB *sqlx.DB
+var db *sqlx.DB
 
 // Server represents an API server that offers endpoints for data related
 // with restaurants, users, offers and orders.
@@ -44,10 +45,7 @@ type Server struct {
 // New creates a Server instance and returns a reference to it.
 func New(driver, dsn string) (*Server, error) {
 	s := Server{
-		router: newRouter(),
-		rest: handlers.REST{
-			Restaurants: mariadb.RestaurantModel{DB: DB},
-		},
+		router:    newRouter(),
 		interrupt: make(chan os.Signal),
 	}
 	s.Server = &http.Server{
@@ -59,6 +57,9 @@ func New(driver, dsn string) (*Server, error) {
 		return nil, err
 	}
 
+	s.rest = handlers.REST{
+		Restaurants: mariadb.RestaurantModel{DB: db},
+	}
 	return &s, nil
 }
 
@@ -66,7 +67,7 @@ func New(driver, dsn string) (*Server, error) {
 func (s *Server) connect(driver, dsn string) error {
 	var err error
 
-	DB, err = sqlx.Connect(driver, dsn)
+	db, err = sqlx.Connect(driver, dsn)
 	if err != nil {
 		return errors.Wrap(err, "connection failed")
 	}
@@ -97,6 +98,6 @@ func (s *Server) Run() {
 		log.Println(err)
 	}
 
-	DB.Close()
+	db.Close()
 	defer cancel()
 }
