@@ -22,8 +22,8 @@ import (
 
 // GetRestaurantInfo is the public interface for retrieving meta information
 // for a given restaurant, returning an instance of core.RestaurantInfo.
-func GetRestaurantInfo(id uint32, model storage.RestaurantModel) (RestaurantInfo, error) {
-	r, err := model.Get(id)
+func GetRestaurantInfo(id uint64, model storage.RestaurantModel) (RestaurantInfo, error) {
+	r, err := model.GetInfo(id)
 	if err != nil {
 		return RestaurantInfo{}, err
 	}

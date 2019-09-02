@@ -19,5 +19,6 @@ import "github.com/dominikbraun/foodunit/dl"
 
 // RestaurantModel prescribes methods for accessing Restaurant-related data.
 type RestaurantModel interface {
-	Get(id uint32) (dl.Restaurant, error)
+	Migrate() error
+	GetInfo(id uint64) (dl.Restaurant, error)
 }

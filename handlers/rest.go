@@ -35,7 +35,7 @@ func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
 		// ToDo: Handle type error properly
 		return
 	}
-	restaurantInfo, err := core.GetRestaurantInfo(uint32(id), rest.restaurants)
+	restaurantInfo, err := core.GetRestaurantInfo(uint64(id), rest.restaurants)
 	if err != nil {
 		// ToDo: Handle model error properly
 		return
