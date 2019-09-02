@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"github.com/dominikbraun/foodunit/handlers"
+	"github.com/dominikbraun/foodunit/storage/mariadb"
 	"github.com/go-chi/chi"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
@@ -43,8 +44,10 @@ type Server struct {
 // New creates a Server instance and returns a reference to it.
 func New(driver, dsn string) (*Server, error) {
 	s := Server{
-		router:    newRouter(),
-		rest:      handlers.REST{},
+		router: newRouter(),
+		rest: handlers.REST{
+			Restaurants: mariadb.RestaurantModel{DB: DB},
+		},
 		interrupt: make(chan os.Signal),
 	}
 	s.Server = &http.Server{

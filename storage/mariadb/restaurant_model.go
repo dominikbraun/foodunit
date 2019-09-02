@@ -21,8 +21,9 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+// RestaurantModel is a storage.RestaurantModel implementation.
 type RestaurantModel struct {
-	db *sqlx.DB
+	DB *sqlx.DB
 }
 
 func (r RestaurantModel) Migrate() error {
@@ -43,13 +44,13 @@ func (r RestaurantModel) Migrate() error {
 		"is_active":   "BOOLEAN",
 	})
 
-	_ = r.db.MustExec(q)
+	_ = r.DB.MustExec(q)
 	return nil
 }
 
-func (r RestaurantModel) GetInfo(id uint32) (dl.Restaurant, error) {
-	q := Select("restaurants", List{"name"}, Conditions{
+func (r RestaurantModel) GetInfo(id uint64) (dl.Restaurant, error) {
+	_ = Select("restaurants", List{"name"}, Conditions{
 		"id": "?",
 	})
-
+	return dl.Restaurant{}, nil
 }
