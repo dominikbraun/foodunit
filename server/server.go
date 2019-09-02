@@ -42,8 +42,9 @@ type Server struct {
 	interrupt chan os.Signal
 }
 
-// New creates a Server instance and returns a reference to it.
-func New(driver, dsn string) (*Server, error) {
+// Setup builds a new Server instance, registers all routes, injects discrete
+// model implementations and eventually establishes a database connection.
+func Setup(driver, dsn string) (*Server, error) {
 	s := Server{
 		router:    newRouter(),
 		interrupt: make(chan os.Signal),
@@ -83,7 +84,7 @@ func (s *Server) RunMigration() error {
 
 // Run mounts all API routes, establishes a database connection and starts
 // listening to the specified port. The server can be shut down with Ctrl + C.
-func (s *Server) Run() {
+func (s *Server) Run() error {
 	s.mountRoutes()
 	signal.Notify(s.interrupt, os.Interrupt)
 
@@ -95,9 +96,11 @@ func (s *Server) Run() {
 	timeout, cancel := context.WithTimeout(context.Background(), time.Second*5)
 
 	if err := s.Shutdown(timeout); err != nil {
-		log.Println(err)
+		return err
 	}
 
-	db.Close()
 	defer cancel()
+	db.Close()
+
+	return nil
 }

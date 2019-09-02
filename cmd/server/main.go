@@ -22,10 +22,10 @@ import (
 )
 
 func main() {
-	server, err := server.New("", "")
+	server, err := server.Setup("", "")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	server.Run()
+	log.Fatal(server.Run())
 }
