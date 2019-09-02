@@ -77,14 +77,16 @@ func (s *Server) connect(driver, dsn string) error {
 }
 
 // RunMigration sets up all tables by invoking the individual Migrate() methods.
-func (s *Server) RunMigration() error {
+func (s *Server) RunMigration() {
 	err := s.rest.Restaurants.Migrate()
-	return err
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 // Run mounts all API routes, establishes a database connection and starts
 // listening to the specified port. The server can be shut down with Ctrl + C.
-func (s *Server) Run() error {
+func (s *Server) Run() {
 	s.mountRoutes()
 	signal.Notify(s.interrupt, os.Interrupt)
 
@@ -96,11 +98,9 @@ func (s *Server) Run() error {
 	timeout, cancel := context.WithTimeout(context.Background(), time.Second*5)
 
 	if err := s.Shutdown(timeout); err != nil {
-		return err
+		log.Println(err)
 	}
 
-	defer cancel()
 	db.Close()
-
-	return nil
+	defer cancel()
 }

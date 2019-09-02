@@ -22,10 +22,10 @@ import (
 )
 
 func main() {
-	server, err := server.New("", "")
+	server, err := server.Setup("mysql", "user:pass@(localhost:3306)/foodunit")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Fatal(server.RunMigration())
+	server.RunMigration()
 }
