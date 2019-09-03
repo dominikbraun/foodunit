@@ -61,6 +61,10 @@ func Setup(driver, dsn string) (*Server, error) {
 	s.rest = handlers.REST{
 		Restaurants: mariadb.RestaurantModel{DB: db},
 	}
+
+	s.mountRoutes()
+	signal.Notify(s.interrupt, os.Interrupt)
+
 	return &s, nil
 }
 
@@ -87,8 +91,6 @@ func (s *Server) RunMigration() {
 // Run mounts all API routes, establishes a database connection and starts
 // listening to the specified port. The server can be shut down with Ctrl + C.
 func (s *Server) Run() {
-	s.mountRoutes()
-	signal.Notify(s.interrupt, os.Interrupt)
 
 	go func() {
 		log.Fatal(s.ListenAndServe())

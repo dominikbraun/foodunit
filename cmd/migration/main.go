@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package main provides functions serving as entry point for compilation.
+// Package migration provides a runnable server instance which connects to
+// a data store and executes all known model migrations.
 package main
 
 import (
@@ -21,11 +22,12 @@ import (
 	"github.com/dominikbraun/foodunit/server"
 )
 
+// main sets up a server and invokes its RunMigration method.
 func main() {
-	server, err := server.Setup("mysql", "user:pass@(localhost:3306)/foodunit")
+	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	server.RunMigration()
+	s.RunMigration()
 }

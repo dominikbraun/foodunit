@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package main provides functions serving as entry point for compilation.
+// Package server provides a runnable server instance which exposes a REST API.
 package main
 
 import (
@@ -21,11 +21,12 @@ import (
 	"github.com/dominikbraun/foodunit/server"
 )
 
+// main sets up a server and invokes its Run method.
 func main() {
-	server, err := server.Setup("", "")
+	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	server.Run()
+	s.Run()
 }
