@@ -16,6 +16,7 @@
 package handlers
 
 import (
+	"github.com/go-chi/chi"
 	"net/http"
 	"strconv"
 
@@ -31,7 +32,7 @@ type REST struct {
 
 // GetRestaurantInfo is responsible for calling core.GetRestaurantInfo.
 func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.Header.Get("id"))
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		// ToDo: Handle type error properly
 		return

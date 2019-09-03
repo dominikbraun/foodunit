@@ -26,8 +26,9 @@ type RestaurantModel struct {
 	DB *sqlx.DB
 }
 
+// Migrate implements storage.RestaurantModel.Migrate.
 func (r RestaurantModel) Migrate() error {
-	q := Create("restaurants", Fields{
+	query := Create("restaurants", Fields{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"name":        "VARCHAR(50)",
 		"postal_code": "VARCHAR(50)",
@@ -44,13 +45,20 @@ func (r RestaurantModel) Migrate() error {
 		"is_active":   "BOOLEAN",
 	})
 
-	_ = r.DB.MustExec(q)
+	_ = r.DB.MustExec(query)
 	return nil
 }
 
+// GetInfo implements storage.RestaurantModel.GetInfo.
 func (r RestaurantModel) GetInfo(id uint64) (dl.Restaurant, error) {
-	_ = Select("restaurants", List{"name"}, Conditions{
-		"id": "?",
+	query := Select("restaurants", List{"*"}, Conditions{
+		"id": "= ?",
 	})
-	return dl.Restaurant{}, nil
+
+	row := r.DB.QueryRowx(query, id)
+
+	var restaurant dl.Restaurant
+	err := row.StructScan(&restaurant)
+
+	return restaurant, err
 }
