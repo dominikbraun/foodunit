@@ -17,31 +17,16 @@ package server
 
 import (
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
 )
 
-// newRouter creates a route multiplexer and registers essential middleware.
-func newRouter() *chi.Mux {
-	r := chi.NewRouter()
-	r.Use(
-		middleware.Logger,
-		middleware.DefaultCompress,
-		middleware.RedirectSlashes,
-		middleware.Recoverer,
-		render.SetContentType(render.ContentTypeJSON),
-	)
-	return r
-}
-
-// mountRoutes builds all supported routes, registers the corresponding handlers
+// mountRoutes builds all supported routes, registers the corresponding controllers
 // and mounts that routes to the server's router instance.
 func (s *Server) mountRoutes() {
-	r := newRouter()
+	r := chi.NewRouter()
 
 	r.Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
-			r.Get("/info", s.rest.GetRestaurantInfo)
+			r.Get("/info", s.controller.GetRestaurantInfo)
 		})
 	})
 

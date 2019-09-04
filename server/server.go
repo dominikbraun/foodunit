@@ -17,72 +17,56 @@ package server
 
 import (
 	"context"
+	"github.com/go-chi/chi"
 	"log"
 	"net/http"
 	"os"
-	"os/signal"
 	"time"
 
-	"github.com/dominikbraun/foodunit/handlers"
-	"github.com/dominikbraun/foodunit/storage/mariadb"
-	"github.com/go-chi/chi"
+	"github.com/dominikbraun/foodunit/controllers"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/pkg/errors"
 )
-
-var db *sqlx.DB
 
 // Server represents an API server that offers endpoints for data related
 // with restaurants, users, offers and orders.
 type Server struct {
 	*http.Server
-	router    *chi.Mux
-	rest      handlers.REST
-	interrupt chan os.Signal
+	db         *sqlx.DB
+	router     *chi.Mux
+	controller *controllers.REST
+	interrupt  chan os.Signal
 }
 
 // Setup builds a new Server instance, registers all routes, injects discrete
 // model implementations and eventually establishes a database connection.
 func Setup(driver, dsn string) (*Server, error) {
-	s := Server{
-		router:    newRouter(),
-		interrupt: make(chan os.Signal),
-	}
-	s.Server = &http.Server{
-		Addr:    ":8080",
-		Handler: s.router,
-	}
-
-	if err := s.connect(driver, dsn); err != nil {
+	db, err := provideDB(driver, dsn)
+	if err != nil {
 		return nil, err
 	}
 
-	s.rest = handlers.REST{
-		Restaurants: mariadb.RestaurantModel{DB: db},
-	}
+	router := provideRouter()
+	restaurantModel := provideRestaurantModel(db)
+	restController := provideRESTController(restaurantModel)
 
-	s.mountRoutes()
-	signal.Notify(s.interrupt, os.Interrupt)
+	s := Server{
+		Server: &http.Server{
+			Addr:    ":9292",
+			Handler: router,
+		},
+		db:         db,
+		router:     router,
+		controller: restController,
+		interrupt:  make(chan os.Signal),
+	}
 
 	return &s, nil
 }
 
-// connect establishes a database connection using the sqlx library.
-func (s *Server) connect(driver, dsn string) error {
-	var err error
-
-	db, err = sqlx.Connect(driver, dsn)
-	if err != nil {
-		return errors.Wrap(err, "connection failed")
-	}
-
-	return nil
-}
-
 // RunMigration sets up all tables by invoking the individual Migrate() methods.
 func (s *Server) RunMigration() {
-	err := s.rest.Restaurants.Migrate()
+	err := s.controller.Restaurants.Migrate()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,7 +75,6 @@ func (s *Server) RunMigration() {
 // Run mounts all API routes, establishes a database connection and starts
 // listening to the specified port. The server can be shut down with Ctrl + C.
 func (s *Server) Run() {
-
 	go func() {
 		log.Fatal(s.ListenAndServe())
 	}()
@@ -103,6 +86,6 @@ func (s *Server) Run() {
 		log.Println(err)
 	}
 
-	db.Close()
+	_ = s.db.Close()
 	defer cancel()
 }

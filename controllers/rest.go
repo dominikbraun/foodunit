@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package handlers provides various handlers for triggering the core logic.
-package handlers
+// Package controllers provides various controllers for triggering the core logic.
+package controllers
 
 import (
 	"github.com/go-chi/chi"
