@@ -68,6 +68,7 @@ type Dish struct {
 	Description     string           `db:"description" json:"description"`
 	Price           uint8            `db:"price" json:"price"`
 	IsUncertain     bool             `db:"is_uncertain" json:"is_uncertain"`
+	IsHealthy       bool             `db:"is_healthy" json:"is_healthy"`
 	Characteristics []Characteristic `db:"characteristics" json:"characteristics"`
 }
 
@@ -94,7 +95,7 @@ type User struct {
 	Name           string `db:"name" json:"name"`
 	IsAdmin        bool   `db:"is_admin" json:"is_admin"`
 	PayPalMailAddr string `db:"pay_pal_mail_addr" json:"pay_pal_mail_addr"`
-	Score          int
+	Score          int    `db:"score" json:"score"`
 }
 
 // Offer represents an user's offer to order food for their friends or team.
