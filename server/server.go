@@ -21,6 +21,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/dominikbraun/foodunit/controllers"
@@ -55,11 +56,13 @@ func Setup(driver, dsn string) (*Server, error) {
 			Addr:    ":9292",
 			Handler: router,
 		},
-		db:         db,
 		router:     router,
 		controller: restController,
 		interrupt:  make(chan os.Signal),
 	}
+
+	s.mountRoutes()
+	signal.Notify(s.interrupt, os.Interrupt)
 
 	return &s, nil
 }
