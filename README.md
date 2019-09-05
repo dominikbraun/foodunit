@@ -45,7 +45,7 @@ The first one starts vue in dev-mode which serves the app to port 8080.
 The second script starts the go server with the --client-url param.
 This proxies the 8080 port to the go-server-port (e.g. 9292).
 
-So you can should the client via http://localhost:9292
+So you can open the client via http://localhost:9292
 
 # VS Code run scripts
 To debug Foodunit with vs code you can use the following run configurations:
