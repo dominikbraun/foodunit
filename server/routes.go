@@ -39,10 +39,8 @@ func (s *Server) mountRoutes() {
 	s.router.Mount("/v1", r)
 }
 
-// Setup fileserver to serve the client files.
+// Setup fileserver to serve the client files. (or use Proxy if clientURL is not "")
 func (s *Server) mountClientRoutes(clientURL string) {
-	//r := chi.NewRouter()
-
 	if clientURL != "" {
 		// Setup proxy which forwards everything to the client. Needed to prevent cross origin error if the client is provided
 		// by another Server. (e.g. by yarn serve in development environment)
