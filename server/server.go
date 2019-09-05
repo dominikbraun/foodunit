@@ -17,12 +17,13 @@ package server
 
 import (
 	"context"
-	"github.com/go-chi/chi"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/go-chi/chi"
 
 	"github.com/dominikbraun/foodunit/controllers"
 	_ "github.com/go-sql-driver/mysql"
@@ -41,7 +42,7 @@ type Server struct {
 
 // Setup builds a new Server instance, registers all routes, injects discrete
 // model implementations and eventually establishes a database connection.
-func Setup(driver, dsn string) (*Server, error) {
+func Setup(driver, dsn string, clientURL string) (*Server, error) {
 	db, err := provideDB(driver, dsn)
 	if err != nil {
 		return nil, err
@@ -62,6 +63,8 @@ func Setup(driver, dsn string) (*Server, error) {
 	}
 
 	s.mountRoutes()
+	s.mountClientRoutes(clientURL)
+
 	signal.Notify(s.interrupt, os.Interrupt)
 
 	return &s, nil
