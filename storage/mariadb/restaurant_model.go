@@ -30,19 +30,19 @@ type RestaurantModel struct {
 func (r RestaurantModel) Migrate() error {
 	query := Create("restaurants", Fields{
 		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
-		"name":        "VARCHAR(50)",
-		"postal_code": "VARCHAR(50)",
-		"city":        "VARCHAR(50)",
-		"phone":       "VARCHAR(50)",
-		"open_mon":    "VARCHAR(50)",
-		"open_tue":    "VARCHAR(50)",
-		"open_wed":    "VARCHAR(50)",
-		"open_thu":    "VARCHAR(50)",
-		"open_fri":    "VARCHAR(50)",
-		"open_sat":    "VARCHAR(50)",
-		"open_sun":    "VARCHAR(50)",
-		"website":     "VARCHAR(50)",
-		"is_active":   "BOOLEAN",
+		"name":        "VARCHAR(50) NOT NULL",
+		"postal_code": "VARCHAR(50) NOT NULL",
+		"city":        "VARCHAR(50) NOT NULL",
+		"phone":       "VARCHAR(50) NOT NULL",
+		"open_mon":    "VARCHAR(50) NOT NULL",
+		"open_tue":    "VARCHAR(50) NOT NULL",
+		"open_wed":    "VARCHAR(50) NOT NULL",
+		"open_thu":    "VARCHAR(50) NOT NULL",
+		"open_fri":    "VARCHAR(50) NOT NULL",
+		"open_sat":    "VARCHAR(50) NOT NULL",
+		"open_sun":    "VARCHAR(50) NOT NULL",
+		"website":     "VARCHAR(50) NOT NULL",
+		"is_active":   "BOOLEAN NOT NULL",
 	})
 
 	_ = r.DB.MustExec(query)
