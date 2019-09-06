@@ -27,7 +27,7 @@ import (
 // mountRoutes makes the file server to either directly serve the files or use a
 // reverse proxy to prevent cross-origin errors.
 func (fs *FileServer) mountRoutes() {
-	dir := "client/dist"
+	dir := "ui/dist"
 
 	fileServer(fs.router, "/js", http.Dir(dir+"/js"))
 	fileServer(fs.router, "/css", http.Dir(dir+"/css"))
