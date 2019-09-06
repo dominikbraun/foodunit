@@ -1,3 +1,3 @@
 #!/bin/bash
-cd client
+cd ui
 yarn serve
