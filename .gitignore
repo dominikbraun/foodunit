@@ -20,6 +20,6 @@ foodunit.exe
 cmd/*/__debug_bin
 
 # FoodUnit config
-server.yaml
+server.toml
 
 .vscode

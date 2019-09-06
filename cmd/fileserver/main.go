@@ -12,18 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package server provides a runnable server instance which exposes a REST API.
+// Package fileserver provides a runnable file server for serving frontend files.
 package main
 
 import (
+	"flag"
+	"github.com/dominikbraun/foodunit/fileserver"
 	"log"
-
-	"github.com/dominikbraun/foodunit/server"
 )
 
-// main sets up a server and invokes its Run method.
+// main sets up a file server and invokes its Run method.
 func main() {
-	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit")
+	clientURL := flag.String("client-url", "", "Specifies the URL of the client.")
+	flag.Parse()
+
+	s, err := fileserver.Setup(*clientURL)
 	if err != nil {
 		log.Fatal(err)
 	}

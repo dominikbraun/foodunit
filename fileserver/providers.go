@@ -12,21 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package server provides a runnable server instance which exposes a REST API.
-package main
+// Package fileserver provides a server which serves all static frontend files.
+package fileserver
 
 import (
-	"log"
-
-	"github.com/dominikbraun/foodunit/server"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/render"
 )
 
-// main sets up a server and invokes its Run method.
-func main() {
-	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	s.Run()
+// provideRouter provides a routing service instance.
+func provideRouter() *chi.Mux {
+	r := chi.NewRouter()
+	r.Use(
+		middleware.Logger,
+		middleware.DefaultCompress,
+		middleware.RedirectSlashes,
+		middleware.Recoverer,
+		render.SetContentType(render.ContentTypeJSON),
+	)
+	return r
 }
