@@ -83,19 +83,21 @@ type Characteristic struct {
 // Variant represents a discrete value of a characteristic.
 type Variant struct {
 	Model
-	Value    string `db:"value" json:"value"`
-	HasPrice bool   `db:"has_price" json:"has_price"`
-	Price    int8   `db:"price" json:"price"`
+	Value     string `db:"value" json:"value"`
+	IsDefault bool   `db:"is_default" json:"is_default"`
+	Price     int8   `db:"price" json:"price"`
 }
 
 // User represents a person that creates offers and orders food.
 type User struct {
 	Model
-	MailAddr       string `db:"mail_addr" json:"mail_addr"`
-	Name           string `db:"name" json:"name"`
-	IsAdmin        bool   `db:"is_admin" json:"is_admin"`
-	PayPalMailAddr string `db:"pay_pal_mail_addr" json:"pay_pal_mail_addr"`
-	Score          int    `db:"score" json:"score"`
+	MailAddr       string    `db:"mail_addr" json:"mail_addr"`
+	Name           string    `db:"name" json:"name"`
+	IsAdmin        bool      `db:"is_admin" json:"is_admin"`
+	PaypalMailAddr string    `db:"paypal_mail_addr" json:"paypal_mail_addr"`
+	Score          int       `db:"score" json:"score"`
+	PasswordHash   []byte    `db:"password_hash" json:"password_hash"`
+	Created        time.Time `db:"created" json:"created"`
 }
 
 // Offer represents an user's offer to order food for their friends or team.
@@ -108,7 +110,7 @@ type Offer struct {
 	Responsible   User       `db:"responsible" json:"responsible"`
 	IsPlaced      bool       `db:"is_placed" json:"is_placed"`
 	ReadyAt       time.Time  `db:"ready_at" json:"ready_at"`
-	PayPalEnabled bool       `db:"pay_pal_enabled" json:"pay_pal_enabled"`
+	PaypalEnabled bool       `db:"paypal_enabled" json:"paypal_enabled"`
 	Orders        []Order    `db:"orders" json:"orders"`
 }
 
