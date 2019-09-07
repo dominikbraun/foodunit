@@ -57,8 +57,16 @@ func provideRestaurantModel(db *sqlx.DB) storage.RestaurantModel {
 	return &restaurantModel
 }
 
+// provideRestaurantModel provides a storage.RestaurantModel implementation.
+func provideUserModel(db *sqlx.DB) storage.UserModel {
+	userModel := mariadb.UserModel{
+		DB: db,
+	}
+	return &userModel
+}
+
 // provideRESTController provides a controller instance for handing REST requests.
-func provideRESTController(r storage.RestaurantModel) *controllers.REST {
+func provideRESTController(r storage.RestaurantModel, u storage.UserModel) *controllers.REST {
 	controller := controllers.REST{
 		Restaurants: r,
 	}

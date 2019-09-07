@@ -28,6 +28,7 @@ import (
 // REST represents the common handler for REST API requests.
 type REST struct {
 	Restaurants storage.RestaurantModel
+	Users       storage.UserModel
 }
 
 // GetRestaurantInfo is responsible for calling core.GetRestaurantInfo.

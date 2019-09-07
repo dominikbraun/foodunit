@@ -50,7 +50,8 @@ func Setup(driver, dsn string) (*Server, error) {
 
 	router := provideRouter()
 	restaurantModel := provideRestaurantModel(db)
-	restController := provideRESTController(restaurantModel)
+	userModel := provideUserModel(db)
+	restController := provideRESTController(restaurantModel, userModel)
 
 	s := Server{
 		Server: &http.Server{
@@ -70,7 +71,11 @@ func Setup(driver, dsn string) (*Server, error) {
 
 // RunMigration sets up all tables by invoking the individual Migrate() methods.
 func (s *Server) RunMigration() {
-	err := s.controller.Restaurants.Migrate()
+	var err error
+
+	err = s.controller.Restaurants.Migrate()
+	err = s.controller.Users.Migrate()
+
 	if err != nil {
 		log.Fatal(err)
 	}

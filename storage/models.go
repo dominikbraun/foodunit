@@ -22,3 +22,9 @@ type RestaurantModel interface {
 	Migrate() error
 	GetInfo(id uint64) (dl.Restaurant, error)
 }
+
+type UserModel interface {
+	Migrate() error
+	Create(user dl.User) error
+	Authenticate(mailAddr, password string) error
+}
