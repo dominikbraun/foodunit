@@ -17,7 +17,6 @@ package mariadb
 
 import (
 	"github.com/dominikbraun/foodunit/dl"
-	. "github.com/dominikbraun/foodunit/storage/mariadb/query"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -30,36 +29,29 @@ type UserModel struct {
 
 // Migrate implements storage.UserModel.Migrate.
 func (u UserModel) Migrate() error {
-	query := Create("users", Fields{
-		"id":               "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
-		"mail_addr":        "VARCHAR(254) NOT NULL",
-		"name":             "VARCHAR(50) NOT NULL",
-		"is_admin":         "BIT(1) NOT NULL",
-		"paypal_mail_addr": "VARCHAR(254) NOT NULL",
-		"score":            "INTEGER NOT NULL",
-		"password_hash":    "CHAR(60) NOT NULL",
-		"created":          "DATETIME NOT NULL",
-	})
+	sql := `CREATE TABLE users (
+				id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+				mail_addr VARCHAR(254) NOT NULL,
+				name VARCHAR(50) NOT NULL,
+				is_admin BOOLEAN NOT NULL,
+				paypal_mail_addr VARCHAR(254) NOT NULL,
+				score INTEGER NOT NULL,
+				password_hash CHAR(60) NOT NULL,
+				created DATETIME NOT NULL
+			)`
 
-	_ = u.DB.MustExec(query)
+	_ = u.DB.MustExec(sql)
 	return nil
 }
 
 // Create implements storage.UserModel.Create.
 func (u UserModel) Create(user dl.User) error {
-	query := Insert("users", Fields{
-		"mail_addr":        "?",
-		"name":             "?",
-		"is_admin":         "?",
-		"paypal_mail_addr": "?",
-		"score":            "?",
-		"password_hash":    "?",
-		"created":          "?",
-	})
+	sql := `INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created)
+			VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format("2006-01-02 15:04:05")
 
-	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+	_, err := u.DB.Exec(sql, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
 	if err != nil {
 		return err
 	}
