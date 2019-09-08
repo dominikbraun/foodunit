@@ -30,5 +30,9 @@ func (s *Server) mountRoutes() {
 		})
 	})
 
+	r.Route("/users", func(r chi.Router) {
+		r.Post("/register", s.controller.RegisterUser)
+	})
+
 	s.router.Mount("/v1", r)
 }

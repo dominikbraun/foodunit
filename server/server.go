@@ -43,7 +43,7 @@ type Server struct {
 // Setup builds a new Server instance, registers all routes, injects discrete
 // model implementations and eventually establishes a database connection.
 func Setup(driver, dsn string) (*Server, error) {
-	db, err := provideDB(driver, dsn)
+	db, err := provideDBConnection(driver, dsn)
 	if err != nil {
 		return nil, err
 	}

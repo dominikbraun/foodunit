@@ -21,6 +21,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+const DateTime string = ""
+
 // UserModel is a storage.UserModel implementation.
 type UserModel struct {
 	DB *sqlx.DB
@@ -32,9 +34,9 @@ func (u UserModel) Migrate() error {
 		"id":               "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
 		"mail_addr":        "VARCHAR(254) NOT NULL",
 		"name":             "VARCHAR(50) NOT NULL",
-		"is_admin":         "BOOLEAN NOT NULL",
+		"is_admin":         "BIT(1) NOT NULL",
 		"paypal_mail_addr": "VARCHAR(254) NOT NULL",
-		"score":            "INTEGER UNSIGNED NOT NULL",
+		"score":            "INTEGER NOT NULL",
 		"password_hash":    "CHAR(60) NOT NULL",
 		"created":          "DATETIME NOT NULL",
 	})
@@ -50,12 +52,14 @@ func (u UserModel) Create(user dl.User) error {
 		"name":             "?",
 		"is_admin":         "?",
 		"paypal_mail_addr": "?",
-		"score":            "",
+		"score":            "?",
 		"password_hash":    "?",
 		"created":          "?",
 	})
 
-	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, user.Created)
+	created := user.Created.Format("2006-01-02 15:04:05")
+
+	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
 	if err != nil {
 		return err
 	}

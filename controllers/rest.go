@@ -16,6 +16,7 @@
 package controllers
 
 import (
+	"github.com/dominikbraun/foodunit/core/dto"
 	"github.com/go-chi/chi"
 	"net/http"
 	"strconv"
@@ -31,7 +32,7 @@ type REST struct {
 	Users       storage.UserModel
 }
 
-// GetRestaurantInfo is responsible for calling core.GetRestaurantInfo.
+// GetRestaurantInfo is responsible for invoking core.GetRestaurantInfo.
 func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
@@ -40,8 +41,24 @@ func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	restaurantInfo, err := core.GetRestaurantInfo(uint64(id), rest.Restaurants)
 	if err != nil {
-		// ToDo: Handle model error properly
+		// ToDo: Handle core error properly
 		return
 	}
 	render.JSON(w, r, restaurantInfo)
+}
+
+// RegisterUser is responsible for invoking core.RegisterUser.
+func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
+	registration := dto.UserRegistration{
+		MailAddr:       r.Form.Get("mail_addr"),
+		Name:           r.Form.Get("name"),
+		PaypalMailAddr: r.Form.Get("paypal_mail_addr"),
+		Password:       r.Form.Get("password"),
+	}
+
+	err := core.RegisterUser(registration, rest.Users)
+	if err != nil {
+		// ToDo: Handle core error properly
+	}
+	render.JSON(w, r, err)
 }

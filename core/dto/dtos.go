@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package core provides business logic interactors and services.
-package core
+// Package dto provides data transfer objects as input and output data.
+package dto
 
 // Restaurant info represents a simple conclusion of relevant meta information.
 type RestaurantInfo struct {
@@ -24,4 +24,12 @@ type RestaurantInfo struct {
 	Phone      string `db:"phone" json:"phone"`
 	Open       string `db:"open" json:"open"`
 	Website    string `db:"website" json:"website"`
+}
+
+// UserRegistration concludes required data for registering a new user.
+type UserRegistration struct {
+	MailAddr       string `db:"mail_addr" json:"mail_addr"`
+	Name           string `db:"name" json:"name"`
+	PaypalMailAddr string `db:"paypal_mail_addr" json:"paypal_mail_addr"`
+	Password       string `db:"password_hash" json:"password_hash"`
 }

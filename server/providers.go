@@ -27,7 +27,7 @@ import (
 )
 
 // provideDB provides a ready-to-go database connection pool.
-func provideDB(driver, dsn string) (*sqlx.DB, error) {
+func provideDBConnection(driver, dsn string) (*sqlx.DB, error) {
 	db, err := sqlx.Connect(driver, dsn)
 	if err != nil {
 		return nil, errors.Wrap(err, "connection failed")
@@ -69,6 +69,7 @@ func provideUserModel(db *sqlx.DB) storage.UserModel {
 func provideRESTController(r storage.RestaurantModel, u storage.UserModel) *controllers.REST {
 	controller := controllers.REST{
 		Restaurants: r,
+		Users:       u,
 	}
 	return &controller
 }

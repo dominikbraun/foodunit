@@ -16,16 +16,17 @@
 package core
 
 import (
+	"github.com/dominikbraun/foodunit/core/dto"
 	"github.com/dominikbraun/foodunit/storage"
 	"time"
 )
 
 // GetRestaurantInfo is the public interface for retrieving meta information
 // for a given restaurant, returning an instance of core.RestaurantInfo.
-func GetRestaurantInfo(id uint64, model storage.RestaurantModel) (RestaurantInfo, error) {
+func GetRestaurantInfo(id uint64, model storage.RestaurantModel) (dto.RestaurantInfo, error) {
 	r, err := model.GetInfo(id)
 	if err != nil {
-		return RestaurantInfo{}, err
+		return dto.RestaurantInfo{}, err
 	}
 
 	var open string
@@ -47,7 +48,7 @@ func GetRestaurantInfo(id uint64, model storage.RestaurantModel) (RestaurantInfo
 		open = r.OpenSun
 	}
 
-	ri := RestaurantInfo{
+	ri := dto.RestaurantInfo{
 		Name:       r.Name,
 		Street:     r.Street,
 		PostalCode: r.PostalCode,
