@@ -29,16 +29,17 @@ type UserModel struct {
 
 // Migrate implements storage.UserModel.Migrate.
 func (u UserModel) Migrate() error {
-	sql := `CREATE TABLE users (
-				id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-				mail_addr VARCHAR(254) NOT NULL,
-				name VARCHAR(50) NOT NULL,
-				is_admin BOOLEAN NOT NULL,
-				paypal_mail_addr VARCHAR(254) NOT NULL,
-				score INTEGER NOT NULL,
-				password_hash CHAR(60) NOT NULL,
-				created DATETIME NOT NULL
-			)`
+	sql := `
+CREATE TABLE users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    mail_addr VARCHAR(254) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    is_admin BOOLEAN NOT NULL,
+    paypal_mail_addr VARCHAR(254) NOT NULL,
+    score INTEGER NOT NULL,
+    password_hash CHAR(60) NOT NULL,
+    created DATETIME NOT NULL
+)`
 
 	_ = u.DB.MustExec(sql)
 	return nil
@@ -46,8 +47,9 @@ func (u UserModel) Migrate() error {
 
 // Create implements storage.UserModel.Create.
 func (u UserModel) Create(user dl.User) error {
-	sql := `INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created)
-			VALUES (?, ?, ?, ?, ?, ?, ?)`
+	sql := `
+INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created)
+VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format("2006-01-02 15:04:05")
 

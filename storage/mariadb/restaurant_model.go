@@ -28,34 +28,33 @@ type RestaurantModel struct {
 
 // Migrate implements storage.RestaurantModel.Migrate.
 func (r RestaurantModel) Migrate() error {
-	query := Create("restaurants", Fields{
-		"id":          "BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY",
-		"name":        "VARCHAR(50) NOT NULL",
-		"postal_code": "VARCHAR(50) NOT NULL",
-		"city":        "VARCHAR(50) NOT NULL",
-		"phone":       "VARCHAR(50) NOT NULL",
-		"open_mon":    "VARCHAR(50) NOT NULL",
-		"open_tue":    "VARCHAR(50) NOT NULL",
-		"open_wed":    "VARCHAR(50) NOT NULL",
-		"open_thu":    "VARCHAR(50) NOT NULL",
-		"open_fri":    "VARCHAR(50) NOT NULL",
-		"open_sat":    "VARCHAR(50) NOT NULL",
-		"open_sun":    "VARCHAR(50) NOT NULL",
-		"website":     "VARCHAR(50) NOT NULL",
-		"is_active":   "BOOLEAN NOT NULL",
-	})
+	sql := `
+CREATE TABLE restaurants (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    postal_code VARCHAR(50) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    open_mon VARCHAR(50) NOT NULL,
+    open_wed VARCHAR(50) NOT NULL,
+    open_thu VARCHAR(50) NOT NULL,
+    open_fri VARCHAR(50) NOT NULL,
+    open_sat VARCHAR(50) NOT NULL,
+    open_sun VARCHAR(50) NOT NULL,
+    website VARCHAR(50) NOT NULL,
+    is_active BOOLEAN NOT NULL
+)`
 
-	_ = r.DB.MustExec(query)
+	_ = r.DB.MustExec(sql)
 	return nil
 }
 
 // GetInfo implements storage.RestaurantModel.GetInfo.
 func (r RestaurantModel) GetInfo(id uint64) (dl.Restaurant, error) {
-	query := Select("restaurants", List{"*"}, Conditions{
-		"id": "= ?",
-	})
+	sql := `
+SELECT * FROM restaurants WHERE id = ?`
 
-	row := r.DB.QueryRowx(query, id)
+	row := r.DB.QueryRowx(sql, id)
 
 	var restaurant dl.Restaurant
 	err := row.StructScan(&restaurant)
