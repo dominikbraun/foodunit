@@ -26,7 +26,7 @@ type RestaurantModel interface {
 type UserModel interface {
 	Migrate() error
 	Create(user dl.User) error
-	Authenticate(mailAddr, password string) error
+	Authenticate(mailAddr, password string) (int, error)
 	FindByMailAddr(mailAddr string) (dl.User, error)
 	Exists(mailAddr string) (bool, error)
 }

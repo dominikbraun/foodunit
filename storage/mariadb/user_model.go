@@ -17,8 +17,10 @@ package mariadb
 
 import (
 	"database/sql"
+	"errors"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const DateTime string = "2006-01-02 15:04:05"
@@ -66,8 +68,30 @@ VALUES (?, ?, ?, ?, ?, ?, ?)`
 }
 
 // Authenticate implements storage.UserModel.Authenticate.
-func (u UserModel) Authenticate(mailAddr, password string) error {
-	panic("implement me")
+func (u UserModel) Authenticate(mailAddr, password string) (int, error) {
+
+	stmt := `SELECT id, password_hash FROM users WHERE mail_addr = ?`
+	row := u.DB.QueryRow(stmt, mailAddr)
+
+	var id int
+	var passwordHash []byte
+	err := row.Scan(&id, &passwordHash)
+
+	if err == sql.ErrNoRows {
+		return 0, errors.New("invalid credentials")
+	} else if err != nil {
+		return 0, err
+	}
+
+	err = bcrypt.CompareHashAndPassword(passwordHash, []byte(password))
+
+	if err == bcrypt.ErrMismatchedHashAndPassword {
+		return 0, errors.New("invalid credentials")
+	} else if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 // FindByMailAddr implements storage.UserModel.FindByMailAddr.
