@@ -16,10 +16,10 @@
 package core
 
 import (
-	"errors"
 	"github.com/dominikbraun/foodunit/core/dto"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/dominikbraun/foodunit/storage"
+	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
@@ -37,7 +37,7 @@ func RegisterUser(registration dto.UserRegistration, model storage.UserModel) er
 		return err
 	}
 	if exists {
-		return errors.New("e-mail address already exists")
+		return errors.Wrap(err, "duplicate E-Mail address")
 	}
 
 	user := dl.User{
