@@ -16,7 +16,12 @@
 package server
 
 import (
+	"net/http"
+	"net/http/httputil"
+	"net/url"
+
 	"github.com/go-chi/chi"
+	"github.com/pkg/errors"
 )
 
 // mountRoutes builds all supported routes, registers the corresponding controllers
@@ -35,4 +40,18 @@ func (s *Server) mountRoutes() {
 	})
 
 	s.router.Mount("/v1", r)
+}
+
+// useReverseProxy sets up a single host reverse proxy to
+func (fs *Server) useReverseProxy(clientURL string) error {
+	client, err := url.Parse(clientURL)
+	if err != nil {
+		return errors.Wrap(err, "client URL is not valid")
+	}
+
+	fs.router.NotFound(func(res http.ResponseWriter, req *http.Request) {
+		httputil.NewSingleHostReverseProxy(client).ServeHTTP(res, req)
+	})
+
+	return nil
 }

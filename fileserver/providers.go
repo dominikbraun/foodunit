@@ -18,7 +18,6 @@ package fileserver
 import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
 )
 
 // provideRouter provides a routing service instance.
@@ -29,7 +28,6 @@ func provideRouter() *chi.Mux {
 		middleware.DefaultCompress,
 		middleware.RedirectSlashes,
 		middleware.Recoverer,
-		render.SetContentType(render.ContentTypeJSON),
 	)
 	return r
 }

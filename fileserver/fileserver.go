@@ -16,11 +16,12 @@
 package fileserver
 
 import (
-	"github.com/go-chi/chi"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+
+	"github.com/go-chi/chi"
 )
 
 // FileServer represents a server providing frontend files for the client.
@@ -31,7 +32,7 @@ type FileServer struct {
 }
 
 // Setup creates a new FileServer instance and mounts its own router.
-func Setup(clientURL string) (*FileServer, error) {
+func Setup() (*FileServer, error) {
 	router := provideRouter()
 
 	fs := FileServer{
@@ -41,12 +42,6 @@ func Setup(clientURL string) (*FileServer, error) {
 
 	signal.Notify(fs.interrupt, os.Interrupt)
 
-	if clientURL != "" {
-		if err := fs.useReverseProxy(clientURL); err != nil {
-			return nil, err
-		}
-		return &fs, nil
-	}
 	fs.mountRoutes()
 
 	return &fs, nil

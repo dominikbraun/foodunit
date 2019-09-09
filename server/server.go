@@ -42,7 +42,7 @@ type Server struct {
 
 // Setup builds a new Server instance, registers all routes, injects discrete
 // model implementations and eventually establishes a database connection.
-func Setup(driver, dsn string) (*Server, error) {
+func Setup(driver, dsn string, clientURL string) (*Server, error) {
 	db, err := provideDBConnection(driver, dsn)
 	if err != nil {
 		return nil, err
@@ -64,6 +64,14 @@ func Setup(driver, dsn string) (*Server, error) {
 	}
 
 	s.mountRoutes()
+
+	if clientURL != "" {
+		if err := s.useReverseProxy(clientURL); err != nil {
+			return nil, err
+		}
+		return &s, nil
+	}
+
 	signal.Notify(s.interrupt, os.Interrupt)
 
 	return &s, nil

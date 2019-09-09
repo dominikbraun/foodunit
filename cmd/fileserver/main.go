@@ -16,17 +16,13 @@
 package main
 
 import (
-	"flag"
 	"github.com/dominikbraun/foodunit/fileserver"
 	"log"
 )
 
 // main sets up a file server and invokes its Run method.
 func main() {
-	clientURL := flag.String("client-url", "", "Specifies the URL of the client.")
-	flag.Parse()
-
-	s, err := fileserver.Setup(*clientURL)
+	s, err := fileserver.Setup()
 	if err != nil {
 		log.Fatal(err)
 	}

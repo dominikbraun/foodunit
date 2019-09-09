@@ -16,6 +16,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/dominikbraun/foodunit/server"
@@ -23,7 +24,11 @@ import (
 
 // main sets up a server and invokes its Run method.
 func main() {
-	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit?parseTime=true")
+	clientURL := flag.String("client-url", "", "Specifies the URL of the client.")
+	dbURI := flag.String("db-uri", "", "root:root@(localhost:3306)/foodunit?parseTime=true")
+	flag.Parse()
+
+	s, err := server.Setup("mysql", *dbURI, *clientURL)
 	if err != nil {
 		log.Fatal(err)
 	}
