@@ -54,6 +54,7 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&registration)
 	if err != nil {
 		render.JSON(w, r, err)
+		return
 	}
 	_ = r.Body.Close()
 
@@ -61,6 +62,7 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// ToDo: Handle core error properly
 		render.JSON(w, r, err)
+		return
 	}
 
 	render.JSON(w, r, true)
