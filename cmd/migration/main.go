@@ -17,6 +17,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/dominikbraun/foodunit/server"
@@ -24,7 +25,9 @@ import (
 
 // main sets up a server and invokes its RunMigration method.
 func main() {
-	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit")
+	dbURI := flag.String("db-uri", "", "root:root@(localhost:3306)/foodunit")
+	flag.Parse()
+	s, err := server.Setup("mysql", *dbURI, "")
 	if err != nil {
 		log.Fatal(err)
 	}
