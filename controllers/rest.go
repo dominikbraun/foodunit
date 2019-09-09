@@ -16,6 +16,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"github.com/dominikbraun/foodunit/core/dto"
 	"github.com/go-chi/chi"
 	"net/http"
@@ -49,16 +50,18 @@ func (rest *REST) GetRestaurantInfo(w http.ResponseWriter, r *http.Request) {
 
 // RegisterUser is responsible for invoking core.RegisterUser.
 func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
-	registration := dto.UserRegistration{
-		MailAddr:       r.Form.Get("mail_addr"),
-		Name:           r.Form.Get("name"),
-		PaypalMailAddr: r.Form.Get("paypal_mail_addr"),
-		Password:       r.Form.Get("password"),
+	var registration dto.UserRegistration
+	err := json.NewDecoder(r.Body).Decode(&registration)
+	if err != nil {
+		render.JSON(w, r, err)
 	}
+	_ = r.Body.Close()
 
-	err := core.RegisterUser(registration, rest.Users)
+	err = core.RegisterUser(registration, rest.Users)
 	if err != nil {
 		// ToDo: Handle core error properly
+		render.JSON(w, r, err)
 	}
-	render.JSON(w, r, err)
+
+	render.JSON(w, r, true)
 }
