@@ -69,13 +69,11 @@ VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 // Authenticate implements storage.UserModel.Authenticate.
 func (u UserModel) Authenticate(mailAddr, password string) (int, error) {
-
-	stmt := `SELECT id, password_hash FROM users WHERE mail_addr = ?`
-	row := u.DB.QueryRow(stmt, mailAddr)
+	query := `SELECT id, password_hash FROM users WHERE mail_addr = ?`
 
 	var id int
 	var passwordHash []byte
-	err := row.Scan(&id, &passwordHash)
+	err := u.DB.QueryRowx(query, mailAddr).Scan(&id, &passwordHash)
 
 	if err == sql.ErrNoRows {
 		return 0, errors.New("invalid credentials")
