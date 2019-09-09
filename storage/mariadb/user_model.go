@@ -30,7 +30,10 @@ type UserModel struct {
 
 // Migrate implements storage.UserModel.Migrate.
 func (u UserModel) Migrate() error {
-	query := `
+	query := `drop table if exists users`
+	_ = u.DB.MustExec(query)
+
+	query = `
 CREATE TABLE users (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     mail_addr VARCHAR(254) NOT NULL,

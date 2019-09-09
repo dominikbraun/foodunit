@@ -27,7 +27,10 @@ type RestaurantModel struct {
 
 // Migrate implements storage.RestaurantModel.Migrate.
 func (r RestaurantModel) Migrate() error {
-	query := `
+	query := `drop table if exists restaurants`
+	_ = r.DB.MustExec(query)
+
+	query = `
 CREATE TABLE restaurants (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
