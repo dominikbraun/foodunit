@@ -31,25 +31,62 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
+			// Get meta information for the restaurant.
 			r.Get("/info", s.controller.GetRestaurantInfo)
+			// Get the restaurant's menu.
+			r.Get("/menu", nil)
 		})
 	})
 
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/register", s.controller.RegisterUser)
+		r.Post("/login", nil)
+		r.Get("/logout", nil)
+
+		r.Route("/{id}", func(r chi.Router) {
+			// Get the user's profile data.
+			r.Get("/profile", nil)
+		})
+	})
+
+	r.Route("/offers", func(r chi.Router) {
+		// Create a new offer.
+		r.Post("/new", nil)
+		// Get all active offers.
+		r.Get("/active", nil)
+
+		r.Route("/{id}", func(r chi.Router) {
+			// Get information for the offer.
+			r.Get("/", nil)
+
+			r.Route("/orders", func(r chi.Router) {
+				// Get all orders for the offer.
+				r.Get("/all", nil)
+				// Get the user's order for the offer.
+				r.Get("/mine", nil)
+				// Save the user's order.
+				r.Post("/mine", nil)
+			})
+		})
+	})
+
+	r.Route("/dishes", func(r chi.Router) {
+		r.Route("/{id}", func(r chi.Router) {
+			r.Get("/characteristics", nil)
+		})
 	})
 
 	s.router.Mount("/v1", r)
 }
 
-// useReverseProxy sets up a single host reverse proxy to
-func (fs *Server) useReverseProxy(clientURL string) error {
+// useReverseProxy sets up a single host reverse proxy prevent cross origin errors.
+func (s *Server) useReverseProxy(clientURL string) error {
 	client, err := url.Parse(clientURL)
 	if err != nil {
 		return errors.Wrap(err, "client URL is not valid")
 	}
 
-	fs.router.NotFound(func(res http.ResponseWriter, req *http.Request) {
+	s.router.NotFound(func(res http.ResponseWriter, req *http.Request) {
 		httputil.NewSingleHostReverseProxy(client).ServeHTTP(res, req)
 	})
 
