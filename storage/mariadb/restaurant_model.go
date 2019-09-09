@@ -17,7 +17,6 @@ package mariadb
 
 import (
 	"github.com/dominikbraun/foodunit/dl"
-	. "github.com/dominikbraun/foodunit/storage/mariadb/query"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -28,7 +27,7 @@ type RestaurantModel struct {
 
 // Migrate implements storage.RestaurantModel.Migrate.
 func (r RestaurantModel) Migrate() error {
-	sql := `
+	query := `
 CREATE TABLE restaurants (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -45,19 +44,16 @@ CREATE TABLE restaurants (
     is_active BOOLEAN NOT NULL
 )`
 
-	_ = r.DB.MustExec(sql)
+	_ = r.DB.MustExec(query)
 	return nil
 }
 
 // GetInfo implements storage.RestaurantModel.GetInfo.
 func (r RestaurantModel) GetInfo(id uint64) (dl.Restaurant, error) {
-	sql := `
-SELECT * FROM restaurants WHERE id = ?`
-
-	row := r.DB.QueryRowx(sql, id)
+	query := `SELECT * FROM restaurants WHERE id = ?`
 
 	var restaurant dl.Restaurant
-	err := row.StructScan(&restaurant)
+	err := r.DB.QueryRowx(query, id).StructScan(&restaurant)
 
 	return restaurant, err
 }

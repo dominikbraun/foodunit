@@ -16,11 +16,12 @@
 package mariadb
 
 import (
+	"database/sql"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
 )
 
-const DateTime string = ""
+const DateTime string = "2006-01-02 15:04:05"
 
 // UserModel is a storage.UserModel implementation.
 type UserModel struct {
@@ -29,7 +30,7 @@ type UserModel struct {
 
 // Migrate implements storage.UserModel.Migrate.
 func (u UserModel) Migrate() error {
-	sql := `
+	query := `
 CREATE TABLE users (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     mail_addr VARCHAR(254) NOT NULL,
@@ -41,19 +42,19 @@ CREATE TABLE users (
     created DATETIME NOT NULL
 )`
 
-	_ = u.DB.MustExec(sql)
+	_ = u.DB.MustExec(query)
 	return nil
 }
 
 // Create implements storage.UserModel.Create.
 func (u UserModel) Create(user dl.User) error {
-	sql := `
+	query := `
 INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created)
 VALUES (?, ?, ?, ?, ?, ?, ?)`
 
-	created := user.Created.Format("2006-01-02 15:04:05")
+	created := user.Created.Format(DateTime)
 
-	_, err := u.DB.Exec(sql, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
 	if err != nil {
 		return err
 	}
@@ -64,4 +65,30 @@ VALUES (?, ?, ?, ?, ?, ?, ?)`
 // Authenticate implements storage.UserModel.Authenticate.
 func (u UserModel) Authenticate(mailAddr, password string) error {
 	panic("implement me")
+}
+
+// FindByMailAddr implements storage.UserModel.FindByMailAddr.
+func (u UserModel) FindByMailAddr(mailAddr string) (dl.User, error) {
+	query := `SELECT * FROM users WHERE mail_addr = ?`
+
+	var user dl.User
+	err := u.DB.QueryRowx(query, mailAddr).StructScan(&user)
+
+	return user, err
+}
+
+// Exists implements storage.UserModel.Exists.
+func (u UserModel) Exists(mailAddr string) (bool, error) {
+	query := `SELECT * FROM users where mail_addr = ?`
+
+	var user dl.User
+	err := u.DB.QueryRowx(query, mailAddr).StructScan(&user)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
 }

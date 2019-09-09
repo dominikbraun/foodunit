@@ -27,4 +27,6 @@ type UserModel interface {
 	Migrate() error
 	Create(user dl.User) error
 	Authenticate(mailAddr, password string) error
+	FindByMailAddr(mailAddr string) (dl.User, error)
+	Exists(mailAddr string) (bool, error)
 }

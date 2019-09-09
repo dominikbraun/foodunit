@@ -16,6 +16,7 @@
 package core
 
 import (
+	"errors"
 	"github.com/dominikbraun/foodunit/core/dto"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/dominikbraun/foodunit/storage"
@@ -23,11 +24,20 @@ import (
 	"time"
 )
 
+// RegisterUser performs an user registration based on the provided UserRegistration data.
 func RegisterUser(registration dto.UserRegistration, model storage.UserModel) error {
 	// ToDo: server-side input validations.
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(registration.Password), 12)
 	if err != nil {
 		return err
+	}
+
+	exists, err := model.Exists(registration.MailAddr)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return errors.New("e-mail address already exists")
 	}
 
 	user := dl.User{

@@ -23,7 +23,7 @@ import (
 
 // main sets up a server and invokes its Run method.
 func main() {
-	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit")
+	s, err := server.Setup("mysql", "root:root@(localhost:3306)/foodunit?parseTime=true")
 	if err != nil {
 		log.Fatal(err)
 	}
