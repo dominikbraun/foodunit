@@ -24,8 +24,8 @@ import (
 
 // main sets up a server and invokes its Run method.
 func main() {
-	clientURL := flag.String("client-url", "", "Specifies the URL of the client.")
-	dbURI := flag.String("db-uri", "", "root:root@(localhost:3306)/foodunit?parseTime=true")
+	clientURL := flag.String("client-url", "", "Specifies the URL of the client to start a proxy.")
+	dbURI := flag.String("db-uri", "root:root@(localhost:3306)/foodunit?parseTime=true", "URI used to connect to the db.")
 	flag.Parse()
 
 	s, err := server.Setup("mysql", *dbURI, *clientURL)

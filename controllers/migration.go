@@ -12,24 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package server provides a server which exposes a REST API.
-package server
+// Package controllers provides various controllers for triggering the core logic.
+package controllers
 
 import (
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
+	"github.com/dominikbraun/foodunit/storage"
 )
 
-// provideRouter provides a routing service instance.
-func provideRouter() *chi.Mux {
-	r := chi.NewRouter()
-	r.Use(
-		middleware.Logger,
-		middleware.DefaultCompress,
-		middleware.RedirectSlashes,
-		middleware.Recoverer,
-		render.SetContentType(render.ContentTypeJSON),
-	)
-	return r
+// Migration represents the handler for the initial set up of FootUnit
+type Migration struct {
+	Restaurants storage.RestaurantModel
+	Users       storage.UserModel
+}
+
+func (m *Migration) Migrate(drop bool) error {
+	if drop {
+		// ToDo
+	}
+
+	m.Restaurants.Migrate()
+	m.Users.Migrate()
+
+	return nil
 }

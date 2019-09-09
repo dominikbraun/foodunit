@@ -12,84 +12,49 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package server provides a server which exposes a REST API.
-package server
+// Package migration provides migration and set up capabilities
+package migration
 
 import (
-	"context"
-	"github.com/dominikbraun/foodunit/storage/mariadb"
-	"log"
-	"net/http"
-	"os"
-	"os/signal"
-	"time"
-
-	"github.com/go-chi/chi"
-
 	"github.com/dominikbraun/foodunit/controllers"
+	"github.com/dominikbraun/foodunit/storage/mariadb"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 // Server represents an API server that offers endpoints for data related
 // with restaurants, users, offers and orders.
 type Server struct {
-	*http.Server
-	router     *chi.Mux
-	controller *controllers.REST
-	interrupt  chan os.Signal
+	controller *controllers.Migration
 }
 
 // Setup builds a new Server instance, registers all routes, injects discrete
 // model implementations and eventually establishes a database connection.
-func Setup(driver, dsn string, clientURL string) (*Server, error) {
+func Setup(driver, dsn string) (*Server, error) {
 	// ToDo: how  to handle  dynamic driver change?
 	db, err := mariadb.ProvideDBConnection(driver, dsn)
 	if err != nil {
 		return nil, err
 	}
 
-	router := provideRouter()
 	restaurantModel := mariadb.ProvideRestaurantModel(db)
 	userModel := mariadb.ProvideUserModel(db)
-	restController := controllers.ProvideRESTController(restaurantModel, userModel)
+	migrationController := controllers.ProvideMigrationController(restaurantModel, userModel)
 
 	s := Server{
-		Server: &http.Server{
-			Addr:    ":9292",
-			Handler: router,
-		},
-		router:     router,
-		controller: restController,
-		interrupt:  make(chan os.Signal),
+		controller: migrationController,
 	}
-
-	s.mountRoutes()
-
-	if clientURL != "" {
-		if err := s.useReverseProxy(clientURL); err != nil {
-			return nil, err
-		}
-		return &s, nil
-	}
-
-	signal.Notify(s.interrupt, os.Interrupt)
 
 	return &s, nil
 }
 
-// Run mounts all API routes, establishes a database connection and starts
-// listening to the specified port. The server can be shut down with Ctrl + C.
-func (s *Server) Run() {
-	go func() {
-		log.Fatal(s.ListenAndServe())
-	}()
+// RunMigration sets up all tables by invoking the individual Migrate() methods.
+func (s *Server) Run(drop bool) {
+	var err error
 
-	<-s.interrupt
-	timeout, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	err = s.controller.Migrate(drop)
 
-	if err := s.Shutdown(timeout); err != nil {
-		log.Println(err)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	defer cancel()
 }
