@@ -28,25 +28,27 @@ type UserModel struct {
 	DB *sqlx.DB
 }
 
-// Migrate implements storage.UserModel.Migrate.
+// Migrate implements storage.Model.Migrate.
 func (u UserModel) Migrate() error {
-	query := `drop table if exists users`
-	_ = u.DB.MustExec(query)
-
-	query = `
+	query := `
 CREATE TABLE users (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    mail_addr VARCHAR(254) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    is_admin BOOLEAN NOT NULL,
-    paypal_mail_addr VARCHAR(254) NOT NULL,
-    score INTEGER NOT NULL,
-    password_hash CHAR(60) NOT NULL,
-    created DATETIME NOT NULL
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	mail_addr VARCHAR(254) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	is_admin BOOLEAN NOT NULL,
+	paypal_mail_addr VARCHAR(254) NOT NULL,
+	score INTEGER NOT NULL,
+	password_hash CHAR(60) NOT NULL,
+	created DATETIME NOT NULL
 )`
 
-	_ = u.DB.MustExec(query)
-	return nil
+	_, err := exec(u.DB, query)
+	return err
+}
+
+// Drop implements storage.Model.Drop.
+func (u UserModel) Drop() error {
+	return drop(u.DB, "users")
 }
 
 // Create implements storage.UserModel.Create.
@@ -57,7 +59,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format(DateTime)
 
-	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+	_, err := exec(u.DB, query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
 	if err != nil {
 		return err
 	}

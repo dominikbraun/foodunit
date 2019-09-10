@@ -18,19 +18,19 @@ package main
 
 import (
 	"flag"
+	"github.com/dominikbraun/foodunit/migration"
 	"log"
-
-	"github.com/dominikbraun/foodunit/server"
 )
 
 // main sets up a server and invokes its RunMigration method.
 func main() {
-	dbURI := flag.String("db-uri", "", "root:root@(localhost:3306)/foodunit")
+	dbURI := flag.String("db-uri", "root:root@(localhost:3306)/foodunit", "URI used to connect to the db.")
+	drop := flag.Bool("drop", false, "This flag drops all tables before creation")
 	flag.Parse()
-	s, err := server.Setup("mysql", *dbURI, "")
+	s, err := migration.Setup("mysql", *dbURI)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	s.RunMigration()
+	s.Run(*drop)
 }

@@ -17,6 +17,7 @@ package server
 
 import (
 	"context"
+	"github.com/dominikbraun/foodunit/storage/mariadb"
 	"log"
 	"net/http"
 	"os"
@@ -27,14 +28,12 @@ import (
 
 	"github.com/dominikbraun/foodunit/controllers"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
 )
 
 // Server represents an API server that offers endpoints for data related
 // with restaurants, users, offers and orders.
 type Server struct {
 	*http.Server
-	db         *sqlx.DB
 	router     *chi.Mux
 	controller *controllers.REST
 	interrupt  chan os.Signal
@@ -43,15 +42,16 @@ type Server struct {
 // Setup builds a new Server instance, registers all routes, injects discrete
 // model implementations and eventually establishes a database connection.
 func Setup(driver, dsn string, clientURL string) (*Server, error) {
-	db, err := provideDBConnection(driver, dsn)
+	// ToDo: how  to handle  dynamic driver change?
+	db, err := mariadb.ProvideDBConnection(driver, dsn)
 	if err != nil {
 		return nil, err
 	}
 
 	router := provideRouter()
-	restaurantModel := provideRestaurantModel(db)
-	userModel := provideUserModel(db)
-	restController := provideRESTController(restaurantModel, userModel)
+	restaurantModel := mariadb.ProvideRestaurantModel(db)
+	userModel := mariadb.ProvideUserModel(db)
+	restController := controllers.ProvideRESTController(restaurantModel, userModel)
 
 	s := Server{
 		Server: &http.Server{
@@ -77,18 +77,6 @@ func Setup(driver, dsn string, clientURL string) (*Server, error) {
 	return &s, nil
 }
 
-// RunMigration sets up all tables by invoking the individual Migrate() methods.
-func (s *Server) RunMigration() {
-	var err error
-
-	err = s.controller.Restaurants.Migrate()
-	err = s.controller.Users.Migrate()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 // Run mounts all API routes, establishes a database connection and starts
 // listening to the specified port. The server can be shut down with Ctrl + C.
 func (s *Server) Run() {
@@ -103,6 +91,5 @@ func (s *Server) Run() {
 		log.Println(err)
 	}
 
-	_ = s.db.Close()
 	defer cancel()
 }

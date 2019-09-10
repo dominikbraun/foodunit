@@ -12,24 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package server provides a server which exposes a REST API.
-package server
+// Package mariadb provides MariaDB-compatible model implementations.
+package mariadb
 
 import (
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/render"
+	"github.com/jmoiron/sqlx"
 )
 
-// provideRouter provides a routing service instance.
-func provideRouter() *chi.Mux {
-	r := chi.NewRouter()
-	r.Use(
-		middleware.Logger,
-		middleware.DefaultCompress,
-		middleware.RedirectSlashes,
-		middleware.Recoverer,
-		render.SetContentType(render.ContentTypeJSON),
-	)
-	return r
+// OrderModel is a storage.OrderModel implementation.
+type OrderModel struct {
+	DB *sqlx.DB
+}
+
+// Migrate implements storage.Model.Migrate.
+func (c OrderModel) Migrate() error {
+	query := `
+CREATE TABLE orders (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id BIGINT UNSIGNED NOT NULL,
+	is_paid BOOLEAN NOT NULL,
+	order_id BIGINT UNSIGNED NOT NULL
+)`
+	_, err := exec(c.DB, query)
+	return err
+}
+
+// Drop implements storage.Model.Drop.
+func (c OrderModel) Drop() error {
+	return drop(c.DB, "orders")
 }

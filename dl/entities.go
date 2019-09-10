@@ -56,9 +56,8 @@ type Restaurant struct {
 // Category represents a menu section holding multiple dishes.
 type Category struct {
 	Model
-	Name    string `db:"name" json:"name"`
-	ImgPath string `db:"img_path" json:"img_path"`
-	Dishes  []Dish `db:"dishes" json:"dishes"`
+	Name   string `db:"name" json:"name"`
+	Dishes []Dish `db:"dishes" json:"dishes"`
 }
 
 // Dish represents a meal that is offered by a restaurant.
@@ -66,7 +65,7 @@ type Dish struct {
 	Model
 	Name            string           `db:"name" json:"name"`
 	Description     string           `db:"description" json:"description"`
-	Price           uint8            `db:"price" json:"price"`
+	Price           uint             `db:"price" json:"price"`
 	IsUncertain     bool             `db:"is_uncertain" json:"is_uncertain"`
 	IsHealthy       bool             `db:"is_healthy" json:"is_healthy"`
 	Characteristics []Characteristic `db:"characteristics" json:"characteristics"`
@@ -85,7 +84,7 @@ type Variant struct {
 	Model
 	Value     string `db:"value" json:"value"`
 	IsDefault bool   `db:"is_default" json:"is_default"`
-	Price     int8   `db:"price" json:"price"`
+	Price     uint   `db:"price" json:"price"`
 }
 
 // User represents a person that creates offers and orders food.
@@ -103,11 +102,11 @@ type User struct {
 // Offer represents an user's offer to order food for their friends or team.
 type Offer struct {
 	Model
-	Owner         User       `db:"owner" json:"owner"`
+	Owner         User       `db:"owner_user_id" json:"owner_user_id"`
 	Restaurant    Restaurant `db:"restaurant" json:"restaurant"`
 	ValidFrom     time.Time  `db:"valid_from" json:"valid_from"`
 	ValidTo       time.Time  `db:"valid_to" json:"valid_to"`
-	Responsible   User       `db:"responsible" json:"responsible"`
+	Responsible   User       `db:"responsible_user_id" json:"responsible_user_id"`
 	IsPlaced      bool       `db:"is_placed" json:"is_placed"`
 	ReadyAt       time.Time  `db:"ready_at" json:"ready_at"`
 	PaypalEnabled bool       `db:"paypal_enabled" json:"paypal_enabled"`
@@ -117,7 +116,7 @@ type Offer struct {
 // Order represents an user's order that was placed as part of an order.
 type Order struct {
 	Model
-	User      User       `db:"user" json:"user"`
+	User      User       `db:"user_id" json:"user_id"`
 	Positions []Position `db:"positions" json:"positions"`
 	IsPaid    bool       `db:"is_paid" json:"is_paid"`
 }
@@ -125,7 +124,7 @@ type Order struct {
 // Position represents one of multiple dishes contained in an user order.
 type Position struct {
 	Model
-	Dish        Dish   `db:"dish" json:"dish"`
+	Dish        Dish   `db:"dish_id" json:"dish_id"`
 	Alternative Dish   `db:"alternative" json:"alternative"`
 	Note        string `db:"note" json:"note"`
 }

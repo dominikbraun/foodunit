@@ -17,16 +17,49 @@ package storage
 
 import "github.com/dominikbraun/foodunit/dl"
 
+type Model interface {
+	Migrate() error
+	Drop() error
+}
+
 // RestaurantModel prescribes methods for accessing Restaurant-related data.
 type RestaurantModel interface {
-	Migrate() error
+	Model
 	GetInfo(id uint64) (dl.Restaurant, error)
 }
 
 type UserModel interface {
-	Migrate() error
+	Model
 	Create(user dl.User) error
 	GetPasswordHash(mailAddr string) ([]byte, error)
 	FindByMailAddr(mailAddr string) (dl.User, error)
 	Exists(mailAddr string) (bool, error)
+}
+
+type CategoryModel interface {
+	Model
+}
+
+type DishModel interface {
+	Model
+}
+
+type CharacteristicModel interface {
+	Model
+}
+
+type VariantModel interface {
+	Model
+}
+
+type OfferModel interface {
+	Model
+}
+
+type OrderModel interface {
+	Model
+}
+
+type PositionModel interface {
+	Model
 }

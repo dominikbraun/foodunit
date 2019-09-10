@@ -16,49 +16,29 @@
 package mariadb
 
 import (
-	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
 )
 
-// RestaurantModel is a storage.RestaurantModel implementation.
-type RestaurantModel struct {
+// CharacteristicModel is a storage.CharacteristicModel implementation.
+type CharacteristicModel struct {
 	DB *sqlx.DB
 }
 
 // Migrate implements storage.Model.Migrate.
-func (r RestaurantModel) Migrate() error {
+func (c CharacteristicModel) Migrate() error {
+	// ToDo: intermediate table to dish
+
 	query := `
-CREATE TABLE restaurants (
+CREATE TABLE characteristics (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL,
-	postal_code VARCHAR(50) NOT NULL,
-	city VARCHAR(50) NOT NULL,
-	phone VARCHAR(50) NOT NULL,
-	open_mon VARCHAR(50) NOT NULL,
-	open_wed VARCHAR(50) NOT NULL,
-	open_thu VARCHAR(50) NOT NULL,
-	open_fri VARCHAR(50) NOT NULL,
-	open_sat VARCHAR(50) NOT NULL,
-	open_sun VARCHAR(50) NOT NULL,
-	website VARCHAR(50) NOT NULL,
-	is_active BOOLEAN NOT NULL
+	multiple BOOLEAN NOT NULL
 )`
-
-	_, err := exec(r.DB, query)
+	_, err := exec(c.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (r RestaurantModel) Drop() error {
-	return drop(r.DB, "restaurants")
-}
-
-// GetInfo implements storage.RestaurantModel.GetInfo.
-func (r RestaurantModel) GetInfo(id uint64) (dl.Restaurant, error) {
-	query := `SELECT * FROM restaurants WHERE id = ?`
-
-	var restaurant dl.Restaurant
-	err := r.DB.QueryRowx(query, id).StructScan(&restaurant)
-
-	return restaurant, err
+func (c CharacteristicModel) Drop() error {
+	return drop(c.DB, "characteristics")
 }
