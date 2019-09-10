@@ -19,30 +19,26 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// OfferModel is a storage.OfferModel implementation.
-type OfferModel struct {
+// PositionModel is a storage.PositionModel implementation.
+type PositionModel struct {
 	DB *sqlx.DB
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c OfferModel) Migrate() error {
+func (c PositionModel) Migrate() error {
 	query := `
-CREATE TABLE offers (
+CREATE TABLE positions (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    owner_user_id BIGINT UNSIGNED NOT NULL,
-	restaurant_id BIGINT UNSIGNED NOT NULL,
-	valid_from DATETIME NOT NULL,
-	valid_to DATETIME NOT NULL,
-	responsible_user_id BIGINT UNSIGNED NOT NULL,
-	is_placed BOOLEAN NOT NULL,
-	ready_at DATETIME NOT NULL,
-	paypal_enabled BOOLEAN NOT NULL
+    dish_id BIGINT UNSIGNED NOT NULL,
+	alternative BIGINT UNSIGNED NOT NULL,
+	note VARCHAR(200) NOT NULL,
+	order_id BIGINT UNSIGNED NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c OfferModel) Drop() error {
-	return drop(c.DB, "offers")
+func (c PositionModel) Drop() error {
+	return drop(c.DB, "positions")
 }

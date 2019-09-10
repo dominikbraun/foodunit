@@ -124,7 +124,7 @@ type Order struct {
 // Position represents one of multiple dishes contained in an user order.
 type Position struct {
 	Model
-	Dish        Dish   `db:"dish" json:"dish"`
+	Dish        Dish   `db:"dish_id" json:"dish_id"`
 	Alternative Dish   `db:"alternative" json:"alternative"`
 	Note        string `db:"note" json:"note"`
 }

@@ -94,3 +94,11 @@ func ProvideOrderModel(db *sqlx.DB) storage.OrderModel {
 	}
 	return &orderModel
 }
+
+// ProvidePositionModel provides a storage.PositionModel implementation.
+func ProvidePositionModel(db *sqlx.DB) storage.PositionModel {
+	positionModel := PositionModel{
+		DB: db,
+	}
+	return &positionModel
+}

@@ -27,7 +27,7 @@ type DishModel struct {
 // Migrate implements storage.Model.Migrate.
 func (c DishModel) Migrate() error {
 	query := `
-CREATE TABLE dish (
+CREATE TABLE dishes (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(200) NOT NULL,
@@ -43,5 +43,5 @@ CREATE TABLE dish (
 
 // Drop implements storage.Model.Drop.
 func (c DishModel) Drop() error {
-	return drop(c.DB, "dish")
+	return drop(c.DB, "dishes")
 }

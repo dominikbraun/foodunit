@@ -27,7 +27,7 @@ type CategoryModel struct {
 // Migrate implements storage.Model.Migrate.
 func (c CategoryModel) Migrate() error {
 	query := `
-CREATE TABLE category (
+CREATE TABLE categories (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 )`
@@ -37,5 +37,5 @@ CREATE TABLE category (
 
 // Drop implements storage.Model.Drop.
 func (c CategoryModel) Drop() error {
-	return drop(c.DB, "category")
+	return drop(c.DB, "categories")
 }

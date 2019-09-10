@@ -59,3 +59,7 @@ type OfferModel interface {
 type OrderModel interface {
 	Model
 }
+
+type PositionModel interface {
+	Model
+}

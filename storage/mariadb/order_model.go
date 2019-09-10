@@ -27,7 +27,7 @@ type OrderModel struct {
 // Migrate implements storage.Model.Migrate.
 func (c OrderModel) Migrate() error {
 	query := `
-CREATE TABLE order (
+CREATE TABLE orders (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT UNSIGNED NOT NULL,
 	is_paid BOOLEAN NOT NULL,
@@ -39,5 +39,5 @@ CREATE TABLE order (
 
 // Drop implements storage.Model.Drop.
 func (c OrderModel) Drop() error {
-	return drop(c.DB, "order")
+	return drop(c.DB, "orders")
 }

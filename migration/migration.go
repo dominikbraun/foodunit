@@ -45,7 +45,8 @@ func Setup(driver, dsn string) (*Server, error) {
 		mariadb.ProvideCharacteristicModel(db),
 		mariadb.ProvideVariantModel(db),
 		mariadb.ProvideOfferModel(db),
-		mariadb.ProvideOrderModel(db))
+		mariadb.ProvideOrderModel(db),
+		mariadb.ProvidePositionModel(db))
 
 	s := Server{
 		controller: migrationController,

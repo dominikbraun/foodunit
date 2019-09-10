@@ -27,7 +27,7 @@ type VariantModel struct {
 // Migrate implements storage.Model.Migrate.
 func (c VariantModel) Migrate() error {
 	query := `
-CREATE TABLE variant (
+CREATE TABLE variants (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     value VARCHAR(50) NOT NULL,
 	is_default BOOLEAN NOT NULL,
@@ -39,5 +39,5 @@ CREATE TABLE variant (
 
 // Drop implements storage.Model.Drop.
 func (c VariantModel) Drop() error {
-	return drop(c.DB, "variant")
+	return drop(c.DB, "variants")
 }

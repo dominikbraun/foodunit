@@ -29,7 +29,7 @@ func (c CharacteristicModel) Migrate() error {
 	// ToDo: intermediate table to dish
 
 	query := `
-CREATE TABLE characteristic (
+CREATE TABLE characteristics (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     multiple BOOLEAN NOT NULL
@@ -40,5 +40,5 @@ CREATE TABLE characteristic (
 
 // Drop implements storage.Model.Drop.
 func (c CharacteristicModel) Drop() error {
-	return drop(c.DB, "characteristic")
+	return drop(c.DB, "characteristics")
 }
