@@ -44,7 +44,7 @@ CREATE TABLE users (
     created DATETIME NOT NULL
 )`
 
-	_, err := u.DB.Exec(query)
+	_, err := exec(u.DB, query)
 	return err
 }
 
@@ -61,7 +61,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format(DateTime)
 
-	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+	_, err := exec(u.DB, query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
 	if err != nil {
 		return err
 	}

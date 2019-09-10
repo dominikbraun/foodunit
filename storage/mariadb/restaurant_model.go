@@ -44,7 +44,7 @@ CREATE TABLE restaurants (
     is_active BOOLEAN NOT NULL
 )`
 
-	_, err := r.DB.Exec(query)
+	_, err := exec(r.DB, query)
 	return err
 }
 

@@ -19,23 +19,29 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// CategoryModel is a storage.CategoryModel implementation.
-type CategoryModel struct {
+// DishModel is a storage.DishModel implementation.
+type DishModel struct {
 	DB *sqlx.DB
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c CategoryModel) Migrate() error {
+func (c DishModel) Migrate() error {
 	query := `
-CREATE TABLE category (
+CREATE TABLE dish (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
+    name VARCHAR(50) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    price INTEGER UNSIGNED NOT NULL,
+    is_uncertain BOOLEAN NOT NULL,
+    is_healthy BOOLEAN NOT NULL,
+    category_id BIGINT UNSIGNED NOT NULL
 )`
+
 	_, err := exec(c.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c CategoryModel) Drop() error {
-	return drop(c.DB, "category")
+func (c DishModel) Drop() error {
+	return drop(c.DB, "dish")
 }

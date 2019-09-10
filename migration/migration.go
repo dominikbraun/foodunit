@@ -40,7 +40,8 @@ func Setup(driver, dsn string) (*Server, error) {
 	migrationController := controllers.ProvideMigrationController(
 		mariadb.ProvideRestaurantModel(db),
 		mariadb.ProvideUserModel(db),
-		mariadb.ProvideCategoryModel(db))
+		mariadb.ProvideCategoryModel(db),
+		mariadb.ProvideDishModel(db))
 
 	s := Server{
 		controller: migrationController,

@@ -35,3 +35,11 @@ type UserModel interface {
 	FindByMailAddr(mailAddr string) (dl.User, error)
 	Exists(mailAddr string) (bool, error)
 }
+
+type CategoryModel interface {
+	Model
+}
+
+type DishModel interface {
+	Model
+}

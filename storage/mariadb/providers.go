@@ -39,7 +39,7 @@ func ProvideRestaurantModel(db *sqlx.DB) storage.RestaurantModel {
 	return &restaurantModel
 }
 
-// ProvideRestaurantModel provides a storage.RestaurantModel implementation.
+// ProvideUserModel provides a storage.UserModel implementation.
 func ProvideUserModel(db *sqlx.DB) storage.UserModel {
 	userModel := UserModel{
 		DB: db,
@@ -48,9 +48,17 @@ func ProvideUserModel(db *sqlx.DB) storage.UserModel {
 }
 
 // ProvideCategoryModel provides a storage.CategoryModel implementation.
-func ProvideCategoryModel(db *sqlx.DB) storage.UserModel {
-	userModel := UserModel{
+func ProvideCategoryModel(db *sqlx.DB) storage.CategoryModel {
+	categoryModel := CategoryModel{
 		DB: db,
 	}
-	return &userModel
+	return &categoryModel
+}
+
+// ProvideDishModel provides a storage.DishModel implementation.
+func ProvideDishModel(db *sqlx.DB) storage.DishModel {
+	dishModel := DishModel{
+		DB: db,
+	}
+	return &dishModel
 }
