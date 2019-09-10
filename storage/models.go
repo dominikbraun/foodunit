@@ -55,3 +55,7 @@ type VariantModel interface {
 type OfferModel interface {
 	Model
 }
+
+type OrderModel interface {
+	Model
+}

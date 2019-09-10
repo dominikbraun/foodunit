@@ -116,7 +116,7 @@ type Offer struct {
 // Order represents an user's order that was placed as part of an order.
 type Order struct {
 	Model
-	User      User       `db:"user" json:"user"`
+	User      User       `db:"user_id" json:"user_id"`
 	Positions []Position `db:"positions" json:"positions"`
 	IsPaid    bool       `db:"is_paid" json:"is_paid"`
 }

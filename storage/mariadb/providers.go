@@ -86,3 +86,11 @@ func ProvideOfferModel(db *sqlx.DB) storage.OfferModel {
 	}
 	return &offerModel
 }
+
+// ProvideOrderModel provides a storage.OrderModel implementation.
+func ProvideOrderModel(db *sqlx.DB) storage.OrderModel {
+	orderModel := OrderModel{
+		DB: db,
+	}
+	return &orderModel
+}
