@@ -17,10 +17,8 @@ package mariadb
 
 import (
 	"database/sql"
-	"errors"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
-	"golang.org/x/crypto/bcrypt"
 )
 
 const DateTime string = "2006-01-02 15:04:05"

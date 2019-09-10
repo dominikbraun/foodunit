@@ -67,3 +67,22 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 	render.JSON(w, r, true)
 }
+
+func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
+	var login dto.UserLogin
+	err := json.NewDecoder(r.Body).Decode(&login)
+	if err != nil {
+		render.JSON(w, r, err)
+		return
+	}
+	_ = r.Body.Close()
+
+	success, err := core.Authenticate(login, rest.Users)
+	if err != nil {
+		// ToDo: Handle core error properly
+		render.JSON(w, r, err)
+		return
+	}
+
+	render.JSON(w, r, success)
+}
