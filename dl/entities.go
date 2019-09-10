@@ -65,7 +65,7 @@ type Dish struct {
 	Model
 	Name            string           `db:"name" json:"name"`
 	Description     string           `db:"description" json:"description"`
-	Price           uint8            `db:"price" json:"price"`
+	Price           uint             `db:"price" json:"price"`
 	IsUncertain     bool             `db:"is_uncertain" json:"is_uncertain"`
 	IsHealthy       bool             `db:"is_healthy" json:"is_healthy"`
 	Characteristics []Characteristic `db:"characteristics" json:"characteristics"`
@@ -84,7 +84,7 @@ type Variant struct {
 	Model
 	Value     string `db:"value" json:"value"`
 	IsDefault bool   `db:"is_default" json:"is_default"`
-	Price     int8   `db:"price" json:"price"`
+	Price     uint   `db:"price" json:"price"`
 }
 
 // User represents a person that creates offers and orders food.

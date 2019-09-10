@@ -28,8 +28,8 @@ type OfferModel struct {
 func (c OfferModel) Migrate() error {
 	query := `
 CREATE TABLE offers (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    owner_user_id BIGINT UNSIGNED NOT NULL,
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	owner_user_id BIGINT UNSIGNED NOT NULL,
 	restaurant_id BIGINT UNSIGNED NOT NULL,
 	valid_from DATETIME NOT NULL,
 	valid_to DATETIME NOT NULL,

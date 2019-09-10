@@ -28,8 +28,8 @@ type CategoryModel struct {
 func (c CategoryModel) Migrate() error {
 	query := `
 CREATE TABLE categories (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err

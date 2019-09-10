@@ -28,13 +28,13 @@ type DishModel struct {
 func (c DishModel) Migrate() error {
 	query := `
 CREATE TABLE dishes (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    description VARCHAR(200) NOT NULL,
-    price TINYINT UNSIGNED NOT NULL,
-    is_uncertain BOOLEAN NOT NULL,
-    is_healthy BOOLEAN NOT NULL,
-    category_id BIGINT UNSIGNED NOT NULL
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(200) NOT NULL,
+	price INTEGER UNSIGNED NOT NULL,
+	is_uncertain BOOLEAN NOT NULL,
+	is_healthy BOOLEAN NOT NULL,
+	category_id BIGINT UNSIGNED NOT NULL
 )`
 
 	_, err := exec(c.DB, query)

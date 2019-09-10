@@ -30,9 +30,9 @@ func (c CharacteristicModel) Migrate() error {
 
 	query := `
 CREATE TABLE characteristics (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    multiple BOOLEAN NOT NULL
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	multiple BOOLEAN NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err

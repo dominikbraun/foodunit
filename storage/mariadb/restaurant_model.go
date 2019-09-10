@@ -29,19 +29,19 @@ type RestaurantModel struct {
 func (r RestaurantModel) Migrate() error {
 	query := `
 CREATE TABLE restaurants (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    postal_code VARCHAR(50) NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    phone VARCHAR(50) NOT NULL,
-    open_mon VARCHAR(50) NOT NULL,
-    open_wed VARCHAR(50) NOT NULL,
-    open_thu VARCHAR(50) NOT NULL,
-    open_fri VARCHAR(50) NOT NULL,
-    open_sat VARCHAR(50) NOT NULL,
-    open_sun VARCHAR(50) NOT NULL,
-    website VARCHAR(50) NOT NULL,
-    is_active BOOLEAN NOT NULL
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	postal_code VARCHAR(50) NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	phone VARCHAR(50) NOT NULL,
+	open_mon VARCHAR(50) NOT NULL,
+	open_wed VARCHAR(50) NOT NULL,
+	open_thu VARCHAR(50) NOT NULL,
+	open_fri VARCHAR(50) NOT NULL,
+	open_sat VARCHAR(50) NOT NULL,
+	open_sun VARCHAR(50) NOT NULL,
+	website VARCHAR(50) NOT NULL,
+	is_active BOOLEAN NOT NULL
 )`
 
 	_, err := exec(r.DB, query)

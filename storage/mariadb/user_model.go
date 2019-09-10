@@ -32,14 +32,14 @@ type UserModel struct {
 func (u UserModel) Migrate() error {
 	query := `
 CREATE TABLE users (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    mail_addr VARCHAR(254) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    is_admin BOOLEAN NOT NULL,
-    paypal_mail_addr VARCHAR(254) NOT NULL,
-    score INTEGER NOT NULL,
-    password_hash CHAR(60) NOT NULL,
-    created DATETIME NOT NULL
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	mail_addr VARCHAR(254) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	is_admin BOOLEAN NOT NULL,
+	paypal_mail_addr VARCHAR(254) NOT NULL,
+	score INTEGER NOT NULL,
+	password_hash CHAR(60) NOT NULL,
+	created DATETIME NOT NULL
 )`
 
 	_, err := exec(u.DB, query)

@@ -28,8 +28,8 @@ type PositionModel struct {
 func (c PositionModel) Migrate() error {
 	query := `
 CREATE TABLE positions (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    dish_id BIGINT UNSIGNED NOT NULL,
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	dish_id BIGINT UNSIGNED NOT NULL,
 	alternative BIGINT UNSIGNED NOT NULL,
 	note VARCHAR(200) NOT NULL,
 	order_id BIGINT UNSIGNED NOT NULL

@@ -28,10 +28,10 @@ type OrderModel struct {
 func (c OrderModel) Migrate() error {
 	query := `
 CREATE TABLE orders (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT UNSIGNED NOT NULL,
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id BIGINT UNSIGNED NOT NULL,
 	is_paid BOOLEAN NOT NULL,
-    order_id BIGINT UNSIGNED NOT NULL
+	order_id BIGINT UNSIGNED NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err
