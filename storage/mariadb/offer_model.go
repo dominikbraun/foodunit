@@ -36,7 +36,7 @@ CREATE TABLE offer (
 	responsible_user_id BIGINT UNSIGNED NOT NULL,
 	is_placed BOOLEAN NOT NULL,
 	ready_at DATETIME NOT NULL,
-	paypal_enabled BOOLEAN, NOT NULL
+	paypal_enabled BOOLEAN NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err
