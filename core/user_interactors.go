@@ -37,7 +37,7 @@ func RegisterUser(registration dto.UserRegistration, model storage.UserModel) er
 		return err
 	}
 	if exists {
-		return errors.Wrap(err, "duplicate E-Mail address")
+		return errors.New("duplicate E-Mail address")
 	}
 
 	user := dl.User{
@@ -52,4 +52,23 @@ func RegisterUser(registration dto.UserRegistration, model storage.UserModel) er
 
 	err = model.Create(user)
 	return err
+}
+
+// Authenticate compares the corresponding password hash with a given password and
+// verifies whether the authentication has been successful or not.
+func Authenticate(login dto.UserLogin, model storage.UserModel) (bool, error) {
+	passwordHash, err := model.GetPasswordHash(login.MailAddr)
+	if err != nil {
+		return false, err
+	}
+
+	err = bcrypt.CompareHashAndPassword(passwordHash, []byte(login.Password))
+
+	if err == bcrypt.ErrMismatchedHashAndPassword {
+		return false, errors.New("invalid credentials")
+	} else if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }

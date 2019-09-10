@@ -31,7 +31,7 @@ type RestaurantModel interface {
 type UserModel interface {
 	Model
 	Create(user dl.User) error
-	Authenticate(mailAddr, password string) (int, error)
+	GetPasswordHash(mailAddr string) ([]byte, error)
 	FindByMailAddr(mailAddr string) (dl.User, error)
 	Exists(mailAddr string) (bool, error)
 }

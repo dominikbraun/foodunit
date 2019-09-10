@@ -31,5 +31,11 @@ type UserRegistration struct {
 	MailAddr       string `db:"mail_addr" json:"mail_addr"`
 	Name           string `db:"name" json:"name"`
 	PaypalMailAddr string `db:"paypal_mail_addr" json:"paypal_mail_addr"`
-	Password       string `db:"password_hash" json:"password_hash"`
+	Password       string `db:"password" json:"password"`
+}
+
+// UserLogin provides data required for logging in.
+type UserLogin struct {
+	MailAddr string `db:"mail_addr" json:"mail_addr"`
+	Password string `db:"password" json:"password"`
 }
