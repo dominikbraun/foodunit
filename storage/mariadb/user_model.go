@@ -30,12 +30,9 @@ type UserModel struct {
 	DB *sqlx.DB
 }
 
-// Migrate implements storage.UserModel.Migrate.
+// Migrate implements storage.Model.Migrate.
 func (u UserModel) Migrate() error {
-	query := `drop table if exists users`
-	_ = u.DB.MustExec(query)
-
-	query = `
+	query := `
 CREATE TABLE users (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     mail_addr VARCHAR(254) NOT NULL,
@@ -47,8 +44,13 @@ CREATE TABLE users (
     created DATETIME NOT NULL
 )`
 
-	_ = u.DB.MustExec(query)
-	return nil
+	_, err := u.DB.Exec(query)
+	return err
+}
+
+// Drop implements storage.Model.Drop.
+func (u UserModel) Drop() error {
+	return drop(u.DB, "users")
 }
 
 // Create implements storage.UserModel.Create.

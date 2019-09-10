@@ -27,10 +27,9 @@ func ProvideRESTController(r storage.RestaurantModel, u storage.UserModel) *REST
 }
 
 // provideMigrationController provides a controller instance for handling the initial FoodUnit set up.
-func ProvideMigrationController(r storage.RestaurantModel, u storage.UserModel) *Migration {
+func ProvideMigrationController(models ...storage.Model) *Migration {
 	controller := Migration{
-		Restaurants: r,
-		Users:       u,
+		Models: models,
 	}
 	return &controller
 }

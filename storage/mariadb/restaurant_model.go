@@ -25,12 +25,9 @@ type RestaurantModel struct {
 	DB *sqlx.DB
 }
 
-// Migrate implements storage.RestaurantModel.Migrate.
+// Migrate implements storage.Model.Migrate.
 func (r RestaurantModel) Migrate() error {
-	query := `drop table if exists restaurants`
-	_ = r.DB.MustExec(query)
-
-	query = `
+	query := `
 CREATE TABLE restaurants (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -47,8 +44,13 @@ CREATE TABLE restaurants (
     is_active BOOLEAN NOT NULL
 )`
 
-	_ = r.DB.MustExec(query)
-	return nil
+	_, err := r.DB.Exec(query)
+	return err
+}
+
+// Drop implements storage.Model.Drop.
+func (r RestaurantModel) Drop() error {
+	return drop(r.DB, "restaurants")
 }
 
 // GetInfo implements storage.RestaurantModel.GetInfo.

@@ -12,33 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package controllers provides various controllers for triggering the core logic.
-package controllers
+// Package mariadb provides MariaDB-compatible model implementations.
+package mariadb
 
 import (
-	"github.com/dominikbraun/foodunit/storage"
+	"github.com/jmoiron/sqlx"
 )
 
-// Migration represents the handler for the initial set up of FootUnit
-type Migration struct {
-	Models []storage.Model
+// CategoryModel is a storage.CategoryModel implementation.
+type CategoryModel struct {
+	DB *sqlx.DB
 }
 
-func (m *Migration) Migrate(drop bool) error {
-	// ToDo: error handling
-	for _, model := range m.Models {
-		if drop {
-			err := model.Drop()
-			if err != nil {
-				return err
-			}
-		}
+// Migrate implements storage.Model.Migrate.
+func (c CategoryModel) Migrate() error {
+	query := `
+CREATE TABLE category (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+)`
+	_, err := c.DB.Exec(query)
+	return err
+}
 
-		err := model.Migrate()
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+// Drop implements storage.Model.Drop.
+func (c CategoryModel) Drop() error {
+	return drop(c.DB, "category")
 }

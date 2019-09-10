@@ -21,7 +21,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// provideDB provides a ready-to-go database connection pool.
+// ProvideDB provides a ready-to-go database connection pool.
 func ProvideDBConnection(driver, dsn string) (*sqlx.DB, error) {
 	db, err := sqlx.Connect(driver, dsn)
 	if err != nil {
@@ -31,7 +31,7 @@ func ProvideDBConnection(driver, dsn string) (*sqlx.DB, error) {
 	return db, err
 }
 
-// provideRestaurantModel provides a storage.RestaurantModel implementation.
+// ProvideRestaurantModel provides a storage.RestaurantModel implementation.
 func ProvideRestaurantModel(db *sqlx.DB) storage.RestaurantModel {
 	restaurantModel := RestaurantModel{
 		DB: db,
@@ -39,8 +39,16 @@ func ProvideRestaurantModel(db *sqlx.DB) storage.RestaurantModel {
 	return &restaurantModel
 }
 
-// provideRestaurantModel provides a storage.RestaurantModel implementation.
+// ProvideRestaurantModel provides a storage.RestaurantModel implementation.
 func ProvideUserModel(db *sqlx.DB) storage.UserModel {
+	userModel := UserModel{
+		DB: db,
+	}
+	return &userModel
+}
+
+// ProvideCategoryModel provides a storage.CategoryModel implementation.
+func ProvideCategoryModel(db *sqlx.DB) storage.UserModel {
 	userModel := UserModel{
 		DB: db,
 	}

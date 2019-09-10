@@ -56,9 +56,8 @@ type Restaurant struct {
 // Category represents a menu section holding multiple dishes.
 type Category struct {
 	Model
-	Name    string `db:"name" json:"name"`
-	ImgPath string `db:"img_path" json:"img_path"`
-	Dishes  []Dish `db:"dishes" json:"dishes"`
+	Name   string `db:"name" json:"name"`
+	Dishes []Dish `db:"dishes" json:"dishes"`
 }
 
 // Dish represents a meal that is offered by a restaurant.
