@@ -68,28 +68,13 @@ VALUES (?, ?, ?, ?, ?, ?, ?)`
 }
 
 // Authenticate implements storage.UserModel.Authenticate.
-func (u UserModel) Authenticate(mailAddr, password string) (int, error) {
-	query := `SELECT id, password_hash FROM users WHERE mail_addr = ?`
+func (u UserModel) GetPasswordHash(mailAddr string) ([]byte, error) {
+	query := `SELECT password_hash FROM users WHERE mail_addr = ?`
 
-	var id int
 	var passwordHash []byte
-	err := u.DB.QueryRowx(query, mailAddr).Scan(&id, &passwordHash)
+	err := u.DB.QueryRowx(query, mailAddr).Scan(&passwordHash)
 
-	if err == sql.ErrNoRows {
-		return 0, errors.New("invalid credentials")
-	} else if err != nil {
-		return 0, err
-	}
-
-	err = bcrypt.CompareHashAndPassword(passwordHash, []byte(password))
-
-	if err == bcrypt.ErrMismatchedHashAndPassword {
-		return 0, errors.New("invalid credentials")
-	} else if err != nil {
-		return 0, err
-	}
-
-	return id, nil
+	return passwordHash, err
 }
 
 // FindByMailAddr implements storage.UserModel.FindByMailAddr.
