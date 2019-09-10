@@ -19,29 +19,30 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// DishModel is a storage.DishModel implementation.
-type DishModel struct {
+// OfferModel is a storage.OfferModel implementation.
+type OfferModel struct {
 	DB *sqlx.DB
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c DishModel) Migrate() error {
+func (c OfferModel) Migrate() error {
 	query := `
-CREATE TABLE dish (
+CREATE TABLE offer (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    description VARCHAR(200) NOT NULL,
-    price TINYINT UNSIGNED NOT NULL,
-    is_uncertain BOOLEAN NOT NULL,
-    is_healthy BOOLEAN NOT NULL,
-    category_id BIGINT UNSIGNED NOT NULL
+    owner_user_id BIGINT UNSIGNED NOT NULL,
+	restaurant_id BIGINT UNSIGNED NOT NULL,
+	valid_from DATETIME NOT NULL,
+	valid_to DATETIME NOT NULL,
+	responsible_user_id BIGINT UNSIGNED NOT NULL,
+	is_placed BOOLEAN NOT NULL,
+	ready_at DATETIME NOT NULL,
+	paypal_enabled BOOLEAN, NOT NULL
 )`
-
 	_, err := exec(c.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c DishModel) Drop() error {
-	return drop(c.DB, "dish")
+func (c OfferModel) Drop() error {
+	return drop(c.DB, "offer")
 }

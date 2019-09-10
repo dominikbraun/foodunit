@@ -8,7 +8,7 @@ import (
 
 // drops a table
 func drop(db *sqlx.DB, table string) error {
-	query := `drop table if exists ` + table
+	query := `DROP TABLE IF EXISTS ` + table
 	// ToDo: check for affected rows? (return error if 0?)
 	_, err := exec(db, query)
 	return err

@@ -102,11 +102,11 @@ type User struct {
 // Offer represents an user's offer to order food for their friends or team.
 type Offer struct {
 	Model
-	Owner         User       `db:"owner" json:"owner"`
+	Owner         User       `db:"owner_user_id" json:"owner_user_id"`
 	Restaurant    Restaurant `db:"restaurant" json:"restaurant"`
 	ValidFrom     time.Time  `db:"valid_from" json:"valid_from"`
 	ValidTo       time.Time  `db:"valid_to" json:"valid_to"`
-	Responsible   User       `db:"responsible" json:"responsible"`
+	Responsible   User       `db:"responsible_user_id" json:"responsible_user_id"`
 	IsPlaced      bool       `db:"is_placed" json:"is_placed"`
 	ReadyAt       time.Time  `db:"ready_at" json:"ready_at"`
 	PaypalEnabled bool       `db:"paypal_enabled" json:"paypal_enabled"`

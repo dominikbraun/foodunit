@@ -19,29 +19,26 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// DishModel is a storage.DishModel implementation.
-type DishModel struct {
+// CharacteristicModel is a storage.CharacteristicModel implementation.
+type CharacteristicModel struct {
 	DB *sqlx.DB
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c DishModel) Migrate() error {
+func (c CharacteristicModel) Migrate() error {
+	// ToDo: intermediate table to dish
+
 	query := `
-CREATE TABLE dish (
+CREATE TABLE characteristic (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    description VARCHAR(200) NOT NULL,
-    price TINYINT UNSIGNED NOT NULL,
-    is_uncertain BOOLEAN NOT NULL,
-    is_healthy BOOLEAN NOT NULL,
-    category_id BIGINT UNSIGNED NOT NULL
+    multiple BOOLEAN NOT NULL
 )`
-
 	_, err := exec(c.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c DishModel) Drop() error {
-	return drop(c.DB, "dish")
+func (c CharacteristicModel) Drop() error {
+	return drop(c.DB, "characteristic")
 }

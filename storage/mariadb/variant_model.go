@@ -19,29 +19,25 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// DishModel is a storage.DishModel implementation.
-type DishModel struct {
+// VariantModel is a storage.VariantModel implementation.
+type VariantModel struct {
 	DB *sqlx.DB
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c DishModel) Migrate() error {
+func (c VariantModel) Migrate() error {
 	query := `
-CREATE TABLE dish (
+CREATE TABLE variant (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    description VARCHAR(200) NOT NULL,
-    price TINYINT UNSIGNED NOT NULL,
-    is_uncertain BOOLEAN NOT NULL,
-    is_healthy BOOLEAN NOT NULL,
-    category_id BIGINT UNSIGNED NOT NULL
+    value VARCHAR(50) NOT NULL,
+	is_default BOOLEAN NOT NULL,
+    price TINYINT UNSIGNED NOT NULL
 )`
-
 	_, err := exec(c.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c DishModel) Drop() error {
-	return drop(c.DB, "dish")
+func (c VariantModel) Drop() error {
+	return drop(c.DB, "variant")
 }

@@ -43,3 +43,15 @@ type CategoryModel interface {
 type DishModel interface {
 	Model
 }
+
+type CharacteristicModel interface {
+	Model
+}
+
+type VariantModel interface {
+	Model
+}
+
+type OfferModel interface {
+	Model
+}

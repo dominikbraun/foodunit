@@ -62,3 +62,27 @@ func ProvideDishModel(db *sqlx.DB) storage.DishModel {
 	}
 	return &dishModel
 }
+
+// ProvideCharacteristicModel provides a storage.CharacteristicModel implementation.
+func ProvideCharacteristicModel(db *sqlx.DB) storage.CharacteristicModel {
+	characteristicModel := CharacteristicModel{
+		DB: db,
+	}
+	return &characteristicModel
+}
+
+// ProvideVariantModel provides a storage.VariantModel implementation.
+func ProvideVariantModel(db *sqlx.DB) storage.VariantModel {
+	variantModel := VariantModel{
+		DB: db,
+	}
+	return &variantModel
+}
+
+// ProvideOfferModel provides a storage.OfferModel implementation.
+func ProvideOfferModel(db *sqlx.DB) storage.OfferModel {
+	offerModel := OfferModel{
+		DB: db,
+	}
+	return &offerModel
+}
