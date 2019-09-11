@@ -20,11 +20,10 @@ import (
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
-	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
-// RegisterUser performs an user registration based on the provided UserRegistration data.
+// CreateOffer creates a new offer based on the provided data
 func CreateOffer(newOffer dto.NewOffer, offers storage.OfferModel, users storage.UserModel, restaurants storage.RestaurantModel) error {
 
 	exists, err := restaurants.Exists(newOffer.Restaurant)
@@ -45,17 +44,17 @@ func CreateOffer(newOffer dto.NewOffer, offers storage.OfferModel, users storage
 
 	// ToDo: time parsing in extra function
 	// ToDo: shouldn't the parsing be part of the controller and not the core? As the core should only contain plain logic...
-	validFrom, err := time.Parse("dd-MM-yyyy", newOffer.ValidFrom) // ToDo: use ansi format?
+	validFrom, err := time.Parse(time.RFC3339, newOffer.ValidFrom) // ToDo: use ansi format?
 	if err != nil {
 		return errors.Errorf("invalid date format: %v", newOffer.ValidFrom)
 	}
 
-	validTo, err := time.Parse("dd-MM-yyyy", newOffer.ValidTo) // ToDo: use ansi format?
+	validTo, err := time.Parse(time.RFC3339, newOffer.ValidTo) // ToDo: use ansi format?
 	if err != nil {
 		return errors.Errorf("invalid date format: %v", newOffer.ValidTo)
 	}
 
-	readyAt, err := time.Parse("dd-MM-yyyy", newOffer.ReadyAt) // ToDo: use ansi format?
+	readyAt, err := time.Parse(time.RFC3339, newOffer.ReadyAt) // ToDo: use ansi format?
 	if err != nil {
 		return errors.Errorf("invalid date format: %v", newOffer.ReadyAt)
 	}

@@ -26,6 +26,7 @@ type Model interface {
 type RestaurantModel interface {
 	Model
 	GetInfo(id uint64) (dl.Restaurant, error)
+	Exists(id uint64) (bool, error)
 }
 
 type UserModel interface {
@@ -55,6 +56,7 @@ type VariantModel interface {
 
 type OfferModel interface {
 	Model
+	Create(offer dl.Offer) error
 }
 
 type OrderModel interface {

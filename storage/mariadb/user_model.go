@@ -54,7 +54,7 @@ func (u UserModel) Drop() error {
 // Create implements storage.UserModel.Create.
 func (u UserModel) Create(user dl.User) error {
 	query := `
-INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created)
+INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created) 
 VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format(DateTime)
@@ -93,6 +93,22 @@ func (u UserModel) MailExists(mailAddr string) (bool, error) {
 
 	var user dl.User
 	err := u.DB.QueryRowx(query, mailAddr).StructScan(&user)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
+}
+
+// Exists implements storage.UserModel.Exists.
+func (u UserModel) Exists(id uint64) (bool, error) {
+	query := `SELECT * FROM users where id = ?`
+
+	var user dl.User
+	err := u.DB.QueryRowx(query, id).StructScan(&user)
 
 	if err != nil {
 		if err == sql.ErrNoRows {

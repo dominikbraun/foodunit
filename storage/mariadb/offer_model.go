@@ -16,6 +16,7 @@
 package mariadb
 
 import (
+	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -45,4 +46,22 @@ CREATE TABLE offers (
 // Drop implements storage.Model.Drop.
 func (c OfferModel) Drop() error {
 	return drop(c.DB, "offers")
+}
+
+// Create implements storage.OfferModel.Create.
+func (c OfferModel) Create(offer dl.Offer) error {
+	query := `
+INSERT INTO offers (owner_user_id, restaurant_id, valid_from, valid_to, responsible_user_id, is_placed, ready_at, paypal_enabled)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+
+	validFrom := offer.ValidFrom.Format(DateTime)
+	validTo := offer.ValidTo.Format(DateTime)
+	readyAt := offer.ReadyAt.Format(DateTime)
+
+	_, err := exec(c.DB, query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo, offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
