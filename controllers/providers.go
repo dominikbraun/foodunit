@@ -18,10 +18,11 @@ package controllers
 import "github.com/dominikbraun/foodunit/storage"
 
 // provideRESTController provides a controller instance for handing REST requests.
-func ProvideRESTController(r storage.RestaurantModel, u storage.UserModel) *REST {
+func ProvideRESTController(r storage.RestaurantModel, u storage.UserModel, o storage.OfferModel) *REST {
 	controller := REST{
 		Restaurants: r,
 		Users:       u,
+		Offers:      o,
 	}
 	return &controller
 }

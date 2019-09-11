@@ -39,3 +39,14 @@ type UserLogin struct {
 	MailAddr string `db:"mail_addr" json:"mail_addr"`
 	Password string `db:"password" json:"password"`
 }
+
+// NewOffer provides data required for creating an offer in.
+type NewOffer struct {
+	Restaurant    uint64 `json:"restaurant"`
+	ValidFrom     string `json:"valid_from"`
+	ValidTo       string `json:"valid_to"`
+	Responsible   uint64 `json:"responsible_user_id"`
+	IsPlaced      bool   `json:"is_placed"`
+	ReadyAt       string `json:"ready_at"`
+	PaypalEnabled bool   `json:"paypal_enabled"`
+}

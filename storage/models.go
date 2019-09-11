@@ -33,7 +33,8 @@ type UserModel interface {
 	Create(user dl.User) error
 	GetPasswordHash(mailAddr string) ([]byte, error)
 	FindByMailAddr(mailAddr string) (dl.User, error)
-	Exists(mailAddr string) (bool, error)
+	MailExists(mailAddr string) (bool, error)
+	Exists(id uint64) (bool, error)
 }
 
 type CategoryModel interface {

@@ -87,8 +87,8 @@ func (u UserModel) FindByMailAddr(mailAddr string) (dl.User, error) {
 	return user, err
 }
 
-// Exists implements storage.UserModel.Exists.
-func (u UserModel) Exists(mailAddr string) (bool, error) {
+// MailExists implements storage.UserModel.MailExists.
+func (u UserModel) MailExists(mailAddr string) (bool, error) {
 	query := `SELECT * FROM users where mail_addr = ?`
 
 	var user dl.User

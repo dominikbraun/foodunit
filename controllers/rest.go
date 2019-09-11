@@ -31,6 +31,7 @@ import (
 type REST struct {
 	Restaurants storage.RestaurantModel
 	Users       storage.UserModel
+	Offers      storage.OfferModel
 }
 
 // GetRestaurantInfo is responsible for invoking core.GetRestaurantInfo.
@@ -78,6 +79,25 @@ func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 	_ = r.Body.Close()
 
 	success, err := core.Authenticate(login, rest.Users)
+	if err != nil {
+		// ToDo: Handle core error properly
+		render.JSON(w, r, err)
+		return
+	}
+
+	render.JSON(w, r, success)
+}
+
+func (rest *REST) CreateOffer(w http.ResponseWriter, r *http.Request) {
+	var offer dto.NewOffer
+	err := json.NewDecoder(r.Body).Decode(&offer)
+	if err != nil {
+		render.JSON(w, r, err)
+		return
+	}
+	_ = r.Body.Close()
+
+	success, err := core.CreateOffer(offer, rest.Offers, rest.Users, rest.Restaurants)
 	if err != nil {
 		// ToDo: Handle core error properly
 		render.JSON(w, r, err)
