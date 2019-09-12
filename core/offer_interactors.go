@@ -42,11 +42,11 @@ func CreateOffer(newOffer dto.NewOffer, offers storage.OfferModel, users storage
 	}
 
 	offer := dl.Offer{
-		Owner:         dl.ProvideUser(0), // ToDo: get current user?
-		Restaurant:    dl.ProvideRestaurant(newOffer.Restaurant),
+		Owner:         dl.NewUser(0), // ToDo: get current user?
+		Restaurant:    dl.NewRestaurant(newOffer.Restaurant),
 		ValidFrom:     newOffer.ValidFrom,
 		ValidTo:       newOffer.ValidTo,
-		Responsible:   dl.ProvideUser(newOffer.Responsible),
+		Responsible:   dl.NewUser(newOffer.Responsible),
 		IsPlaced:      newOffer.IsPlaced,
 		ReadyAt:       newOffer.ReadyAt,
 		PaypalEnabled: newOffer.PaypalEnabled,
