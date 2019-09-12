@@ -15,7 +15,10 @@
 // Package session provides utility types and functions for session management.
 package session
 
-import "context"
+import (
+	"context"
+	"net/http"
+)
 
 // Manager provides functions to create session tokens and reading or writing data
 // from or to the associated session.
@@ -24,4 +27,5 @@ type Manager interface {
 	Get(ctx context.Context, key string) interface{}
 	GetString(ctx context.Context, key string) string
 	Put(ctx context.Context, key string, val interface{})
+	LoadAndSave(next http.Handler) http.Handler
 }

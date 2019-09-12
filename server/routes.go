@@ -30,6 +30,8 @@ import (
 func (s *Server) mountRoutes() {
 	r := chi.NewRouter()
 
+	r.Use(s.manager.LoadAndSave)
+
 	r.Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
 			// Get meta information for the restaurant.
