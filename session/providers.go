@@ -21,7 +21,7 @@ import (
 )
 
 // ProvideManager returns an Manager implementation which utilizes the provided SessionStorage.
-func ProvideManager(storage storage.SessionStorage) Manager {
+func ProvideManager(storage storage.Session) Manager {
 	manager := scs.New()
 	manager.Store = storage
 

@@ -17,8 +17,8 @@ package storage
 
 import "time"
 
-// SessionStorage provides methods to commit, find and delete session data.
-type SessionStorage interface {
+// Session provides methods to commit, find and delete session data.
+type Session interface {
 	Delete(token string) (err error)
 	Find(token string) (b []byte, found bool, err error)
 	Commit(token string, b []byte, expiry time.Time) (err error)
