@@ -17,6 +17,7 @@ package server
 
 import (
 	"context"
+	"github.com/dominikbraun/foodunit/session"
 	"github.com/dominikbraun/foodunit/storage/mariadb"
 	"log"
 	"net/http"
@@ -37,6 +38,7 @@ type Server struct {
 	router     *chi.Mux
 	controller *controllers.REST
 	interrupt  chan os.Signal
+	manager    session.Manager
 }
 
 // Setup builds a new Server instance, registers all routes, injects discrete
@@ -49,10 +51,14 @@ func Setup(driver, dsn string, clientURL string) (*Server, error) {
 	}
 
 	router := provideRouter()
+
 	restaurantModel := mariadb.ProvideRestaurantModel(db)
 	userModel := mariadb.ProvideUserModel(db)
 	offerModel := mariadb.ProvideOfferModel(db)
 	restController := controllers.ProvideRESTController(restaurantModel, userModel, offerModel)
+
+	storage := mariadb.ProvideSessionStorage(db)
+	manager := session.ProvideManager(storage)
 
 	s := Server{
 		Server: &http.Server{
@@ -62,6 +68,7 @@ func Setup(driver, dsn string, clientURL string) (*Server, error) {
 		router:     router,
 		controller: restController,
 		interrupt:  make(chan os.Signal),
+		manager:    manager,
 	}
 
 	s.mountRoutes()

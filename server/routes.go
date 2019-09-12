@@ -16,6 +16,7 @@
 package server
 
 import (
+	"github.com/dominikbraun/foodunit/middleware"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -50,6 +51,7 @@ func (s *Server) mountRoutes() {
 	})
 
 	r.Route("/offers", func(r chi.Router) {
+		r.Use(middleware.Authenticate(s.manager))
 		// Create a new offer.
 		r.Post("/create", s.controller.CreateOffer)
 		// Get all active offers.

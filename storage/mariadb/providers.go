@@ -102,3 +102,11 @@ func ProvidePositionModel(db *sqlx.DB) storage.PositionModel {
 	}
 	return &positionModel
 }
+
+// ProvideSessionStorage provides a storage.Session implementation.
+func ProvideSessionStorage(db *sqlx.DB) storage.Session {
+	sessionStorage := SessionStorage{
+		DB: db,
+	}
+	return &sessionStorage
+}
