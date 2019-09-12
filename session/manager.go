@@ -22,5 +22,6 @@ import "context"
 type Manager interface {
 	RenewToken(ctx context.Context) error
 	Get(ctx context.Context, key string) interface{}
+	GetString(ctx context.Context, key string) string
 	Put(ctx context.Context, key string, val interface{})
 }
