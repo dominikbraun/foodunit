@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package storage provides model implementations for persisting entities.
+// Package storage provides model and session storage implementations.
 package storage
 
 import "github.com/dominikbraun/foodunit/dl"

@@ -12,18 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package session provides utility types and functions for session management.
-package session
+// Package storage provides model and session storage implementations.
+package storage
 
-import (
-	"github.com/alexedwards/scs/v2"
-	"github.com/dominikbraun/foodunit/storage"
-)
+import "time"
 
-// ProvideManager returns an Manager implementation which utilizes the provided SessionStorage.
-func ProvideManager(storage storage.SessionStorage) Manager {
-	manager := scs.New()
-	manager.Store = storage
-
-	return manager
+// SessionStorage provides methods to commit, find and delete session data.
+type SessionStorage interface {
+	Delete(token string) (err error)
+	Find(token string) (b []byte, found bool, err error)
+	Commit(token string, b []byte, expiry time.Time) (err error)
 }
