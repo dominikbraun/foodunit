@@ -57,9 +57,7 @@ func Setup(driver, dsn string) (*Server, error) {
 
 // RunMigration sets up all tables by invoking the individual Migrate() methods.
 func (s *Server) Run(drop bool) {
-	var err error
-
-	err = s.controller.Migrate(drop)
+	err := s.controller.Migrate(drop)
 
 	if err != nil {
 		log.Fatal(err)

@@ -23,6 +23,7 @@ import (
 // provideRESTController provides a controller instance for handing REST requests.
 func ProvideRESTController(manager session.Manager, r storage.RestaurantModel, u storage.UserModel, o storage.OfferModel) *REST {
 	controller := REST{
+		Manager:     manager,
 		Restaurants: r,
 		Users:       u,
 		Offers:      o,

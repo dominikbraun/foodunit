@@ -23,7 +23,7 @@ import (
 // ProvideManager returns an Manager implementation which utilizes the provided SessionStorage.
 func ProvideManager(storage storage.Session) Manager {
 	manager := scs.New()
-	manager.Store = storage
+	//manager.Store = storage
 	manager.Cookie.HttpOnly = true
 
 	return manager
