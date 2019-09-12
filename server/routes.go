@@ -51,7 +51,7 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/offers", func(r chi.Router) {
 		// Create a new offer.
-		r.Post("/new", nil)
+		r.Post("/new", s.controller.CreateOffer)
 		// Get all active offers.
 		r.Get("/active", nil)
 

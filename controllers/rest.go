@@ -31,6 +31,7 @@ import (
 type REST struct {
 	Restaurants storage.RestaurantModel
 	Users       storage.UserModel
+	Offers      storage.OfferModel
 }
 
 // GetRestaurantInfo is responsible for invoking core.GetRestaurantInfo.
@@ -53,7 +54,7 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	var registration dto.UserRegistration
 	err := json.NewDecoder(r.Body).Decode(&registration)
 	if err != nil {
-		render.JSON(w, r, err)
+		render.JSON(w, r, err.Error())
 		return
 	}
 	_ = r.Body.Close()
@@ -61,7 +62,7 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	err = core.RegisterUser(registration, rest.Users)
 	if err != nil {
 		// ToDo: Handle core error properly
-		render.JSON(w, r, err)
+		render.JSON(w, r, err.Error())
 		return
 	}
 
@@ -72,7 +73,7 @@ func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 	var login dto.UserLogin
 	err := json.NewDecoder(r.Body).Decode(&login)
 	if err != nil {
-		render.JSON(w, r, err)
+		render.JSON(w, r, err.Error())
 		return
 	}
 	_ = r.Body.Close()
@@ -80,9 +81,53 @@ func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 	success, err := core.Authenticate(login, rest.Users)
 	if err != nil {
 		// ToDo: Handle core error properly
-		render.JSON(w, r, err)
+		render.JSON(w, r, err.Error())
 		return
 	}
 
 	render.JSON(w, r, success)
+}
+
+func (rest *REST) CreateOffer(w http.ResponseWriter, r *http.Request) {
+	var offerJson struct {
+		Restaurant    uint64 `json:"restaurant_id"`
+		ValidFrom     string `json:"valid_from"`
+		ValidTo       string `json:"valid_to"`
+		Responsible   uint64 `json:"responsible_user_id"`
+		IsPlaced      bool   `json:"is_placed"`
+		ReadyAt       string `json:"ready_at"`
+		PaypalEnabled bool   `json:"paypal_enabled"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&offerJson)
+	if err != nil {
+		render.JSON(w, r, err.Error())
+		return
+	}
+	_ = r.Body.Close()
+
+	dates, err := parseDates(offerJson.ValidFrom, offerJson.ValidTo, offerJson.ReadyAt)
+	if err != nil {
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	offer := dto.NewOffer{
+		Restaurant:    offerJson.Restaurant,
+		ValidFrom:     dates[0],
+		ValidTo:       dates[1],
+		Responsible:   offerJson.Responsible,
+		IsPlaced:      offerJson.IsPlaced,
+		ReadyAt:       dates[2],
+		PaypalEnabled: offerJson.PaypalEnabled,
+	}
+
+	err = core.CreateOffer(offer, rest.Offers, rest.Users, rest.Restaurants)
+	if err != nil {
+		// ToDo: Handle core error properly
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	render.JSON(w, r, true)
 }

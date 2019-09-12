@@ -16,6 +16,7 @@
 package mariadb
 
 import (
+	"database/sql"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
 )
@@ -61,4 +62,20 @@ func (r RestaurantModel) GetInfo(id uint64) (dl.Restaurant, error) {
 	err := r.DB.QueryRowx(query, id).StructScan(&restaurant)
 
 	return restaurant, err
+}
+
+// Exists implements storage.RestaurantModel.Exists.
+func (r RestaurantModel) Exists(id uint64) (bool, error) {
+	query := `SELECT * FROM restaurants where id = ?`
+
+	var restaurant dl.Restaurant
+	err := r.DB.QueryRowx(query, id).StructScan(&restaurant)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
 }

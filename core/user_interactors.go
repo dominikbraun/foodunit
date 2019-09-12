@@ -32,7 +32,7 @@ func RegisterUser(registration dto.UserRegistration, model storage.UserModel) er
 		return err
 	}
 
-	exists, err := model.Exists(registration.MailAddr)
+	exists, err := model.MailExists(registration.MailAddr)
 	if err != nil {
 		return err
 	}

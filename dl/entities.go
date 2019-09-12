@@ -53,6 +53,12 @@ type Restaurant struct {
 	Menu       []Category `db:"menu" json:"menu"`
 }
 
+func NewRestaurant(id uint64) Restaurant {
+	return Restaurant{
+		Model: Model{ID: id},
+	}
+}
+
 // Category represents a menu section holding multiple dishes.
 type Category struct {
 	Model
@@ -97,6 +103,12 @@ type User struct {
 	Score          int       `db:"score" json:"score"`
 	PasswordHash   []byte    `db:"password_hash" json:"password_hash"`
 	Created        time.Time `db:"created" json:"created"`
+}
+
+func NewUser(id uint64) User {
+	return User{
+		Model: Model{ID: id},
+	}
 }
 
 // Offer represents an user's offer to order food for their friends or team.

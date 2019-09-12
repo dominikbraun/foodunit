@@ -26,6 +26,7 @@ type Model interface {
 type RestaurantModel interface {
 	Model
 	GetInfo(id uint64) (dl.Restaurant, error)
+	Exists(id uint64) (bool, error)
 }
 
 type UserModel interface {
@@ -33,7 +34,8 @@ type UserModel interface {
 	Create(user dl.User) error
 	GetPasswordHash(mailAddr string) ([]byte, error)
 	FindByMailAddr(mailAddr string) (dl.User, error)
-	Exists(mailAddr string) (bool, error)
+	MailExists(mailAddr string) (bool, error)
+	Exists(id uint64) (bool, error)
 }
 
 type CategoryModel interface {
@@ -54,6 +56,7 @@ type VariantModel interface {
 
 type OfferModel interface {
 	Model
+	Create(offer dl.Offer) error
 }
 
 type OrderModel interface {

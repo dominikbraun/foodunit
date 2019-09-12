@@ -16,6 +16,6 @@ func drop(db *sqlx.DB, table string) error {
 
 // wraps DB.Exec and adds more error information in case of an error
 func exec(db *sqlx.DB, query string, args ...interface{}) (sql.Result, error) {
-	res, err := db.Exec(query)
+	res, err := db.Exec(query, args...)
 	return res, errors.Wrap(err, query)
 }
