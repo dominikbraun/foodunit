@@ -15,6 +15,8 @@
 // Package dto provides data transfer objects as input and output data.
 package dto
 
+import "time"
+
 // Restaurant info represents a simple conclusion of relevant meta information.
 type RestaurantInfo struct {
 	Name       string `db:"name" json:"name"`
@@ -42,11 +44,11 @@ type UserLogin struct {
 
 // NewOffer provides data required for creating an offer in.
 type NewOffer struct {
-	Restaurant    uint64 `json:"restaurant"`
-	ValidFrom     string `json:"valid_from"`
-	ValidTo       string `json:"valid_to"`
-	Responsible   uint64 `json:"responsible_user_id"`
-	IsPlaced      bool   `json:"is_placed"`
-	ReadyAt       string `json:"ready_at"`
-	PaypalEnabled bool   `json:"paypal_enabled"`
+	Restaurant    uint64
+	ValidFrom     time.Time
+	ValidTo       time.Time
+	Responsible   uint64
+	IsPlaced      bool
+	ReadyAt       time.Time
+	PaypalEnabled bool
 }

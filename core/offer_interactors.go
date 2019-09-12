@@ -20,7 +20,6 @@ import (
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
-	"time"
 )
 
 // CreateOffer creates a new offer based on the provided data
@@ -42,31 +41,14 @@ func CreateOffer(newOffer dto.NewOffer, offers storage.OfferModel, users storage
 		return errors.Errorf("the responsible user doesn't exist: %v", newOffer.Responsible)
 	}
 
-	// ToDo: time parsing in extra function
-	// ToDo: shouldn't the parsing be part of the controller and not the core? As the core should only contain plain logic...
-	validFrom, err := time.Parse(time.RFC3339, newOffer.ValidFrom) // ToDo: use ansi format?
-	if err != nil {
-		return errors.Errorf("invalid date format: %v", newOffer.ValidFrom)
-	}
-
-	validTo, err := time.Parse(time.RFC3339, newOffer.ValidTo) // ToDo: use ansi format?
-	if err != nil {
-		return errors.Errorf("invalid date format: %v", newOffer.ValidTo)
-	}
-
-	readyAt, err := time.Parse(time.RFC3339, newOffer.ReadyAt) // ToDo: use ansi format?
-	if err != nil {
-		return errors.Errorf("invalid date format: %v", newOffer.ReadyAt)
-	}
-
 	offer := dl.Offer{
 		Owner:         dl.ProvideUser(0), // ToDo: get current user?
 		Restaurant:    dl.ProvideRestaurant(newOffer.Restaurant),
-		ValidFrom:     validFrom,
-		ValidTo:       validTo,
+		ValidFrom:     newOffer.ValidFrom,
+		ValidTo:       newOffer.ValidTo,
 		Responsible:   dl.ProvideUser(newOffer.Responsible),
 		IsPlaced:      newOffer.IsPlaced,
-		ReadyAt:       readyAt,
+		ReadyAt:       newOffer.ReadyAt,
 		PaypalEnabled: newOffer.PaypalEnabled,
 	}
 

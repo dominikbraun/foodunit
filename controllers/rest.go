@@ -89,13 +89,38 @@ func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rest *REST) CreateOffer(w http.ResponseWriter, r *http.Request) {
-	var offer dto.NewOffer
-	err := json.NewDecoder(r.Body).Decode(&offer)
+	var offerJson struct {
+		Restaurant    uint64 `json:"restaurant_id"`
+		ValidFrom     string `json:"valid_from"`
+		ValidTo       string `json:"valid_to"`
+		Responsible   uint64 `json:"responsible_user_id"`
+		IsPlaced      bool   `json:"is_placed"`
+		ReadyAt       string `json:"ready_at"`
+		PaypalEnabled bool   `json:"paypal_enabled"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&offerJson)
 	if err != nil {
 		render.JSON(w, r, err.Error())
 		return
 	}
 	_ = r.Body.Close()
+
+	dates, err := parseDates(offerJson.ValidFrom, offerJson.ValidTo, offerJson.ReadyAt)
+	if err != nil {
+		render.JSON(w, r, err.Error())
+		return
+	}
+
+	offer := dto.NewOffer{
+		Restaurant:    offerJson.Restaurant,
+		ValidFrom:     dates[0],
+		ValidTo:       dates[1],
+		Responsible:   offerJson.Responsible,
+		IsPlaced:      offerJson.IsPlaced,
+		ReadyAt:       dates[2],
+		PaypalEnabled: offerJson.PaypalEnabled,
+	}
 
 	err = core.CreateOffer(offer, rest.Offers, rest.Users, rest.Restaurants)
 	if err != nil {
