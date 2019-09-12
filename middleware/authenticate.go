@@ -35,6 +35,7 @@ func Authenticate(manager session.Manager) Middleware {
 
 			if mailAddr == "" {
 				render.JSON(w, r, "Forbidden")
+				return
 			}
 			next.ServeHTTP(w, r)
 		})
