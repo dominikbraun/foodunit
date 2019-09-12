@@ -26,6 +26,7 @@ type Manager interface {
 	RenewToken(ctx context.Context) error
 	Get(ctx context.Context, key string) interface{}
 	GetString(ctx context.Context, key string) string
+	GetBool(ctx context.Context, key string) bool
 	Put(ctx context.Context, key string, val interface{})
 	LoadAndSave(next http.Handler) http.Handler
 }

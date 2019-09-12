@@ -43,7 +43,7 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/register", s.controller.RegisterUser)
-		r.Post("/login", s.controller.Authenticate)
+		r.Post("/login", s.controller.Login)
 		r.Get("/logout", nil)
 
 		r.Route("/{id}", func(r chi.Router) {

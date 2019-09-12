@@ -31,9 +31,9 @@ func Authenticate(manager session.Manager) Middleware {
 	return func(next http.Handler) http.Handler {
 
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			mailAddr := manager.GetString(r.Context(), "mail_addr")
+			loggedIn := manager.GetBool(r.Context(), "logged_in")
 
-			if mailAddr == "" {
+			if !loggedIn {
 				render.JSON(w, r, "Forbidden")
 				return
 			}

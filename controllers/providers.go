@@ -15,10 +15,13 @@
 // Package controllers provides various controllers for triggering the core logic.
 package controllers
 
-import "github.com/dominikbraun/foodunit/storage"
+import (
+	"github.com/dominikbraun/foodunit/session"
+	"github.com/dominikbraun/foodunit/storage"
+)
 
 // provideRESTController provides a controller instance for handing REST requests.
-func ProvideRESTController(r storage.RestaurantModel, u storage.UserModel, o storage.OfferModel) *REST {
+func ProvideRESTController(manager session.Manager, r storage.RestaurantModel, u storage.UserModel, o storage.OfferModel) *REST {
 	controller := REST{
 		Restaurants: r,
 		Users:       u,

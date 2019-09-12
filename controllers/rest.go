@@ -18,6 +18,7 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/dominikbraun/foodunit/core/dto"
+	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
 	"net/http"
 	"strconv"
@@ -29,6 +30,7 @@ import (
 
 // REST represents the common handler for REST API requests.
 type REST struct {
+	Manager     session.Manager
 	Restaurants storage.RestaurantModel
 	Users       storage.UserModel
 	Offers      storage.OfferModel
@@ -71,7 +73,7 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 // Authenticate logs in the authenticating user by comparing the provided password
 // with the stored password and creating a new session if the comparison was successful.
-func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
+func (rest *REST) Login(w http.ResponseWriter, r *http.Request) {
 	var login dto.UserLogin
 	err := json.NewDecoder(r.Body).Decode(&login)
 	if err != nil {
@@ -85,6 +87,10 @@ func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 		// ToDo: Handle core error properly
 		render.JSON(w, r, err.Error())
 		return
+	}
+
+	if success {
+		rest.Manager.Put(r.Context(), "logged_in", true)
 	}
 
 	render.JSON(w, r, success)
