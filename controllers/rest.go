@@ -69,6 +69,8 @@ func (rest *REST) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, true)
 }
 
+// Authenticate logs in the authenticating user by comparing the provided password
+// with the stored password and creating a new session if the comparison was successful.
 func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 	var login dto.UserLogin
 	err := json.NewDecoder(r.Body).Decode(&login)
@@ -88,6 +90,7 @@ func (rest *REST) Authenticate(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, success)
 }
 
+// CreateOffer stores a new user-created offer.
 func (rest *REST) CreateOffer(w http.ResponseWriter, r *http.Request) {
 	var offerJson struct {
 		Restaurant    uint64 `json:"restaurant_id"`

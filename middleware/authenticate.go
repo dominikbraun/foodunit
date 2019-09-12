@@ -26,7 +26,7 @@ import (
 type Middleware func(http.Handler) http.Handler
 
 // Authenticate returns a middleware that provides a handler for checking if a
-// `mail_addr` exists in the current session using a `SessionManager` instance.
+// `mail_addr` exists in the current session using a SessionManager instance.
 func Authenticate(manager session.Manager) Middleware {
 	return func(next http.Handler) http.Handler {
 
