@@ -32,7 +32,7 @@ CREATE TABLE variants (
 	value VARCHAR(50) NOT NULL,
 	is_default BOOLEAN NOT NULL,
 	price INTEGER UNSIGNED NOT NULL,
-	characteristic_id BIGINT UNSIGNED NOT NULL,
+	characteristic_id BIGINT UNSIGNED NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err
