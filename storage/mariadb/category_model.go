@@ -30,6 +30,7 @@ func (c CategoryModel) Migrate() error {
 CREATE TABLE categories (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL
+	restaurant_id BIGINT UNSIGNED NOT NULL
 )`
 	_, err := exec(c.DB, query)
 	return err
