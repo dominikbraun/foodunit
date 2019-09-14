@@ -44,11 +44,32 @@ type UserLogin struct {
 
 // NewOffer provides data required for creating an offer in.
 type NewOffer struct {
-	Restaurant    uint64
-	ValidFrom     time.Time
-	ValidTo       time.Time
-	Responsible   uint64
-	IsPlaced      bool
-	ReadyAt       time.Time
-	PaypalEnabled bool
+	Restaurant    uint64    `json:"restaurant"`
+	ValidFrom     time.Time `json:"valid_from"`
+	ValidTo       time.Time `json:"valid_to"`
+	Responsible   uint64    `json:"responsible"`
+	IsPlaced      bool      `json:"is_placed"`
+	ReadyAt       time.Time `json:"ready_at"`
+	PaypalEnabled bool      `json:"paypal_enabled"`
+}
+
+// Menu represents a restaurant's menu. It consists of multiple categories.
+type Menu struct {
+	Categories []MenuCategory `json:"categories"`
+}
+
+// MenuCategory represents a section in a menu, holding several dishes.
+type MenuCategory struct {
+	Name   string     `json:"name"`
+	Dishes []MenuDish `json:"dishes"`
+}
+
+// MenuDish is a dish as it appears in a restaurant's menu.
+type MenuDish struct {
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	Price        uint   `json:"price"`
+	IsUncertain  bool   `json:"is_uncertain"`
+	IsHealthy    bool   `json:"is_healthy"`
+	IsVegetarian bool   `json:"is_vegetarian"`
 }

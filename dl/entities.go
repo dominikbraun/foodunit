@@ -74,6 +74,7 @@ type Dish struct {
 	Price           uint             `db:"price" json:"price"`
 	IsUncertain     bool             `db:"is_uncertain" json:"is_uncertain"`
 	IsHealthy       bool             `db:"is_healthy" json:"is_healthy"`
+	IsVegetarian    bool             `db:"is_vegetarian" json:"is_vegetarian"`
 	Characteristics []Characteristic `db:"characteristics" json:"characteristics"`
 }
 

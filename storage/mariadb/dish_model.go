@@ -34,6 +34,7 @@ CREATE TABLE dishes (
 	price INTEGER UNSIGNED NOT NULL,
 	is_uncertain BOOLEAN NOT NULL,
 	is_healthy BOOLEAN NOT NULL,
+	is_vegetarian BOOLEAN NOT NULL,
 	category_id BIGINT UNSIGNED NOT NULL
 )`
 
