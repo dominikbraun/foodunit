@@ -34,10 +34,8 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
-			// Get meta information for the restaurant.
 			r.Get("/info", s.controller.GetRestaurantInfo)
-			// Get the restaurant's menu.
-			r.Get("/menu", nil)
+			r.Get("/menu", s.controller.GetRestaurantMenu)
 		})
 	})
 
@@ -54,7 +52,6 @@ func (s *Server) mountRoutes() {
 
 	r.With(middleware.Authenticate(s.manager)).
 		Route("/offers", func(r chi.Router) {
-			// Create a new offer.
 			r.Post("/create", s.controller.CreateOffer)
 			// Get all active offers.
 			r.Get("/active", nil)

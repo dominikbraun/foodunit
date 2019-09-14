@@ -21,10 +21,15 @@ import (
 )
 
 // provideRESTController provides a controller instance for handing REST requests.
-func ProvideRESTController(manager session.Manager, r storage.RestaurantModel, u storage.UserModel, o storage.OfferModel) *REST {
+func ProvideRESTController(
+	manager session.Manager, r storage.RestaurantModel, c storage.CategoryModel,
+	d storage.DishModel, u storage.UserModel, o storage.OfferModel,
+) *REST {
 	controller := REST{
 		Manager:     manager,
 		Restaurants: r,
+		Categories:  c,
+		Dishes:      d,
 		Users:       u,
 		Offers:      o,
 	}

@@ -56,9 +56,11 @@ func Setup(driver, dsn string, clientURL string) (*Server, error) {
 	manager := session.ProvideManager(storage)
 
 	restaurantModel := mariadb.ProvideRestaurantModel(db)
+	categoryModel := mariadb.ProvideCategoryModel(db)
+	dishModel := mariadb.ProvideDishModel(db)
 	userModel := mariadb.ProvideUserModel(db)
 	offerModel := mariadb.ProvideOfferModel(db)
-	restController := controllers.ProvideRESTController(manager, restaurantModel, userModel, offerModel)
+	restController := controllers.ProvideRESTController(manager, restaurantModel, categoryModel, dishModel, userModel, offerModel)
 
 	s := Server{
 		Server: &http.Server{

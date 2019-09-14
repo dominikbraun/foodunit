@@ -44,5 +44,25 @@ func (c CategoryModel) Drop() error {
 
 // FindByRestaurant implements storage.CategoryModel.FindByRestaurant.
 func (c CategoryModel) FindByRestaurant(restaurantID uint64) ([]dl.Category, error) {
-	panic("to be implemented")
+	query := `SELECT * FROM categories WHERE restaurant_id = ?`
+
+	rows, err := c.DB.Queryx(query, restaurantID)
+	if err != nil {
+		return nil, err
+	}
+
+	var categories []dl.Category
+
+	for rows.Next() {
+		var category dl.Category
+
+		err = rows.StructScan(&category)
+		if err != nil {
+			return nil, err
+		}
+
+		categories = append(categories, category)
+	}
+
+	return categories, nil
 }

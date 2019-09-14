@@ -32,6 +32,8 @@ import (
 type REST struct {
 	Manager     session.Manager
 	Restaurants storage.RestaurantModel
+	Categories  storage.CategoryModel
+	Dishes      storage.DishModel
 	Users       storage.UserModel
 	Offers      storage.OfferModel
 }
@@ -139,4 +141,21 @@ func (rest *REST) CreateOffer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.JSON(w, r, true)
+}
+
+// GetRestaurantMenu invokes core.GetRestaurantMenu in order to retrieve a restaurant's menu.
+func (rest *REST) GetRestaurantMenu(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		// ToDo: Handle type error properly
+		return
+	}
+
+	menu, err := core.GetRestaurantMenu(uint64(id), rest.Categories, rest.Dishes)
+	if err != nil {
+		// ToDo: Handle core error properly
+		render.JSON(w, r, err.Error())
+	}
+
+	render.JSON(w, r, menu)
 }
