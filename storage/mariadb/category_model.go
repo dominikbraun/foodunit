@@ -16,6 +16,7 @@
 package mariadb
 
 import (
+	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -39,4 +40,9 @@ CREATE TABLE categories (
 // Drop implements storage.Model.Drop.
 func (c CategoryModel) Drop() error {
 	return drop(c.DB, "categories")
+}
+
+// FindByRestaurant implements storage.CategoryModel.FindByRestaurant.
+func (c CategoryModel) FindByRestaurant(restaurantID uint64) ([]dl.Category, error) {
+	panic("to be implemented")
 }

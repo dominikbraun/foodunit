@@ -40,10 +40,12 @@ type UserModel interface {
 
 type CategoryModel interface {
 	Model
+	FindByRestaurant(restaurantID uint64) ([]dl.Category, error)
 }
 
 type DishModel interface {
 	Model
+	FindByCategory(categoryID uint64) ([]dl.Dish, error)
 }
 
 type CharacteristicModel interface {

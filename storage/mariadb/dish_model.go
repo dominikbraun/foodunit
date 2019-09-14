@@ -16,6 +16,7 @@
 package mariadb
 
 import (
+	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -25,7 +26,7 @@ type DishModel struct {
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c DishModel) Migrate() error {
+func (d DishModel) Migrate() error {
 	query := `
 CREATE TABLE dishes (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -38,11 +39,16 @@ CREATE TABLE dishes (
 	category_id BIGINT UNSIGNED NOT NULL
 )`
 
-	_, err := exec(c.DB, query)
+	_, err := exec(d.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c DishModel) Drop() error {
-	return drop(c.DB, "dishes")
+func (d DishModel) Drop() error {
+	return drop(d.DB, "dishes")
+}
+
+// FindByCategory implements storage.DishModel.FindByCategory.
+func (d DishModel) FindByCategory(categoryID uint64) ([]dl.Dish, error) {
+	panic("to be implemented")
 }
