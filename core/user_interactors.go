@@ -16,6 +16,7 @@
 package core
 
 import (
+	"database/sql"
 	"github.com/dominikbraun/foodunit/core/dto"
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/dominikbraun/foodunit/storage"
@@ -58,7 +59,10 @@ func RegisterUser(registration dto.UserRegistration, model storage.UserModel) er
 // verifies whether the authentication has been successful or not.
 func Authenticate(login dto.UserLogin, model storage.UserModel) (bool, error) {
 	passwordHash, err := model.GetPasswordHash(login.MailAddr)
-	if err != nil {
+	// ToDo: Will we handle SQL errors like that?
+	if err == sql.ErrNoRows {
+		return false, nil
+	} else if err != nil {
 		return false, err
 	}
 
