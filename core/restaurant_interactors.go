@@ -60,3 +60,48 @@ func GetRestaurantInfo(id uint64, model storage.RestaurantModel) (dto.Restaurant
 
 	return ri, nil
 }
+
+// GetRestaurantMenu is the most convenient way to retrieve a restaurant's menu. It
+// holds all menu sections (categories) and the corresponding dishes, including prices
+// and meta information. It does not include the dish characteristic variants.
+func GetRestaurantMenu(id uint64, categoryModel storage.CategoryModel, dishModel storage.DishModel) (dto.Menu, error) {
+	categories, err := categoryModel.FindByRestaurant(id)
+	if err != nil {
+		return dto.Menu{}, err
+	}
+
+	var menuCategories []dto.MenuCategory
+
+	for _, c := range categories {
+		dishes, err := dishModel.FindByCategory(c.ID)
+		if err != nil {
+			return dto.Menu{}, err
+		}
+
+		var menuDishes []dto.MenuDish
+
+		for _, d := range dishes {
+			menuDish := dto.MenuDish{
+				Name:         d.Name,
+				Description:  d.Description,
+				Price:        d.Price,
+				IsUncertain:  d.IsUncertain,
+				IsHealthy:    d.IsHealthy,
+				IsVegetarian: d.IsVegetarian,
+			}
+			menuDishes = append(menuDishes, menuDish)
+		}
+
+		menuCategory := dto.MenuCategory{
+			Name:   c.Name,
+			Dishes: menuDishes,
+		}
+		menuCategories = append(menuCategories, menuCategory)
+	}
+
+	menu := dto.Menu{
+		Categories: menuCategories,
+	}
+
+	return menu, nil
+}
