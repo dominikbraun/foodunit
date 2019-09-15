@@ -50,7 +50,7 @@ func (d DishModel) Drop() error {
 
 // FindByCategory implements storage.DishModel.FindByCategory.
 func (d DishModel) FindByCategory(categoryID uint64) ([]dl.Dish, error) {
-	query := `SELECT * FROM dishes WHERE category_id = ?`
+	query := `SELECT id, name, description, price, is_uncertain, is_healthy, is_vegetarian FROM dishes WHERE category_id = ?`
 
 	rows, err := d.DB.Queryx(query, categoryID)
 	if err != nil {
