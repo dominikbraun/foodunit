@@ -20,6 +20,7 @@ import (
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
+	"time"
 )
 
 // CreateOffer creates a new offer based on the provided data
@@ -54,4 +55,15 @@ func CreateOffer(newOffer dto.NewOffer, offers storage.OfferModel, users storage
 
 	err = offers.Create(offer)
 	return err
+}
+
+// GetActiveOffers delivers all offers which are active
+func GetActiveOffers(offers storage.OfferModel) (dto.Offers, error) {
+	offerIds, err := offers.GetActive(time.Now())
+
+	if err != nil {
+		return dto.Offers{}, err
+	}
+
+	return dto.Offers{Offers: offerIds}, nil
 }

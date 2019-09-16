@@ -15,7 +15,10 @@
 // Package storage provides model and session storage implementations.
 package storage
 
-import "github.com/dominikbraun/foodunit/dl"
+import (
+	"github.com/dominikbraun/foodunit/dl"
+	"time"
+)
 
 type Model interface {
 	Migrate() error
@@ -59,6 +62,7 @@ type VariantModel interface {
 type OfferModel interface {
 	Model
 	Create(offer dl.Offer) error
+	GetActive(now time.Time) ([]uint64, error)
 }
 
 type OrderModel interface {

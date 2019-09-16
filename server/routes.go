@@ -16,7 +16,6 @@
 package server
 
 import (
-	"github.com/dominikbraun/foodunit/middleware"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -50,26 +49,26 @@ func (s *Server) mountRoutes() {
 		})
 	})
 
-	r.With(middleware.Authenticate(s.manager)).
-		Route("/offers", func(r chi.Router) {
-			r.Post("/create", s.controller.CreateOffer)
-			// Get all active offers.
-			r.Get("/active", nil)
+	//r.With(middleware.Authenticate(s.manager)).
+	r.Route("/offers", func(r chi.Router) {
+		r.Post("/create", s.controller.CreateOffer)
+		// Get all active offers.
+		r.Get("/active", s.controller.GetActiveOffers)
 
-			r.Route("/{id}", func(r chi.Router) {
-				// Get information for the offer.
-				r.Get("/", nil)
+		r.Route("/{id}", func(r chi.Router) {
+			// Get information for the offer.
+			r.Get("/", nil)
 
-				r.Route("/orders", func(r chi.Router) {
-					// Get all orders for the offer.
-					r.Get("/all", nil)
-					// Get the user's order for the offer.
-					r.Get("/mine", nil)
-					// Save the user's order.
-					r.Post("/mine", nil)
-				})
+			r.Route("/orders", func(r chi.Router) {
+				// Get all orders for the offer.
+				r.Get("/all", nil)
+				// Get the user's order for the offer.
+				r.Get("/mine", nil)
+				// Save the user's order.
+				r.Post("/mine", nil)
 			})
 		})
+	})
 
 	r.Route("/dishes", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {

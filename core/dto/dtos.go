@@ -53,6 +53,11 @@ type NewOffer struct {
 	PaypalEnabled bool      `json:"paypal_enabled"`
 }
 
+// Offers provides a list of offer ids
+type Offers struct {
+	Offers []uint64 `json:"offer_ids"`
+}
+
 // Menu represents a restaurant's menu. It consists of multiple categories.
 type Menu struct {
 	Categories []MenuCategory `json:"categories"`
