@@ -17,6 +17,22 @@ package storage
 
 import "github.com/dominikbraun/foodunit/dl"
 
+// Storage concludes all Model interfaces. A function or component which would
+// normally take the individual interfaces separately as arguments or fields can
+// just take a single Storage implementation instead.
+type Storage interface {
+	RestaurantModel() RestaurantModel
+	CategoryModel() CategoryModel
+	DishModel() DishModel
+	CharacteristicModel() CharacteristicModel
+	VariantModel() VariantModel
+	UserModel() UserModel
+	OfferModel() OfferModel
+	OrderModel() OrderModel
+	PositionModel() PositionModel
+}
+
+// Model prescribes methods for working with meta information such as database structures.
 type Model interface {
 	Migrate() error
 	Drop() error
@@ -29,6 +45,29 @@ type RestaurantModel interface {
 	Exists(id uint64) (bool, error)
 }
 
+// CategoryModel prescribes methods for accessing Category-related data.
+type CategoryModel interface {
+	Model
+	FindByRestaurant(restaurantID uint64) ([]dl.Category, error)
+}
+
+// DishModel prescribes methods for accessing Dish-related data.
+type DishModel interface {
+	Model
+	FindByCategory(categoryID uint64) ([]dl.Dish, error)
+}
+
+// RestaurantModel prescribes methods for accessing Restaurant-related data.
+type CharacteristicModel interface {
+	Model
+}
+
+// VariantModel prescribes methods for accessing Variant-related data.
+type VariantModel interface {
+	Model
+}
+
+// UserModel prescribes methods for accessing User-related data.
 type UserModel interface {
 	Model
 	Create(user dl.User) error
@@ -38,33 +77,18 @@ type UserModel interface {
 	Exists(id uint64) (bool, error)
 }
 
-type CategoryModel interface {
-	Model
-	FindByRestaurant(restaurantID uint64) ([]dl.Category, error)
-}
-
-type DishModel interface {
-	Model
-	FindByCategory(categoryID uint64) ([]dl.Dish, error)
-}
-
-type CharacteristicModel interface {
-	Model
-}
-
-type VariantModel interface {
-	Model
-}
-
+// OfferModel prescribes methods for accessing Offer-related data.
 type OfferModel interface {
 	Model
 	Create(offer dl.Offer) error
 }
 
+// OrderModel prescribes methods for accessing Order-related data.
 type OrderModel interface {
 	Model
 }
 
+// PositionModel prescribes methods for accessing Position-related data.
 type PositionModel interface {
 	Model
 }
