@@ -143,6 +143,17 @@ func (rest *REST) CreateOffer(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, true)
 }
 
+// GetActiveOffers returns the ids for all offers currently active
+func (rest *REST) GetActiveOffers(w http.ResponseWriter, r *http.Request) {
+	offers, err := core.GetActiveOffers(rest.Offers)
+
+	if err != nil {
+		// ToDo: Handle core error properly
+		return
+	}
+	render.JSON(w, r, offers)
+}
+
 // GetRestaurantMenu invokes core.GetRestaurantMenu in order to retrieve a restaurant's menu.
 func (rest *REST) GetRestaurantMenu(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))

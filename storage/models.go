@@ -15,7 +15,10 @@
 // Package storage provides model and session storage implementations.
 package storage
 
-import "github.com/dominikbraun/foodunit/dl"
+import (
+	"github.com/dominikbraun/foodunit/dl"
+	"time"
+)
 
 // Storage concludes all Model interfaces. A function or component which would
 // normally take the individual interfaces separately as arguments or fields can
@@ -81,6 +84,7 @@ type UserModel interface {
 type OfferModel interface {
 	Model
 	Create(offer dl.Offer) error
+	GetActive(now time.Time) ([]uint64, error)
 }
 
 // OrderModel prescribes methods for accessing Order-related data.
