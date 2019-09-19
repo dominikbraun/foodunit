@@ -18,6 +18,7 @@ package mariadb
 import (
 	"github.com/dominikbraun/foodunit/dl"
 	"github.com/jmoiron/sqlx"
+	"time"
 )
 
 // OfferModel is a storage.OfferModel implementation.
@@ -26,7 +27,7 @@ type OfferModel struct {
 }
 
 // Migrate implements storage.Model.Migrate.
-func (c OfferModel) Migrate() error {
+func (o OfferModel) Migrate() error {
 	query := `
 CREATE TABLE offers (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -39,17 +40,17 @@ CREATE TABLE offers (
 	ready_at DATETIME NOT NULL,
 	paypal_enabled BOOLEAN NOT NULL
 )`
-	_, err := exec(c.DB, query)
+	_, err := exec(o.DB, query)
 	return err
 }
 
 // Drop implements storage.Model.Drop.
-func (c OfferModel) Drop() error {
-	return drop(c.DB, "offers")
+func (o OfferModel) Drop() error {
+	return drop(o.DB, "offers")
 }
 
 // Create implements storage.OfferModel.Create.
-func (c OfferModel) Create(offer dl.Offer) error {
+func (o OfferModel) Create(offer dl.Offer) error {
 	query := `
 INSERT INTO offers (owner_user_id, restaurant_id, valid_from, valid_to, responsible_user_id, is_placed, ready_at, paypal_enabled)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
@@ -58,10 +59,35 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 	validTo := offer.ValidTo.Format(DateTime)
 	readyAt := offer.ReadyAt.Format(DateTime)
 
-	_, err := exec(c.DB, query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo, offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled)
+	_, err := exec(o.DB, query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo, offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+// GetActive implements storage.OfferModel.GetActive.
+func (o OfferModel) GetActive(now time.Time) ([]uint64, error) {
+	query := `SELECT id FROM offers WHERE valid_from <= ? and ? <= valid_to`
+
+	rows, err := o.DB.Queryx(query, now, now)
+	if err != nil {
+		return nil, err
+	}
+
+	ids := make([]uint64, 0)
+
+	for rows.Next() {
+		var offer dl.Offer
+
+		err = rows.StructScan(&offer)
+		if err != nil {
+			return nil, err
+		}
+
+		ids = append(ids, offer.ID)
+	}
+
+	return ids, nil
 }
