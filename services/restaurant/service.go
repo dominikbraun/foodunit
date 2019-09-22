@@ -14,3 +14,20 @@
 
 // Package restaurant provides services and types for Restaurant-related data.
 package restaurant
+
+import "github.com/dominikbraun/foodunit/storage"
+
+type Service struct {
+	restaurants storage.Restaurant
+	categories  storage.Category
+	dishes      storage.Dish
+}
+
+func NewService(r storage.Restaurant, c storage.Category, d storage.Dish) *Service {
+	service := Service{
+		restaurants: r,
+		categories:  c,
+		dishes:      d,
+	}
+	return &service
+}

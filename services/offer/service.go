@@ -14,3 +14,20 @@
 
 // Package offer provides services and types for Offer-related data.
 package offer
+
+import "github.com/dominikbraun/foodunit/storage"
+
+type Service struct {
+	offers    storage.Offer
+	orders    storage.Order
+	positions storage.Position
+}
+
+func NewService(o storage.Offer, odr storage.Order, p storage.Position) *Service {
+	service := Service{
+		offers:    o,
+		orders:    odr,
+		positions: p,
+	}
+	return &service
+}

@@ -14,3 +14,16 @@
 
 // Package user provides services and types for User-related data.
 package user
+
+import "github.com/dominikbraun/foodunit/storage"
+
+type Service struct {
+	users storage.User
+}
+
+func NewService(u storage.User) *Service {
+	service := Service{
+		users: u,
+	}
+	return &service
+}
