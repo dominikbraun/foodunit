@@ -15,7 +15,10 @@
 // Package restaurant provides services and types for Restaurant-related data.
 package restaurant
 
-import "github.com/dominikbraun/foodunit/storage"
+import (
+	"github.com/dominikbraun/foodunit/storage"
+	"time"
+)
 
 type Service struct {
 	restaurants storage.Restaurant
@@ -30,4 +33,42 @@ func NewService(r storage.Restaurant, c storage.Category, d storage.Dish) *Servi
 		dishes:      d,
 	}
 	return &service
+}
+
+func (s *Service) Info(id uint64) (Info, error) {
+	restaurant, err := s.restaurants.Find(id)
+	if err != nil {
+		return Info{}, err
+	}
+
+	var open string
+
+	switch time.Now().Weekday() {
+	case time.Monday:
+		open = restaurant.OpenMon
+	case time.Tuesday:
+		open = restaurant.OpenTue
+	case time.Wednesday:
+		open = restaurant.OpenWed
+	case time.Thursday:
+		open = restaurant.OpenThu
+	case time.Friday:
+		open = restaurant.OpenFri
+	case time.Saturday:
+		open = restaurant.OpenSat
+	case time.Sunday:
+		open = restaurant.OpenSun
+	}
+
+	info := Info{
+		Name:       restaurant.Name,
+		Street:     restaurant.Street,
+		PostalCode: restaurant.PostalCode,
+		City:       restaurant.City,
+		Phone:      restaurant.Phone,
+		Open:       open,
+		Website:    restaurant.Website,
+	}
+
+	return info, nil
 }

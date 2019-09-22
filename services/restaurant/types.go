@@ -14,3 +14,13 @@
 
 // Package restaurant provides services and types for Restaurant-related data.
 package restaurant
+
+type Info struct {
+	Name       string `json:"name"`
+	Street     string `json:"street"`
+	PostalCode string `json:"postal_code"`
+	City       string `json:"city"`
+	Phone      string `json:"phone"`
+	Open       string `json:"open"`
+	Website    string `json:"website"`
+}
