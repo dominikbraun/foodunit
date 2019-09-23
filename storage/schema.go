@@ -15,7 +15,7 @@
 // Package storage provides storage interfaces and implementations.
 package storage
 
-type Importer interface {
+type Schema interface {
 	Prepare() error
 	Drop() error
 }
