@@ -24,6 +24,13 @@ type Category struct {
 	DB *sqlx.DB
 }
 
+func NewCategory(db *sqlx.DB) *Category {
+	category := Category{
+		DB: db,
+	}
+	return &category
+}
+
 func (c Category) FindByRestaurant(restaurantID uint64) ([]model.Category, error) {
 	panic("implement me")
 }

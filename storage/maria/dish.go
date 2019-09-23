@@ -24,6 +24,13 @@ type Dish struct {
 	DB *sqlx.DB
 }
 
+func NewDish(db *sqlx.DB) *Dish {
+	dish := Dish{
+		DB: db,
+	}
+	return &dish
+}
+
 func (d Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
 	panic("implement me")
 }

@@ -24,6 +24,13 @@ type Restaurant struct {
 	DB *sqlx.DB
 }
 
+func NewRestaurant(db *sqlx.DB) *Restaurant {
+	restaurant := Restaurant{
+		DB: db,
+	}
+	return &restaurant
+}
+
 func (r Restaurant) Find(id uint64) (model.Restaurant, error) {
 	panic("implement me")
 }

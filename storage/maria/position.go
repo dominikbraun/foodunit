@@ -24,6 +24,13 @@ type Position struct {
 	DB *sqlx.DB
 }
 
+func NewPosition(db *sqlx.DB) *Position {
+	position := Position{
+		DB: db,
+	}
+	return &position
+}
+
 func (p Position) FindByOrder(orderID uint64) ([]model.Position, error) {
 	panic("implement me")
 }

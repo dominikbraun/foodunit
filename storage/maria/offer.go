@@ -24,6 +24,13 @@ type Offer struct {
 	DB *sqlx.DB
 }
 
+func NewOffer(db *sqlx.DB) *Offer {
+	offer := Offer{
+		DB: db,
+	}
+	return &offer
+}
+
 func (o Offer) Find(id uint64) (model.Offer, error) {
 	panic("implement me")
 }

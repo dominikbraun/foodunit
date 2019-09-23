@@ -24,6 +24,13 @@ type Order struct {
 	DB *sqlx.DB
 }
 
+func NewOrder(db *sqlx.DB) *Order {
+	order := Order{
+		DB: db,
+	}
+	return &order
+}
+
 func (o Order) FindByOffer(offerID uint64) ([]model.Order, error) {
 	panic("implement me")
 }

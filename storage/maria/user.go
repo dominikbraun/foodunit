@@ -24,6 +24,13 @@ type User struct {
 	DB *sqlx.DB
 }
 
+func NewUser(db *sqlx.DB) *User {
+	user := User{
+		DB: db,
+	}
+	return &user
+}
+
 func (u User) Find(id uint64) (model.User, error) {
 	panic("implement me")
 }

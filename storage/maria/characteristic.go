@@ -24,6 +24,13 @@ type Characteristic struct {
 	DB *sqlx.DB
 }
 
+func NewCharacteristic(db *sqlx.DB) *Characteristic {
+	characteristic := Characteristic{
+		DB: db,
+	}
+	return &characteristic
+}
+
 func (c Characteristic) FindByDish(dishID uint64) ([]model.Characteristic, error) {
 	panic("implement me")
 }
