@@ -34,6 +34,11 @@ import (
 	"time"
 )
 
+type Config struct {
+	Driver string `json:"driver"`
+	DSN    string `json:"dsn"`
+}
+
 type Server struct {
 	router  *chi.Mux
 	http    *http.Server
@@ -55,7 +60,7 @@ type Server struct {
 	offerService      *offer.Service
 }
 
-func New(config *storage.Config) (*Server, error) {
+func New(config *Config) (*Server, error) {
 	s := Server{}
 	var err error
 

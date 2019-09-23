@@ -12,10 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package storage provides storage interfaces and implementations.
-package storage
-
-type Config struct {
-	Driver string `json:"driver"`
-	DSN    string `json:"dsn"`
-}
+// Package offer provides services and types for Offer-related data.
+package dishes
