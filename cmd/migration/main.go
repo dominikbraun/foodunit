@@ -18,6 +18,7 @@ package main
 import (
 	"flag"
 	"github.com/dominikbraun/foodunit/migration"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 

@@ -32,11 +32,27 @@ func NewDish(db *sqlx.DB) *Dish {
 }
 
 func (d *Dish) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE dishes (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(200) NOT NULL,
+	price INTEGER UNSIGNED NOT NULL,
+	is_uncertain BOOLEAN NOT NULL,
+	is_healthy BOOLEAN NOT NULL,
+	is_vegetarian BOOLEAN NOT NULL,
+	category_id BIGINT UNSIGNED NOT NULL
+)`
+
+	_, err := d.DB.Exec(query)
+	return err
 }
 
 func (d *Dish) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS dishes`
+	_, err := d.DB.Exec(query)
+
+	return err
 }
 
 func (d *Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {

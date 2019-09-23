@@ -32,11 +32,22 @@ func NewCharacteristic(db *sqlx.DB) *Characteristic {
 }
 
 func (c *Characteristic) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE characteristics (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	multiple BOOLEAN NOT NULL
+)`
+
+	_, err := c.DB.Exec(query)
+	return err
 }
 
 func (c *Characteristic) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS characteristics`
+	_, err := c.DB.Exec(query)
+
+	return err
 }
 
 func (c *Characteristic) FindByDish(dishID uint64) ([]model.Characteristic, error) {

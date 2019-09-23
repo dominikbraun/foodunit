@@ -32,11 +32,33 @@ func NewRestaurant(db *sqlx.DB) *Restaurant {
 }
 
 func (r *Restaurant) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE restaurants (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	street VARCHAR(50) NOT NULL,
+	postal_code VARCHAR(50) NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	phone VARCHAR(50) NOT NULL,
+	open_mon VARCHAR(50) NOT NULL,
+	open_wed VARCHAR(50) NOT NULL,
+	open_thu VARCHAR(50) NOT NULL,
+	open_fri VARCHAR(50) NOT NULL,
+	open_sat VARCHAR(50) NOT NULL,
+	open_sun VARCHAR(50) NOT NULL,
+	website VARCHAR(50) NOT NULL,
+	is_active BOOLEAN NOT NULL
+)`
+
+	_, err := r.DB.Exec(query)
+	return err
 }
 
 func (r *Restaurant) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS restaurants`
+	_, err := r.DB.Exec(query)
+
+	return err
 }
 
 func (r *Restaurant) Find(id uint64) (model.Restaurant, error) {

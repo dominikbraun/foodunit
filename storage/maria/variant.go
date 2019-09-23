@@ -32,11 +32,24 @@ func NewVariant(db *sqlx.DB) *Variant {
 }
 
 func (v *Variant) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE variants (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	value VARCHAR(50) NOT NULL,
+	is_default BOOLEAN NOT NULL,
+	price INTEGER UNSIGNED NOT NULL,
+	characteristic_id BIGINT UNSIGNED NOT NULL
+)`
+
+	_, err := v.DB.Exec(query)
+	return err
 }
 
 func (v *Variant) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS variants`
+	_, err := v.DB.Exec(query)
+
+	return err
 }
 
 func (v *Variant) FindByCharacteristic(characteristicID uint64) ([]model.Variant, error) {
