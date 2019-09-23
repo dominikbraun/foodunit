@@ -78,6 +78,8 @@ func New(config *storage.Config) (*Server, error) {
 	s.userService = user.NewService(s.users)
 	s.offerService = offer.NewService(s.offers, s.orders, s.positions)
 
+	s.mountRoutes()
+
 	return &s, err
 }
 
