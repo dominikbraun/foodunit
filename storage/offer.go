@@ -18,16 +18,19 @@ package storage
 import "github.com/dominikbraun/foodunit/model"
 
 type Offer interface {
+	Importer
 	Find(id uint64) (model.Offer, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Order interface {
+	Importer
 	FindByOffer(offerID uint64) ([]model.Order, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Position interface {
+	Importer
 	FindByOrder(orderID uint64) ([]model.Position, error)
 	Exists(id uint64) (bool, error)
 }

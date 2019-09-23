@@ -18,6 +18,7 @@ package storage
 import "github.com/dominikbraun/foodunit/model"
 
 type User interface {
+	Importer
 	Find(id uint64) (model.User, error)
 	Exists(id uint64) (bool, error)
 }

@@ -31,10 +31,18 @@ func NewVariant(db *sqlx.DB) *Variant {
 	return &variant
 }
 
-func (v Variant) FindByCharacteristic(characteristicID uint64) ([]model.Variant, error) {
+func (v *Variant) Prepare() error {
 	panic("implement me")
 }
 
-func (v Variant) Exists(id uint64) (bool, error) {
+func (v *Variant) Drop() error {
+	panic("implement me")
+}
+
+func (v *Variant) FindByCharacteristic(characteristicID uint64) ([]model.Variant, error) {
+	panic("implement me")
+}
+
+func (v *Variant) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }

@@ -12,37 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package maria provides storage implementations for MariaDB.
-package maria
+// Package storage provides storage interfaces and implementations.
+package storage
 
-import (
-	"github.com/dominikbraun/foodunit/model"
-	"github.com/jmoiron/sqlx"
-)
-
-type Restaurant struct {
-	DB *sqlx.DB
-}
-
-func NewRestaurant(db *sqlx.DB) *Restaurant {
-	restaurant := Restaurant{
-		DB: db,
-	}
-	return &restaurant
-}
-
-func (r *Restaurant) Prepare() error {
-	panic("implement me")
-}
-
-func (r *Restaurant) Drop() error {
-	panic("implement me")
-}
-
-func (r *Restaurant) Find(id uint64) (model.Restaurant, error) {
-	panic("implement me")
-}
-
-func (r *Restaurant) Exists(id uint64) (bool, error) {
-	panic("implement me")
+type Importer interface {
+	Prepare() error
+	Drop() error
 }

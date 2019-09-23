@@ -31,10 +31,18 @@ func NewPosition(db *sqlx.DB) *Position {
 	return &position
 }
 
-func (p Position) FindByOrder(orderID uint64) ([]model.Position, error) {
+func (p *Position) Prepare() error {
 	panic("implement me")
 }
 
-func (p Position) Exists(id uint64) (bool, error) {
+func (p *Position) Drop() error {
+	panic("implement me")
+}
+
+func (p *Position) FindByOrder(orderID uint64) ([]model.Position, error) {
+	panic("implement me")
+}
+
+func (p *Position) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }

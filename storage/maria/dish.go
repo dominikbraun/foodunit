@@ -31,10 +31,18 @@ func NewDish(db *sqlx.DB) *Dish {
 	return &dish
 }
 
-func (d Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
+func (d *Dish) Prepare() error {
 	panic("implement me")
 }
 
-func (d Dish) Exists(id uint64) (bool, error) {
+func (d *Dish) Drop() error {
+	panic("implement me")
+}
+
+func (d *Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
+	panic("implement me")
+}
+
+func (d *Dish) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }

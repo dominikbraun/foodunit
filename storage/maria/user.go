@@ -31,10 +31,18 @@ func NewUser(db *sqlx.DB) *User {
 	return &user
 }
 
-func (u User) Find(id uint64) (model.User, error) {
+func (u *User) Prepare() error {
 	panic("implement me")
 }
 
-func (u User) Exists(id uint64) (bool, error) {
+func (u *User) Drop() error {
+	panic("implement me")
+}
+
+func (u *User) Find(id uint64) (model.User, error) {
+	panic("implement me")
+}
+
+func (u *User) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }

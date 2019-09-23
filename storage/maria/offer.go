@@ -31,10 +31,18 @@ func NewOffer(db *sqlx.DB) *Offer {
 	return &offer
 }
 
-func (o Offer) Find(id uint64) (model.Offer, error) {
+func (o *Offer) Prepare() error {
 	panic("implement me")
 }
 
-func (o Offer) Exists(id uint64) (bool, error) {
+func (o *Offer) Drop() error {
+	panic("implement me")
+}
+
+func (o *Offer) Find(id uint64) (model.Offer, error) {
+	panic("implement me")
+}
+
+func (o *Offer) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }

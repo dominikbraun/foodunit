@@ -31,10 +31,18 @@ func NewCharacteristic(db *sqlx.DB) *Characteristic {
 	return &characteristic
 }
 
-func (c Characteristic) FindByDish(dishID uint64) ([]model.Characteristic, error) {
+func (c *Characteristic) Prepare() error {
 	panic("implement me")
 }
 
-func (c Characteristic) Exists(id uint64) (bool, error) {
+func (c *Characteristic) Drop() error {
+	panic("implement me")
+}
+
+func (c *Characteristic) FindByDish(dishID uint64) ([]model.Characteristic, error) {
+	panic("implement me")
+}
+
+func (c *Characteristic) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }

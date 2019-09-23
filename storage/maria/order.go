@@ -31,10 +31,18 @@ func NewOrder(db *sqlx.DB) *Order {
 	return &order
 }
 
-func (o Order) FindByOffer(offerID uint64) ([]model.Order, error) {
+func (o *Order) Prepare() error {
 	panic("implement me")
 }
 
-func (o Order) Exists(id uint64) (bool, error) {
+func (o *Order) Drop() error {
+	panic("implement me")
+}
+
+func (o *Order) FindByOffer(offerID uint64) ([]model.Order, error) {
+	panic("implement me")
+}
+
+func (o *Order) Exists(id uint64) (bool, error) {
 	panic("implement me")
 }
