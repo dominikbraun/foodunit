@@ -32,11 +32,28 @@ func NewOffer(db *sqlx.DB) *Offer {
 }
 
 func (o *Offer) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE offers (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	owner_user_id BIGINT UNSIGNED NOT NULL,
+	restaurant_id BIGINT UNSIGNED NOT NULL,
+	valid_from DATETIME NOT NULL,
+	valid_to DATETIME NOT NULL,
+	responsible_user_id BIGINT UNSIGNED NOT NULL,
+	is_placed BOOLEAN NOT NULL,
+	ready_at DATETIME NOT NULL,
+	paypal_enabled BOOLEAN NOT NULL
+)`
+
+	_, err := o.DB.Exec(query)
+	return err
 }
 
 func (o *Offer) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS offers`
+	_, err := o.DB.Exec(query)
+
+	return err
 }
 
 func (o *Offer) Find(id uint64) (model.Offer, error) {

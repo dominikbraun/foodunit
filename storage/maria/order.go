@@ -32,11 +32,23 @@ func NewOrder(db *sqlx.DB) *Order {
 }
 
 func (o *Order) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE orders (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id BIGINT UNSIGNED NOT NULL,
+	is_paid BOOLEAN NOT NULL,
+	order_id BIGINT UNSIGNED NOT NULL
+)`
+
+	_, err := o.DB.Exec(query)
+	return err
 }
 
 func (o *Order) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS orders`
+	_, err := o.DB.Exec(query)
+
+	return err
 }
 
 func (o *Order) FindByOffer(offerID uint64) ([]model.Order, error) {

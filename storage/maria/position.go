@@ -32,11 +32,23 @@ func NewPosition(db *sqlx.DB) *Position {
 }
 
 func (p *Position) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE positions (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	dish_id BIGINT UNSIGNED NOT NULL,
+	alternative_dish_id BIGINT UNSIGNED NOT NULL,
+	note VARCHAR(200) NOT NULL,
+	order_id BIGINT UNSIGNED NOT NULL
+)`
+	_, err := p.DB.Exec(query)
+	return err
 }
 
 func (p *Position) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS positions`
+	_, err := p.DB.Exec(query)
+
+	return err
 }
 
 func (p *Position) FindByOrder(orderID uint64) ([]model.Position, error) {

@@ -40,6 +40,6 @@ type Order struct {
 type Position struct {
 	ID          uint64 `db:"id" json:"id"`
 	Dish        Dish   `db:"dish_id" json:"dish_id"`
-	Alternative Dish   `db:"alternative" json:"alternative"`
+	Alternative Dish   `db:"alternative_dish_id" json:"alternative_dish_id"`
 	Note        string `db:"note" json:"note"`
 }

@@ -32,11 +32,27 @@ func NewUser(db *sqlx.DB) *User {
 }
 
 func (u *User) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE users (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	mail_addr VARCHAR(254) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	is_admin BOOLEAN NOT NULL,
+	paypal_mail_addr VARCHAR(254) NOT NULL,
+	score INTEGER NOT NULL,
+	password_hash CHAR(60) NOT NULL,
+	created DATETIME NOT NULL
+)`
+
+	_, err := u.DB.Exec(query)
+	return err
 }
 
 func (u *User) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS users`
+	_, err := u.DB.Exec(query)
+
+	return err
 }
 
 func (u *User) Find(id uint64) (model.User, error) {
