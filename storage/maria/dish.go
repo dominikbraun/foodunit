@@ -58,7 +58,3 @@ func (d *Dish) Drop() error {
 func (d *Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
 	panic("implement me")
 }
-
-func (d *Dish) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}

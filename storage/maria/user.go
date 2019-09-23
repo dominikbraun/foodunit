@@ -58,7 +58,3 @@ func (u *User) Drop() error {
 func (u *User) Find(id uint64) (model.User, error) {
 	panic("implement me")
 }
-
-func (u *User) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}

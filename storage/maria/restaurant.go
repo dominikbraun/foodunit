@@ -62,7 +62,12 @@ func (r *Restaurant) Drop() error {
 }
 
 func (r *Restaurant) Find(id uint64) (model.Restaurant, error) {
-	panic("implement me")
+	query := `SELECT * FROM restaurants WHERE id = ?`
+
+	var restaurant model.Restaurant
+	err := r.DB.QueryRowx(query, id).StructScan(&restaurant)
+
+	return restaurant, err
 }
 
 func (r *Restaurant) Exists(id uint64) (bool, error) {

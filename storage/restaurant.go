@@ -20,29 +20,24 @@ import "github.com/dominikbraun/foodunit/model"
 type Restaurant interface {
 	Entity
 	Find(id uint64) (model.Restaurant, error)
-	Exists(id uint64) (bool, error)
 }
 
 type Category interface {
 	Entity
 	FindByRestaurant(restaurantID uint64) ([]model.Category, error)
-	Exists(id uint64) (bool, error)
 }
 
 type Dish interface {
 	Entity
 	FindByCategory(categoryID uint64) ([]model.Dish, error)
-	Exists(id uint64) (bool, error)
 }
 
 type Characteristic interface {
 	Entity
 	FindByDish(dishID uint64) ([]model.Characteristic, error)
-	Exists(id uint64) (bool, error)
 }
 
 type Variant interface {
 	Entity
 	FindByCharacteristic(characteristicID uint64) ([]model.Variant, error)
-	Exists(id uint64) (bool, error)
 }

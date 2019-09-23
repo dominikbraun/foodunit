@@ -54,7 +54,3 @@ func (p *Position) Drop() error {
 func (p *Position) FindByOrder(orderID uint64) ([]model.Position, error) {
 	panic("implement me")
 }
-
-func (p *Position) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}

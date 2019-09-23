@@ -59,7 +59,3 @@ func (o *Offer) Drop() error {
 func (o *Offer) Find(id uint64) (model.Offer, error) {
 	panic("implement me")
 }
-
-func (o *Offer) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}

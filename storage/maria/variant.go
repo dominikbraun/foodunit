@@ -55,7 +55,3 @@ func (v *Variant) Drop() error {
 func (v *Variant) FindByCharacteristic(characteristicID uint64) ([]model.Variant, error) {
 	panic("implement me")
 }
-
-func (v *Variant) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}

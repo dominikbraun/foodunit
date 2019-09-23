@@ -53,7 +53,3 @@ func (c *Characteristic) Drop() error {
 func (c *Characteristic) FindByDish(dishID uint64) ([]model.Characteristic, error) {
 	panic("implement me")
 }
-
-func (c *Characteristic) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}

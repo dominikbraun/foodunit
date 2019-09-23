@@ -53,7 +53,3 @@ func (c *Category) Drop() error {
 func (c *Category) FindByRestaurant(restaurantID uint64) ([]model.Category, error) {
 	panic("implement me")
 }
-
-func (c *Category) Exists(id uint64) (bool, error) {
-	panic("implement me")
-}
