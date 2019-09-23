@@ -16,8 +16,14 @@
 package restaurant
 
 import (
+	"database/sql"
+	"errors"
 	"github.com/dominikbraun/foodunit/storage"
 	"time"
+)
+
+var (
+	ErrRestaurantNotFound = errors.New("the restaurant could not be found")
 )
 
 type Service struct {
@@ -37,7 +43,10 @@ func NewService(r storage.Restaurant, c storage.Category, d storage.Dish) *Servi
 
 func (s *Service) Info(id uint64) (Info, error) {
 	restaurant, err := s.restaurants.Find(id)
-	if err != nil {
+
+	if err == sql.ErrNoRows {
+		return Info{}, ErrRestaurantNotFound
+	} else if err != nil {
 		return Info{}, err
 	}
 

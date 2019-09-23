@@ -39,7 +39,11 @@ func RestaurantInfo(service *restaurant.Service) http.HandlerFunc {
 		}
 
 		info, err := service.Info(uint64(id))
-		if err != nil {
+		if err == restaurant.ErrRestaurantNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			render.JSON(w, r, restaurant.ErrRestaurantNotFound.Error())
+			return
+		} else if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, ErrProcessingFailed.Error())
 			return
