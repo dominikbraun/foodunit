@@ -23,13 +23,15 @@ import (
 )
 
 type Config struct {
-	Driver string `json:"driver"`
-	DSN    string `json:"dsn"`
+	Driver     string `json:"driver"`
+	DSN        string `json:"dsn"`
+	DropSchema bool   `json:"drop_schema"`
 }
 
 type Manger struct {
-	db       *sqlx.DB
-	entities []storage.Entity
+	db         *sqlx.DB
+	entities   []storage.Entity
+	dropSchema bool
 }
 
 func NewManager(config *Config) (*Manger, error) {
@@ -48,14 +50,15 @@ func NewManager(config *Config) (*Manger, error) {
 		maria.NewOrder(m.db),
 		maria.NewPosition(m.db),
 	}
+	m.dropSchema = config.DropSchema
 
 	return &m, err
 }
 
-func (m *Manger) RunPreparation(dropSchema bool) {
+func (m *Manger) RunPreparation() {
 	var err error
 
-	if dropSchema {
+	if m.dropSchema {
 		for _, s := range m.entities {
 			if err = s.Drop(); err != nil {
 				log.Fatal(err)
