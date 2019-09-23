@@ -60,10 +60,7 @@ func New(config *storage.Config) (*Server, error) {
 	var err error
 
 	s.router = newRouter()
-	s.http = &http.Server{
-		Addr:    "9292",
-		Handler: s.router,
-	}
+	s.http = newHTTPServer(s.router)
 	s.db, err = sqlx.Open(config.Driver, config.DSN)
 	s.session = session.NewManager()
 
@@ -114,4 +111,12 @@ func newRouter() *chi.Mux {
 		render.SetContentType(render.ContentTypeJSON),
 	)
 	return router
+}
+
+func newHTTPServer(handler http.Handler) *http.Server {
+	server := http.Server{
+		Addr:    "9292",
+		Handler: handler,
+	}
+	return &server
 }
