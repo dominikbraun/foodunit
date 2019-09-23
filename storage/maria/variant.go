@@ -24,6 +24,13 @@ type Variant struct {
 	DB *sqlx.DB
 }
 
+func NewVariant(db *sqlx.DB) *Variant {
+	variant := Variant{
+		DB: db,
+	}
+	return &variant
+}
+
 func (v Variant) FindByCharacteristic(characteristicID uint64) ([]model.Variant, error) {
 	panic("implement me")
 }
