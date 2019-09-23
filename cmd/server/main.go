@@ -18,6 +18,7 @@ package main
 import (
 	"flag"
 	"github.com/dominikbraun/foodunit/server"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 )
 
@@ -26,7 +27,7 @@ const (
 	DSNDefault  = "root:root@(localhost:3306)/foodunit?parseTime=true"
 	DSNHelp     = "The data source name for connecting to the database."
 	AddrKey     = "addr"
-	AddrDefault = "9292"
+	AddrDefault = ":9292"
 	AddrHelp    = "A network address or port the server listens to."
 )
 

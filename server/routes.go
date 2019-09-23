@@ -59,5 +59,5 @@ func (s *Server) mountRoutes() {
 		})
 	})
 
-	r.Mount("/v1", s.router)
+	s.router.Mount("/v1", r)
 }
