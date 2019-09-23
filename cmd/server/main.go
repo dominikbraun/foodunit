@@ -22,9 +22,12 @@ import (
 )
 
 const (
-	DSNKey     = "dsn"
-	DSNDefault = "root:root@(localhost:3306)/foodunit?parseTime=true"
-	DSNHelp    = "The data source name for connecting to the database."
+	DSNKey      = "dsn"
+	DSNDefault  = "root:root@(localhost:3306)/foodunit?parseTime=true"
+	DSNHelp     = "The data source name for connecting to the database."
+	AddrKey     = "addr"
+	AddrDefault = "9292"
+	AddrHelp    = "A network address or port the server listens to."
 )
 
 func main() {
@@ -40,11 +43,14 @@ func main() {
 
 func parseConfig() server.Config {
 	dsn := flag.String(DSNKey, DSNDefault, DSNHelp)
+	addr := flag.String(AddrKey, AddrDefault, AddrHelp)
+
 	flag.Parse()
 
 	config := server.Config{
 		Driver: "mysql",
 		DSN:    *dsn,
+		Addr:   *addr,
 	}
 
 	return config

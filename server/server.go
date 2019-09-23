@@ -37,6 +37,7 @@ import (
 type Config struct {
 	Driver string `json:"driver"`
 	DSN    string `json:"dsn"`
+	Addr   string `json:"addr"`
 }
 
 type Server struct {
@@ -65,7 +66,7 @@ func New(config *Config) (*Server, error) {
 	var err error
 
 	s.router = newRouter()
-	s.http = newHTTPServer(s.router)
+	s.http = newHTTPServer(s.router, config.Addr)
 	s.db, err = sqlx.Open(config.Driver, config.DSN)
 	s.session = session.NewManager()
 
@@ -120,9 +121,9 @@ func newRouter() *chi.Mux {
 	return router
 }
 
-func newHTTPServer(handler http.Handler) *http.Server {
+func newHTTPServer(handler http.Handler, addr string) *http.Server {
 	server := http.Server{
-		Addr:    "9292",
+		Addr:    addr,
 		Handler: handler,
 	}
 	return &server
