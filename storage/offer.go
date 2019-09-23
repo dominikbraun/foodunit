@@ -18,19 +18,19 @@ package storage
 import "github.com/dominikbraun/foodunit/model"
 
 type Offer interface {
-	Schema
+	Entity
 	Find(id uint64) (model.Offer, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Order interface {
-	Schema
+	Entity
 	FindByOffer(offerID uint64) ([]model.Order, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Position interface {
-	Schema
+	Entity
 	FindByOrder(orderID uint64) ([]model.Position, error)
 	Exists(id uint64) (bool, error)
 }

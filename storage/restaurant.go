@@ -18,31 +18,31 @@ package storage
 import "github.com/dominikbraun/foodunit/model"
 
 type Restaurant interface {
-	Schema
+	Entity
 	Find(id uint64) (model.Restaurant, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Category interface {
-	Schema
+	Entity
 	FindByRestaurant(restaurantID uint64) ([]model.Category, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Dish interface {
-	Schema
+	Entity
 	FindByCategory(categoryID uint64) ([]model.Dish, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Characteristic interface {
-	Schema
+	Entity
 	FindByDish(dishID uint64) ([]model.Characteristic, error)
 	Exists(id uint64) (bool, error)
 }
 
 type Variant interface {
-	Schema
+	Entity
 	FindByCharacteristic(characteristicID uint64) ([]model.Variant, error)
 	Exists(id uint64) (bool, error)
 }

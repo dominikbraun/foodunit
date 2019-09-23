@@ -31,7 +31,7 @@ func NewVariant(db *sqlx.DB) *Variant {
 	return &variant
 }
 
-func (v *Variant) Prepare() error {
+func (v *Variant) Create() error {
 	panic("implement me")
 }
 

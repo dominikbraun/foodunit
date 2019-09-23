@@ -31,7 +31,7 @@ func NewDish(db *sqlx.DB) *Dish {
 	return &dish
 }
 
-func (d *Dish) Prepare() error {
+func (d *Dish) Create() error {
 	panic("implement me")
 }
 

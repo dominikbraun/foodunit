@@ -31,7 +31,7 @@ func NewCharacteristic(db *sqlx.DB) *Characteristic {
 	return &characteristic
 }
 
-func (c *Characteristic) Prepare() error {
+func (c *Characteristic) Create() error {
 	panic("implement me")
 }
 

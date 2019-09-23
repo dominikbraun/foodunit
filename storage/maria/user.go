@@ -31,7 +31,7 @@ func NewUser(db *sqlx.DB) *User {
 	return &user
 }
 
-func (u *User) Prepare() error {
+func (u *User) Create() error {
 	panic("implement me")
 }
 

@@ -15,7 +15,7 @@
 // Package storage provides storage interfaces and implementations.
 package storage
 
-type Schema interface {
-	Prepare() error
+type Entity interface {
+	Create() error
 	Drop() error
 }

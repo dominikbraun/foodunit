@@ -31,7 +31,7 @@ func NewCategory(db *sqlx.DB) *Category {
 	return &category
 }
 
-func (c *Category) Prepare() error {
+func (c *Category) Create() error {
 	panic("implement me")
 }
 

@@ -31,7 +31,7 @@ func NewOrder(db *sqlx.DB) *Order {
 	return &order
 }
 
-func (o *Order) Prepare() error {
+func (o *Order) Create() error {
 	panic("implement me")
 }
 

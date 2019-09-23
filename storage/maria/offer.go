@@ -31,7 +31,7 @@ func NewOffer(db *sqlx.DB) *Offer {
 	return &offer
 }
 
-func (o *Offer) Prepare() error {
+func (o *Offer) Create() error {
 	panic("implement me")
 }
 

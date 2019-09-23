@@ -31,7 +31,7 @@ func NewRestaurant(db *sqlx.DB) *Restaurant {
 	return &restaurant
 }
 
-func (r *Restaurant) Prepare() error {
+func (r *Restaurant) Create() error {
 	panic("implement me")
 }
 

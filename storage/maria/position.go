@@ -31,7 +31,7 @@ func NewPosition(db *sqlx.DB) *Position {
 	return &position
 }
 
-func (p *Position) Prepare() error {
+func (p *Position) Create() error {
 	panic("implement me")
 }
 
