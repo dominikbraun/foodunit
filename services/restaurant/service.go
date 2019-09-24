@@ -17,13 +17,14 @@ package restaurant
 
 import (
 	"database/sql"
-	"errors"
 	"github.com/dominikbraun/foodunit/storage"
+	"github.com/pkg/errors"
 	"time"
 )
 
 var (
 	ErrRestaurantNotFound = errors.New("the restaurant could not be found")
+	ErrMenuNotFound       = errors.New("the menu could not be found")
 )
 
 type Service struct {
@@ -80,4 +81,52 @@ func (s *Service) Info(id uint64) (Info, error) {
 	}
 
 	return info, nil
+}
+
+func (s *Service) Menu(id uint64) (Menu, error) {
+	categories, err := s.categories.FindByRestaurant(id)
+
+	if err == sql.ErrNoRows {
+		return Menu{}, ErrMenuNotFound
+	} else if err != nil {
+		return Menu{}, err
+	}
+
+	var menuCategories []MenuCategory
+
+	for _, c := range categories {
+		dishes, err := s.dishes.FindByCategory(c.ID)
+
+		if err == sql.ErrNoRows {
+			return Menu{}, ErrMenuNotFound
+		} else if err != nil {
+			return Menu{}, err
+		}
+
+		var menuDishes []MenuDish
+
+		for _, d := range dishes {
+			menuDish := MenuDish{
+				Name:         d.Name,
+				Description:  d.Description,
+				Price:        d.Price,
+				IsUncertain:  d.IsUncertain,
+				IsHealthy:    d.IsHealthy,
+				IsVegetarian: d.IsVegetarian,
+			}
+			menuDishes = append(menuDishes, menuDish)
+		}
+
+		menuCategory := MenuCategory{
+			Name:   c.Name,
+			Dishes: menuDishes,
+		}
+		menuCategories = append(menuCategories, menuCategory)
+	}
+
+	menu := Menu{
+		Categories: menuCategories,
+	}
+
+	return menu, nil
 }

@@ -24,3 +24,21 @@ type Info struct {
 	Open       string `json:"open"`
 	Website    string `json:"website"`
 }
+
+type Menu struct {
+	Categories []MenuCategory `json:"categories"`
+}
+
+type MenuCategory struct {
+	Name   string     `json:"name"`
+	Dishes []MenuDish `json:"dishes"`
+}
+
+type MenuDish struct {
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	Price        uint   `json:"price"`
+	IsUncertain  bool   `json:"is_uncertain"`
+	IsHealthy    bool   `json:"is_healthy"`
+	IsVegetarian bool   `json:"is_vegetarian"`
+}

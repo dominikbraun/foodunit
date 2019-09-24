@@ -49,3 +49,30 @@ func (c *Controller) RestaurantInfo() http.HandlerFunc {
 		return
 	}
 }
+
+func (c *Controller) RestaurantMenu() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+		if err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		menu, err := c.restaurantService.Menu(uint64(id))
+
+		if err == restaurant.ErrRestaurantNotFound || err == restaurant.ErrMenuNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			render.JSON(w, r, err)
+			return
+		} else if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, ErrProcessingFailed.Error())
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, menu)
+		return
+	}
+}
