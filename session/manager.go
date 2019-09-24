@@ -27,6 +27,7 @@ type Manager interface {
 	GetString(ctx context.Context, key string) string
 	GetBool(ctx context.Context, key string) bool
 	Put(ctx context.Context, key string, val interface{})
+	Remove(ctx context.Context, key string)
 	LoadAndSave(next http.Handler) http.Handler
 }
 

@@ -84,3 +84,13 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 		return
 	}
 }
+
+func (c *Controller) Logout(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		session.Remove(r.Context(), "authenticated")
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, true)
+		return
+	}
+}

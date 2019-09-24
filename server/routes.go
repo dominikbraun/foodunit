@@ -16,6 +16,7 @@
 package server
 
 import (
+	"github.com/dominikbraun/foodunit/middleware"
 	"github.com/go-chi/chi"
 )
 
@@ -24,7 +25,7 @@ func (s *Server) mountRoutes() {
 
 	r.Use(s.session.LoadAndSave)
 
-	r.Route("/restaurants", func(r chi.Router) {
+	r.With(middleware.Authenticate(s.session)).Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/info", s.controller.RestaurantInfo())
 			r.Get("/menu", s.controller.RestaurantMenu())
@@ -34,23 +35,24 @@ func (s *Server) mountRoutes() {
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/register", s.controller.RegisterUser())
 		r.Post("/login", s.controller.Login(s.session))
-		r.Get("/logout", nil)
+		r.Get("/logout", s.controller.Logout(s.session))
 	})
 
-	r.Route("/offers", func(r chi.Router) {
-		r.Post("/create", nil)
-		r.Get("/active", nil)
+	r.With(middleware.Authenticate(s.session)).
+		Route("/offers", func(r chi.Router) {
+			r.Post("/create", nil)
+			r.Get("/active", nil)
 
-		r.Route("/{id}", func(r chi.Router) {
-			r.Get("/", nil)
+			r.Route("/{id}", func(r chi.Router) {
+				r.Get("/", nil)
 
-			r.Route("/orders", func(r chi.Router) {
-				r.Get("/all", nil)
-				r.Get("/mine", nil)
-				r.Post("/mine", nil)
+				r.Route("/orders", func(r chi.Router) {
+					r.Get("/all", nil)
+					r.Get("/mine", nil)
+					r.Post("/mine", nil)
+				})
 			})
 		})
-	})
 
 	r.Route("/dishes", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
