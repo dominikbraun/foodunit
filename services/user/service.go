@@ -16,6 +16,7 @@
 package user
 
 import (
+	"database/sql"
 	"github.com/dominikbraun/foodunit/model"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
@@ -24,9 +25,11 @@ import (
 )
 
 var (
-	ErrUserExists      = errors.New("the given mail address already exists")
-	ErrPasswordInvalid = errors.New("the given password is invalid")
-	ErrUserNotStored   = errors.New("the user could not be registered")
+	ErrUserExists        = errors.New("the given mail address already exists")
+	ErrPasswordInvalid   = errors.New("the given password is invalid")
+	ErrPasswordIncorrect = errors.New("the given password is not correct")
+	ErrUserNotStored     = errors.New("the user could not be registered")
+	ErrUserNotFound      = errors.New("the user could not be found")
 )
 
 type Service struct {
@@ -67,6 +70,26 @@ func (s *Service) Register(r *Registration) (bool, error) {
 	err = s.users.Store(&user)
 	if err != nil {
 		return false, ErrUserNotStored
+	}
+
+	return true, nil
+}
+
+func (s *Service) Authenticate(l *Login) (bool, error) {
+	user, err := s.users.FindByMailAddr(l.MailAddr)
+
+	if err == sql.ErrNoRows {
+		return false, ErrUserNotFound
+	} else if err != nil {
+		return false, err
+	}
+
+	err = bcrypt.CompareHashAndPassword(user.PasswordHash, []byte(l.Password))
+
+	if err == bcrypt.ErrMismatchedHashAndPassword {
+		return false, ErrPasswordIncorrect
+	} else if err != nil {
+		return false, err
 	}
 
 	return true, nil

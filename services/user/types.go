@@ -21,3 +21,8 @@ type Registration struct {
 	PaypalMailAddr string `json:"paypal_mail_addr"`
 	Password       string `json:"password"`
 }
+
+type Login struct {
+	MailAddr string `json:"mail_addr"`
+	Password string `json:"password"`
+}

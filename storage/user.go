@@ -21,5 +21,6 @@ type User interface {
 	Entity
 	Store(user *model.User) error
 	Find(id uint64) (model.User, error)
+	FindByMailAddr(mailAddr string) (model.User, error)
 	MailExists(mailAddr string) (bool, error)
 }

@@ -60,6 +60,15 @@ func (u *User) Find(id uint64) (model.User, error) {
 	panic("implement me")
 }
 
+func (u *User) FindByMailAddr(mailAddr string) (model.User, error) {
+	query := `SELECT * FROM users where mail_addr = ?`
+
+	var user model.User
+	err := u.DB.QueryRowx(query, mailAddr).StructScan(&user)
+
+	return user, err
+}
+
 func (u *User) MailExists(mailAddr string) (bool, error) {
 	query := `SELECT * FROM users where mail_addr = ?`
 
