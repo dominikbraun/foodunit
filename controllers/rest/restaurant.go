@@ -61,13 +61,13 @@ func (c *Controller) RestaurantMenu() http.HandlerFunc {
 
 		menu, err := c.restaurantService.Menu(uint64(id))
 
-		if err == restaurant.ErrRestaurantNotFound || err == restaurant.ErrMenuNotFound {
-			w.WriteHeader(http.StatusNotFound)
-			render.JSON(w, r, err)
-			return
-		} else if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, ErrProcessingFailed.Error())
+		if err != nil {
+			if err == restaurant.ErrRestaurantNotFound || err == restaurant.ErrMenuNotFound {
+				w.WriteHeader(http.StatusNotFound)
+			} else {
+				w.WriteHeader(http.StatusInternalServerError)
+			}
+			render.JSON(w, r, err.Error())
 			return
 		}
 

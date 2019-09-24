@@ -86,24 +86,24 @@ func (s *Service) Info(id uint64) (Info, error) {
 func (s *Service) Menu(id uint64) (Menu, error) {
 	categories, err := s.categories.FindByRestaurant(id)
 
-	if err == sql.ErrNoRows {
+	if err == sql.ErrNoRows || len(categories) == 0 {
 		return Menu{}, ErrMenuNotFound
 	} else if err != nil {
 		return Menu{}, err
 	}
 
-	var menuCategories []MenuCategory
+	menuCategories := make([]MenuCategory, 0)
 
 	for _, c := range categories {
 		dishes, err := s.dishes.FindByCategory(c.ID)
 
-		if err == sql.ErrNoRows {
+		if err == sql.ErrNoRows || len(dishes) == 0 {
 			return Menu{}, ErrMenuNotFound
 		} else if err != nil {
 			return Menu{}, err
 		}
 
-		var menuDishes []MenuDish
+		menuDishes := make([]MenuDish, 0)
 
 		for _, d := range dishes {
 			menuDish := MenuDish{
