@@ -18,6 +18,7 @@ package rest
 import (
 	"encoding/json"
 	"github.com/dominikbraun/foodunit/services/user"
+	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/render"
 	"net/http"
 )
@@ -43,6 +44,39 @@ func (c *Controller) RegisterUser() http.HandlerFunc {
 			}
 			render.JSON(w, r, err.Error())
 			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, success)
+		return
+	}
+}
+
+func (c *Controller) Login(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var login user.Login
+		err := json.NewDecoder(r.Body).Decode(&login)
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			render.JSON(w, r, ErrInvalidFormData.Error())
+			return
+		}
+
+		success, err := c.userService.Authenticate(&login)
+
+		if err != nil {
+			if err == user.ErrPasswordIncorrect || err == user.ErrUserNotFound {
+				w.WriteHeader(http.StatusUnauthorized)
+			} else {
+				w.WriteHeader(http.StatusInternalServerError)
+			}
+			render.JSON(w, r, err.Error())
+			return
+		}
+
+		if success {
+			session.Put(r.Context(), "authenticated", true)
 		}
 
 		w.WriteHeader(http.StatusOK)
