@@ -23,8 +23,9 @@ import (
 )
 
 var (
-	ErrInvalidNumberFormat = errors.New("provided number format is not valid")
+	ErrInvalidNumberFormat = errors.New("the provided number format is not valid")
 	ErrProcessingFailed    = errors.New("failed processing the request")
+	ErrInvalidFormData     = errors.New("the provided form data is not valid")
 )
 
 type Controller struct {
