@@ -16,7 +16,6 @@
 package server
 
 import (
-	"github.com/dominikbraun/foodunit/controllers/api"
 	"github.com/go-chi/chi"
 )
 
@@ -27,7 +26,7 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
-			r.Get("/info", api.RestaurantInfo(s.restaurantService))
+			r.Get("/info", s.controller.RestaurantInfo())
 			r.Get("/menu", nil)
 		})
 	})

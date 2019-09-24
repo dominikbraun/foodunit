@@ -12,24 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package api provides controller functions for handling API requests.
-package api
+// Package rest provides a controller for handling API requests.
+package rest
 
 import (
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
-	"github.com/pkg/errors"
 	"net/http"
 	"strconv"
 )
 
-var (
-	ErrInvalidNumberFormat = errors.New("provided number format is not valid")
-	ErrProcessingFailed    = errors.New("failed processing the request")
-)
-
-func RestaurantInfo(service *restaurant.Service) http.HandlerFunc {
+func (c *Controller) RestaurantInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
 		if err != nil {
@@ -38,7 +32,8 @@ func RestaurantInfo(service *restaurant.Service) http.HandlerFunc {
 			return
 		}
 
-		info, err := service.Info(uint64(id))
+		info, err := c.restaurantService.Info(uint64(id))
+
 		if err == restaurant.ErrRestaurantNotFound {
 			w.WriteHeader(http.StatusNotFound)
 			render.JSON(w, r, restaurant.ErrRestaurantNotFound.Error())

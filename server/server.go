@@ -17,6 +17,7 @@ package server
 
 import (
 	"context"
+	"github.com/dominikbraun/foodunit/controllers/rest"
 	"github.com/dominikbraun/foodunit/services/offer"
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/dominikbraun/foodunit/services/user"
@@ -59,6 +60,8 @@ type Server struct {
 	restaurantService *restaurant.Service
 	userService       *user.Service
 	offerService      *offer.Service
+
+	controller *rest.Controller
 }
 
 func New(config *Config) (*Server, error) {
@@ -83,6 +86,8 @@ func New(config *Config) (*Server, error) {
 	s.restaurantService = restaurant.NewService(s.restaurants, s.categories, s.dishes)
 	s.userService = user.NewService(s.users)
 	s.offerService = offer.NewService(s.offers, s.orders, s.positions)
+
+	s.controller = rest.NewController(s.restaurantService, s.userService, s.offerService)
 
 	s.mountRoutes()
 
