@@ -15,7 +15,19 @@
 // Package user provides services and types for User-related data.
 package user
 
-import "github.com/dominikbraun/foodunit/storage"
+import (
+	"github.com/dominikbraun/foodunit/model"
+	"github.com/dominikbraun/foodunit/storage"
+	"github.com/pkg/errors"
+	"golang.org/x/crypto/bcrypt"
+	"time"
+)
+
+var (
+	ErrUserExists      = errors.New("the given mail address already exists")
+	ErrPasswordInvalid = errors.New("the given password is invalid")
+	ErrUserNotStored   = errors.New("the user could not be registered")
+)
 
 type Service struct {
 	users storage.User
@@ -26,4 +38,36 @@ func NewService(u storage.User) *Service {
 		users: u,
 	}
 	return &service
+}
+
+func (s *Service) Register(r *Registration) (bool, error) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(r.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return false, ErrPasswordInvalid
+	}
+
+	mailExists, err := s.users.MailExists(r.MailAddr)
+
+	if err != nil {
+		return false, err
+	} else if mailExists {
+		return false, ErrUserExists
+	}
+
+	user := model.User{
+		MailAddr:       r.MailAddr,
+		Name:           r.Name,
+		IsAdmin:        false,
+		PaypalMailAddr: r.PaypalMailAddr,
+		Score:          0,
+		PasswordHash:   hashedPassword,
+		Created:        time.Now(),
+	}
+
+	err = s.users.Store(&user)
+	if err != nil {
+		return false, ErrUserNotStored
+	}
+
+	return true, nil
 }

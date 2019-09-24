@@ -26,6 +26,7 @@ import (
 func (c *Controller) RestaurantInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+
 		if err != nil {
 			w.WriteHeader(http.StatusUnprocessableEntity)
 			render.JSON(w, r, ErrInvalidNumberFormat.Error())
@@ -53,6 +54,7 @@ func (c *Controller) RestaurantInfo() http.HandlerFunc {
 func (c *Controller) RestaurantMenu() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+
 		if err != nil {
 			w.WriteHeader(http.StatusUnprocessableEntity)
 			render.JSON(w, r, ErrInvalidNumberFormat.Error())

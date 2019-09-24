@@ -14,3 +14,10 @@
 
 // Package user provides services and types for User-related data.
 package user
+
+type Registration struct {
+	MailAddr       string `json:"mail_addr"`
+	Name           string `json:"name"`
+	PaypalMailAddr string `json:"paypal_mail_addr"`
+	Password       string `json:"password"`
+}

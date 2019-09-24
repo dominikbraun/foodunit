@@ -32,7 +32,7 @@ func (s *Server) mountRoutes() {
 	})
 
 	r.Route("/users", func(r chi.Router) {
-		r.Post("/register", nil)
+		r.Post("/register", s.controller.RegisterUser())
 		r.Post("/login", nil)
 		r.Get("/logout", nil)
 	})
