@@ -72,7 +72,6 @@ func (d *Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
 		if err != nil {
 			return nil, err
 		}
-
 		dishes = append(dishes, dish)
 	}
 

@@ -16,6 +16,7 @@
 package maria
 
 import (
+	"database/sql"
 	"github.com/dominikbraun/foodunit/model"
 	"github.com/jmoiron/sqlx"
 )
@@ -57,4 +58,30 @@ func (u *User) Drop() error {
 
 func (u *User) Find(id uint64) (model.User, error) {
 	panic("implement me")
+}
+
+func (u *User) MailExists(mailAddr string) (bool, error) {
+	query := `SELECT * FROM users where mail_addr = ?`
+
+	var user model.User
+	err := u.DB.QueryRowx(query, mailAddr).StructScan(&user)
+
+	if err == sql.ErrNoRows {
+		return false, nil
+	} else if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func (u *User) Store(user *model.User) error {
+	query := `
+INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created) 
+VALUES (?, ?, ?, ?, ?, ?, ?)`
+
+	created := user.Created.Format("2006-01-02 15:04:05")
+	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+
+	return err
 }

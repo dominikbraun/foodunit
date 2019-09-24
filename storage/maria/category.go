@@ -67,7 +67,6 @@ func (c *Category) FindByRestaurant(restaurantID uint64) ([]model.Category, erro
 		if err != nil {
 			return nil, err
 		}
-
 		categories = append(categories, category)
 	}
 
