@@ -27,7 +27,7 @@ func (s *Server) mountRoutes() {
 	r.Route("/restaurants", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/info", s.controller.RestaurantInfo())
-			r.Get("/menu", nil)
+			r.Get("/menu", s.controller.RestaurantMenu())
 		})
 	})
 
