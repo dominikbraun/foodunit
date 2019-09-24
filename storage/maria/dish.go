@@ -56,5 +56,25 @@ func (d *Dish) Drop() error {
 }
 
 func (d *Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
-	panic("implement me")
+	query := `SELECT id, name, description, price, is_uncertain, is_healthy, is_vegetarian FROM dishes WHERE category_id = ?`
+
+	rows, err := d.DB.Queryx(query, categoryID)
+	if err != nil {
+		return nil, err
+	}
+
+	var dishes []model.Dish
+
+	for rows.Next() {
+		var dish model.Dish
+
+		err = rows.StructScan(&dish)
+		if err != nil {
+			return nil, err
+		}
+
+		dishes = append(dishes, dish)
+	}
+
+	return dishes, nil
 }

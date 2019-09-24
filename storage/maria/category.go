@@ -51,5 +51,25 @@ func (c *Category) Drop() error {
 }
 
 func (c *Category) FindByRestaurant(restaurantID uint64) ([]model.Category, error) {
-	panic("implement me")
+	query := `SELECT id, name FROM categories WHERE restaurant_id = ?`
+
+	rows, err := c.DB.Queryx(query, restaurantID)
+	if err != nil {
+		return nil, err
+	}
+
+	var categories []model.Category
+
+	for rows.Next() {
+		var category model.Category
+
+		err = rows.StructScan(&category)
+		if err != nil {
+			return nil, err
+		}
+
+		categories = append(categories, category)
+	}
+
+	return categories, nil
 }
