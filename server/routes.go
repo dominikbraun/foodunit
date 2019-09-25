@@ -44,7 +44,7 @@ func (s *Server) mountRoutes() {
 			r.Get("/active", s.controller.ActiveOffers())
 
 			r.Route("/{id}", func(r chi.Router) {
-				r.Get("/", nil)
+				r.Get("/", s.controller.GetOffer())
 
 				r.Route("/orders", func(r chi.Router) {
 					r.Get("/all", nil)

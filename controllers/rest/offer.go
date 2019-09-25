@@ -19,8 +19,10 @@ import (
 	"encoding/json"
 	"github.com/dominikbraun/foodunit/services/offer"
 	"github.com/dominikbraun/foodunit/session"
+	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"net/http"
+	"strconv"
 )
 
 func (c *Controller) CreateOffer(session session.Manager) http.HandlerFunc {
@@ -71,6 +73,34 @@ func (c *Controller) ActiveOffers() http.HandlerFunc {
 
 		w.WriteHeader(http.StatusOK)
 		render.JSON(w, r, offers)
+		return
+	}
+}
+
+func (c *Controller) GetOffer() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		offerView, err := c.offerService.Get(uint64(id))
+
+		if err == offer.ErrOfferNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			render.JSON(w, r, offer.ErrOfferNotFound.Error())
+			return
+		} else if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, err.Error())
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, offerView)
 		return
 	}
 }

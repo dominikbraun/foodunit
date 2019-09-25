@@ -26,6 +26,7 @@ import (
 var (
 	ErrRestaurantNotFound = errors.New("the restaurant could not be found")
 	ErrUserNotFound       = errors.New("the user could not be found")
+	ErrOfferNotFound      = errors.New("the offer could not be found")
 )
 
 type Service struct {
@@ -105,4 +106,27 @@ func (s *Service) Active() ([]ActiveOffer, error) {
 	}
 
 	return activeOffers, nil
+}
+
+func (s *Service) Get(id uint64) (View, error) {
+	offer, err := s.offers.Find(id)
+
+	if err == sql.ErrNoRows {
+		return View{}, ErrOfferNotFound
+	} else if err != nil {
+		return View{}, err
+	}
+
+	offerView := View{
+		ID:            offer.ID,
+		Owner:         User{Name: offer.Owner.Name},
+		ValidFrom:     offer.ValidFrom,
+		ValidTo:       offer.ValidTo,
+		Responsible:   User{Name: offer.Responsible.Name},
+		IsPlaced:      offer.IsPlaced,
+		ReadyAt:       offer.ReadyAt,
+		PaypalEnabled: offer.PaypalEnabled,
+	}
+
+	return offerView, nil
 }
