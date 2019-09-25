@@ -18,6 +18,7 @@
 foodunit
 foodunit.exe
 cmd/*/__debug_bin
+target/*
 
 # FoodUnit config
 server.toml
