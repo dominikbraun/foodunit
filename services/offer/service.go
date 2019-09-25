@@ -79,3 +79,30 @@ func (s *Service) Create(c *Creation, userID uint64) error {
 	err = s.offers.Store(&offer)
 	return err
 }
+
+func (s *Service) Active() ([]ActiveOffer, error) {
+	offers, err := s.offers.FindValidFrom(time.Now())
+
+	activeOffers := make([]ActiveOffer, 0)
+
+	if err == sql.ErrNoRows {
+		return activeOffers, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	for _, o := range offers {
+		activeOffer := ActiveOffer{
+			ID:            o.ID,
+			Owner:         User{Name: o.Owner.Name},
+			Restaurant:    Restaurant{Name: o.Restaurant.Name},
+			ValidFrom:     o.ValidFrom,
+			ValidTo:       o.ValidTo,
+			PaypalEnabled: o.PaypalEnabled,
+		}
+
+		activeOffers = append(activeOffers, activeOffer)
+	}
+
+	return activeOffers, nil
+}

@@ -18,8 +18,25 @@ package offer
 import "time"
 
 type Creation struct {
-	Restaurant    uint64    `json:"restaurant"`
+	Restaurant    uint64    `json:"restaurant_id"`
 	ValidFrom     time.Time `json:"valid_from"`
 	ValidTo       time.Time `json:"valid_to"`
 	PaypalEnabled bool      `json:"paypal_enabled"`
+}
+
+type ActiveOffer struct {
+	ID            uint64     `json:"id"`
+	Owner         User       `json:"owner"`
+	Restaurant    Restaurant `json:"restaurant"`
+	ValidFrom     time.Time  `json:"valid_from"`
+	ValidTo       time.Time  `json:"valid_to"`
+	PaypalEnabled bool       `json:"paypal_enabled"`
+}
+
+type User struct {
+	Name string `json:"name"`
+}
+
+type Restaurant struct {
+	Name string `json:"name"`
 }
