@@ -12,5 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package offer provides services and types for Offer-related data.
+// Package dishes provides services and types for Dish-related data.
 package dishes
+
+import (
+	"github.com/dominikbraun/foodunit/storage"
+)
+
+type Service struct {
+	dishes          storage.Dish
+	characteristics storage.Characteristic
+	variants        storage.Variant
+}
+
+func NewService(d storage.Dish, c storage.Characteristic, v storage.Variant) *Service {
+	service := Service{
+		dishes:          d,
+		characteristics: c,
+		variants:        v,
+	}
+	return &service
+}
