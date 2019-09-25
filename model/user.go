@@ -18,12 +18,12 @@ package model
 import "time"
 
 type User struct {
-	ID             uint64    `db:"id" json:"id"`
-	MailAddr       string    `db:"mail_addr" json:"mail_addr"`
-	Name           string    `db:"name" json:"name"`
-	IsAdmin        bool      `db:"is_admin" json:"is_admin"`
-	PaypalMailAddr string    `db:"paypal_mail_addr" json:"paypal_mail_addr"`
-	Score          int       `db:"score" json:"score"`
-	PasswordHash   []byte    `db:"password_hash" json:"password_hash"`
-	Created        time.Time `db:"created" json:"created"`
+	ID             uint64    `db:"id"`
+	MailAddr       string    `db:"mail_addr"`
+	Name           string    `db:"name"`
+	IsAdmin        bool      `db:"is_admin"`
+	PaypalMailAddr string    `db:"paypal_mail_addr"`
+	Score          int       `db:"score"`
+	PasswordHash   []byte    `db:"password_hash"`
+	Created        time.Time `db:"created"`
 }
