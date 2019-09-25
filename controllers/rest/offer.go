@@ -37,7 +37,7 @@ func (c *Controller) CreateOffer(session session.Manager) http.HandlerFunc {
 		uid, ok := session.Get(r.Context(), "uid").(uint64)
 		if !ok {
 			w.WriteHeader(http.StatusForbidden)
-			render.JSON(w, r, ErrForbiddenAction)
+			render.JSON(w, r, ErrForbiddenAction.Error())
 			return
 		}
 
@@ -55,6 +55,22 @@ func (c *Controller) CreateOffer(session session.Manager) http.HandlerFunc {
 
 		w.WriteHeader(http.StatusOK)
 		render.JSON(w, r, true)
+		return
+	}
+}
+
+func (c *Controller) ActiveOffers() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		offers, err := c.offerService.Active()
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, ErrProcessingFailed.Error())
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, offers)
 		return
 	}
 }
