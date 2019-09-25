@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package dishes provides services and types for Dish-related data.
-package dishes
+// Package dish provides services and types for Dish-related data.
+package dish
 
 import (
 	"github.com/dominikbraun/foodunit/storage"
