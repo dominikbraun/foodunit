@@ -63,7 +63,7 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 			return
 		}
 
-		success, err := c.userService.Authenticate(&login)
+		uid, err := c.userService.Authenticate(&login)
 
 		if err != nil {
 			if err == user.ErrPasswordIncorrect || err == user.ErrUserNotFound {
@@ -75,12 +75,13 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 			return
 		}
 
-		if success {
+		if uid != 0 {
 			session.Put(r.Context(), "authenticated", true)
+			session.Put(r.Context(), "uid", uid)
 		}
 
 		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, success)
+		render.JSON(w, r, true)
 		return
 	}
 }

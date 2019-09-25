@@ -40,7 +40,7 @@ func (s *Server) mountRoutes() {
 
 	r.With(middleware.Authenticate(s.session)).
 		Route("/offers", func(r chi.Router) {
-			r.Post("/create", nil)
+			r.Post("/create", s.controller.CreateOffer(s.session))
 			r.Get("/active", nil)
 
 			r.Route("/{id}", func(r chi.Router) {

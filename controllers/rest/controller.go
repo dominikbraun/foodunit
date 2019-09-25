@@ -26,6 +26,7 @@ var (
 	ErrInvalidNumberFormat = errors.New("the provided number format is not valid")
 	ErrProcessingFailed    = errors.New("failed processing the request")
 	ErrInvalidFormData     = errors.New("the provided form data is not valid")
+	ErrForbiddenAction     = errors.New("no permission for performing the action")
 )
 
 type Controller struct {
