@@ -75,22 +75,22 @@ func (s *Service) Register(r *Registration) (bool, error) {
 	return true, nil
 }
 
-func (s *Service) Authenticate(l *Login) (bool, error) {
+func (s *Service) Authenticate(l *Login) (uint64, error) {
 	user, err := s.users.FindByMailAddr(l.MailAddr)
 
 	if err == sql.ErrNoRows {
-		return false, ErrUserNotFound
+		return 0, ErrUserNotFound
 	} else if err != nil {
-		return false, err
+		return 0, err
 	}
 
 	err = bcrypt.CompareHashAndPassword(user.PasswordHash, []byte(l.Password))
 
 	if err == bcrypt.ErrMismatchedHashAndPassword {
-		return false, ErrPasswordIncorrect
+		return 0, ErrPasswordIncorrect
 	} else if err != nil {
-		return false, err
+		return 0, err
 	}
 
-	return true, nil
+	return user.ID, nil
 }
