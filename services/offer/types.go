@@ -18,7 +18,6 @@ package offer
 import "time"
 
 type Creation struct {
-	Owner         uint64    `json:"owner"`
 	Restaurant    uint64    `json:"restaurant"`
 	ValidFrom     time.Time `json:"valid_from"`
 	ValidTo       time.Time `json:"valid_to"`

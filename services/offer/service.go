@@ -47,8 +47,8 @@ func NewService(r storage.Restaurant, u storage.User, o storage.Offer, odr stora
 	return &service
 }
 
-func (s *Service) Create(c *Creation) error {
-	user, err := s.users.Find(c.Owner)
+func (s *Service) Create(c *Creation, userID uint64) error {
+	user, err := s.users.Find(userID)
 
 	if err == sql.ErrNoRows {
 		return ErrUserNotFound
