@@ -18,6 +18,7 @@ package server
 import (
 	"context"
 	"github.com/dominikbraun/foodunit/controllers/rest"
+	"github.com/dominikbraun/foodunit/services/dish"
 	"github.com/dominikbraun/foodunit/services/offer"
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/dominikbraun/foodunit/services/user"
@@ -58,6 +59,7 @@ type Server struct {
 	positions       storage.Position
 
 	restaurantService *restaurant.Service
+	dishService       *dish.Service
 	userService       *user.Service
 	offerService      *offer.Service
 
@@ -84,10 +86,11 @@ func New(config *Config) (*Server, error) {
 	s.positions = maria.NewPosition(s.db)
 
 	s.restaurantService = restaurant.NewService(s.restaurants, s.categories, s.dishes)
+	s.dishService = dish.NewService(s.dishes, s.characteristics, s.variants)
 	s.userService = user.NewService(s.users)
 	s.offerService = offer.NewService(s.restaurants, s.users, s.offers, s.orders, s.positions)
 
-	s.controller = rest.NewController(s.restaurantService, s.userService, s.offerService)
+	s.controller = rest.NewController(s.restaurantService, s.dishService, s.userService, s.offerService)
 
 	s.mountRoutes()
 
