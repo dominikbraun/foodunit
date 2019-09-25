@@ -18,6 +18,8 @@ package maria
 import (
 	"github.com/dominikbraun/foodunit/model"
 	"github.com/jmoiron/sqlx"
+	"log"
+	"time"
 )
 
 type Offer struct {
@@ -75,4 +77,39 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 
 func (o *Offer) Find(id uint64) (model.Offer, error) {
 	panic("implement me")
+}
+
+func (o *Offer) FindValidFrom(from time.Time) ([]model.Offer, error) {
+	query := `
+SELECT o.id, valid_from, valid_to, is_placed, ready_at, paypal_enabled, u.name as "owner_user_id.name", r.name as "restaurant_id.name", u2.name as "responsible_user_id.name"
+FROM offers o
+INNER JOIN users u
+ON u.id = o.owner_user_id
+INNER JOIN restaurants r
+ON r.id = o.restaurant_id
+INNER JOIN users u2
+ON u2.id = o.responsible_user_id
+WHERE valid_from >= ?
+AND is_placed = 0`
+
+	validFrom := from.Format("2006-01-02 15:04:05")
+
+	rows, err := o.DB.Queryx(query, validFrom)
+	if err != nil {
+		return nil, err
+	}
+
+	offers := make([]model.Offer, 0)
+
+	for rows.Next() {
+		var offer model.Offer
+
+		if err := rows.StructScan(&offer); err != nil {
+			log.Fatal(err)
+			return nil, err
+		}
+		offers = append(offers, offer)
+	}
+
+	return offers, nil
 }

@@ -15,12 +15,16 @@
 // Package storage provides storage interfaces and implementations.
 package storage
 
-import "github.com/dominikbraun/foodunit/model"
+import (
+	"github.com/dominikbraun/foodunit/model"
+	"time"
+)
 
 type Offer interface {
 	Entity
 	Store(offer *model.Offer) error
 	Find(id uint64) (model.Offer, error)
+	FindValidFrom(from time.Time) ([]model.Offer, error)
 }
 
 type Order interface {
