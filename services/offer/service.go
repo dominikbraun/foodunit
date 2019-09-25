@@ -15,19 +15,67 @@
 // Package offer provides services and types for Offer-related data.
 package offer
 
-import "github.com/dominikbraun/foodunit/storage"
+import (
+	"database/sql"
+	"github.com/dominikbraun/foodunit/model"
+	"github.com/dominikbraun/foodunit/storage"
+	"github.com/pkg/errors"
+	"time"
+)
+
+var (
+	ErrRestaurantNotFound = errors.New("the restaurant could not be found")
+	ErrUserNotFound       = errors.New("the user could not be found")
+)
 
 type Service struct {
-	offers    storage.Offer
-	orders    storage.Order
-	positions storage.Position
+	restaurants storage.Restaurant
+	users       storage.User
+	offers      storage.Offer
+	orders      storage.Order
+	positions   storage.Position
 }
 
-func NewService(o storage.Offer, odr storage.Order, p storage.Position) *Service {
+func NewService(r storage.Restaurant, u storage.User, o storage.Offer, odr storage.Order, p storage.Position) *Service {
 	service := Service{
-		offers:    o,
-		orders:    odr,
-		positions: p,
+		restaurants: r,
+		users:       u,
+		offers:      o,
+		orders:      odr,
+		positions:   p,
 	}
 	return &service
+}
+
+func (s *Service) Create(c *Creation) error {
+	user, err := s.users.Find(c.Owner)
+
+	if err == sql.ErrNoRows {
+		return ErrUserNotFound
+	} else if err != nil {
+		return err
+	}
+
+	restaurant, err := s.restaurants.Find(c.Restaurant)
+
+	if err == sql.ErrNoRows {
+		return ErrRestaurantNotFound
+	} else if err != nil {
+		return err
+	}
+
+	offer := model.Offer{
+		Owner:       user,
+		Restaurant:  restaurant,
+		ValidFrom:   c.ValidFrom,
+		ValidTo:     c.ValidTo,
+		Responsible: user,
+		IsPlaced:    false,
+		// ToDo: Set this value to NULL since ReadyAt isn't known at this point
+		ReadyAt:       time.Now(),
+		PaypalEnabled: c.PaypalEnabled,
+	}
+
+	err = s.offers.Store(&offer)
+	return err
 }
