@@ -56,8 +56,24 @@ func (u *User) Drop() error {
 	return err
 }
 
+func (u *User) Store(user *model.User) error {
+	query := `
+INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created) 
+VALUES (?, ?, ?, ?, ?, ?, ?)`
+
+	created := user.Created.Format("2006-01-02 15:04:05")
+	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+
+	return err
+}
+
 func (u *User) Find(id uint64) (model.User, error) {
-	panic("implement me")
+	query := `SELECT * FROM users WHERE id = ?`
+
+	var user model.User
+	err := u.DB.QueryRowx(query, id).StructScan(&user)
+
+	return user, err
 }
 
 func (u *User) FindByMailAddr(mailAddr string) (model.User, error) {
@@ -82,15 +98,4 @@ func (u *User) MailExists(mailAddr string) (bool, error) {
 	}
 
 	return true, nil
-}
-
-func (u *User) Store(user *model.User) error {
-	query := `
-INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created) 
-VALUES (?, ?, ?, ?, ?, ?, ?)`
-
-	created := user.Created.Format("2006-01-02 15:04:05")
-	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
-
-	return err
 }

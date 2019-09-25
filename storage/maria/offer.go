@@ -56,6 +56,23 @@ func (o *Offer) Drop() error {
 	return err
 }
 
+func (o *Offer) Store(offer *model.Offer) error {
+	query := `
+INSERT INTO offers (owner_user_id, restaurant_id, valid_from, valid_to, responsible_user_id, is_placed, ready_at, paypal_enabled) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+
+	validFrom := offer.ValidFrom.Format("2006-01-02 15:04:05")
+	validTo := offer.ValidTo.Format("2006-01-02 15:04:05")
+
+	// ToDo: Make ready_at column nullable and handle NULL in model
+	readyAt := offer.ReadyAt.Format("2006-01-02 15:04:05")
+
+	// ToDo: Clarify if all child struct fields need to be set
+	_, err := o.DB.Exec(query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo, offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled)
+
+	return err
+}
+
 func (o *Offer) Find(id uint64) (model.Offer, error) {
 	panic("implement me")
 }

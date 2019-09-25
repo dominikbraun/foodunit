@@ -19,6 +19,7 @@ import "github.com/dominikbraun/foodunit/model"
 
 type Offer interface {
 	Entity
+	Store(offer *model.Offer) error
 	Find(id uint64) (model.Offer, error)
 }
 
