@@ -101,9 +101,9 @@ WHERE o.id = ?`
 func (o *Offer) FindValidFrom(from time.Time) ([]model.Offer, error) {
 	query := `
 SELECT o.id, valid_from, valid_to, is_placed, ready_at, paypal_enabled,
-	u.name as "owner_user_id.name",
-	r.name as "restaurant_id.name",
-	u2.name as "responsible_user_id.name"
+	u.id as "owner_user_id.id", u.name as "owner_user_id.name",
+	r.id as "restaurant_id.id", r.name as "restaurant_id.name",
+	u2.id as "responsible_user_id.id", u2.name as "responsible_user_id.name"
 FROM offers o
 INNER JOIN users u
 ON u.id = o.owner_user_id
