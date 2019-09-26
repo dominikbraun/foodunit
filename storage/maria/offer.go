@@ -18,7 +18,6 @@ package maria
 import (
 	"github.com/dominikbraun/foodunit/model"
 	"github.com/jmoiron/sqlx"
-	"log"
 	"time"
 )
 
@@ -127,7 +126,6 @@ AND is_placed = 0`
 		var offer model.Offer
 
 		if err := rows.StructScan(&offer); err != nil {
-			log.Fatal(err)
 			return nil, err
 		}
 		offers = append(offers, offer)
