@@ -42,12 +42,12 @@ type Restaurant struct {
 }
 
 type View struct {
-	ID            uint64    `db:"id"`
-	Owner         User      `db:"owner"`
-	ValidFrom     time.Time `db:"valid_from"`
-	ValidTo       time.Time `db:"valid_to"`
-	Responsible   User      `db:"responsible_user_id"`
-	IsPlaced      bool      `db:"is_placed"`
-	ReadyAt       time.Time `db:"ready_at"`
-	PaypalEnabled bool      `db:"paypal_enabled"`
+	ID            uint64    `json:"id"`
+	Owner         User      `json:"owner"`
+	ValidFrom     time.Time `json:"valid_from"`
+	ValidTo       time.Time `json:"valid_to"`
+	Responsible   User      `json:"responsible_user_id"`
+	IsPlaced      bool      `json:"is_placed"`
+	ReadyAt       time.Time `json:"ready_at"`
+	PaypalEnabled bool      `json:"paypal_enabled"`
 }
