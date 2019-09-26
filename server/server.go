@@ -20,6 +20,7 @@ import (
 	"github.com/dominikbraun/foodunit/controllers/rest"
 	"github.com/dominikbraun/foodunit/services/dish"
 	"github.com/dominikbraun/foodunit/services/offer"
+	"github.com/dominikbraun/foodunit/services/order"
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/dominikbraun/foodunit/services/user"
 	"github.com/dominikbraun/foodunit/session"
@@ -62,6 +63,7 @@ type Server struct {
 	dishService       *dish.Service
 	userService       *user.Service
 	offerService      *offer.Service
+	orderService      *order.Service
 
 	controller *rest.Controller
 }
@@ -89,8 +91,11 @@ func New(config *Config) (*Server, error) {
 	s.dishService = dish.NewService(s.dishes, s.characteristics, s.variants)
 	s.userService = user.NewService(s.users)
 	s.offerService = offer.NewService(s.restaurants, s.users, s.offers, s.orders, s.positions)
+	s.orderService = order.NewService(s.orders, s.dishes, s.characteristics, s.variants)
 
-	s.controller = rest.NewController(s.restaurantService, s.dishService, s.userService, s.offerService)
+	s.controller = rest.NewController(
+		s.restaurantService, s.dishService, s.userService, s.offerService, s.orderService,
+	)
 
 	s.mountRoutes()
 

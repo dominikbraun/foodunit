@@ -18,6 +18,7 @@ package rest
 import (
 	"github.com/dominikbraun/foodunit/services/dish"
 	"github.com/dominikbraun/foodunit/services/offer"
+	"github.com/dominikbraun/foodunit/services/order"
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/dominikbraun/foodunit/services/user"
 	"github.com/pkg/errors"
@@ -35,14 +36,16 @@ type Controller struct {
 	dishService       *dish.Service
 	userService       *user.Service
 	offerService      *offer.Service
+	orderService      *order.Service
 }
 
-func NewController(r *restaurant.Service, d *dish.Service, u *user.Service, o *offer.Service) *Controller {
+func NewController(r *restaurant.Service, d *dish.Service, u *user.Service, o *offer.Service, odr *order.Service) *Controller {
 	controller := Controller{
 		restaurantService: r,
 		dishService:       d,
 		userService:       u,
 		offerService:      o,
+		orderService:      odr,
 	}
 	return &controller
 }
