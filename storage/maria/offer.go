@@ -62,7 +62,7 @@ func (o *Offer) Store(offer *model.Offer) error {
 	query := `
 INSERT INTO offers (
 	owner_user_id, restaurant_id, valid_from, valid_to,
-    responsible_user_id, is_placed, ready_at, paypal_enabled
+	responsible_user_id, is_placed, ready_at, paypal_enabled
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 
 	validFrom := offer.ValidFrom.Format("2006-01-02 15:04:05")
