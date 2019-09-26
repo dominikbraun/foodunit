@@ -25,12 +25,13 @@ func (s *Server) mountRoutes() {
 
 	r.Use(s.session.LoadAndSave)
 
-	r.With(middleware.Authenticate(s.session)).Route("/restaurants", func(r chi.Router) {
-		r.Route("/{id}", func(r chi.Router) {
-			r.Get("/info", s.controller.RestaurantInfo())
-			r.Get("/menu", s.controller.RestaurantMenu())
+	r.With(middleware.Authenticate(s.session)).
+		Route("/restaurants", func(r chi.Router) {
+			r.Route("/{id}", func(r chi.Router) {
+				r.Get("/info", s.controller.RestaurantInfo())
+				r.Get("/menu", s.controller.RestaurantMenu())
+			})
 		})
-	})
 
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/register", s.controller.RegisterUser())
@@ -47,7 +48,7 @@ func (s *Server) mountRoutes() {
 				r.Get("/", s.controller.GetOffer())
 
 				r.Route("/orders", func(r chi.Router) {
-					r.Get("/all", nil)
+					r.Get("/all", s.controller.AllOrders())
 					r.Get("/mine", nil)
 					r.Post("/mine", nil)
 				})
