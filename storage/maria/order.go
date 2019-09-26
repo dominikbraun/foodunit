@@ -37,7 +37,7 @@ CREATE TABLE orders (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user_id BIGINT UNSIGNED NOT NULL,
 	is_paid BOOLEAN NOT NULL,
-	order_id BIGINT UNSIGNED NOT NULL
+	offer_id BIGINT UNSIGNED NOT NULL
 )`
 
 	_, err := o.DB.Exec(query)
@@ -52,5 +52,28 @@ func (o *Order) Drop() error {
 }
 
 func (o *Order) FindByOffer(offerID uint64) ([]model.Order, error) {
-	panic("implement me")
+	query := `
+SELECT o.id, o.is_paid u.id as "user_id.id", u.name as "user_id.name"
+FROM offers o
+INNER JOIN users u
+ON u.id = o.user_id
+WHERE o.offer_id = ?`
+
+	rows, err := o.DB.Queryx(query, offerID)
+	if err != nil {
+		return nil, err
+	}
+
+	orders := make([]model.Order, 0)
+
+	for rows.Next() {
+		var order model.Order
+
+		if err := rows.StructScan(&order); err != nil {
+			return nil, err
+		}
+		orders = append(orders, order)
+	}
+
+	return orders, nil
 }
