@@ -12,32 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package storage provides storage interfaces and implementations.
-package storage
+// Package maria provides storage implementations for MariaDB.
+package maria
 
-import (
-	"github.com/dominikbraun/foodunit/model"
-	"time"
-)
+import "github.com/jmoiron/sqlx"
 
-type Offer interface {
-	Entity
-	Store(offer *model.Offer) error
-	Find(id uint64) (model.Offer, error)
-	FindValidFrom(from time.Time) ([]model.Offer, error)
+type Configuration struct {
+	DB *sqlx.DB
 }
 
-type Order interface {
-	Entity
-	FindByOffer(offerID uint64) ([]model.Order, error)
+func NewConfiguration(db *sqlx.DB) *Configuration {
+	configuration := Configuration{
+		DB: db,
+	}
+	return &configuration
 }
 
-type Position interface {
-	Entity
-	FindByOrder(orderID uint64) ([]model.Position, error)
+func (c Configuration) Create() error {
+	panic("implement me")
 }
 
-type Configuration interface {
-	Entity
-	FindByPosition(positionID uint64) ([]model.Configuration, error)
+func (c Configuration) Drop() error {
+	panic("implement me")
 }

@@ -38,8 +38,15 @@ type Order struct {
 }
 
 type Position struct {
-	ID          uint64 `db:"id"`
-	Dish        Dish   `db:"dish_id"`
-	Alternative Dish   `db:"alternative_dish_id"`
-	Note        string `db:"note"`
+	ID             uint64          `db:"id"`
+	Dish           Dish            `db:"dish_id"`
+	Alternative    Dish            `db:"alternative_dish_id"`
+	Note           string          `db:"note"`
+	Configurations []Configuration `db:"configurations"`
+}
+
+type Configuration struct {
+	ID             uint64         `db:"id"`
+	Characteristic Characteristic `db:"characteristic_id"`
+	Variants       []Variant      `db:"variants"`
 }
