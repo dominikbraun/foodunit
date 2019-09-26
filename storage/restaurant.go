@@ -29,6 +29,7 @@ type Category interface {
 
 type Dish interface {
 	Entity
+	Find(id uint64) (model.Dish, error)
 	FindByCategory(categoryID uint64) ([]model.Dish, error)
 }
 

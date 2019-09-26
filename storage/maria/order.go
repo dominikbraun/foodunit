@@ -53,7 +53,7 @@ func (o *Order) Drop() error {
 
 func (o *Order) FindByOffer(offerID uint64) ([]model.Order, error) {
 	query := `
-SELECT o.id, o.is_paid u.id as "user_id.id", u.name as "user_id.name"
+SELECT o.id, o.is_paid, u.id as "user_id.id", u.name as "user_id.name"
 FROM offers o
 INNER JOIN users u
 ON u.id = o.user_id

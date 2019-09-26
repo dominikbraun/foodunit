@@ -52,5 +52,30 @@ func (p *Position) Drop() error {
 }
 
 func (p *Position) FindByOrder(orderID uint64) ([]model.Position, error) {
-	panic("implement me")
+	query := `
+SELECT p.id, d.id as "dish_id.id", d2.id as "alternative_dish_id.id", note
+FROM positions p
+INNER JOIN dishes d
+ON d.id = p.dish_id
+INNER JOIN dishes d2
+ON d2.id = p.alternative_dish_id
+WHERE p.order_id = ?`
+
+	rows, err := p.DB.Queryx(query, orderID)
+	if err != nil {
+		return nil, err
+	}
+
+	positions := make([]model.Position, 0)
+
+	for rows.Next() {
+		var position model.Position
+
+		if err := rows.StructScan(&position); err != nil {
+			return nil, err
+		}
+		positions = append(positions, position)
+	}
+
+	return positions, nil
 }
