@@ -58,6 +58,7 @@ type Server struct {
 	offers          storage.Offer
 	orders          storage.Order
 	positions       storage.Position
+	configurations  storage.Configuration
 
 	restaurantService *restaurant.Service
 	dishService       *dish.Service
@@ -86,12 +87,13 @@ func New(config *Config) (*Server, error) {
 	s.offers = maria.NewOffer(s.db)
 	s.orders = maria.NewOrder(s.db)
 	s.positions = maria.NewPosition(s.db)
+	s.configurations = maria.NewConfiguration(s.db)
 
 	s.restaurantService = restaurant.NewService(s.restaurants, s.categories, s.dishes)
 	s.dishService = dish.NewService(s.dishes, s.characteristics, s.variants)
 	s.userService = user.NewService(s.users)
 	s.offerService = offer.NewService(s.restaurants, s.users, s.offers, s.orders, s.positions)
-	s.orderService = order.NewService(s.orders, s.positions, s.dishes, s.characteristics, s.variants)
+	s.orderService = order.NewService(s.orders, s.positions, s.configurations, s.dishes, s.characteristics, s.variants)
 
 	s.controller = rest.NewController(
 		s.restaurantService, s.dishService, s.userService, s.offerService, s.orderService,

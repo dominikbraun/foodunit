@@ -28,17 +28,19 @@ var (
 type Service struct {
 	orders          storage.Order
 	positions       storage.Position
+	configurations  storage.Configuration
 	dishes          storage.Dish
 	characteristics storage.Characteristic
 	variants        storage.Variant
 }
 
-func NewService(o storage.Order, p storage.Position, d storage.Dish, c storage.Characteristic, v storage.Variant) *Service {
+func NewService(o storage.Order, p storage.Position, c storage.Configuration, d storage.Dish, chr storage.Characteristic, v storage.Variant) *Service {
 	service := Service{
 		orders:          o,
 		positions:       p,
+		configurations:  c,
 		dishes:          d,
-		characteristics: c,
+		characteristics: chr,
 		variants:        v,
 	}
 	return &service

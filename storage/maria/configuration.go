@@ -15,7 +15,10 @@
 // Package maria provides storage implementations for MariaDB.
 package maria
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/dominikbraun/foodunit/model"
+	"github.com/jmoiron/sqlx"
+)
 
 type Configuration struct {
 	DB *sqlx.DB
@@ -28,10 +31,14 @@ func NewConfiguration(db *sqlx.DB) *Configuration {
 	return &configuration
 }
 
-func (c Configuration) Create() error {
+func (c *Configuration) Create() error {
 	panic("implement me")
 }
 
-func (c Configuration) Drop() error {
+func (c *Configuration) Drop() error {
+	panic("implement me")
+}
+
+func (c *Configuration) FindByPosition(positionID uint64) ([]model.Configuration, error) {
 	panic("implement me")
 }
