@@ -41,7 +41,7 @@ func (c *Controller) AllOrders() http.HandlerFunc {
 			return
 		} else if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, ErrProcessingFailed)
+			render.JSON(w, r, ErrProcessingFailed.Error())
 			return
 		}
 
