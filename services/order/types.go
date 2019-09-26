@@ -37,11 +37,7 @@ type Position struct {
 type Dish struct {
 	ID              uint64           `json:"id"`
 	Name            string           `json:"name"`
-	Description     string           `json:"description"`
 	Price           uint             `json:"price"`
-	IsUncertain     bool             `json:"is_uncertain"`
-	IsHealthy       bool             `json:"is_healthy"`
-	IsVegetarian    bool             `json:"is_vegetarian"`
 	Characteristics []Characteristic `json:"characteristics"`
 }
 

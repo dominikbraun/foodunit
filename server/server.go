@@ -91,7 +91,7 @@ func New(config *Config) (*Server, error) {
 	s.dishService = dish.NewService(s.dishes, s.characteristics, s.variants)
 	s.userService = user.NewService(s.users)
 	s.offerService = offer.NewService(s.restaurants, s.users, s.offers, s.orders, s.positions)
-	s.orderService = order.NewService(s.orders, s.dishes, s.characteristics, s.variants)
+	s.orderService = order.NewService(s.orders, s.positions, s.dishes, s.characteristics, s.variants)
 
 	s.controller = rest.NewController(
 		s.restaurantService, s.dishService, s.userService, s.offerService, s.orderService,

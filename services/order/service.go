@@ -15,21 +15,93 @@
 // Package order provides services and types for Order-related data.
 package order
 
-import "github.com/dominikbraun/foodunit/storage"
+import (
+	"database/sql"
+	"github.com/dominikbraun/foodunit/storage"
+	"github.com/pkg/errors"
+)
+
+var (
+	ErrOfferNotFound = errors.New("the offer could not be found")
+)
 
 type Service struct {
 	orders          storage.Order
+	positions       storage.Position
 	dishes          storage.Dish
 	characteristics storage.Characteristic
 	variants        storage.Variant
 }
 
-func NewService(o storage.Order, d storage.Dish, c storage.Characteristic, v storage.Variant) *Service {
+func NewService(o storage.Order, p storage.Position, d storage.Dish, c storage.Characteristic, v storage.Variant) *Service {
 	service := Service{
 		orders:          o,
+		positions:       p,
 		dishes:          d,
 		characteristics: c,
 		variants:        v,
 	}
 	return &service
+}
+
+func (s *Service) GetAll(offerID uint64) ([]Order, error) {
+	orders, err := s.orders.FindByOffer(offerID)
+
+	if err == sql.ErrNoRows {
+		return []Order{}, ErrOfferNotFound
+	} else if err != nil {
+		return []Order{}, err
+	}
+
+	allOrders := make([]Order, 0)
+
+	for _, o := range orders {
+		order := Order{
+			ID:     o.ID,
+			User:   User{Name: o.User.Name},
+			IsPaid: o.IsPaid,
+			Total:  0,
+		}
+
+		positions, err := s.positions.FindByOrder(o.ID)
+
+		if err == sql.ErrNoRows {
+			continue
+		} else if err != nil {
+			return []Order{}, err
+		}
+
+		for _, p := range positions {
+			dish, err := s.dishes.Find(p.Dish.ID)
+			alternative, err := s.dishes.Find(p.Alternative.ID)
+
+			if err == sql.ErrNoRows {
+				continue
+			} else if err != nil {
+				return []Order{}, err
+			}
+
+			position := Position{
+				ID: p.ID,
+				Dish: Dish{
+					ID:    dish.ID,
+					Name:  dish.Name,
+					Price: dish.Price,
+				},
+				Alternative: Dish{
+					ID:    alternative.ID,
+					Name:  alternative.Name,
+					Price: alternative.Price,
+				},
+				Note: p.Note,
+			}
+
+			order.Positions = append(order.Positions, position)
+			order.Total += dish.Price
+		}
+
+		allOrders = append(allOrders, order)
+	}
+
+	return allOrders, nil
 }
