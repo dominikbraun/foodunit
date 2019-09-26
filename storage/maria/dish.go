@@ -56,7 +56,10 @@ func (d *Dish) Drop() error {
 }
 
 func (d *Dish) FindByCategory(categoryID uint64) ([]model.Dish, error) {
-	query := `SELECT id, name, description, price, is_uncertain, is_healthy, is_vegetarian FROM dishes WHERE category_id = ?`
+	query := `
+SELECT id, name, description, price, is_uncertain, is_healthy, is_vegetarian
+FROM dishes
+WHERE category_id = ?`
 
 	rows, err := d.DB.Queryx(query, categoryID)
 	if err != nil {

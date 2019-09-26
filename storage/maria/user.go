@@ -58,8 +58,9 @@ func (u *User) Drop() error {
 
 func (u *User) Store(user *model.User) error {
 	query := `
-INSERT INTO users (mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created) 
-VALUES (?, ?, ?, ?, ?, ?, ?)`
+INSERT INTO users (
+    mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created
+) VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format("2006-01-02 15:04:05")
 	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
