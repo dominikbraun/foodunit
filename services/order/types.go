@@ -28,21 +28,27 @@ type User struct {
 }
 
 type Position struct {
-	ID          uint64 `json:"id"`
-	Dish        Dish   `json:"dish_id"`
-	Alternative Dish   `json:"alternative_dish_id"`
-	Note        string `json:"note"`
+	ID             uint64          `json:"id"`
+	Dish           Dish            `json:"dish_id"`
+	Alternative    Dish            `json:"alternative_dish_id"`
+	Note           string          `json:"note"`
+	Configurations []Configuration `json:"configurations"`
 }
 
 type Dish struct {
-	ID              uint64           `json:"id"`
-	Name            string           `json:"name"`
-	Price           uint             `json:"price"`
-	Characteristics []Characteristic `json:"characteristics"`
+	ID    uint64 `json:"id"`
+	Name  string `json:"name"`
+	Price uint   `json:"price"`
 }
 
-type Characteristic struct {
-	Name     string   `json:"name"`
-	Multiple bool     `json:"multiple"`
-	Values   []string `json:"values"`
+type Configuration struct {
+	CharacteristicName string    `json:"characteristic_name"`
+	Multiple           bool      `json:"multiple"`
+	Variants           []Variant `json:"variants"`
+}
+
+type Variant struct {
+	ID    uint64 `db:"id"`
+	Value string `db:"value"`
+	Price uint   `db:"price"`
 }

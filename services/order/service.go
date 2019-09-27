@@ -77,10 +77,44 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 			dish, err := s.dishes.Find(p.Dish.ID)
 			alternative, err := s.dishes.Find(p.Alternative.ID)
 
+			configurations, err := s.configurations.FindByPosition(p.ID)
+
 			if err == sql.ErrNoRows {
 				continue
 			} else if err != nil {
 				return []Order{}, err
+			}
+
+			positionConfigurations := make([]Configuration, 0)
+
+			for _, c := range configurations {
+				variants, err := s.configurations.FindVariants(c.ID)
+
+				if err == sql.ErrNoRows {
+					continue
+				} else if err != nil {
+					return []Order{}, err
+				}
+
+				configurationVariants := make([]Variant, 0)
+
+				for _, v := range variants {
+					variant := Variant{
+						ID:    v.ID,
+						Value: v.Value,
+						Price: v.Price,
+					}
+
+					configurationVariants = append(configurationVariants, variant)
+				}
+
+				configuration := Configuration{
+					CharacteristicName: c.Characteristic.Name,
+					Multiple:           c.Characteristic.Multiple,
+					Variants:           configurationVariants,
+				}
+
+				positionConfigurations = append(positionConfigurations, configuration)
 			}
 
 			position := Position{
@@ -95,7 +129,8 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 					Name:  alternative.Name,
 					Price: alternative.Price,
 				},
-				Note: p.Note,
+				Note:           p.Note,
+				Configurations: positionConfigurations,
 			}
 
 			order.Positions = append(order.Positions, position)
