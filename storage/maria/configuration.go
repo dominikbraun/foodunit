@@ -59,7 +59,8 @@ func (c *Configuration) Drop() error {
 
 func (c *Configuration) FindByPosition(positionID uint64) ([]model.Configuration, error) {
 	query := `
-SELECT conf.id, c.id as "characteristic_id.id", c.name as "characteristic_id.name"
+SELECT conf.id,
+	c.id as "characteristic_id.id", c.name as "characteristic_id.name", c.multiple as "characteristic_id.multiple"
 FROM configurations conf
 INNER JOIN characteristics c
 ON c.id = conf.characteristic_id
