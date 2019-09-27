@@ -23,6 +23,7 @@ import (
 
 var (
 	ErrOfferNotFound = errors.New("the offer could not be found")
+	ErrOrderNotFound = errors.New("the order could not be found")
 )
 
 type Service struct {
@@ -76,45 +77,12 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 		for _, p := range positions {
 			dish, err := s.dishes.Find(p.Dish.ID)
 			alternative, err := s.dishes.Find(p.Alternative.ID)
-
-			configurations, err := s.configurations.FindByPosition(p.ID)
+			configurations, err := s.loadConfigurations(p.ID)
 
 			if err == sql.ErrNoRows {
 				continue
 			} else if err != nil {
 				return []Order{}, err
-			}
-
-			positionConfigurations := make([]Configuration, 0)
-
-			for _, c := range configurations {
-				variants, err := s.configurations.FindVariants(c.ID)
-
-				if err == sql.ErrNoRows {
-					continue
-				} else if err != nil {
-					return []Order{}, err
-				}
-
-				configurationVariants := make([]Variant, 0)
-
-				for _, v := range variants {
-					variant := Variant{
-						ID:    v.ID,
-						Value: v.Value,
-						Price: v.Price,
-					}
-
-					configurationVariants = append(configurationVariants, variant)
-				}
-
-				configuration := Configuration{
-					CharacteristicName: c.Characteristic.Name,
-					Multiple:           c.Characteristic.Multiple,
-					Variants:           configurationVariants,
-				}
-
-				positionConfigurations = append(positionConfigurations, configuration)
 			}
 
 			position := Position{
@@ -130,7 +98,7 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 					Price: alternative.Price,
 				},
 				Note:           p.Note,
-				Configurations: positionConfigurations,
+				Configurations: configurations,
 			}
 
 			order.Positions = append(order.Positions, position)
@@ -141,4 +109,104 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 	}
 
 	return allOrders, nil
+}
+
+func (s *Service) Get(offerID, userID uint64) (Order, error) {
+	orderEntry, err := s.orders.FindByOfferAndUser(offerID, userID)
+
+	if err == sql.ErrNoRows {
+		return Order{}, ErrOrderNotFound
+	} else if err != nil {
+		return Order{}, err
+	}
+
+	order := Order{
+		ID:     orderEntry.ID,
+		User:   User{Name: orderEntry.User.Name},
+		IsPaid: orderEntry.IsPaid,
+		Total:  0,
+	}
+
+	positions, err := s.positions.FindByOrder(o.ID)
+
+	if err == sql.ErrNoRows && err != nil {
+		return Order{}, err
+	}
+
+	for _, p := range positions {
+		dish, err := s.dishes.Find(p.Dish.ID)
+		alternative, err := s.dishes.Find(p.Alternative.ID)
+		configurations, err := s.loadConfigurations(p.ID)
+
+		if err == sql.ErrNoRows {
+			continue
+		} else if err != nil {
+			return Order{}, err
+		}
+
+		position := Position{
+			ID: p.ID,
+			Dish: Dish{
+				ID:    dish.ID,
+				Name:  dish.Name,
+				Price: dish.Price,
+			},
+			Alternative: Dish{
+				ID:    alternative.ID,
+				Name:  alternative.Name,
+				Price: alternative.Price,
+			},
+			Note:           p.Note,
+			Configurations: configurations,
+		}
+
+		order.Positions = append(order.Positions, position)
+		order.Total += dish.Price
+	}
+
+	return order, nil
+}
+
+func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error) {
+	configs, err := s.configurations.FindByPosition(positionID)
+
+	if err == sql.ErrNoRows {
+		return []Configuration{}, nil
+	} else if err != nil {
+		return []Configuration{}, err
+	}
+
+	configurations := make([]Configuration, 0)
+
+	for _, c := range configs {
+		variants, err := s.configurations.FindVariants(c.ID)
+
+		if err == sql.ErrNoRows {
+			continue
+		} else if err != nil {
+			return []Configuration{}, err
+		}
+
+		configurationVariants := make([]Variant, 0)
+
+		for _, v := range variants {
+			variant := Variant{
+				ID:    v.ID,
+				Value: v.Value,
+				Price: v.Price,
+			}
+
+			configurationVariants = append(configurationVariants, variant)
+		}
+
+		configuration := Configuration{
+			CharacteristicName: c.Characteristic.Name,
+			Multiple:           c.Characteristic.Multiple,
+			Variants:           configurationVariants,
+		}
+
+		configurations = append(configurations, configuration)
+	}
+
+	return configurations, nil
 }
