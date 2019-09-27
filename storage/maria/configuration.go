@@ -32,13 +32,55 @@ func NewConfiguration(db *sqlx.DB) *Configuration {
 }
 
 func (c *Configuration) Create() error {
-	panic("implement me")
+	query := `
+CREATE TABLE configurations (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	position_id BIGINT UNSIGNED NOT NULL,
+	characteristic_id BIGINT UNSIGNED NOT NULL
+)`
+	_, err := c.DB.Exec(query)
+
+	query = `
+CREATE TABLE configurations_variants (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	configuration_id BIGINT UNSIGNED NOT NULL,
+	variant_id BIGINT UNSIGNED NOT NULL
+)`
+
+	return err
 }
 
 func (c *Configuration) Drop() error {
-	panic("implement me")
+	query := `DROP TABLE IF EXISTS configurations, configurations_variants`
+	_, err := c.DB.Exec(query)
+
+	return err
 }
 
 func (c *Configuration) FindByPosition(positionID uint64) ([]model.Configuration, error) {
-	panic("implement me")
+	query := `
+SELECT c.id as "configuration_id.id", c.name as "configuration_id.name"
+FROM configurations conf
+INNER JOIN characteristics c
+ON c.id = conf.characteristic_id
+WHERE conf.position_id = ?`
+
+	rows, err := c.DB.Queryx(query, positionID)
+	if err != nil {
+		return nil, err
+	}
+
+	configurations := make([]model.Configuration, 0)
+
+	for rows.Next() {
+		var configuration model.Configuration
+
+		if err := rows.StructScan(&configuration); err != nil {
+			return nil, err
+		}
+
+		configurations = append(configurations, configuration)
+	}
+
+	return configurations, nil
 }
