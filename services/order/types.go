@@ -17,7 +17,7 @@ package order
 
 type Order struct {
 	ID        uint64     `json:"id"`
-	User      User       `json:"user_id"`
+	User      User       `json:"user"`
 	Positions []Position `json:"positions"`
 	IsPaid    bool       `json:"is_paid"`
 	Total     uint       `json:"total"`
@@ -29,8 +29,8 @@ type User struct {
 
 type Position struct {
 	ID             uint64          `json:"id"`
-	Dish           Dish            `json:"dish_id"`
-	Alternative    Dish            `json:"alternative_dish_id"`
+	Dish           Dish            `json:"dish"`
+	Alternative    Dish            `json:"alternative_dish"`
 	Note           string          `json:"note"`
 	Configurations []Configuration `json:"configurations"`
 }

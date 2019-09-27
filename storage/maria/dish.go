@@ -56,7 +56,7 @@ func (d *Dish) Drop() error {
 }
 
 func (d *Dish) Find(id uint64) (model.Dish, error) {
-	query := `SELECT id, name, description, is_uncertain, is_healthy, is_vegetarian FROM dishes where id = ?`
+	query := `SELECT id, name, description, price, is_uncertain, is_healthy, is_vegetarian FROM dishes where id = ?`
 
 	var dish model.Dish
 	err := d.DB.QueryRowx(query, id).StructScan(&dish)
