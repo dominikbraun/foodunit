@@ -77,3 +77,18 @@ WHERE o.offer_id = ?`
 
 	return orders, nil
 }
+
+func (o *Order) FindByOfferAndUser(offerID, userID uint64) (model.Order, error) {
+	query := `
+SELECT o.id, o.is_paid, u.id as "user_id.id", u.name as "user_id.name"
+FROM orders o
+INNER JOIN users u
+ON u.id = o.user_id
+WHERE o.offer_id = ?
+AND o.user_id = ?`
+
+	var order model.Order
+	err := o.DB.QueryRowx(query, offerID, userID).StructScan(&order)
+
+	return order, err
+}

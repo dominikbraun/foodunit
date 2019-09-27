@@ -30,6 +30,7 @@ type Offer interface {
 type Order interface {
 	Entity
 	FindByOffer(offerID uint64) ([]model.Order, error)
+	FindByOfferAndUser(offerID, userID uint64) (model.Order, error)
 }
 
 type Position interface {
