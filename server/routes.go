@@ -49,7 +49,7 @@ func (s *Server) mountRoutes() {
 
 				r.Route("/orders", func(r chi.Router) {
 					r.Get("/all", s.controller.AllOrders())
-					r.Get("/mine", nil)
+					r.Get("/mine", s.controller.GetOrder(s.session))
 					r.Post("/mine", nil)
 				})
 			})

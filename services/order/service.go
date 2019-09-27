@@ -120,6 +120,8 @@ func (s *Service) Get(offerID, userID uint64) (Order, error) {
 		return Order{}, err
 	}
 
+	// ToDo: This algorithm is the same as above and should be outsourced.
+
 	order := Order{
 		ID:     orderEntry.ID,
 		User:   User{Name: orderEntry.User.Name},
@@ -127,7 +129,7 @@ func (s *Service) Get(offerID, userID uint64) (Order, error) {
 		Total:  0,
 	}
 
-	positions, err := s.positions.FindByOrder(o.ID)
+	positions, err := s.positions.FindByOrder(orderEntry.ID)
 
 	if err == sql.ErrNoRows && err != nil {
 		return Order{}, err

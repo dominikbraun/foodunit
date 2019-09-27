@@ -17,6 +17,7 @@ package rest
 
 import (
 	"github.com/dominikbraun/foodunit/services/order"
+	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"net/http"
@@ -47,6 +48,44 @@ func (c *Controller) AllOrders() http.HandlerFunc {
 
 		w.WriteHeader(http.StatusOK)
 		render.JSON(w, r, orders)
+		return
+	}
+}
+
+func (c *Controller) GetOrder(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		userID, ok := session.Get(r.Context(), "uid").(uint64)
+		if !ok {
+			w.WriteHeader(http.StatusForbidden)
+			render.JSON(w, r, ErrForbiddenAction.Error())
+			return
+		}
+
+		userOrder, err := c.orderService.Get(uint64(offerID), userID)
+
+		if err != nil {
+			if err == order.ErrOfferNotFound || err == order.ErrOrderNotFound {
+				w.WriteHeader(http.StatusNotFound)
+				render.JSON(w, r, err.Error())
+				return
+			} else {
+				// ToDo: Handle all 500's like this (printing ErrProcessingFailed)
+				w.WriteHeader(http.StatusInternalServerError)
+				render.JSON(w, r, ErrProcessingFailed.Error())
+				return
+			}
+		}
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, userOrder)
 		return
 	}
 }
