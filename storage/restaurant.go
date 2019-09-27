@@ -21,24 +21,3 @@ type Restaurant interface {
 	Entity
 	Find(id uint64) (model.Restaurant, error)
 }
-
-type Category interface {
-	Entity
-	FindByRestaurant(restaurantID uint64) ([]model.Category, error)
-}
-
-type Dish interface {
-	Entity
-	Find(id uint64) (model.Dish, error)
-	FindByCategory(categoryID uint64) ([]model.Dish, error)
-}
-
-type Characteristic interface {
-	Entity
-	FindByDish(dishID uint64) ([]model.Characteristic, error)
-}
-
-type Variant interface {
-	Entity
-	FindByCharacteristic(characteristicID uint64) ([]model.Variant, error)
-}

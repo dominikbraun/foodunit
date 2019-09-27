@@ -15,14 +15,10 @@
 // Package storage provides storage interfaces and implementations.
 package storage
 
-import (
-	"github.com/dominikbraun/foodunit/model"
-	"time"
-)
+import "github.com/dominikbraun/foodunit/model"
 
-type Offer interface {
+type Configuration interface {
 	Entity
-	Store(offer *model.Offer) error
-	Find(id uint64) (model.Offer, error)
-	FindValidFrom(from time.Time) ([]model.Offer, error)
+	FindByPosition(positionID uint64) ([]model.Configuration, error)
+	FindVariants(id uint64) ([]model.Variant, error)
 }
