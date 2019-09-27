@@ -40,4 +40,5 @@ type Position interface {
 type Configuration interface {
 	Entity
 	FindByPosition(positionID uint64) ([]model.Configuration, error)
+	FindVariants(id uint64) ([]model.Variant, error)
 }

@@ -84,3 +84,29 @@ WHERE conf.position_id = ?`
 
 	return configurations, nil
 }
+
+func (c *Configuration) FindVariants(id uint64) ([]model.Variant, error) {
+	query := `
+SELECT v.id, v.value, v.is_default, v.price
+FROM configuration_variants cv
+INNER JOIN v.id = cv.variant_id
+WHERE cv.configuration_id = ?`
+
+	rows, err := c.DB.Queryx(query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	variants := make([]model.Variant, 0)
+
+	for rows.Next() {
+		var variant model.Variant
+
+		if err := rows.StructScan(&variant); err != nil {
+			return nil, err
+		}
+		variants = append(variants, variant)
+	}
+
+	return variants, nil
+}
