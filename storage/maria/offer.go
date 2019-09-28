@@ -70,8 +70,10 @@ INSERT INTO offers (
 	// ToDo: Make ready_at column nullable and handle NULL in model
 	readyAt := offer.ReadyAt.Format("2006-01-02 15:04:05")
 
-	// ToDo: Clarify if all child struct fields need to be set
-	_, err := o.DB.Exec(query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo, offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled)
+	_, err := o.DB.Exec(
+		query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo,
+		offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled,
+	)
 
 	return err
 }
