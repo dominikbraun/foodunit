@@ -176,3 +176,25 @@ func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error)
 
 	return configurations, nil
 }
+
+func (s *Service) Update(order *Update) error {
+	_, err := s.orders.FindByOfferAndUser(order.OfferID, order.UserID)
+
+	if err != nil && err != sql.ErrNoRows {
+		return err
+	}
+
+	orderEntry := model.Order{
+		User:   model.User{ID: order.UserID},
+		IsPaid: false,
+	}
+	_, err = s.orders.Store(order.OfferID, &orderEntry)
+
+	if err != nil {
+		return err
+	}
+
+	// ToDo: Store order positions
+
+	return nil
+}

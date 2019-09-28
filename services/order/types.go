@@ -48,7 +48,24 @@ type Configuration struct {
 }
 
 type Variant struct {
-	ID    uint64 `db:"id"`
-	Value string `db:"value"`
-	Price uint   `db:"price"`
+	ID    uint64 `json:"id"`
+	Value string `json:"value"`
+	Price uint   `json:"price"`
+}
+
+type Update struct {
+	OfferID   uint64           `json:"offer_id"`
+	UserID    uint64           `json:"user_id"`
+	Positions []UpdatePosition `json:"positions"`
+}
+
+type UpdatePosition struct {
+	DishID         uint64                `json:"dish_id"`
+	Configurations []UpdateConfiguration `json:"configurations"`
+	Note           string                `json:"note"`
+}
+
+type UpdateConfiguration struct {
+	CharacteristicID uint64   `json:"characteristic_id"`
+	VariantIDs       []uint64 `json:"variants"`
 }
