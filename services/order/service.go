@@ -17,6 +17,7 @@ package order
 
 import (
 	"database/sql"
+	"github.com/dominikbraun/foodunit/model"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
 )
@@ -59,50 +60,9 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 	allOrders := make([]Order, 0)
 
 	for _, o := range orders {
-		order := Order{
-			ID:     o.ID,
-			User:   User{Name: o.User.Name},
-			IsPaid: o.IsPaid,
-			Total:  0,
-		}
-
-		positions, err := s.positions.FindByOrder(o.ID)
-
-		if err == sql.ErrNoRows {
-			continue
-		} else if err != nil {
+		order, err := s.buildOrder(&o)
+		if err != nil {
 			return []Order{}, err
-		}
-
-		for _, p := range positions {
-			dish, err := s.dishes.Find(p.Dish.ID)
-			alternative, err := s.dishes.Find(p.Alternative.ID)
-			configurations, err := s.loadConfigurations(p.ID)
-
-			if err == sql.ErrNoRows {
-				continue
-			} else if err != nil {
-				return []Order{}, err
-			}
-
-			position := Position{
-				ID: p.ID,
-				Dish: Dish{
-					ID:    dish.ID,
-					Name:  dish.Name,
-					Price: dish.Price,
-				},
-				Alternative: Dish{
-					ID:    alternative.ID,
-					Name:  alternative.Name,
-					Price: alternative.Price,
-				},
-				Note:           p.Note,
-				Configurations: configurations,
-			}
-
-			order.Positions = append(order.Positions, position)
-			order.Total += dish.Price
 		}
 
 		allOrders = append(allOrders, order)
@@ -120,8 +80,12 @@ func (s *Service) Get(offerID, userID uint64) (Order, error) {
 		return Order{}, err
 	}
 
-	// ToDo: This algorithm is the same as above and should be outsourced.
+	order, err := s.buildOrder(&orderEntry)
 
+	return order, err
+}
+
+func (s *Service) buildOrder(orderEntry *model.Order) (Order, error) {
 	order := Order{
 		ID:     orderEntry.ID,
 		User:   User{Name: orderEntry.User.Name},
