@@ -51,11 +51,18 @@ func (o *Order) Drop() error {
 	return err
 }
 
-func (o *Order) Store(offerID uint64, order *model.Order) error {
+func (o *Order) Store(offerID uint64, order *model.Order) (uint64, error) {
 	query := `INSERT INTO orders (user_id, id_paid, offer_id) VALUES (?, ?, ?)`
-	_, err := o.DB.Exec(query, order.User.ID, order.IsPaid, offerID)
 
-	return err
+	result, err := o.DB.Exec(query, order.User.ID, order.IsPaid, offerID)
+	if err != nil {
+		return uint64(0), err
+	}
+
+	// ToDo: When does LastInsertId return an error?
+	id, _ := result.LastInsertId()
+
+	return uint64(id), nil
 }
 
 func (o *Order) FindByOffer(offerID uint64) ([]model.Order, error) {
