@@ -3,7 +3,7 @@
 echo "Building FoodUnit binary"
 
 mkdir -p ./.target
-go build -o ./.target/foodunit-server cmd/server/main.go
+GOOS=linux go build -ldflags="-s -w" -o ./.target/foodunit-server cmd/server/main.go
 
 # ToDo: Run FoodUnit as a `foodunit` user
 # echo "Preparing server execution"
