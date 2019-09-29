@@ -12,21 +12,8 @@
 // Package dish provides services and types for sending mails.
 package mail
 
-import "github.com/dominikbraun/foodunit/storage"
-
-type Service struct {
-	sgAPIKey string
-	users    storage.User
-}
-
-func New(sgAPIKey string, u storage.User) *Service {
-	service := Service{
-		sgAPIKey: sgAPIKey,
-		users:    u,
-	}
-	return &service
-}
-
-func Send(settings *Settings) error {
-	panic("implement me")
+type Settings struct {
+	From    string `json:"from"`
+	Subject string `json:"subject"`
+	Body    string `json:"body"`
 }
