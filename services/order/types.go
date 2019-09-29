@@ -68,5 +68,5 @@ type UpdatePosition struct {
 
 type UpdateConfiguration struct {
 	CharacteristicID uint64   `json:"characteristic_id"`
-	VariantIDs       []uint64 `json:"variants"`
+	VariantIDs       []uint64 `json:"variant_ids"`
 }
