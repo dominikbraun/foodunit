@@ -57,6 +57,34 @@ func (c *Configuration) Drop() error {
 	return err
 }
 
+func (c *Configuration) Store(positionID uint64, configuration *model.Configuration) (uint64, error) {
+	query := `INSERT INTO configurations (position_id, characteristic_id) VALUES (?, ?)`
+
+	result, err := c.DB.Exec(query, positionID, configuration.Characteristic.ID)
+	if err != nil {
+		return uint64(0), err
+	}
+
+	// ToDo: When does LastInsertId return an error?
+	id, _ := result.LastInsertId()
+
+	return uint64(id), nil
+}
+
+func (c *Configuration) StoreVariant(configurationID uint64, variant *model.Variant) (uint64, error) {
+	query := `INSERT INTO configurations_variants (configuration_id, variant_id) VALUES (?, ?)`
+
+	result, err := c.DB.Exec(query, configurationID, variant.ID)
+	if err != nil {
+		return uint64(0), err
+	}
+
+	// ToDo: When does LastInsertId return an error?
+	id, _ := result.LastInsertId()
+
+	return uint64(id), nil
+}
+
 func (c *Configuration) FindByPosition(positionID uint64) ([]model.Configuration, error) {
 	query := `
 SELECT conf.id,

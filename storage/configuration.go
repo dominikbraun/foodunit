@@ -19,6 +19,8 @@ import "github.com/dominikbraun/foodunit/model"
 
 type Configuration interface {
 	Entity
+	Store(positionID uint64, configuration *model.Configuration) (uint64, error)
+	StoreVariant(configurationID uint64, variant *model.Variant) (uint64, error)
 	FindByPosition(positionID uint64) ([]model.Configuration, error)
 	FindVariants(id uint64) ([]model.Variant, error)
 }

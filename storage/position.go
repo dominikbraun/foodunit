@@ -19,5 +19,6 @@ import "github.com/dominikbraun/foodunit/model"
 
 type Position interface {
 	Entity
+	Store(orderID uint64, position *model.Position) (uint64, error)
 	FindByOrder(orderID uint64) ([]model.Position, error)
 }

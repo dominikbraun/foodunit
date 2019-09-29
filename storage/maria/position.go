@@ -51,6 +51,20 @@ func (p *Position) Drop() error {
 	return err
 }
 
+func (p *Position) Store(orderID uint64, position *model.Position) (uint64, error) {
+	query := `INSERT INTO positions (dish_id, alternative_dish_id, note, order_id) VALUES (?, ?, ?, ?)`
+
+	result, err := p.DB.Exec(query, position.Dish.ID, position.Alternative.ID, position.Note, orderID)
+	if err != nil {
+		return uint64(0), err
+	}
+
+	// ToDo: When does LastInsertId return an error?
+	id, _ := result.LastInsertId()
+
+	return uint64(id), nil
+}
+
 func (p *Position) FindByOrder(orderID uint64) ([]model.Position, error) {
 	query := `
 SELECT p.id, d.id as "dish_id.id", d2.id as "alternative_dish_id.id", note
