@@ -21,7 +21,9 @@ import (
 	"github.com/dominikbraun/foodunit/services/order"
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/dominikbraun/foodunit/services/user"
+	"github.com/go-chi/render"
 	"github.com/pkg/errors"
+	"net/http"
 )
 
 var (
@@ -48,4 +50,9 @@ func NewController(r *restaurant.Service, d *dish.Service, u *user.Service, o *o
 		orderService:      odr,
 	}
 	return &controller
+}
+
+func respond(w http.ResponseWriter, r *http.Request, status int, v interface{}) {
+	w.WriteHeader(status)
+	render.JSON(w, r, v)
 }

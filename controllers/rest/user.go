@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"github.com/dominikbraun/foodunit/services/user"
 	"github.com/dominikbraun/foodunit/session"
-	"github.com/go-chi/render"
 	"net/http"
 )
 
@@ -29,25 +28,21 @@ func (c *Controller) RegisterUser() http.HandlerFunc {
 		err := json.NewDecoder(r.Body).Decode(&registration)
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidFormData.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidFormData.Error())
 			return
 		}
 
 		success, err := c.userService.Register(&registration)
 
-		if err != nil {
-			if err == user.ErrUserExists {
-				w.WriteHeader(http.StatusUnprocessableEntity)
-			} else {
-				w.WriteHeader(http.StatusInternalServerError)
-			}
-			render.JSON(w, r, err.Error())
+		if err != nil && (err == user.ErrUserExists || err == user.ErrPasswordInvalid) {
+			respond(w, r, http.StatusUnprocessableEntity, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, success)
+		respond(w, r, http.StatusOK, success)
 		return
 	}
 }
@@ -58,20 +53,17 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 		err := json.NewDecoder(r.Body).Decode(&login)
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidFormData.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidFormData.Error())
 			return
 		}
 
 		uid, err := c.userService.Authenticate(&login)
 
-		if err != nil {
-			if err == user.ErrPasswordIncorrect || err == user.ErrUserNotFound {
-				w.WriteHeader(http.StatusUnauthorized)
-			} else {
-				w.WriteHeader(http.StatusInternalServerError)
-			}
-			render.JSON(w, r, err.Error())
+		if err != nil && (err == user.ErrPasswordIncorrect || err == user.ErrUserNotFound) {
+			respond(w, r, http.StatusUnauthorized, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
@@ -80,8 +72,7 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 			session.Put(r.Context(), "uid", uid)
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, true)
+		respond(w, r, http.StatusOK, true)
 		return
 	}
 }
@@ -91,8 +82,7 @@ func (c *Controller) Logout(session session.Manager) http.HandlerFunc {
 		session.Remove(r.Context(), "authenticated")
 		session.Remove(r.Context(), "uid")
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, true)
+		respond(w, r, http.StatusOK, true)
 		return
 	}
 }

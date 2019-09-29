@@ -20,7 +20,6 @@ import (
 	"github.com/dominikbraun/foodunit/services/offer"
 	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/render"
 	"net/http"
 	"strconv"
 )
@@ -31,32 +30,27 @@ func (c *Controller) CreateOffer(session session.Manager) http.HandlerFunc {
 		err := json.NewDecoder(r.Body).Decode(&creation)
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidFormData.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidFormData.Error())
 			return
 		}
 
 		uid, ok := session.Get(r.Context(), "uid").(uint64)
 		if !ok {
-			w.WriteHeader(http.StatusForbidden)
-			render.JSON(w, r, ErrForbiddenAction.Error())
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
 			return
 		}
 
 		err = c.offerService.Create(&creation, uid)
 
-		if err != nil {
-			if err == offer.ErrUserNotFound || err == offer.ErrRestaurantNotFound {
-				w.WriteHeader(http.StatusNotFound)
-			} else {
-				w.WriteHeader(http.StatusInternalServerError)
-			}
-			render.JSON(w, r, err.Error())
+		if err != nil && (err == offer.ErrUserNotFound || err == offer.ErrRestaurantNotFound) {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, true)
+		respond(w, r, http.StatusOK, true)
 		return
 	}
 }
@@ -66,13 +60,11 @@ func (c *Controller) ActiveOffers() http.HandlerFunc {
 		offers, err := c.offerService.Active()
 
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, ErrProcessingFailed.Error())
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, offers)
+		respond(w, r, http.StatusOK, offers)
 		return
 	}
 }
@@ -82,25 +74,21 @@ func (c *Controller) GetOffer() http.HandlerFunc {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
 		offerView, err := c.offerService.Get(uint64(id))
 
-		if err == offer.ErrOfferNotFound {
-			w.WriteHeader(http.StatusNotFound)
-			render.JSON(w, r, offer.ErrOfferNotFound.Error())
+		if err != nil && err == offer.ErrOfferNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, err.Error())
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, offerView)
+		respond(w, r, http.StatusOK, offerView)
 		return
 	}
 }

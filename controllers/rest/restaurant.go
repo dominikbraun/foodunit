@@ -18,7 +18,6 @@ package rest
 import (
 	"github.com/dominikbraun/foodunit/services/restaurant"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/render"
 	"net/http"
 	"strconv"
 )
@@ -28,25 +27,20 @@ func (c *Controller) RestaurantInfo() http.HandlerFunc {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
 		info, err := c.restaurantService.Info(uint64(id))
 
-		if err == restaurant.ErrRestaurantNotFound {
-			w.WriteHeader(http.StatusNotFound)
-			render.JSON(w, r, restaurant.ErrRestaurantNotFound.Error())
-			return
+		if err != nil && err == restaurant.ErrRestaurantNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
 		} else if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, ErrProcessingFailed.Error())
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, info)
+		respond(w, r, http.StatusOK, info)
 		return
 	}
 }
@@ -56,25 +50,21 @@ func (c *Controller) RestaurantMenu() http.HandlerFunc {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
 		menu, err := c.restaurantService.Menu(uint64(id))
 
-		if err != nil {
-			if err == restaurant.ErrRestaurantNotFound || err == restaurant.ErrMenuNotFound {
-				w.WriteHeader(http.StatusNotFound)
-			} else {
-				w.WriteHeader(http.StatusInternalServerError)
-			}
-			render.JSON(w, r, err.Error())
+		if err != nil && (err == restaurant.ErrRestaurantNotFound || err == restaurant.ErrMenuNotFound) {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, menu)
+		respond(w, r, http.StatusOK, menu)
 		return
 	}
 }

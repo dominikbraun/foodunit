@@ -30,20 +30,17 @@ func (c *Controller) AllOrders() http.HandlerFunc {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
 		orders, err := c.orderService.GetAll(uint64(offerID))
 
-		if err == order.ErrOfferNotFound {
-			w.WriteHeader(http.StatusNotFound)
-			render.JSON(w, r, order.ErrOfferNotFound.Error())
+		if err != nil && err == order.ErrOfferNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, ErrProcessingFailed.Error())
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
@@ -58,35 +55,27 @@ func (c *Controller) GetOrder(session session.Manager) http.HandlerFunc {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
 		userID, ok := session.Get(r.Context(), "uid").(uint64)
 		if !ok {
-			w.WriteHeader(http.StatusForbidden)
-			render.JSON(w, r, ErrForbiddenAction.Error())
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
 			return
 		}
 
 		userOrder, err := c.orderService.Get(uint64(offerID), userID)
 
-		if err != nil {
-			if err == order.ErrOfferNotFound || err == order.ErrOrderNotFound {
-				w.WriteHeader(http.StatusNotFound)
-				render.JSON(w, r, err.Error())
-				return
-			} else {
-				// ToDo: Handle all 500's like this (printing ErrProcessingFailed)
-				w.WriteHeader(http.StatusInternalServerError)
-				render.JSON(w, r, ErrProcessingFailed.Error())
-				return
-			}
+		if err != nil && (err == order.ErrOrderNotFound || err == order.ErrOfferNotFound) {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, userOrder)
+		respond(w, r, http.StatusOK, userOrder)
 		return
 	}
 }
@@ -98,15 +87,13 @@ func (c *Controller) UpdateOrder(session session.Manager) http.HandlerFunc {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
-			w.WriteHeader(http.StatusUnprocessableEntity)
-			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
 		userID, ok := session.Get(r.Context(), "uid").(uint64)
 		if !ok {
-			w.WriteHeader(http.StatusForbidden)
-			render.JSON(w, r, ErrForbiddenAction.Error())
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
 			return
 		}
 
@@ -116,13 +103,11 @@ func (c *Controller) UpdateOrder(session session.Manager) http.HandlerFunc {
 		err = c.orderService.Update(&update)
 
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			render.JSON(w, r, ErrProcessingFailed.Error())
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
 			return
 		}
 
-		w.WriteHeader(http.StatusOK)
-		render.JSON(w, r, true)
+		respond(w, r, http.StatusOK, true)
 		return
 	}
 }
