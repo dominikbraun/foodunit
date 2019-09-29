@@ -49,7 +49,7 @@ func NewService(r storage.Restaurant, u storage.User, o storage.Offer, odr stora
 }
 
 func (s *Service) Create(c *Creation, userID uint64) error {
-	user, err := s.users.Find(userID)
+	userEntity, err := s.users.Find(userID)
 
 	if err == sql.ErrNoRows {
 		return ErrUserNotFound
@@ -66,11 +66,11 @@ func (s *Service) Create(c *Creation, userID uint64) error {
 	}
 
 	offer := model.Offer{
-		Owner:       user,
+		Owner:       userEntity,
 		Restaurant:  restaurant,
 		ValidFrom:   c.ValidFrom,
 		ValidTo:     c.ValidTo,
-		Responsible: user,
+		Responsible: userEntity,
 		IsPlaced:    false,
 		// ToDo: Set this value to NULL since ReadyAt isn't known at this point
 		ReadyAt:       time.Now(),
@@ -82,7 +82,7 @@ func (s *Service) Create(c *Creation, userID uint64) error {
 }
 
 func (s *Service) Active() ([]ActiveOffer, error) {
-	offers, err := s.offers.FindValidFrom(time.Now())
+	offerEntities, err := s.offers.FindValidFrom(time.Now())
 
 	activeOffers := make([]ActiveOffer, 0)
 
@@ -92,7 +92,7 @@ func (s *Service) Active() ([]ActiveOffer, error) {
 		return nil, err
 	}
 
-	for _, o := range offers {
+	for _, o := range offerEntities {
 		activeOffer := ActiveOffer{
 			ID:            o.ID,
 			Owner:         User{Name: o.Owner.Name},
@@ -109,7 +109,7 @@ func (s *Service) Active() ([]ActiveOffer, error) {
 }
 
 func (s *Service) Get(id uint64) (View, error) {
-	offer, err := s.offers.Find(id)
+	offerEntity, err := s.offers.Find(id)
 
 	if err == sql.ErrNoRows {
 		return View{}, ErrOfferNotFound
@@ -118,14 +118,14 @@ func (s *Service) Get(id uint64) (View, error) {
 	}
 
 	offerView := View{
-		ID:            offer.ID,
-		Owner:         User{Name: offer.Owner.Name},
-		ValidFrom:     offer.ValidFrom,
-		ValidTo:       offer.ValidTo,
-		Responsible:   User{Name: offer.Responsible.Name},
-		IsPlaced:      offer.IsPlaced,
-		ReadyAt:       offer.ReadyAt,
-		PaypalEnabled: offer.PaypalEnabled,
+		ID:            offerEntity.ID,
+		Owner:         User{Name: offerEntity.Owner.Name},
+		ValidFrom:     offerEntity.ValidFrom,
+		ValidTo:       offerEntity.ValidTo,
+		Responsible:   User{Name: offerEntity.Responsible.Name},
+		IsPlaced:      offerEntity.IsPlaced,
+		ReadyAt:       offerEntity.ReadyAt,
+		PaypalEnabled: offerEntity.PaypalEnabled,
 	}
 
 	return offerView, nil

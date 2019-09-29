@@ -57,7 +57,7 @@ func (s *Service) Register(r *Registration) (bool, error) {
 		return false, ErrUserExists
 	}
 
-	user := model.User{
+	userEntity := model.User{
 		MailAddr:       r.MailAddr,
 		Name:           r.Name,
 		IsAdmin:        false,
@@ -67,7 +67,7 @@ func (s *Service) Register(r *Registration) (bool, error) {
 		Created:        time.Now(),
 	}
 
-	err = s.users.Store(&user)
+	err = s.users.Store(&userEntity)
 	if err != nil {
 		return false, ErrUserNotStored
 	}
@@ -76,7 +76,7 @@ func (s *Service) Register(r *Registration) (bool, error) {
 }
 
 func (s *Service) Authenticate(l *Login) (uint64, error) {
-	user, err := s.users.FindByMailAddr(l.MailAddr)
+	userEntity, err := s.users.FindByMailAddr(l.MailAddr)
 
 	if err == sql.ErrNoRows {
 		return 0, ErrUserNotFound
@@ -84,7 +84,7 @@ func (s *Service) Authenticate(l *Login) (uint64, error) {
 		return 0, err
 	}
 
-	err = bcrypt.CompareHashAndPassword(user.PasswordHash, []byte(l.Password))
+	err = bcrypt.CompareHashAndPassword(userEntity.PasswordHash, []byte(l.Password))
 
 	if err == bcrypt.ErrMismatchedHashAndPassword {
 		return 0, ErrPasswordIncorrect
@@ -92,5 +92,5 @@ func (s *Service) Authenticate(l *Login) (uint64, error) {
 		return 0, err
 	}
 
-	return user.ID, nil
+	return userEntity.ID, nil
 }

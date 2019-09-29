@@ -43,7 +43,7 @@ func NewService(r storage.Restaurant, c storage.Category, d storage.Dish) *Servi
 }
 
 func (s *Service) Info(id uint64) (Info, error) {
-	restaurant, err := s.restaurants.Find(id)
+	restaurantEntity, err := s.restaurants.Find(id)
 
 	if err == sql.ErrNoRows {
 		return Info{}, ErrRestaurantNotFound
@@ -55,38 +55,38 @@ func (s *Service) Info(id uint64) (Info, error) {
 
 	switch time.Now().Weekday() {
 	case time.Monday:
-		open = restaurant.OpenMon
+		open = restaurantEntity.OpenMon
 	case time.Tuesday:
-		open = restaurant.OpenTue
+		open = restaurantEntity.OpenTue
 	case time.Wednesday:
-		open = restaurant.OpenWed
+		open = restaurantEntity.OpenWed
 	case time.Thursday:
-		open = restaurant.OpenThu
+		open = restaurantEntity.OpenThu
 	case time.Friday:
-		open = restaurant.OpenFri
+		open = restaurantEntity.OpenFri
 	case time.Saturday:
-		open = restaurant.OpenSat
+		open = restaurantEntity.OpenSat
 	case time.Sunday:
-		open = restaurant.OpenSun
+		open = restaurantEntity.OpenSun
 	}
 
 	info := Info{
-		Name:       restaurant.Name,
-		Street:     restaurant.Street,
-		PostalCode: restaurant.PostalCode,
-		City:       restaurant.City,
-		Phone:      restaurant.Phone,
+		Name:       restaurantEntity.Name,
+		Street:     restaurantEntity.Street,
+		PostalCode: restaurantEntity.PostalCode,
+		City:       restaurantEntity.City,
+		Phone:      restaurantEntity.Phone,
 		Open:       open,
-		Website:    restaurant.Website,
+		Website:    restaurantEntity.Website,
 	}
 
 	return info, nil
 }
 
 func (s *Service) Menu(id uint64) (Menu, error) {
-	categories, err := s.categories.FindByRestaurant(id)
+	categoryEntities, err := s.categories.FindByRestaurant(id)
 
-	if err == sql.ErrNoRows || len(categories) == 0 {
+	if err == sql.ErrNoRows || len(categoryEntities) == 0 {
 		return Menu{}, ErrMenuNotFound
 	} else if err != nil {
 		return Menu{}, err
@@ -94,10 +94,10 @@ func (s *Service) Menu(id uint64) (Menu, error) {
 
 	menuCategories := make([]MenuCategory, 0)
 
-	for _, c := range categories {
-		dishes, err := s.dishes.FindByCategory(c.ID)
+	for _, c := range categoryEntities {
+		dishEntities, err := s.dishes.FindByCategory(c.ID)
 
-		if err == sql.ErrNoRows || len(dishes) == 0 {
+		if err == sql.ErrNoRows || len(dishEntities) == 0 {
 			return Menu{}, ErrMenuNotFound
 		} else if err != nil {
 			return Menu{}, err
@@ -105,7 +105,7 @@ func (s *Service) Menu(id uint64) (Menu, error) {
 
 		menuDishes := make([]MenuDish, 0)
 
-		for _, d := range dishes {
+		for _, d := range dishEntities {
 			menuDish := MenuDish{
 				Name:         d.Name,
 				Description:  d.Description,

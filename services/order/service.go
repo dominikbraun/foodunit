@@ -49,7 +49,7 @@ func NewService(o storage.Order, p storage.Position, c storage.Configuration, d 
 }
 
 func (s *Service) GetAll(offerID uint64) ([]Order, error) {
-	orders, err := s.orders.FindByOffer(offerID)
+	orderEntities, err := s.orders.FindByOffer(offerID)
 
 	if err == sql.ErrNoRows {
 		return []Order{}, ErrOfferNotFound
@@ -57,22 +57,22 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 		return []Order{}, err
 	}
 
-	allOrders := make([]Order, 0)
+	orders := make([]Order, 0)
 
-	for _, o := range orders {
+	for _, o := range orderEntities {
 		order, err := s.buildOrder(&o)
 		if err != nil {
 			return []Order{}, err
 		}
 
-		allOrders = append(allOrders, order)
+		orders = append(orders, order)
 	}
 
-	return allOrders, nil
+	return orders, nil
 }
 
 func (s *Service) Get(offerID, userID uint64) (Order, error) {
-	orderEntry, err := s.orders.FindByOfferAndUser(offerID, userID)
+	orderEntity, err := s.orders.FindByOfferAndUser(offerID, userID)
 
 	if err == sql.ErrNoRows {
 		return Order{}, ErrOrderNotFound
@@ -80,7 +80,7 @@ func (s *Service) Get(offerID, userID uint64) (Order, error) {
 		return Order{}, err
 	}
 
-	order, err := s.buildOrder(&orderEntry)
+	order, err := s.buildOrder(&orderEntity)
 
 	return order, err
 }
@@ -93,15 +93,15 @@ func (s *Service) buildOrder(orderEntry *model.Order) (Order, error) {
 		Total:  0,
 	}
 
-	positions, err := s.positions.FindByOrder(orderEntry.ID)
+	positionEntities, err := s.positions.FindByOrder(orderEntry.ID)
 
 	if err == sql.ErrNoRows && err != nil {
 		return Order{}, err
 	}
 
-	for _, p := range positions {
-		dish, err := s.dishes.Find(p.Dish.ID)
-		alternative, err := s.dishes.Find(p.Alternative.ID)
+	for _, p := range positionEntities {
+		dishEntity, err := s.dishes.Find(p.Dish.ID)
+		alternativeEntity, err := s.dishes.Find(p.Alternative.ID)
 		configurations, err := s.loadConfigurations(p.ID)
 
 		if err == sql.ErrNoRows {
@@ -113,28 +113,28 @@ func (s *Service) buildOrder(orderEntry *model.Order) (Order, error) {
 		position := Position{
 			ID: p.ID,
 			Dish: Dish{
-				ID:    dish.ID,
-				Name:  dish.Name,
-				Price: dish.Price,
+				ID:    dishEntity.ID,
+				Name:  dishEntity.Name,
+				Price: dishEntity.Price,
 			},
 			Alternative: Dish{
-				ID:    alternative.ID,
-				Name:  alternative.Name,
-				Price: alternative.Price,
+				ID:    alternativeEntity.ID,
+				Name:  alternativeEntity.Name,
+				Price: alternativeEntity.Price,
 			},
 			Note:           p.Note,
 			Configurations: configurations,
 		}
 
 		order.Positions = append(order.Positions, position)
-		order.Total += dish.Price
+		order.Total += dishEntity.Price
 	}
 
 	return order, nil
 }
 
 func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error) {
-	configs, err := s.configurations.FindByPosition(positionID)
+	configurationEntities, err := s.configurations.FindByPosition(positionID)
 
 	if err == sql.ErrNoRows {
 		return []Configuration{}, nil
@@ -144,8 +144,8 @@ func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error)
 
 	configurations := make([]Configuration, 0)
 
-	for _, c := range configs {
-		variants, err := s.configurations.FindVariants(c.ID)
+	for _, c := range configurationEntities {
+		variantEntities, err := s.configurations.FindVariants(c.ID)
 
 		if err == sql.ErrNoRows {
 			continue
@@ -153,22 +153,22 @@ func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error)
 			return []Configuration{}, err
 		}
 
-		configurationVariants := make([]Variant, 0)
+		variants := make([]Variant, 0)
 
-		for _, v := range variants {
+		for _, v := range variantEntities {
 			variant := Variant{
 				ID:    v.ID,
 				Value: v.Value,
 				Price: v.Price,
 			}
 
-			configurationVariants = append(configurationVariants, variant)
+			variants = append(variants, variant)
 		}
 
 		configuration := Configuration{
 			CharacteristicName: c.Characteristic.Name,
 			Multiple:           c.Characteristic.Multiple,
-			Variants:           configurationVariants,
+			Variants:           variants,
 		}
 
 		configurations = append(configurations, configuration)
@@ -184,40 +184,40 @@ func (s *Service) Update(order *Update) error {
 		return err
 	}
 
-	orderEntry := model.Order{
+	orderEntity := model.Order{
 		User:   model.User{ID: order.UserID},
 		IsPaid: false,
 	}
-	orderID, err := s.orders.Store(order.OfferID, &orderEntry)
+	orderID, err := s.orders.Store(order.OfferID, &orderEntity)
 	if err != nil {
 		return err
 	}
 
 	for _, p := range order.Positions {
-		positionEntry := model.Position{
+		positionEntity := model.Position{
 			Dish:        model.Dish{ID: p.DishID},
 			Alternative: model.Dish{ID: p.AlternativeDishID},
 			Note:        p.Note,
 		}
-		positionID, err := s.positions.Store(orderID, &positionEntry)
+		positionID, err := s.positions.Store(orderID, &positionEntity)
 		if err != nil {
 			return err
 		}
 
 		for _, c := range p.Configurations {
-			configurationEntry := model.Configuration{
+			configurationEntity := model.Configuration{
 				ID:             0,
 				Characteristic: model.Characteristic{ID: c.CharacteristicID},
 			}
 
-			configurationID, err := s.configurations.Store(positionID, &configurationEntry)
+			configurationID, err := s.configurations.Store(positionID, &configurationEntity)
 			if err != nil {
 				return err
 			}
 
 			for _, v := range c.VariantIDs {
-				variantEntry := model.Variant{ID: v}
-				_, err := s.configurations.StoreVariant(configurationID, &variantEntry)
+				variantEntity := model.Variant{ID: v}
+				_, err := s.configurations.StoreVariant(configurationID, &variantEntity)
 				if err != nil {
 					return err
 				}
