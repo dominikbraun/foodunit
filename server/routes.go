@@ -50,7 +50,7 @@ func (s *Server) mountRoutes() {
 				r.Route("/orders", func(r chi.Router) {
 					r.Get("/all", s.controller.AllOrders())
 					r.Get("/mine", s.controller.GetOrder(s.session))
-					r.Post("/mine", nil)
+					r.Post("/mine", s.controller.UpdateOrder(s.session))
 				})
 			})
 		})

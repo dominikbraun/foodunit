@@ -60,9 +60,10 @@ type Update struct {
 }
 
 type UpdatePosition struct {
-	DishID         uint64                `json:"dish_id"`
-	Configurations []UpdateConfiguration `json:"configurations"`
-	Note           string                `json:"note"`
+	DishID            uint64                `json:"dish_id"`
+	AlternativeDishID uint64                `json:"alternative_dish_id"`
+	Configurations    []UpdateConfiguration `json:"configurations"`
+	Note              string                `json:"note"`
 }
 
 type UpdateConfiguration struct {

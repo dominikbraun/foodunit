@@ -16,6 +16,7 @@
 package rest
 
 import (
+	"encoding/json"
 	"github.com/dominikbraun/foodunit/services/order"
 	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
@@ -86,6 +87,42 @@ func (c *Controller) GetOrder(session session.Manager) http.HandlerFunc {
 
 		w.WriteHeader(http.StatusOK)
 		render.JSON(w, r, userOrder)
+		return
+	}
+}
+
+func (c *Controller) UpdateOrder(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var update order.Update
+		err := json.NewDecoder(r.Body).Decode(&update)
+		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+		if err != nil {
+			w.WriteHeader(http.StatusUnprocessableEntity)
+			render.JSON(w, r, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		userID, ok := session.Get(r.Context(), "uid").(uint64)
+		if !ok {
+			w.WriteHeader(http.StatusForbidden)
+			render.JSON(w, r, ErrForbiddenAction.Error())
+			return
+		}
+
+		update.OfferID = uint64(offerID)
+		update.UserID = userID
+
+		err = c.orderService.Update(&update)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			render.JSON(w, r, ErrProcessingFailed.Error())
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+		render.JSON(w, r, true)
 		return
 	}
 }
