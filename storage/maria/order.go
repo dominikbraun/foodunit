@@ -52,7 +52,7 @@ func (o *Order) Drop() error {
 }
 
 func (o *Order) Store(offerID uint64, order *model.Order) (uint64, error) {
-	query := `INSERT INTO orders (user_id, id_paid, offer_id) VALUES (?, ?, ?)`
+	query := `INSERT INTO orders (user_id, is_paid, offer_id) VALUES (?, ?, ?)`
 
 	result, err := o.DB.Exec(query, order.User.ID, order.IsPaid, offerID)
 	if err != nil {
@@ -99,7 +99,8 @@ FROM orders o
 INNER JOIN users u
 ON u.id = o.user_id
 WHERE o.offer_id = ?
-AND o.user_id = ?`
+AND o.user_id = ?
+ORDER BY o.id DESC`
 
 	var order model.Order
 	err := o.DB.QueryRowx(query, offerID, userID).StructScan(&order)
