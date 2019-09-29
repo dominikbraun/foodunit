@@ -188,13 +188,42 @@ func (s *Service) Update(order *Update) error {
 		User:   model.User{ID: order.UserID},
 		IsPaid: false,
 	}
-	_, err = s.orders.Store(order.OfferID, &orderEntry)
-
+	orderID, err := s.orders.Store(order.OfferID, &orderEntry)
 	if err != nil {
 		return err
 	}
 
-	// ToDo: Store order positions
+	for _, p := range order.Positions {
+		positionEntry := model.Position{
+			Dish:        model.Dish{ID: p.DishID},
+			Alternative: model.Dish{ID: p.AlternativeDishID},
+			Note:        p.Note,
+		}
+		positionID, err := s.positions.Store(orderID, &positionEntry)
+		if err != nil {
+			return err
+		}
+
+		for _, c := range p.Configurations {
+			configurationEntry := model.Configuration{
+				ID:             0,
+				Characteristic: model.Characteristic{ID: c.CharacteristicID},
+			}
+
+			configurationID, err := s.configurations.Store(positionID, &configurationEntry)
+			if err != nil {
+				return err
+			}
+
+			for _, v := range c.VariantIDs {
+				variantEntry := model.Variant{ID: v}
+				_, err := s.configurations.StoreVariant(configurationID, &variantEntry)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
 
 	return nil
 }
