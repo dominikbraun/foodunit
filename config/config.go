@@ -31,7 +31,7 @@ var (
 	ErrFileNotFound = errors.New("the configuration file was not found.")
 )
 
-func NewFile() error {
+func NewFile() (Reader, error) {
 	reader := viper.New()
 
 	reader.SetConfigName("config")
@@ -40,10 +40,10 @@ func NewFile() error {
 
 	if err := reader.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
-			return ErrFileNotFound
+			return nil, ErrFileNotFound
 		}
-		return err
+		return nil, err
 	}
 
-	return nil
+	return reader, nil
 }
