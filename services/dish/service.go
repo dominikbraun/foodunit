@@ -16,7 +16,14 @@
 package dish
 
 import (
+	"database/sql"
+	"errors"
 	"github.com/dominikbraun/foodunit/storage"
+)
+
+var (
+	ErrCharacteristicsNotFound = errors.New("the characteristics for the dish could not be found")
+	ErrVariantssNotFound       = errors.New("the variants for the characteristics could not be found")
 )
 
 type Service struct {
@@ -32,4 +39,46 @@ func NewService(d storage.Dish, c storage.Characteristic, v storage.Variant) *Se
 		variants:        v,
 	}
 	return &service
+}
+
+func (s *Service) GetCharacteristics(dishID uint64) ([]Characteristic, error) {
+	characteristicEntities, err := s.characteristics.FindByDish(dishID)
+
+	if err == sql.ErrNoRows {
+		return nil, ErrCharacteristicsNotFound
+	} else if err != nil {
+		return nil, err
+	}
+
+	characteristics := make([]Characteristic, 0)
+
+	for _, characteristicEntity := range characteristicEntities {
+		variantEntities, err := s.variants.FindByCharacteristic(characteristicEntity.ID)
+
+		if err == sql.ErrNoRows {
+			return nil, ErrVariantssNotFound
+		} else if err != nil {
+			return nil, err
+		}
+
+		variants := make([]Variant, 0)
+
+		for _, variantEntity := range variantEntities {
+			variants = append(variants, Variant{
+				ID:        variantEntity.ID,
+				Value:     variantEntity.Value,
+				IsDefault: variantEntity.IsDefault,
+				Price:     variantEntity.Price,
+			})
+		}
+
+		characteristics = append(characteristics, Characteristic{
+			ID:       characteristicEntity.ID,
+			Name:     characteristicEntity.Name,
+			Multiple: characteristicEntity.Multiple,
+			Variants: variants,
+		})
+	}
+
+	return characteristics, nil
 }
