@@ -53,5 +53,23 @@ func (v *Variant) Drop() error {
 }
 
 func (v *Variant) FindByCharacteristic(characteristicID uint64) ([]model.Variant, error) {
-	panic("implement me")
+	query := `SELECT id, value, is_default, price FROM variants where characteristic_id = ?`
+
+	rows, err := v.DB.Queryx(query, characteristicID)
+	if err != nil {
+		return nil, err
+	}
+
+	variants := make([]model.Variant, 0)
+
+	for rows.Next() {
+		var variant model.Variant
+
+		if err := rows.StructScan(&variant); err != nil {
+			return nil, err
+		}
+		variants = append(variants, variant)
+	}
+
+	return variants, nil
 }

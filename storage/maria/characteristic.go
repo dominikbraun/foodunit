@@ -51,5 +51,27 @@ func (c *Characteristic) Drop() error {
 }
 
 func (c *Characteristic) FindByDish(dishID uint64) ([]model.Characteristic, error) {
-	panic("implement me")
+	query := `
+SELECT c.id, c.name, c.multiple FROM dishes_characteristics dc
+inner join characteristics c
+on c.id = dc.characteristic_id
+where dc.dish_id = ?`
+
+	rows, err := c.DB.Queryx(query, dishID)
+	if err != nil {
+		return nil, err
+	}
+
+	characteristics := make([]model.Characteristic, 0)
+
+	for rows.Next() {
+		var characteristic model.Characteristic
+
+		if err := rows.StructScan(&characteristic); err != nil {
+			return nil, err
+		}
+		characteristics = append(characteristics, characteristic)
+	}
+
+	return characteristics, nil
 }

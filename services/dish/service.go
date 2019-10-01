@@ -52,6 +52,8 @@ func (s *Service) GetCharacteristics(dishID uint64) ([]Characteristic, error) {
 
 	characteristics := make([]Characteristic, 0)
 
+	// TODO: can FindByCharacteristic be done with one select and not a for loop? Would prevent several separate selects
+	// or even let the db-layer load the variants with the characteristics at once as it may be easy on some dbms to load it at once (e.g. mongodb)
 	for _, characteristicEntity := range characteristicEntities {
 		variantEntities, err := s.variants.FindByCharacteristic(characteristicEntity.ID)
 
