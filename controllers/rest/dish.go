@@ -16,7 +16,7 @@
 package rest
 
 import (
-	"github.com/dominikbraun/foodunit/services/offer"
+	"github.com/dominikbraun/foodunit/services/dish"
 	"github.com/go-chi/chi"
 	"net/http"
 	"strconv"
@@ -31,9 +31,9 @@ func (c *Controller) GetCharacteristics() http.HandlerFunc {
 			return
 		}
 
-		offerView, err := c.dishService.GetCharacteristics(uint64(dishID))
+		characteristics, err := c.dishService.GetCharacteristics(uint64(dishID))
 
-		if err != nil && err == offer.ErrOfferNotFound {
+		if err != nil && err == dish.ErrCharacteristicsNotFound {
 			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil {
@@ -41,7 +41,7 @@ func (c *Controller) GetCharacteristics() http.HandlerFunc {
 			return
 		}
 
-		respond(w, r, http.StatusOK, offerView)
+		respond(w, r, http.StatusOK, characteristics)
 		return
 	}
 }
