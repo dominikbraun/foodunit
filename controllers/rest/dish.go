@@ -33,7 +33,7 @@ func (c *Controller) GetCharacteristics() http.HandlerFunc {
 
 		characteristics, err := c.dishService.GetCharacteristics(uint64(dishID))
 
-		if err != nil && err == dish.ErrCharacteristicsNotFound {
+		if err != nil && (err == dish.ErrCharacteristicsNotFound || err == dish.ErrVariantsNotFound) {
 			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil {

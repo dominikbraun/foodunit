@@ -23,7 +23,7 @@ import (
 
 var (
 	ErrCharacteristicsNotFound = errors.New("the characteristics for the dish could not be found")
-	ErrVariantssNotFound       = errors.New("the variants for the characteristics could not be found")
+	ErrVariantsNotFound        = errors.New("the variants for the characteristics could not be found")
 )
 
 type Service struct {
@@ -52,13 +52,12 @@ func (s *Service) GetCharacteristics(dishID uint64) ([]Characteristic, error) {
 
 	characteristics := make([]Characteristic, 0)
 
-	// TODO: can FindByCharacteristic be done with one select and not a for loop? Would prevent several separate selects
-	// or even let the db-layer load the variants with the characteristics at once as it may be easy on some dbms to load it at once (e.g. mongodb)
+	// ToDo: Load the variants via SQL in the corresponding storage
 	for _, characteristicEntity := range characteristicEntities {
 		variantEntities, err := s.variants.FindByCharacteristic(characteristicEntity.ID)
 
 		if err == sql.ErrNoRows {
-			return nil, ErrVariantssNotFound
+			return nil, ErrVariantsNotFound
 		} else if err != nil {
 			return nil, err
 		}
