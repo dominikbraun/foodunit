@@ -42,6 +42,7 @@ func NewManager(config *Config) (*Manger, error) {
 	m.entities = []storage.Entity{
 		maria.NewRestaurant(m.db),
 		maria.NewCategory(m.db),
+		maria.NewConfiguration(m.db),
 		maria.NewDish(m.db),
 		maria.NewCharacteristic(m.db),
 		maria.NewVariant(m.db),

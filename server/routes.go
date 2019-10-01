@@ -57,7 +57,7 @@ func (s *Server) mountRoutes() {
 
 	r.Route("/dishes", func(r chi.Router) {
 		r.Route("/{id}", func(r chi.Router) {
-			r.Get("/characteristics", nil)
+			r.Get("/characteristics", s.controller.GetCharacteristics())
 		})
 	})
 

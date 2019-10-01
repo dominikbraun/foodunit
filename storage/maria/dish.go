@@ -45,11 +45,25 @@ CREATE TABLE dishes (
 )`
 
 	_, err := d.DB.Exec(query)
+
+	if err != nil {
+		return err
+	}
+
+	query = `
+CREATE TABLE dishes_characteristics (
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	dish_id BIGINT UNSIGNED NOT NULL,
+	characteristic_id BIGINT UNSIGNED NOT NULL
+)`
+
+	_, err = d.DB.Exec(query)
+
 	return err
 }
 
 func (d *Dish) Drop() error {
-	query := `DROP TABLE IF EXISTS dishes`
+	query := `DROP TABLE IF EXISTS dishes, dishes_characteristics`
 	_, err := d.DB.Exec(query)
 
 	return err

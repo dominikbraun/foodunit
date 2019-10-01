@@ -39,13 +39,17 @@ CREATE TABLE configurations (
 	characteristic_id BIGINT UNSIGNED NOT NULL
 )`
 	_, err := c.DB.Exec(query)
-
+	if err != nil {
+		return err
+	}
 	query = `
 CREATE TABLE configurations_variants (
 	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	configuration_id BIGINT UNSIGNED NOT NULL,
 	variant_id BIGINT UNSIGNED NOT NULL
 )`
+
+	_, err = c.DB.Exec(query)
 
 	return err
 }
