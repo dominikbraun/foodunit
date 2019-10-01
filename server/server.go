@@ -17,6 +17,7 @@ package server
 
 import (
 	"context"
+	conf "github.com/dominikbraun/foodunit/config"
 	"github.com/dominikbraun/foodunit/controllers/rest"
 	"github.com/dominikbraun/foodunit/services/dish"
 	"github.com/dominikbraun/foodunit/services/offer"
@@ -44,10 +45,11 @@ type Config struct {
 }
 
 type Server struct {
-	router  *chi.Mux
-	http    *http.Server
-	db      *sqlx.DB
-	session session.Manager
+	router    *chi.Mux
+	http      *http.Server
+	db        *sqlx.DB
+	session   session.Manager
+	appConfig conf.Reader
 
 	restaurants     storage.Restaurant
 	categories      storage.Category
@@ -77,6 +79,7 @@ func New(config *Config) (*Server, error) {
 	s.http = newHTTPServer(s.router, config.Addr)
 	s.db, err = sqlx.Open(config.Driver, config.DSN)
 	s.session = session.NewManager()
+	s.appConfig, err = conf.New()
 
 	s.restaurants = maria.NewRestaurant(s.db)
 	s.categories = maria.NewCategory(s.db)
