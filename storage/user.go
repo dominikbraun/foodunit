@@ -19,8 +19,9 @@ import "github.com/dominikbraun/foodunit/model"
 
 type User interface {
 	Entity
-	Store(user *model.User) error
+	Store(user *model.User) (uint64, error)
 	Find(id uint64) (model.User, error)
 	FindByMailAddr(mailAddr string) (model.User, error)
 	MailExists(mailAddr string) (bool, error)
+	StoreConfirmationToken(userID uint64, token string) error
 }

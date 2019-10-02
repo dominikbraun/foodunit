@@ -46,6 +46,17 @@ CREATE TABLE users (
 )`
 
 	_, err := u.DB.Exec(query)
+	if err != nil {
+		return err
+	}
+	query = `
+CREATE TABLE confirmation_tokens (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
+    token VARCHAR(255) NOT NULL
+)`
+	_, err = u.DB.Exec(query)
+
 	return err
 }
 
@@ -56,16 +67,23 @@ func (u *User) Drop() error {
 	return err
 }
 
-func (u *User) Store(user *model.User) error {
+func (u *User) Store(user *model.User) (uint64, error) {
 	query := `
 INSERT INTO users (
     mail_addr, name, is_admin, paypal_mail_addr, score, password_hash, created
 ) VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	created := user.Created.Format("2006-01-02 15:04:05")
-	_, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
 
-	return err
+	result, err := u.DB.Exec(query, user.MailAddr, user.Name, user.IsAdmin, user.PaypalMailAddr, user.Score, user.PasswordHash, created)
+	if err != nil {
+		return uint64(0), err
+	}
+
+	// ToDo: When does LastInsertId return an error?
+	id, _ := result.LastInsertId()
+
+	return uint64(id), nil
 }
 
 func (u *User) Find(id uint64) (model.User, error) {
@@ -99,4 +117,11 @@ func (u *User) MailExists(mailAddr string) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (u *User) StoreConfirmationToken(userID uint64, token string) error {
+	query := `INSERT INTO confirmation_tokens (user_id, token) VALUES (?, ?)`
+	_, err := u.DB.Exec(query, userID, token)
+
+	return err
 }
