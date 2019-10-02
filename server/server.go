@@ -79,7 +79,7 @@ func New(config *Config) (*Server, error) {
 	s.http = newHTTPServer(s.router, config.Addr)
 	s.db, err = sqlx.Open(config.Driver, config.DSN)
 	s.session = session.NewManager()
-	s.appConfig, err = conf.New()
+	s.appConfig, err = conf.New("app")
 
 	s.restaurants = maria.NewRestaurant(s.db)
 	s.categories = maria.NewCategory(s.db)

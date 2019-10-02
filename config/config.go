@@ -31,11 +31,12 @@ var (
 	ErrFileNotFound = errors.New("the configuration file was not found.")
 )
 
-func New() (Reader, error) {
+func New(filename string) (Reader, error) {
 	reader := viper.New()
 
-	reader.SetConfigName("config")
+	reader.SetConfigName(filename)
 	reader.AddConfigPath("$HOME/foodunit")
+	reader.AddConfigPath("../..")
 	reader.AddConfigPath(".")
 
 	if err := reader.ReadInConfig(); err != nil {
