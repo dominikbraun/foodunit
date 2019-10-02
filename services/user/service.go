@@ -16,7 +16,9 @@
 package user
 
 import (
+	"crypto/md5"
 	"database/sql"
+	"fmt"
 	"github.com/dominikbraun/foodunit/model"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
@@ -67,12 +69,25 @@ func (s *Service) Register(r *Registration) (bool, error) {
 		Created:        time.Now(),
 	}
 
-	err = s.users.Store(&userEntity)
+	userID, err := s.users.Store(&userEntity)
 	if err != nil {
 		return false, ErrUserNotStored
 	}
 
+	token := s.generateToken(userEntity.MailAddr)
+	err = s.users.StoreConfirmationToken(userID, token)
+	if err != nil {
+		return false, err
+	}
+
 	return true, nil
+}
+
+func (s *Service) generateToken(mailAddr string) string {
+	data := []byte(mailAddr)
+	hash := md5.Sum(data)
+
+	return fmt.Sprintf("%x", hash)
 }
 
 func (s *Service) Authenticate(l *Login) (uint64, error) {
