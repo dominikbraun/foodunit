@@ -34,7 +34,7 @@ func (c *Controller) RegisterUser() http.HandlerFunc {
 
 		success, err := c.userService.Register(&registration)
 
-		if err != nil && (err == user.ErrUserExists || err == user.ErrPasswordInvalid) {
+		if err != nil && (err == user.ErrUserExists || err == user.ErrPasswordInvalid || err == user.ErrConfirmationMailNotSent) {
 			respond(w, r, http.StatusUnprocessableEntity, err.Error())
 			return
 		} else if err != nil {

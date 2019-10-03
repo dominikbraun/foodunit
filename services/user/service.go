@@ -29,11 +29,12 @@ import (
 )
 
 var (
-	ErrUserExists        = errors.New("the given mail address already exists")
-	ErrPasswordInvalid   = errors.New("the given password is invalid")
-	ErrPasswordIncorrect = errors.New("the given password is not correct")
-	ErrUserNotStored     = errors.New("the user could not be registered")
-	ErrUserNotFound      = errors.New("the user could not be found")
+	ErrUserExists              = errors.New("the given mail address already exists")
+	ErrPasswordInvalid         = errors.New("the given password is invalid")
+	ErrPasswordIncorrect       = errors.New("the given password is not correct")
+	ErrUserNotStored           = errors.New("the user could not be registered")
+	ErrUserNotFound            = errors.New("the user could not be found")
+	ErrConfirmationMailNotSent = errors.New("confirmation mail could not be sent")
 )
 
 type Service struct {
@@ -86,7 +87,7 @@ func (s *Service) Register(r *Registration) (bool, error) {
 	}
 
 	if err = s.sendConfirmationMail(userEntity.MailAddr); err != nil {
-		return false, err
+		return false, ErrConfirmationMailNotSent
 	}
 	return true, nil
 }
