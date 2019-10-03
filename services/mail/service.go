@@ -27,6 +27,6 @@ func New(sgAPIKey string, u storage.User) *Service {
 	return &service
 }
 
-func Send(settings *Settings) error {
+func (s *Service) Send(settings *Settings) error {
 	panic("implement me")
 }

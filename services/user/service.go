@@ -19,7 +19,9 @@ import (
 	"crypto/md5"
 	"database/sql"
 	"fmt"
+	"github.com/dominikbraun/foodunit/config"
 	"github.com/dominikbraun/foodunit/model"
+	"github.com/dominikbraun/foodunit/services/mail"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
@@ -35,12 +37,16 @@ var (
 )
 
 type Service struct {
-	users storage.User
+	appConfig   config.Reader
+	users       storage.User
+	mailService *mail.Service
 }
 
-func NewService(u storage.User) *Service {
+func NewService(r config.Reader, u storage.User, m *mail.Service) *Service {
 	service := Service{
-		users: u,
+		appConfig:   r,
+		users:       u,
+		mailService: m,
 	}
 	return &service
 }
@@ -75,11 +81,13 @@ func (s *Service) Register(r *Registration) (bool, error) {
 	}
 
 	token := s.generateToken(userEntity.MailAddr)
-	err = s.users.StoreConfirmationToken(userID, token)
-	if err != nil {
+	if err = s.users.StoreConfirmationToken(userID, token); err != nil {
 		return false, err
 	}
 
+	if err = s.sendConfirmationMail(userEntity.MailAddr); err != nil {
+		return false, err
+	}
 	return true, nil
 }
 
@@ -88,6 +96,17 @@ func (s *Service) generateToken(mailAddr string) string {
 	hash := md5.Sum(data)
 
 	return fmt.Sprintf("%x", hash)
+}
+
+func (s *Service) sendConfirmationMail(mailAddr string) error {
+	settings := mail.Settings{
+		From:    s.appConfig.GetString("confirmation_mail_from"),
+		Subject: s.appConfig.GetString("confirmation_mail_subject"),
+		Body:    s.appConfig.GetString("confirmation_mail_body"),
+	}
+
+	err := s.mailService.Send(&settings)
+	return err
 }
 
 func (s *Service) Authenticate(l *Login) (uint64, error) {
@@ -108,4 +127,8 @@ func (s *Service) Authenticate(l *Login) (uint64, error) {
 	}
 
 	return userEntity.ID, nil
+}
+
+func (s *Service) ConfirmMailAddr(token string) error {
+	return nil
 }
