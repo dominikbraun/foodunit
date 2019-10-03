@@ -99,7 +99,7 @@ func New(config *Config) (*Server, error) {
 	s.positions = maria.NewPosition(s.db)
 	s.configurations = maria.NewConfiguration(s.db)
 
-	sgAPIKey := s.appConfig.GetString("sg_api_key")
+	sgAPIKey := s.appConfig.GetString("sendgrid_api_key")
 	s.mailService = mail.New(sgAPIKey, s.users)
 
 	s.restaurantService = restaurant.NewService(s.restaurants, s.categories, s.dishes)
