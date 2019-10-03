@@ -24,4 +24,5 @@ type User interface {
 	FindByMailAddr(mailAddr string) (model.User, error)
 	MailExists(mailAddr string) (bool, error)
 	StoreConfirmationToken(userID uint64, token string) error
+	ConfirmUser(token string) error
 }

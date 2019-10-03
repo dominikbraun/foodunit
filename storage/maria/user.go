@@ -53,7 +53,8 @@ CREATE TABLE users (
 CREATE TABLE confirmation_tokens (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT UNSIGNED NOT NULL,
-    token VARCHAR(255) NOT NULL
+    token VARCHAR(255) NOT NULL,
+    is_confirmed BOOLEAN NOT NULL
 )`
 	_, err = u.DB.Exec(query)
 
@@ -122,6 +123,13 @@ func (u *User) MailExists(mailAddr string) (bool, error) {
 func (u *User) StoreConfirmationToken(userID uint64, token string) error {
 	query := `INSERT INTO confirmation_tokens (user_id, token) VALUES (?, ?)`
 	_, err := u.DB.Exec(query, userID, token)
+
+	return err
+}
+
+func (u *User) ConfirmUser(token string) error {
+	query := `UPDATE confirmation_tokens SET is_confirmed = 1 WHERE token = ?`
+	_, err := u.DB.Exec(query, token)
 
 	return err
 }
