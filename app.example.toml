@@ -8,7 +8,7 @@ sendgrid_api_key = ""
 
 # This e-mail address will be used to send the confirmation mail the user will
 # receive after create an account at FoodUnit.
-confirmation_mail_sender = ""
+confirmation_mail_from = ""
 
 # The subject of the confirmation mail, e. g. 'Your registration at FoodUnit'.
 confirmation_mail_subject = ""
