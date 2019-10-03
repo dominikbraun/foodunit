@@ -28,6 +28,12 @@ import (
 	"time"
 )
 
+const (
+	confirmationMailFrom    string = "confirmation_mail_from"
+	confirmationMailSubject string = "confirmation_mail_subject"
+	confirmationMailBody    string = "confirmation_mail_body"
+)
+
 var (
 	ErrUserExists              = errors.New("the given mail address already exists")
 	ErrPasswordInvalid         = errors.New("the given password is invalid")
@@ -86,7 +92,7 @@ func (s *Service) Register(r *Registration) (bool, error) {
 		return false, err
 	}
 
-	if err = s.sendConfirmationMail(userEntity.MailAddr); err != nil {
+	if err = s.sendConfirmationMail(userEntity.Name, userEntity.MailAddr, token); err != nil {
 		return false, ErrConfirmationMailNotSent
 	}
 	return true, nil
@@ -99,11 +105,20 @@ func (s *Service) generateToken(mailAddr string) string {
 	return fmt.Sprintf("%x", hash)
 }
 
-func (s *Service) sendConfirmationMail(mailAddr string) error {
+func (s *Service) sendConfirmationMail(name, mailAddr, token string) error {
+	from := s.appConfig.GetString(confirmationMailFrom)
+	subj := s.appConfig.GetString(confirmationMailSubject)
+	body := s.appConfig.GetString(confirmationMailBody)
+
 	settings := mail.Settings{
-		From:    s.appConfig.GetString("confirmation_mail_from"),
-		Subject: s.appConfig.GetString("confirmation_mail_subject"),
-		Body:    s.appConfig.GetString("confirmation_mail_body"),
+		From:    from,
+		To:      mailAddr,
+		ToName:  name,
+		Subject: subj,
+		Body:    body,
+		Variables: map[string]string{
+			"token": token,
+		},
 	}
 
 	err := s.mailService.Send(&settings)

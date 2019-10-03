@@ -13,7 +13,10 @@
 package mail
 
 type Settings struct {
-	From    string `json:"from"`
-	Subject string `json:"subject"`
-	Body    string `json:"body"`
+	From      string            `json:"from"`
+	To        string            `json:"to"`
+	ToName    string            `json:"to_name"`
+	Subject   string            `json:"subject"`
+	Body      string            `json:"body"`
+	Variables map[string]string `json:"variables"`
 }
