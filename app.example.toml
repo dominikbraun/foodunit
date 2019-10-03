@@ -1,0 +1,20 @@
+#
+# FoodUnit 3 App Configuration
+#
+
+# Your SendGrid API key. It is recommended to create an own key for FoodUnit.
+# Create a new key here: https://app.sendgrid.com/settings/api_keys
+sendgrid_api_key = ""
+
+# This e-mail address will be used to send the confirmation mail the user will
+# receive after create an account at FoodUnit.
+confirmation_mail_sender = ""
+
+# The subject of the confirmation mail, e. g. 'Your registration at FoodUnit'.
+confirmation_mail_subject = ""
+
+# The body of the confirmation mail. It should contain a hyperlink to the application's
+# confirmation page including the confirmation token. Musn't contain HTML at the moment.
+# Placeholders:
+# - {{token}} will be replaced with the generated token before sending the mail.
+confirmation_mail_body = ""
