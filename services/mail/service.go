@@ -12,7 +12,17 @@
 // Package dish provides services and types for sending mails.
 package mail
 
-import "github.com/dominikbraun/foodunit/storage"
+import (
+	"fmt"
+	"github.com/dominikbraun/foodunit/storage"
+	"github.com/sendgrid/sendgrid-go"
+	"github.com/sendgrid/sendgrid-go/helpers/mail"
+	"strings"
+)
+
+const (
+	FromName string = "FoodUnit"
+)
 
 type Service struct {
 	sgAPIKey string
@@ -28,5 +38,17 @@ func New(sgAPIKey string, u storage.User) *Service {
 }
 
 func (s *Service) Send(settings *Settings) error {
-	panic("implement me")
+	for v, r := range settings.Variables {
+		placeholder := fmt.Sprintf("{{%s}}", v)
+		settings.Body = strings.Replace(settings.Body, placeholder, r, -1)
+	}
+
+	from := mail.NewEmail(FromName, settings.From)
+	to := mail.NewEmail(settings.ToName, settings.To)
+	email := mail.NewSingleEmail(from, settings.Subject, to, settings.Body, settings.Body)
+
+	client := sendgrid.NewSendClient(s.sgAPIKey)
+
+	_, err := client.Send(email)
+	return err
 }
