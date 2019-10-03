@@ -41,6 +41,7 @@ var (
 	ErrUserNotStored           = errors.New("the user could not be registered")
 	ErrUserNotFound            = errors.New("the user could not be found")
 	ErrConfirmationMailNotSent = errors.New("confirmation mail could not be sent")
+	ErrTokenInvalid            = errors.New("the confirmation token is invalid")
 )
 
 type Service struct {
@@ -146,5 +147,13 @@ func (s *Service) Authenticate(l *Login) (uint64, error) {
 }
 
 func (s *Service) ConfirmMailAddr(token string) error {
+	err := s.users.ConfirmUser(token)
+
+	if err == sql.ErrNoRows {
+		return ErrTokenInvalid
+	} else if err != nil {
+		return err
+	}
+
 	return nil
 }

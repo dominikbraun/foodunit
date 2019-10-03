@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"github.com/dominikbraun/foodunit/services/user"
 	"github.com/dominikbraun/foodunit/session"
+	"github.com/go-chi/chi"
 	"net/http"
 )
 
@@ -70,6 +71,29 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 		if uid != 0 {
 			session.Put(r.Context(), "authenticated", true)
 			session.Put(r.Context(), "uid", uid)
+		}
+
+		respond(w, r, http.StatusOK, true)
+		return
+	}
+}
+
+func (c *Controller) ConfirmMailAddr() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := chi.URLParam(r, "token")
+		if token == "" {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidFormData.Error())
+			return
+		}
+
+		err := c.userService.ConfirmMailAddr(token)
+
+		if err != nil && err == user.ErrTokenInvalid {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidFormData.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
 		}
 
 		respond(w, r, http.StatusOK, true)
