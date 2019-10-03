@@ -21,5 +21,6 @@ or use the provided script `run-dev.sh` which will also start the frontend serve
 This step isn't necessary if you've used `run-dev.sh`. Otherwise:
 
 ```shell script
+$ cd ./ui
 $ yarn serve
 ```
