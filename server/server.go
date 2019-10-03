@@ -20,6 +20,7 @@ import (
 	conf "github.com/dominikbraun/foodunit/config"
 	"github.com/dominikbraun/foodunit/controllers/rest"
 	"github.com/dominikbraun/foodunit/services/dish"
+	"github.com/dominikbraun/foodunit/services/mail"
 	"github.com/dominikbraun/foodunit/services/offer"
 	"github.com/dominikbraun/foodunit/services/order"
 	"github.com/dominikbraun/foodunit/services/restaurant"
@@ -45,10 +46,11 @@ type Config struct {
 }
 
 type Server struct {
-	router    *chi.Mux
-	http      *http.Server
-	db        *sqlx.DB
-	session   session.Manager
+	router  *chi.Mux
+	http    *http.Server
+	db      *sqlx.DB
+	session session.Manager
+
 	appConfig conf.Reader
 
 	restaurants     storage.Restaurant
@@ -61,6 +63,8 @@ type Server struct {
 	orders          storage.Order
 	positions       storage.Position
 	configurations  storage.Configuration
+
+	mailService *mail.Service
 
 	restaurantService *restaurant.Service
 	dishService       *dish.Service
@@ -79,7 +83,10 @@ func New(config *Config) (*Server, error) {
 	s.http = newHTTPServer(s.router, config.Addr)
 	s.db, err = sqlx.Open(config.Driver, config.DSN)
 	s.session = session.NewManager()
-	s.appConfig, err = conf.New("app")
+
+	if s.appConfig, err = conf.New("app"); err != nil {
+		return nil, err
+	}
 
 	s.restaurants = maria.NewRestaurant(s.db)
 	s.categories = maria.NewCategory(s.db)
@@ -92,9 +99,12 @@ func New(config *Config) (*Server, error) {
 	s.positions = maria.NewPosition(s.db)
 	s.configurations = maria.NewConfiguration(s.db)
 
+	sgAPIKey := s.appConfig.GetString("sg_api_key")
+	s.mailService = mail.New(sgAPIKey, s.users)
+
 	s.restaurantService = restaurant.NewService(s.restaurants, s.categories, s.dishes)
 	s.dishService = dish.NewService(s.dishes, s.characteristics, s.variants)
-	s.userService = user.NewService(s.users)
+	s.userService = user.NewService(s.appConfig, s.users, s.mailService)
 	s.offerService = offer.NewService(s.restaurants, s.users, s.offers, s.orders, s.positions)
 	s.orderService = order.NewService(s.orders, s.positions, s.configurations, s.dishes, s.characteristics, s.variants)
 
