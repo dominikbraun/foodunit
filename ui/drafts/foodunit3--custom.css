@@ -27,6 +27,10 @@
     background-color: #2F4050 !important;
 }
 
+.bg-darker {
+    background-color: #29333e;
+}
+
 .bg-primary {
     background-color: #fe5d70 !important;
 }
@@ -43,7 +47,7 @@
 }
 
 .text-dark {
-    color: #404E67 !important;
+    color: #29333e !important;
 }
 
 .text-secondary {
@@ -130,7 +134,7 @@
     background: #FFF;
     background: -moz-linear-gradient(90deg, #FFF 40%, #F8F9FE 65%);
     background: -webkit-linear-gradient(90deg, #FFF 40%, #F8F9FE 65%);
-    background: linear-gradient(90deg, #FFF 40%, #F8F9FE 65%);
+    background: linear-gradient(90deg, #FFF 35%, #F8F9FE 65%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF', endColorstr='#F8F9FE', GradientType=1);
 }
 
@@ -274,7 +278,7 @@
 
 .nav-link {
     color: #CBD2DB;
-    border-left: 3px solid #2F4050;
+    border-left: 3px solid #29333e;
     transition: color .1s, background-color .1s, border .1s;
 }
 
@@ -284,7 +288,7 @@
 }
 
 .nav-link.active {
-    background-color: #364759 !important;
+    background-color: #2d3643 !important;
     border-left: 3px solid #16d39a;
 }
 
