@@ -1,0 +1,174 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<link rel="stylesheet" href="foodunit3--custom.css">
+
+<body class="bg-white-gradient">
+	<div class="row m-0 h-100">
+		
+		<div class="col-12 col-md-3 col-xl-2 h-100 p-0 bg-dark border-right">
+			<div class="px-5 py-4 bg-dark">
+				<div class="bg-primary-gradient text-white text-hand mx-auto text-center text-logo div-logo my-3 px-2 py-4 rounded-0">FoodUnit&nbsp;</div>
+			</div>
+			<p class="text-light text-center text-strong text-sm mb-0 p-3">Angebot ausw&auml;hlen &amp; bestellen</p>	
+			<div class="nav flex-column nav-pills">
+				<a class="nav-link text-md px-4 py-3 rounded-0" href="offers.html"><i class="fas fa-pizza-slice ml-1 mr-4"></i>Aktuelle Angebote</a>
+				<a class="nav-link text-md px-4 py-3 rounded-0 active" href="create-offer.html"><i class="fas fa-share ml-1 mr-4"></i>Angebot erstellen</a>
+				<a class="nav-link text-md px-4 py-3 rounded-0" href="#"><i class="fas fa-layer-group ml-1 mr-4"></i>Meine Angebote</a>
+			</div>
+			<p class="text-light text-center text-strong text-sm mb-0 p-3">Mein Konto</p>
+			<div class="nav flex-column nav-pills">
+				<div class="nav-link text-md text-success px-4 py-3 rounded-0"><i class="fas fa-medal ml-1 mr-4"></i>Gesamt: 1200</div>
+				<a class="nav-link text-md px-4 py-3 rounded-0" href="#"><i class="fas fa-user-circle ml-1 mr-4"></i>Konto verwalten</a>
+				<a class="nav-link text-md px-4 py-3 rounded-0" href="#"><i class="fas fa-sign-out-alt ml-1 mr-4"></i>Ausloggen</a>
+			</div>
+		</div>
+		
+		<div class="col-12 col-md-6 col-xl-8 h-100 scroll-y">
+			
+			
+			<div class="mx-5 my-4 px-5 py-3 bg-gradient-alt rounded-0">
+				<h6 class="text-dark text-strong px-0 mb-1 pt-3 pb-0">Angebot erstellen</h6>
+				
+				<div class="row m-0">
+					<div class="col-12 col-md-3"></div>
+					<div class="col-12 col-md-6 text-center">
+					
+						<h4 class="px-2 py-4 text-strong">W&auml;hle ein Restaurant</h4>
+						<form class="my-4" spellcheck="false">
+							<div class="input-group mb-3">
+							  <div class="input-group-prepend">
+								<label class="input-group-text bg-white border-0 rounded-0" for="select-restaurant">Bestellen bei:</label>
+							  </div>
+							  <select class="custom-select bg-white border-0 rounded-0" id="select-restaurant">
+								<option selected>ausw&auml;hlen ...</option>
+								<option>Steffi's Imbiss</option>
+								<option>Imbiss Media</option>
+								<option>Asia Aroma</option>
+								<option>McDonald's Straubing</option>
+								<option>Pizzeria Venezia</option>
+							  </select>
+							</div>
+						</form>
+				
+						<h4 class="px-2 py-4 text-strong">Lege einen Zeitraum fest</h4>
+						<h6 class="text-sm">Dies gibt den Zeitraum an, in dem deine Kollegen bestellen k&ouml;nnen.</h6>
+						<div class="row mx-0 mt-4">
+							<div class="col-12 col-lg-5 p-0">
+								<form class="mx-0 my-4" spellcheck="false">
+									<div class="input-group w-100">
+										<select class="custom-select bg-white border-0 rounded-0 text-md" id="from-hh">
+											<option selected>HH</option>
+											<option value="1">06</option>
+											<option value="2">07</option>
+											<option value="3">08</option>
+											<option value="3">09</option>
+											<option value="3">09</option>
+											<option value="3">10</option>
+											<option value="3">11</option>
+											<option value="3">12</option>
+											<option value="3">13</option>
+											<option value="3">14</option>
+											<option value="3">15</option>
+											<option value="3">16</option>
+											<option value="3">17</option>
+											<option value="3">18</option>
+										</select>
+										<div class="input-group-append input-group-prepend">
+											<label class="input-group-text bg-white border-0 text-md">:</label>
+										</div>
+										<select class="custom-select bg-white border-0 rounded-0 text-md" id="from-mm">
+											<option selected>MM</option>
+											<option>00</option>
+											<option>15</option>
+											<option>30</option>
+											<option>45</option>
+										</select>
+									</div>
+								</form>
+							</div>
+							<div class="col-12 col-lg-2 p-1 text-center">
+								<p class="m-4">&mdash;</p>
+							</div>
+							<div class="col-12 col-lg-5 p-0">
+								<form class="mx-0 my-4" spellcheck="false">
+									<div class="input-group w-100">
+										<select class="custom-select bg-white border-0 text-md" id="to-hh">
+											<option selected>HH</option>
+											<option value="1">06</option>
+											<option value="2">07</option>
+											<option value="3">08</option>
+											<option value="3">09</option>
+											<option value="3">09</option>
+											<option value="3">10</option>
+											<option value="3">11</option>
+											<option value="3">12</option>
+											<option value="3">13</option>
+											<option value="3">14</option>
+											<option value="3">15</option>
+											<option value="3">16</option>
+											<option value="3">17</option>
+											<option value="3">18</option>
+										</select>
+										<div class="input-group-append input-group-prepend">
+											<label class="input-group-text bg-white border-0 text-md">:</label>
+										</div>
+										<select class="custom-select bg-white border-0 rounded-0 text-md" id="to-mm">
+											<option selected>MM</option>
+											<option>00</option>
+											<option>15</option>
+											<option>30</option>
+											<option>45</option>
+										</select>
+									</div>
+								</form>
+							</div>
+						</div>
+						
+						<h4 class="px-2 py-4 text-strong">Erlaubst du Bezahlung per PayPal?</h4>
+						<form class="mx-5 my-3 text-center" spellcheck="false">
+							<div class="form-check form-check-inline text-md">
+								<input class="form-check-input bg-light border-0" type="radio" name="allow-paypal" id="yes" value="yes" checked>
+								<label class="form-check-label" for="yes">Ja</label>
+							</div>
+							<div class="form-check form-check-inline text-md">
+								<input class="form-check-input bg-light border-0" type="radio" name="allow-paypal" id="no" value="no">
+								<label class="form-check-label" for="no">Nein</label>
+							</div>
+						</form>
+						
+						<button class="btn btn-success text-md rounded-0 w-100 text-strong mt-4 mb-5 py-2">Angebot erstellen<span class="text-md d-inline-block ml-2 text-white"><i class="fas fa-medal mr-1"></i>+50</span></button>
+					
+					</div>
+					<div class="col-12 col-md-3"></div>
+				</div>
+			
+			</div>
+			
+			<div class="mx-5 my-4 bg-white border rounded-0">
+				<div class="p-3 text-dark text-md">
+					<i class="fas fa-question-circle text-primary ml-1 mr-3"></i>Mit einem Angebot bietest du deinen Kollegen an, bei einem Restaurant für sie zu bestellen und das Essen abzuholen.
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="col-12 col-md-3 col-xl-2 h-100 p-0 bg-white border-left">
+			<h4 class="text-hand text-dark bg-light-gradient text-center mb-0 px-2 py-4">Einkaufskorb</h4>
+			<p class="text-center text-strong mb-0 pt-4 pb-0 text-sm">Dein Einkaufskorb ist leer.</p>
+			<div class="px-4 py-4">
+				<div class="row m-0">
+					<div class="col-5 text-md text-strong text-muted px-0 py-2">Gesamt: 0.00 &euro;</div>
+					<div class="col-7 text-right p-0">
+						<button class="btn btn-light rounded-pill text-xs" disabled><i class="fab fa-paypal mr-2"></i>direkt zu PayPal</button>
+					</div>
+				</div>
+			</div>
+			<div class="px-4 pt-0 pb-4">
+				<button class="btn btn-success w-100 text-md rounded-0 text-strong py-2" disabled>Einkaufskorb speichern</button>
+			</div>
+		</div>
+	
+	</div>
+</body>
