@@ -1,6 +1,6 @@
 {
-  "name": "foodunit-client",
-  "version": "0.0.1",
+  "name": "ui",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
