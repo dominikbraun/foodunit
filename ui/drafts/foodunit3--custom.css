@@ -16,7 +16,7 @@
 
 * {
     /* noinspection CssNoGenericFontName */
-    font-family: 'Nunito';
+    font-family: 'Muli';
 }
 
 .bg-light {
@@ -37,6 +37,10 @@
 
 .bg-success {
     background-color: #16d39a !important;
+}
+
+.bg-dark-transparent {
+    background-color: rgba(41, 51, 62, .017);
 }
 
 .text-hand {
@@ -139,11 +143,11 @@
 }
 
 .bg-gradient {
-    background: #FFE2EA;
-    background: -moz-linear-gradient(-45deg, #FFE2EA 0%, #FFF1DD 100%);
-    background: -webkit-linear-gradient(-45deg, #FFE2EA 0%, #FFF1DD 100%);
-    background: linear-gradient(135deg, #FFE2EA 5%, #FFF1DD 95%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE2EA', endColorstr='#FFF1DD', GradientType=1);
+    background: #FFE1E9;
+    background: -moz-linear-gradient(-45deg, #FFE1E9 0%, #FFEFD8 100%);
+    background: -webkit-linear-gradient(-45deg, #FFE1E9 0%, #FFEFD8 100%);
+    background: linear-gradient(135deg, #FFE1E9 5%, #FFEFD8 95%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE1E9', endColorstr='#FFEFD8', GradientType=1);
 }
 
 .bg-gradient-alt {
@@ -288,7 +292,7 @@
 }
 
 .nav-link.active {
-    background-color: #2d3643 !important;
+    background-color: #2D3743 !important;
     border-left: 3px solid #16d39a;
 }
 
