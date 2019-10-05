@@ -23,8 +23,12 @@
     background-color: #F8F9FE !important;
 }
 
+.bg-pre-dark {
+    background-color: #344050;
+}
+
 .bg-dark {
-    background-color: #2F4050 !important;
+    background-color: #2D3743 !important;
 }
 
 .bg-darker {
@@ -39,8 +43,8 @@
     background-color: #16d39a !important;
 }
 
-.bg-dark-transparent {
-    background-color: rgba(41, 51, 62, .017);
+.bg-white-transparent {
+    background-color: rgba(255, 255, 255, .21);
 }
 
 .text-hand {
@@ -79,11 +83,11 @@
 }
 
 .text-sm {
-    font-size: .82em;
+    font-size: .83em;
 }
 
 .text-md {
-    font-size: .93em;
+    font-size: .935em;
 }
 
 .text-md .fa, .text-md .fas {
@@ -99,7 +103,7 @@
 }
 
 .text-xl.text-hand {
-    font-size: 3.2em;
+    font-size: 3.25em;
 }
 
 .text-logo {
@@ -180,18 +184,18 @@
 
 .btn-dark {
     color: #fff;
-    background-color: #50617F !important;
-    border-color: #50617F !important;
+    background-color: #344050 !important;
+    border-color: #344050 !important;
 }
 
 .btn-dark:hover {
     color: #fff;
-    background-color: #404e67 !important;
-    border-color: #404e67 !important;
+    background-color: #2D3743 !important;
+    border-color: #2D3743 !important;
 }
 
 .btn-dark:active, .btn-dark:focus {
-    box-shadow: 0 0 0 0.2rem rgba(64, 78, 103, .25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(45, 55, 67, .28) !important;
 }
 
 .btn-light {
