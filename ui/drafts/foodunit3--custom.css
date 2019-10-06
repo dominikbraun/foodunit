@@ -103,7 +103,13 @@
 }
 
 .text-xl.text-hand {
-    font-size: 3.9em;
+    font-size: 3.0em;
+}
+
+@media (min-width: 992px) {
+    .text-xl.text-hand {
+        font-size: 3.9em;
+    }
 }
 
 .text-logo {
