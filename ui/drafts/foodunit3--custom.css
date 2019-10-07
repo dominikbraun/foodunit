@@ -16,11 +16,11 @@
 
 * {
     /* noinspection CssNoGenericFontName */
-    font-family: 'Muli';
+    font-family: 'Roboto';
 }
 
 .bg-light {
-    background-color: #F8F9FE !important;
+    background-color: #F7F8FC !important;
 }
 
 .bg-pre-dark {
@@ -71,7 +71,7 @@
 }
 
 .text-strong {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .text-normal {
@@ -137,19 +137,19 @@
 }
 
 .bg-light-gradient {
-    background: #F8F9FE;
-    background: -moz-linear-gradient(40deg, #F8F9FE 51%, #F7F8FC 51%);
-    background: -webkit-linear-gradient(40deg, #F8F9FE 51%, #F7F8FC 51%);
-    background: linear-gradient(40deg, #F8F9FE 51%, #F7F8FC 51%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F9FE', endColorstr='#F7F8FC', GradientType=1);
+    background: #F7F8FC;
+    background: -moz-linear-gradient(40deg, #F7F8FC 51%, #F7F8FC 51%);
+    background: -webkit-linear-gradient(40deg, #F7F8FC 51%, #F7F8FC 51%);
+    background: linear-gradient(40deg, #F7F8FC 51%, #F7F8FC 51%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7F8FC', endColorstr='#F7F8FC', GradientType=1);
 }
 
 .bg-white-gradient {
     background: #FFF;
-    background: -moz-linear-gradient(90deg, #FFF 40%, #F8F9FE 65%);
-    background: -webkit-linear-gradient(90deg, #FFF 40%, #F8F9FE 65%);
-    background: linear-gradient(90deg, #FFF 35%, #F8F9FE 65%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF', endColorstr='#F8F9FE', GradientType=1);
+    background: -moz-linear-gradient(90deg, #FFF 40%, #F7F8FC 65%);
+    background: -webkit-linear-gradient(90deg, #FFF 40%, #F7F8FC 65%);
+    background: linear-gradient(90deg, #FFF 35%, #F7F8FC 65%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF', endColorstr='#F7F8FC', GradientType=1);
 }
 
 .bg-gradient {
@@ -347,17 +347,17 @@
 }
 
 .border-color-light {
-    border-color: #F8F9FE !important;
+    border-color: #F7F8FC !important;
 }
 
 .scroll-xl-y {
     overflow-y: scroll;
-    scrollbar-color: #344050 #F8F9FE;
+    scrollbar-color: #344050 #F7F8FC;
     scrollbar-width: thin;
 }
 
 .table-hover tbody tr:hover {
-    background-color: #F8F9FE !important;
+    background-color: #F7F8FC !important;
 }
 
 .table td, .table th {
@@ -369,7 +369,7 @@
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #F8F9FE;
+    background-color: #F7F8FC;
 }
 
 .border-top-thin {
