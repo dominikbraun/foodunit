@@ -19,6 +19,10 @@
     font-family: 'Roboto';
 }
 
+body {
+    min-width: 992px;
+}
+
 .bg-light {
     background-color: #F7F8FC !important;
 }
@@ -86,12 +90,20 @@
     font-size: .84em;
 }
 
+.text-pmd {
+    font-size: .88em;
+}
+
+.text-pmd .fa, .text-pmd .fas {
+    font-size: .9em;
+}
+
 .text-md {
     font-size: .95em;
 }
 
 .text-md .fa, .text-md .fas {
-    font-size: .97em !important;
+    font-size: .95em !important;
 }
 
 .text-lg {
@@ -399,6 +411,10 @@ td.edit-item:hover, td.edit-item:active {
     color: #fff;
     background-color: #404e67;
     cursor: pointer;
+}
+
+summary:active, summary:focus {
+    outline: none;
 }
 
 ::-webkit-scrollbar {
