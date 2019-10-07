@@ -11,7 +11,7 @@ GOOS=linux go build -ldflags="-s -w" -o ./.target/foodunit-server cmd/server/mai
 # getent passwd foodunit || useradd -m -d /home/foodunit foodunit
 # chown -R foodunit:foodunit ./.target/*
 
-echo "Starting FoodUnit server in production mode"
+echo "Starting FoodUnit in production mode"
 
 cd ./.target || exit
 chmod +x foodunit-server
