@@ -19,10 +19,6 @@
     font-family: 'Roboto';
 }
 
-body {
-    min-width: 992px;
-}
-
 @media (min-width: 992px) {
     .sidebar-right-lg {
         position: fixed;
