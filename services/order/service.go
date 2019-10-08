@@ -23,11 +23,13 @@ import (
 )
 
 var (
-	ErrOfferNotFound = errors.New("the offer could not be found")
-	ErrOrderNotFound = errors.New("the order could not be found")
+	ErrOfferNotFound    = errors.New("the offer could not be found")
+	ErrOrderNotFound    = errors.New("the order could not be found")
+	ErrActionNotAllowed = errors.New("the action is not allowed")
 )
 
 type Service struct {
+	offers          storage.Offer
 	orders          storage.Order
 	positions       storage.Position
 	configurations  storage.Configuration
@@ -36,9 +38,10 @@ type Service struct {
 	variants        storage.Variant
 }
 
-func NewService(o storage.Order, p storage.Position, c storage.Configuration, d storage.Dish, chr storage.Characteristic, v storage.Variant) *Service {
+func NewService(o storage.Offer, odr storage.Order, p storage.Position, c storage.Configuration, d storage.Dish, chr storage.Characteristic, v storage.Variant) *Service {
 	service := Service{
-		orders:          o,
+		offers:          o,
+		orders:          odr,
 		positions:       p,
 		configurations:  c,
 		dishes:          d,
@@ -223,6 +226,32 @@ func (s *Service) Update(order *Update) error {
 				}
 			}
 		}
+	}
+
+	return nil
+}
+
+func (s *Service) MarkAsPaid(offerID, orderID, userID uint64) error {
+	err := s.orders.MarkAsPaid(orderID)
+
+	ownerID, err := s.offers.OwnerID(offerID)
+
+	if err == sql.ErrNoRows {
+		return ErrOfferNotFound
+	} else if err != nil {
+		return err
+	}
+
+	if ownerID != userID {
+		return ErrActionNotAllowed
+	}
+
+	err = s.orders.MarkAsPaid(orderID)
+
+	if err == sql.ErrNoRows {
+		return ErrOrderNotFound
+	} else if err != nil {
+		return err
 	}
 
 	return nil

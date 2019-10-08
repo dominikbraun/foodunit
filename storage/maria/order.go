@@ -107,3 +107,10 @@ ORDER BY o.id DESC`
 
 	return order, err
 }
+
+func (o *Order) MarkAsPaid(id uint64) error {
+	query := `UPDATE orders SET is_paid = 1 WHERE id = ?`
+	_, err := o.DB.Exec(query, id)
+
+	return err
+}

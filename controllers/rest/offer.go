@@ -18,6 +18,7 @@ package rest
 import (
 	"encoding/json"
 	"github.com/dominikbraun/foodunit/services/offer"
+	"github.com/dominikbraun/foodunit/services/order"
 	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
 	"net/http"
@@ -114,6 +115,40 @@ func (c *Controller) CancelOffer(session session.Manager) http.HandlerFunc {
 			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil && err == offer.ErrActionNotAllowed {
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
+		}
+
+		respond(w, r, http.StatusOK, true)
+		return
+	}
+}
+
+func (c *Controller) MarkOrderAsPaid(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
+		orderID, err := strconv.Atoi(chi.URLParam(r, "orderID"))
+
+		if err != nil {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		userID, ok := session.Get(r.Context(), "uid").(uint64)
+		if !ok {
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
+			return
+		}
+
+		err = c.orderService.MarkAsPaid(uint64(offerID), uint64(orderID), userID)
+
+		if err != nil && (err == order.ErrOfferNotFound || err == order.ErrOrderNotFound) {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil && err == order.ErrActionNotAllowed {
 			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
 			return
 		} else if err != nil {

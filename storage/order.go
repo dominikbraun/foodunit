@@ -22,4 +22,5 @@ type Order interface {
 	Store(offerID uint64, order *model.Order) (uint64, error)
 	FindByOffer(offerID uint64) ([]model.Order, error)
 	FindByOfferAndUser(offerID, userID uint64) (model.Order, error)
+	MarkAsPaid(id uint64) error
 }

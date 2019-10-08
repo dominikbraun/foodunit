@@ -140,13 +140,9 @@ AND is_placed = 0`
 
 func (o *Offer) Cancel(id uint64) error {
 	query := `UPDATE offers SET is_cancelled = 1 WHERE id = ?`
-
 	_, err := o.DB.Exec(query, id)
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }
 
 func (o *Offer) OwnerID(id uint64) (uint64, error) {

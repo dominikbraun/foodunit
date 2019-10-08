@@ -53,6 +53,10 @@ func (s *Server) mountRoutes() {
 					r.Get("/all", s.controller.AllOrders())
 					r.Get("/mine", s.controller.GetOrder(s.session))
 					r.Post("/mine", s.controller.UpdateOrder(s.session))
+
+					r.Route("/{orderID}", func(r chi.Router) {
+						r.Get("/mark-as-paid", s.controller.MarkOrderAsPaid(s.session))
+					})
 				})
 			})
 		})
