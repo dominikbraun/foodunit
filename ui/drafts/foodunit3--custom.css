@@ -23,6 +23,24 @@ body {
     min-width: 992px;
 }
 
+@media (min-width: 992px) {
+    .sidebar-right-lg {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1030;
+    }
+
+    .sidebar-left-lg {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+    }
+}
+
 .bg-light {
     background-color: #F7F8FC !important;
 }
@@ -418,7 +436,7 @@ summary:active, summary:focus {
 }
 
 ::-webkit-scrollbar {
-    width: 2px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -431,10 +449,6 @@ summary:active, summary:focus {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #DCDCDC;
-}
-
-.scrollbar {
-    width: 2px;
 }
 
 ::-webkit-scrollbar-track {
