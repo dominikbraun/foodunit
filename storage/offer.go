@@ -25,4 +25,5 @@ type Offer interface {
 	Store(offer *model.Offer) error
 	Find(id uint64) (model.Offer, error)
 	FindValidFrom(from time.Time) ([]model.Offer, error)
+	Cancel(id uint64) error
 }

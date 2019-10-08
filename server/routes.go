@@ -47,6 +47,7 @@ func (s *Server) mountRoutes() {
 
 			r.Route("/{id}", func(r chi.Router) {
 				r.Get("/", s.controller.GetOffer())
+				r.Get("/cancel", s.controller.CancelOffer())
 
 				r.Route("/orders", func(r chi.Router) {
 					r.Get("/all", s.controller.AllOrders())

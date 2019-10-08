@@ -92,3 +92,27 @@ func (c *Controller) GetOffer() http.HandlerFunc {
 		return
 	}
 }
+
+func (c *Controller) CancelOffer() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+		if err != nil {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		err = c.offerService.Cancel(uint64(id))
+
+		if err != nil && err == offer.ErrOfferNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
+		}
+
+		respond(w, r, http.StatusOK, true)
+		return
+	}
+}

@@ -131,3 +131,15 @@ func (s *Service) Get(id uint64) (View, error) {
 
 	return offerView, nil
 }
+
+func (s *Service) Cancel(id uint64) error {
+	err := s.offers.Cancel(id)
+
+	if err == sql.ErrNoRows {
+		return ErrOfferNotFound
+	} else if err != nil {
+		return err
+	}
+
+	return nil
+}
