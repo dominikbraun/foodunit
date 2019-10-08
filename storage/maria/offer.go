@@ -148,3 +148,12 @@ func (o *Offer) Cancel(id uint64) error {
 
 	return nil
 }
+
+func (o *Offer) OwnerID(id uint64) (uint64, error) {
+	query := `SELECT owner_user_id FROM offers WHERE id = ?`
+
+	var ownerID int
+	err := o.DB.QueryRowx(query, id).Scan(&ownerID)
+
+	return uint64(ownerID), err
+}

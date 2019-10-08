@@ -27,6 +27,7 @@ var (
 	ErrRestaurantNotFound = errors.New("the restaurant could not be found")
 	ErrUserNotFound       = errors.New("the user could not be found")
 	ErrOfferNotFound      = errors.New("the offer could not be found")
+	ErrActionNotAllowed   = errors.New("the action is not allowed")
 )
 
 type Service struct {
@@ -132,8 +133,20 @@ func (s *Service) Get(id uint64) (View, error) {
 	return offerView, nil
 }
 
-func (s *Service) Cancel(id uint64) error {
-	err := s.offers.Cancel(id)
+func (s *Service) Cancel(offerID, userID uint64) error {
+	ownerID, err := s.offers.OwnerID(offerID)
+
+	if err == sql.ErrNoRows {
+		return ErrOfferNotFound
+	} else if err != nil {
+		return err
+	}
+
+	if ownerID != userID {
+		return ErrActionNotAllowed
+	}
+
+	err = s.offers.Cancel(offerID)
 
 	if err == sql.ErrNoRows {
 		return ErrOfferNotFound

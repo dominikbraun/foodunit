@@ -93,19 +93,28 @@ func (c *Controller) GetOffer() http.HandlerFunc {
 	}
 }
 
-func (c *Controller) CancelOffer() http.HandlerFunc {
+func (c *Controller) CancelOffer(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
 
 		if err != nil {
 			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
 			return
 		}
 
-		err = c.offerService.Cancel(uint64(id))
+		userID, ok := session.Get(r.Context(), "uid").(uint64)
+		if !ok {
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
+			return
+		}
+
+		err = c.offerService.Cancel(uint64(offerID), userID)
 
 		if err != nil && err == offer.ErrOfferNotFound {
 			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil && err == offer.ErrActionNotAllowed {
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
 			return
 		} else if err != nil {
 			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
