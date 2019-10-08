@@ -48,6 +48,7 @@ type View struct {
 	ValidTo       time.Time `json:"valid_to"`
 	Responsible   User      `json:"responsible_user_id"`
 	IsPlaced      bool      `json:"is_placed"`
+	IsCancelled   bool      `json:"is_cancelled"`
 	ReadyAt       time.Time `json:"ready_at"`
 	PaypalEnabled bool      `json:"paypal_enabled"`
 }

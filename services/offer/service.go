@@ -124,6 +124,7 @@ func (s *Service) Get(id uint64) (View, error) {
 		ValidTo:       offerEntity.ValidTo,
 		Responsible:   User{Name: offerEntity.Responsible.Name},
 		IsPlaced:      offerEntity.IsPlaced,
+		IsCancelled:   offerEntity.IsCancelled,
 		ReadyAt:       offerEntity.ReadyAt,
 		PaypalEnabled: offerEntity.PaypalEnabled,
 	}

@@ -25,6 +25,7 @@ type Offer struct {
 	ValidTo       time.Time  `db:"valid_to"`
 	Responsible   User       `db:"responsible_user_id"`
 	IsPlaced      bool       `db:"is_placed"`
+	IsCancelled   bool       `db:"is_cancelled"`
 	ReadyAt       time.Time  `db:"ready_at"`
 	PaypalEnabled bool       `db:"paypal_enabled"`
 	Orders        []Order    `db:"orders"`

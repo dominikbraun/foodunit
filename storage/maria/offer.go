@@ -42,6 +42,7 @@ CREATE TABLE offers (
 	valid_to DATETIME NOT NULL,
 	responsible_user_id BIGINT UNSIGNED NOT NULL,
 	is_placed BOOLEAN NOT NULL,
+	is_cancelled BOOLEAN NOT NULL,
 	ready_at DATETIME NOT NULL,
 	paypal_enabled BOOLEAN NOT NULL
 )`
@@ -61,8 +62,8 @@ func (o *Offer) Store(offer *model.Offer) error {
 	query := `
 INSERT INTO offers (
 	owner_user_id, restaurant_id, valid_from, valid_to,
-	responsible_user_id, is_placed, ready_at, paypal_enabled
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+	responsible_user_id, is_placed, is_cancelled, ready_at, paypal_enabled
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 	validFrom := offer.ValidFrom.Format("2006-01-02 15:04:05")
 	validTo := offer.ValidTo.Format("2006-01-02 15:04:05")
@@ -71,8 +72,9 @@ INSERT INTO offers (
 	readyAt := offer.ReadyAt.Format("2006-01-02 15:04:05")
 
 	_, err := o.DB.Exec(
-		query, offer.Owner.ID, offer.Restaurant.ID, validFrom, validTo,
-		offer.Responsible.ID, offer.IsPlaced, readyAt, offer.PaypalEnabled,
+		query, offer.Owner.ID, offer.Restaurant.ID, validFrom,
+		validTo, offer.Responsible.ID, offer.IsPlaced, offer.IsCancelled,
+		readyAt, offer.PaypalEnabled,
 	)
 
 	return err
@@ -80,7 +82,7 @@ INSERT INTO offers (
 
 func (o *Offer) Find(id uint64) (model.Offer, error) {
 	query := `
-SELECT o.id, valid_from, valid_to, is_placed, ready_at, paypal_enabled,
+SELECT o.id, valid_from, valid_to, is_placed, is_cancelled, ready_at, paypal_enabled,
 	u.id as "owner_user_id.id", u.name as "owner_user_id.name",
 	r.id as "restaurant_id.id", r.name as "restaurant_id.name",
 	u2.id as "responsible_user_id.id", u2.name as "responsible_user_id.name"
@@ -101,7 +103,7 @@ WHERE o.id = ?`
 
 func (o *Offer) FindValidFrom(from time.Time) ([]model.Offer, error) {
 	query := `
-SELECT o.id, valid_from, valid_to, is_placed, ready_at, paypal_enabled,
+SELECT o.id, valid_from, valid_to, is_placed, is_cancelled, ready_at, paypal_enabled,
 	u.id as "owner_user_id.id", u.name as "owner_user_id.name",
 	r.id as "restaurant_id.id", r.name as "restaurant_id.name",
 	u2.id as "responsible_user_id.id", u2.name as "responsible_user_id.name"
