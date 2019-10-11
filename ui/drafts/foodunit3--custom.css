@@ -364,6 +364,10 @@
     border-top: 1px solid #F7F8FC !important;
 }
 
+.border-top-0 {
+    border-top: none !important;
+}
+
 .border-bottom {
     border-bottom: 1px solid #EFF1F4 !important;
 }
