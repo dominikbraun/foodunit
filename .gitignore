@@ -13,6 +13,7 @@
 
 # IDE files
 .idea
+.vscode
 
 # FoodUnit binary
 foodunit
@@ -23,5 +24,3 @@ cmd/*/__debug_bin
 # FoodUnit config
 server.toml
 app.toml
-
-.vscode
