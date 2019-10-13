@@ -163,8 +163,8 @@ func (c *Controller) MarkOrderAsPaid(session session.Manager) http.HandlerFunc {
 
 func (c *Controller) SetReadyAt() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var readyAt offer.ReadyAtSetter
-		err := json.NewDecoder(r.Body).Decode(&readyAt)
+		var setter offer.ReadyAtSetter
+		err := json.NewDecoder(r.Body).Decode(&setter)
 
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
 
@@ -173,7 +173,7 @@ func (c *Controller) SetReadyAt() http.HandlerFunc {
 			return
 		}
 
-		err = c.offerService.SetReadyAt(uint64(id), readyAt)
+		err = c.offerService.SetReadyAt(uint64(id), setter)
 
 		if err != nil && err == offer.ErrOfferNotFound {
 			respond(w, r, http.StatusNotFound, err.Error())

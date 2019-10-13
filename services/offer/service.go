@@ -220,8 +220,8 @@ func (s *Service) sendCancellationMail(name, mailAddr, owner, restaurant string)
 	return err
 }
 
-func (s *Service) SetReadyAt(id uint64, readyAt ReadyAtSetter) error {
-	err := s.offers.SetReadyAt(id, readyAt.ReadyAt)
+func (s *Service) SetReadyAt(id uint64, setter ReadyAtSetter) error {
+	err := s.offers.SetReadyAt(id, setter.ReadyAt)
 
 	if err == sql.ErrNoRows {
 		return ErrOfferNotFound
