@@ -38,10 +38,10 @@ func New(sgAPIKey string, u storage.User) *Service {
 }
 
 func (s *Service) Send(settings *Settings) error {
-	for v, r := range settings.Variables {
-		placeholder := fmt.Sprintf("{{%s}}", v)
-		settings.Subject = strings.Replace(settings.Subject, placeholder, r, -1)
-		settings.Body = strings.Replace(settings.Body, placeholder, r, -1)
+	for variable, replacement := range settings.Variables {
+		placeholder := fmt.Sprintf("{{%s}}", variable)
+		settings.Subject = strings.Replace(settings.Subject, placeholder, replacement, -1)
+		settings.Body = strings.Replace(settings.Body, placeholder, replacement, -1)
 	}
 
 	from := mail.NewEmail(FromName, settings.From)
