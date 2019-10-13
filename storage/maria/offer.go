@@ -160,3 +160,30 @@ func (o *Offer) SetReadyAt(id uint64, readyAt time.Time) error {
 
 	return err
 }
+
+func (o *Offer) OrderingUsers(id uint64) ([]model.User, error) {
+	query := `
+SELECT u.id as "id", u.mail_addr as "mail_addr"
+FROM orders o
+INNER JOIN users u
+ON o.user_id = u.id
+WHERE o.offer_id = ?`
+
+	rows, err := o.DB.Queryx(query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	users := make([]model.User, 0)
+
+	for rows.Next() {
+		var user model.User
+
+		if err := rows.StructScan(&user); err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
+}

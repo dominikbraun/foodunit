@@ -17,10 +17,19 @@ package offer
 
 import (
 	"database/sql"
+	"github.com/dominikbraun/foodunit/config"
 	"github.com/dominikbraun/foodunit/model"
+	"github.com/dominikbraun/foodunit/services/mail"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/pkg/errors"
+	"log"
 	"time"
+)
+
+const (
+	cancellationMailFrom    string = "cancellation_mail_from"
+	cancellationMailSubject string = "cancellation_mail_subject"
+	cancellationMailBody    string = "cancellation_mail_body"
 )
 
 var (
@@ -31,20 +40,24 @@ var (
 )
 
 type Service struct {
+	appConfig   config.Reader
 	restaurants storage.Restaurant
 	users       storage.User
 	offers      storage.Offer
 	orders      storage.Order
 	positions   storage.Position
+	mailService *mail.Service
 }
 
-func NewService(r storage.Restaurant, u storage.User, o storage.Offer, odr storage.Order, p storage.Position) *Service {
+func NewService(r config.Reader, res storage.Restaurant, u storage.User, o storage.Offer, odr storage.Order, p storage.Position, m *mail.Service) *Service {
 	service := Service{
-		restaurants: r,
+		appConfig:   r,
+		restaurants: res,
 		users:       u,
 		offers:      o,
 		orders:      odr,
 		positions:   p,
+		mailService: m,
 	}
 	return &service
 }
@@ -134,7 +147,7 @@ func (s *Service) Get(id uint64) (View, error) {
 }
 
 func (s *Service) Cancel(offerID, userID uint64) error {
-	ownerID, err := s.offers.OwnerID(offerID)
+	offer, err := s.offers.Find(offerID)
 
 	if err == sql.ErrNoRows {
 		return ErrOfferNotFound
@@ -142,7 +155,7 @@ func (s *Service) Cancel(offerID, userID uint64) error {
 		return err
 	}
 
-	if ownerID != userID {
+	if offer.Owner.ID != userID {
 		return ErrActionNotAllowed
 	}
 
@@ -154,7 +167,57 @@ func (s *Service) Cancel(offerID, userID uint64) error {
 		return err
 	}
 
+	orderingUsers, err := s.offers.OrderingUsers(offerID)
+	if err != nil && err != sql.ErrNoRows {
+		return err
+	}
+
+	if err != sql.ErrNoRows {
+		owner, err := s.users.Find(offer.Owner.ID)
+
+		if err != nil && err == sql.ErrNoRows {
+			return ErrUserNotFound
+		} else if err != nil {
+			return err
+		}
+
+		restaurant, err := s.restaurants.Find(offer.Restaurant.ID)
+		if err != nil && err == sql.ErrNoRows {
+			return ErrRestaurantNotFound
+		} else if err != nil {
+			return err
+		}
+
+		for _, u := range orderingUsers {
+			err = s.sendCancellationMail(u.Name, u.MailAddr, owner.Name, restaurant.Name)
+			if err != nil {
+				log.Printf("Error while cancelling offer #{%v}: {%s}", offerID, err.Error())
+			}
+		}
+	}
+
 	return nil
+}
+
+func (s *Service) sendCancellationMail(name, mailAddr, owner, restaurant string) error {
+	from := s.appConfig.GetString(cancellationMailFrom)
+	subj := s.appConfig.GetString(cancellationMailSubject)
+	body := s.appConfig.GetString(cancellationMailBody)
+
+	settings := mail.Settings{
+		From:    from,
+		To:      mailAddr,
+		ToName:  name,
+		Subject: subj,
+		Body:    body,
+		Variables: map[string]string{
+			"owner":      owner,
+			"restaurant": restaurant,
+		},
+	}
+
+	err := s.mailService.Send(&settings)
+	return err
 }
 
 func (s *Service) SetReadyAt(id uint64, readyAt ReadyAtSetter) error {

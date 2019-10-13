@@ -111,14 +111,14 @@ func (c *Controller) CancelOffer(session session.Manager) http.HandlerFunc {
 
 		err = c.offerService.Cancel(uint64(offerID), userID)
 
-		if err != nil && err == offer.ErrOfferNotFound {
+		if err != nil && (err == offer.ErrOfferNotFound || err == offer.ErrRestaurantNotFound) {
 			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil && err == offer.ErrActionNotAllowed {
 			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
 			return
 		} else if err != nil {
-			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			respond(w, r, http.StatusInternalServerError, err.Error())
 			return
 		}
 

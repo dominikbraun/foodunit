@@ -28,4 +28,5 @@ type Offer interface {
 	Cancel(id uint64) error
 	OwnerID(id uint64) (uint64, error)
 	SetReadyAt(id uint64, readyAt time.Time) error
+	OrderingUsers(id uint64) ([]model.User, error)
 }
