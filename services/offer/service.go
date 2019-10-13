@@ -191,7 +191,7 @@ func (s *Service) Cancel(offerID, userID uint64) error {
 		for _, u := range orderingUsers {
 			err = s.sendCancellationMail(u.Name, u.MailAddr, owner.Name, restaurant.Name)
 			if err != nil {
-				log.Printf("Error while cancelling offer #{%v}: {%s}", offerID, err.Error())
+				log.Printf("Error while cancelling offer #{%v}: {%s}\n", offerID, err.Error())
 			}
 		}
 	}
