@@ -157,3 +157,15 @@ func (s *Service) ConfirmMailAddr(token string) error {
 
 	return nil
 }
+
+func (s *Service) SetPaypalMailAddr(id uint64, setter PaypalMailAddrSetter) error {
+	err := s.users.SetPaypalMailAddr(id, setter.PaypalMailAddr)
+
+	if err == sql.ErrNoRows {
+		return ErrUserNotFound
+	} else if err != nil {
+		return err
+	}
+
+	return nil
+}

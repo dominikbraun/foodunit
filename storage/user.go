@@ -25,4 +25,5 @@ type User interface {
 	MailExists(mailAddr string) (bool, error)
 	StoreConfirmationToken(userID uint64, token string) error
 	ConfirmUser(token string) error
+	SetPaypalMailAddr(id uint64, paypalMailAddr string) error
 }

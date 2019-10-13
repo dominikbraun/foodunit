@@ -110,3 +110,33 @@ func (c *Controller) Logout(session session.Manager) http.HandlerFunc {
 		return
 	}
 }
+
+func (c *Controller) SetPaypalMailAddr(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var setter user.PaypalMailAddrSetter
+		err := json.NewDecoder(r.Body).Decode(&setter)
+
+		if err != nil {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidFormData.Error())
+			return
+		}
+
+		id, ok := session.Get(r.Context(), "uid").(uint64)
+		if !ok {
+			respond(w, r, http.StatusForbidden, ErrForbiddenAction.Error())
+			return
+		}
+
+		err = c.userService.SetPaypalMailAddr(id, setter)
+
+		if err != nil && err == user.ErrUserNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+		}
+
+		respond(w, r, http.StatusOK, true)
+		return
+	}
+}

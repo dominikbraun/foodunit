@@ -62,7 +62,7 @@ CREATE TABLE confirmation_tokens (
 }
 
 func (u *User) Drop() error {
-	query := `DROP TABLE IF EXISTS users`
+	query := `DROP TABLE IF EXISTS users, confirmation_tokens`
 	_, err := u.DB.Exec(query)
 
 	return err
@@ -130,6 +130,13 @@ func (u *User) StoreConfirmationToken(userID uint64, token string) error {
 func (u *User) ConfirmUser(token string) error {
 	query := `UPDATE confirmation_tokens SET is_confirmed = 1 WHERE token = ?`
 	_, err := u.DB.Exec(query, token)
+
+	return err
+}
+
+func (u *User) SetPaypalMailAddr(id uint64, paypalMailAddr string) error {
+	query := `UPDATE users SET paypal_mail_addr = ? WHERE id = ?`
+	_, err := u.DB.Exec(query, paypalMailAddr, id)
 
 	return err
 }
