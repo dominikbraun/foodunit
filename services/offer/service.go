@@ -156,3 +156,15 @@ func (s *Service) Cancel(offerID, userID uint64) error {
 
 	return nil
 }
+
+func (s *Service) SetReadyAt(id uint64, readyAt ReadyAtSetter) error {
+	err := s.offers.SetReadyAt(id, readyAt.ReadyAt)
+
+	if err == sql.ErrNoRows {
+		return ErrOfferNotFound
+	} else if err != nil {
+		return err
+	}
+
+	return nil
+}

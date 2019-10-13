@@ -52,3 +52,7 @@ type View struct {
 	ReadyAt       time.Time `json:"ready_at"`
 	PaypalEnabled bool      `json:"paypal_enabled"`
 }
+
+type ReadyAtSetter struct {
+	ReadyAt time.Time `json:"ready_at"`
+}

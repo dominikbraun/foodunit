@@ -160,3 +160,30 @@ func (c *Controller) MarkOrderAsPaid(session session.Manager) http.HandlerFunc {
 		return
 	}
 }
+
+func (c *Controller) SetReadyAt() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var readyAt offer.ReadyAtSetter
+		err := json.NewDecoder(r.Body).Decode(&readyAt)
+
+		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+		if err != nil {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		err = c.offerService.SetReadyAt(uint64(id), readyAt)
+
+		if err != nil && err == offer.ErrOfferNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
+		}
+
+		respond(w, r, http.StatusOK, true)
+		return
+	}
+}

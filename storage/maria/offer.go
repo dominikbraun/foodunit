@@ -153,3 +153,10 @@ func (o *Offer) OwnerID(id uint64) (uint64, error) {
 
 	return uint64(ownerID), err
 }
+
+func (o *Offer) SetReadyAt(id uint64, readyAt time.Time) error {
+	query := `UPDATE offers SET ready_at = ? WHERE id = ?`
+	_, err := o.DB.Exec(query, readyAt, id)
+
+	return err
+}

@@ -27,4 +27,5 @@ type Offer interface {
 	FindValidFrom(from time.Time) ([]model.Offer, error)
 	Cancel(id uint64) error
 	OwnerID(id uint64) (uint64, error)
+	SetReadyAt(id uint64, readyAt time.Time) error
 }
