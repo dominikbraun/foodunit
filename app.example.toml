@@ -18,3 +18,19 @@ confirmation_mail_subject = ""
 # Placeholders:
 # - {{token}} will be replaced with the generated token before sending the mail.
 confirmation_mail_body = ""
+
+# This e-mail address will be used to send the notification mail in case a offer will
+# be cancelled. All users that have ordered their food at this offer will be notified.
+cancellation_mail_from = ""
+
+# The subject of the notification mail, e. g. 'The offer for {{restaurant}} has been cancelled'.
+# Placeholders:
+# - {{owner}} will be replaced with the name of the offer's owner.
+# - {{restaurant}} will be replaced with the name of the concerned restaurant.
+cancellation_mail_subject = ""
+
+# The body of the notification mail. Musn't contain HTML at the moment.
+# Placeholders:
+# - {{owner}} will be replaced with the name of the offer's owner.
+# - {{restaurant}} will be replaced with the name of the concerned restaurant.
+cancellation_mail_body = ""
