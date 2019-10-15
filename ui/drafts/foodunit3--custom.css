@@ -431,6 +431,10 @@ td.edit-item:hover, td.edit-item:active {
     cursor: pointer;
 }
 
+.z-1080 {
+    z-index: 1080;
+}
+
 summary:active, summary:focus {
     outline: none;
 }
