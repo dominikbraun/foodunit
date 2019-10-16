@@ -40,7 +40,7 @@ func New(filename string) (Reader, error) {
 	reader.AddConfigPath(".")
 
 	if err := reader.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			return nil, ErrFileNotFound
 		}
 		return nil, err
