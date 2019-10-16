@@ -35,7 +35,7 @@ func New(filename string) (Reader, error) {
 	reader := viper.New()
 
 	reader.SetConfigName(filename)
-	reader.AddConfigPath("$HOME/foodunit")
+	reader.AddConfigPath("$HOME/.foodunit")
 	reader.AddConfigPath("../..")
 	reader.AddConfigPath(".")
 
