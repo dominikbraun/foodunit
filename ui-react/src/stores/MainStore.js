@@ -15,14 +15,14 @@
  */
 
 import {observable, action, decorate} from 'mobx';
-import FoodUnitModel from "../models/AuthModel";
+import AuthModel from "../models/AuthModel";
+import FoodUnitModel from "../models/FoodUnitModel";
 
 export default class MainStore {
-    foodUnit = null;
-    auth = null;
+    foodUnit = new FoodUnitModel();
+    auth = new AuthModel();
 
     init() {
-        this.auth = new FoodUnitModel();
     }
 }
 
