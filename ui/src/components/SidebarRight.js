@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import React from "react";
+
 export default function SidebarRight(props) {
     return <div className="col-12 col-lg-3 col-xl-2 p-0 sidebar-right-lg bg-white border-left">
         <h5 className="text-center border-bottom mb-0 px-2 py-4">Einkaufskorb</h5>
