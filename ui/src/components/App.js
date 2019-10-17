@@ -33,31 +33,31 @@ class App extends React.Component {
     render() {
         console.log(this.mainStore)
 
+        let view;
+
         if (!this.mainStore.auth.loggedIn) {
-            return (
-                <div className="App">
-                    <Provider auth={this.mainStore.auth}>
-                        <LoginView/>
-                    </Provider>
-                </div>
-            );
+            view = <LoginView/>;
+
         } else if (this.mainStore.auth.loggedIn) {
-            return (
-                <div className="App row m-0 h-100">
-                    <div className="row m-0 h-100">
-                        <Provider foodUnit={this.mainStore.foodUnit}>
-                            <SidebarLeft/>
+            view =  <div className="row m-0 h-100">
+                        <SidebarLeft/>
 
-                            <OfferView/>
+                        <OfferView/>
 
-                            <SidebarRight/>
-                        </Provider>
+                        <SidebarRight/>
                     </div>
-                </div>
-            );
+        } else {
+            view = <div>ERROR</div>;
         }
 
-        return <div>ERROR</div>;
+
+        return (
+            <Provider auth={this.mainStore.auth} foodUnit={this.mainStore.foodUnit}>
+                {view}
+            </Provider>
+        );
+
+
     }
 }
 
