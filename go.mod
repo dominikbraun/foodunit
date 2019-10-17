@@ -12,6 +12,7 @@ require (
 	github.com/coreos/go-systemd v0.0.0-20190719114852-fd7a80b32e1f // indirect
 	github.com/creack/pty v1.1.9 // indirect
 	github.com/go-chi/chi v4.0.2+incompatible
+	github.com/go-chi/cors v1.0.0
 	github.com/go-chi/render v1.0.1
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/gogo/protobuf v1.3.0 // indirect
