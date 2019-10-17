@@ -16,6 +16,7 @@
 package migration
 
 import (
+	"github.com/dominikbraun/foodunit/session"
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/dominikbraun/foodunit/storage/maria"
 	"github.com/jmoiron/sqlx"
@@ -50,6 +51,7 @@ func NewManager(config *Config) (*Manger, error) {
 		maria.NewOffer(m.db),
 		maria.NewOrder(m.db),
 		maria.NewPosition(m.db),
+		session.NewStorage(m.db),
 	}
 	m.dropSchema = config.DropSchema
 
