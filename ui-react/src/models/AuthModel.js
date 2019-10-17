@@ -15,16 +15,50 @@
  */
 
 import {observable, action, decorate} from 'mobx';
+import Axios from 'axios';
 
 export default class AuthModel {
-    name = "";
+    mailAddress = "";
+    password = "";
+    loggedIn = false;
 
-    someAction(value) {
-        this.name = value;
+    login() {
+        let that = this;
+        Axios.post("http://localhost:9292/v1/users/login",
+            {
+                mail_addr: this.mailAddress,
+                password: this.password
+            }).then(function (response) {
+
+            if (response.data === true) {
+                loggedIn(that);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    changeMailAddress(mailAddress) {
+        this.mailAddress = mailAddress;
+    }
+
+    changePassword(password) {
+        this.password = password;
     }
 }
 
+function loggedIn(that) {
+    that.password = "";
+    that.loggedIn = true;
+}
+
 decorate(AuthModel, {
-    name: observable,
-    someAction: action,
+    mailAddress: observable,
+    password: observable,
+    loggedIn: observable,
+
+    login: action,
+    changeMailAddress: action,
+    changePassword: action,
 });

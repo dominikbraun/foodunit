@@ -20,9 +20,9 @@ import SidebarLeft from "./SidebarLeft";
 import SidebarRight from "./SidebarRight";
 import OfferView from "./Offer/OfferView";
 import LoginView from "./Auth/LoginView";
-import {Provider} from "mobx-react";
+import {inject, observer, Provider} from "mobx-react";
 
-export default class App extends React.Component {
+class App extends React.Component {
     mainStore = new MainStore();
 
     constructor(props) {
@@ -32,7 +32,8 @@ export default class App extends React.Component {
 
     render() {
         console.log(this.mainStore)
-        if (this.mainStore.auth !== null) {
+
+        if (!this.mainStore.auth.loggedIn) {
             return (
                 <div className="App">
                     <Provider auth={this.mainStore.auth}>
@@ -40,7 +41,7 @@ export default class App extends React.Component {
                     </Provider>
                 </div>
             );
-        } else if (this.mainStore.foodUnit !== null) {
+        } else if (this.mainStore.auth.loggedIn) {
             return (
                 <div className="App row m-0 h-100">
                     <div className="row m-0 h-100">
@@ -59,3 +60,5 @@ export default class App extends React.Component {
         return <div>ERROR</div>;
     }
 }
+
+export default observer(App);

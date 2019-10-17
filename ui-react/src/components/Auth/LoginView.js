@@ -24,6 +24,18 @@ class LoginView extends React.Component {
         this.auth = props.auth;
     }
 
+    handleMailAddressChange = (event) => {
+        this.auth.changeMailAddress(event.target.value)
+    }
+
+    handlePasswordChange = (event) => {
+        this.auth.changePassword(event.target.value)
+    }
+
+    handleLogin = () => {
+        this.auth.login()
+    }
+
     render() {
         return (
             <div className="row m-0 align-items-center h-100">
@@ -37,15 +49,20 @@ class LoginView extends React.Component {
                         <div className="bg-gradient px-3 py-4">
                             <h4 className="text-lg text-dark text-strong text-center py-5">Jetzt einloggen &amp; Essen
                                 bestellen</h4>
-                            <form className="mx-4 mt-3 pb-4 text-center" spellCheck="false">
+                            <div className="mx-4 mt-3 pb-4 text-center" spellCheck="false">
                                 <input className="form-control bg-white rounded-0 border-0 my-2 py-4 text-dark"
-                                       type="text" name="mail-addr" placeholder="Deine E-Mail-Adresse"/>
+                                       type="text" name="mail-addr" placeholder="Deine E-Mail-Adresse"
+                                       value={this.auth.mailAddress}
+                                       onChange={this.handleMailAddressChange}/>
                                 <input className="form-control bg-white rounded-0 border-0 my-2 py-4 text-dark"
-                                       type="text" name="password" placeholder="Dein Passwort"/>
+                                       type="text" name="password" placeholder="Dein Passwort"
+                                       value={this.auth.password}
+                                       onChange={this.handlePasswordChange}/>
                                 <button
-                                    className="btn btn-light border-0 text-strong w-100 rounded-0 border-0 my-2 py-2">einloggen
+                                    className="btn btn-light border-0 text-strong w-100 rounded-0 border-0 my-2 py-2"
+                                    onClick={this.handleLogin}>einloggen
                                 </button>
-                            </form>
+                            </div>
                             <p className="text-center text-sm">&copy; 2019 FoodUnit &mdash; <a
                                 className="text-dark link-underlined" target="_blank"
                                 href="https://github.com/dominikbraun/foodunit">dominikbraun/foodunit</a></p>
