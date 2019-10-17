@@ -15,22 +15,47 @@
  */
 
 import React from 'react';
-import SidebarLeft from "./SidebarLeft/SidebarLeft";
-import SidebarRight from "./SidebarRight/SidebarRight";
+import MainStore from "../stores/MainStore";
+import SidebarLeft from "./SidebarLeft";
+import SidebarRight from "./SidebarRight";
 import OfferView from "./Offer/OfferView";
+import LoginView from "./Auth/LoginView";
+import {Provider} from "mobx-react";
 
-function App() {
-  return (
-    <div className="App">
-      <div className="row m-0 h-100">
-        <SidebarLeft/>
+export default class App extends React.Component {
+    mainStore = new MainStore();
 
-        <OfferView/>
+    constructor(props) {
+        super(props);
+        this.mainStore.init.bind(this.mainStore)()
+    }
 
-        <SidebarRight/>
-      </div>
-    </div>
-  );
+    render() {
+        console.log(this.mainStore)
+        if (this.mainStore.auth !== null) {
+            return (
+                <div className="App">
+                    <Provider auth={this.mainStore.auth}>
+                        <LoginView/>
+                    </Provider>
+                </div>
+            );
+        } else if (this.mainStore.foodUnit !== null) {
+            return (
+                <div className="App row m-0 h-100">
+                    <div className="row m-0 h-100">
+                        <Provider foodUnit={this.mainStore.foodUnit}>
+                            <SidebarLeft/>
+
+                            <OfferView/>
+
+                            <SidebarRight/>
+                        </Provider>
+                    </div>
+                </div>
+            );
+        }
+
+        return <div>ERROR</div>;
+    }
 }
-
-export default App;
