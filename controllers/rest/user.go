@@ -78,6 +78,15 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 	}
 }
 
+func (c *Controller) IsAuthenticated(session session.Manager) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		_, ok := session.Get(r.Context(), "authenticated").(bool)
+
+		respond(w, r, http.StatusOK, ok)
+		return
+	}
+}
+
 func (c *Controller) ConfirmMailAddr() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := chi.URLParam(r, "token")

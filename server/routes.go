@@ -49,6 +49,7 @@ func (s *Server) mountRoutes() {
 	r.Route("/users", func(r chi.Router) {
 		r.Post("/register", s.controller.RegisterUser())
 		r.Post("/login", s.controller.Login(s.session))
+		r.Get("/is-authenticated", s.controller.IsAuthenticated(s.session))
 
 		r.With(middleware.Authenticate(s.session)).
 			Post("/paypal-mail-addr", s.controller.SetPaypalMailAddr(s.session))
