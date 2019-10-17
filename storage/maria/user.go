@@ -121,8 +121,8 @@ func (u *User) MailExists(mailAddr string) (bool, error) {
 }
 
 func (u *User) StoreConfirmationToken(userID uint64, token string) error {
-	query := `INSERT INTO confirmation_tokens (user_id, token) VALUES (?, ?)`
-	_, err := u.DB.Exec(query, userID, token)
+	query := `INSERT INTO confirmation_tokens (user_id, token, is_confirmed) VALUES (?, ?, ?)`
+	_, err := u.DB.Exec(query, userID, token, false)
 
 	return err
 }

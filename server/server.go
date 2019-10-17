@@ -82,7 +82,7 @@ func New(config *Config) (*Server, error) {
 	s.router = newRouter()
 	s.http = newHTTPServer(s.router, config.Addr)
 	s.db, err = sqlx.Open(config.Driver, config.DSN)
-	s.session = session.NewManager()
+	s.session = session.NewManager(s.db)
 
 	if s.appConfig, err = conf.New("app"); err != nil {
 		return nil, err

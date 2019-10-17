@@ -15,28 +15,34 @@
 // Package session provides interfaces and implementations for session managers.
 package session
 
-import (
-	"context"
-	"github.com/alexedwards/scs/mysqlstore"
-	"github.com/alexedwards/scs/v2"
-	"github.com/jmoiron/sqlx"
-	"net/http"
-)
+import "github.com/jmoiron/sqlx"
 
-type Manager interface {
-	RenewToken(ctx context.Context) error
-	Get(ctx context.Context, key string) interface{}
-	GetString(ctx context.Context, key string) string
-	GetBool(ctx context.Context, key string) bool
-	Put(ctx context.Context, key string, val interface{})
-	Remove(ctx context.Context, key string)
-	LoadAndSave(next http.Handler) http.Handler
+type Storage struct {
+	DB *sqlx.DB
 }
 
-func NewManager(db *sqlx.DB) Manager {
-	manager := scs.New()
-	manager.Cookie.HttpOnly = true
-	manager.Store = mysqlstore.New(db.DB)
+func NewStorage(db *sqlx.DB) *Storage {
+	storage := Storage{
+		DB: db,
+	}
+	return &storage
+}
 
-	return manager
+func (s *Storage) Create() error {
+	query := `
+CREATE TABLE sessions (
+	token CHAR(43) PRIMARY KEY,
+	data BLOB NOT NULL,
+	expiry TIMESTAMP(6) NOT NULL
+);`
+
+	_, err := s.DB.Exec(query)
+	return err
+}
+
+func (s *Storage) Drop() error {
+	query := `DROP TABLE IF EXISTS sessions`
+	_, err := s.DB.Exec(query)
+
+	return err
 }
