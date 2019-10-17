@@ -22,13 +22,30 @@ export default class AuthModel {
     password = "";
     loggedIn = false;
 
+    constructor() {
+        let that = this;
+        Axios.get("http://localhost:9292/v1/users/is-authenticated",
+            {withCredentials: true}
+        ).then(function (response) {
+
+            if (response.data === true) {
+                loggedIn(that);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
     login() {
         let that = this;
         Axios.post("http://localhost:9292/v1/users/login",
             {
                 mail_addr: this.mailAddress,
                 password: this.password
-            }).then(function (response) {
+            },
+            {withCredentials: true}
+            ).then(function (response) {
 
             if (response.data === true) {
                 loggedIn(that);

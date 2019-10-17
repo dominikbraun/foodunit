@@ -31,8 +31,6 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(this.mainStore)
-
         let view;
 
         if (!this.mainStore.auth.loggedIn) {
