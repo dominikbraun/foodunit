@@ -35,12 +35,12 @@ func New(filename string) (Reader, error) {
 	reader := viper.New()
 
 	reader.SetConfigName(filename)
-	reader.AddConfigPath("$HOME/foodunit")
+	reader.AddConfigPath("$HOME/.foodunit")
 	reader.AddConfigPath("../..")
 	reader.AddConfigPath(".")
 
 	if err := reader.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			return nil, ErrFileNotFound
 		}
 		return nil, err
