@@ -18,6 +18,7 @@ import ReactDOM from 'react-dom';
 import './foodunit3--custom.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
+import React from "react";
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
