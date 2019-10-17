@@ -55,7 +55,7 @@ class LoginView extends React.Component {
                                        value={this.auth.mailAddress}
                                        onChange={this.handleMailAddressChange}/>
                                 <input className="form-control bg-white rounded-0 border-0 my-2 py-4 text-dark"
-                                       type="text" name="password" placeholder="Dein Passwort"
+                                       type="password" name="password" placeholder="Dein Passwort"
                                        value={this.auth.password}
                                        onChange={this.handlePasswordChange}/>
                                 <button
