@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {observable, action, decorate} from 'mobx';
+import {action, decorate, observable} from 'mobx';
 import Axios from 'axios';
 
 export default class AuthModel {

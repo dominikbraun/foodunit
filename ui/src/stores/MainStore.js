@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './foodunit3--custom.css';
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
+import {action, decorate, observable} from 'mobx';
+import AuthModel from "../models/AuthModel";
+import FoodUnitModel from "../models/FoodUnitModel";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default class MainStore {
+    foodUnit = new FoodUnitModel();
+    auth = new AuthModel();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    init() {
+    }
+}
+
+decorate(MainStore, {
+    foodUnit: observable,
+    auth: observable,
+    init: action
+});

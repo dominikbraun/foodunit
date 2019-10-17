@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-import {observable, action, decorate} from 'mobx';
-import AuthModel from "../models/AuthModel";
-import FoodUnitModel from "../models/FoodUnitModel";
+import ReactDOM from 'react-dom';
+import App from './App';
 
-export default class MainStore {
-    foodUnit = new FoodUnitModel();
-    auth = new AuthModel();
-
-    init() {
-    }
-}
-
-decorate(MainStore, {
-    foodUnit: observable,
-    auth: observable,
-    init: action
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<App />, div);
+  ReactDOM.unmountComponentAtNode(div);
 });

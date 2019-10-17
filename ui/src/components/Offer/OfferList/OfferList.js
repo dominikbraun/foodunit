@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import React from "react";
-
 // ToDo: combine both functions in one as the have similar content
 export function OfferListCurrent(props) {
     return <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">

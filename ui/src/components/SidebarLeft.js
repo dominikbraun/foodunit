@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import React from "react";
-
 export default function SidebarLeft(props) {
     return <div className="col-12 col-lg-3 col-xl-2 p-0 sidebar-left-lg bg-darker border-right">
         <div className="px-2 py-1 px-xl-4 py-xl-4">

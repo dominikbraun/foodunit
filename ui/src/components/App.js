@@ -20,7 +20,7 @@ import SidebarLeft from "./SidebarLeft";
 import SidebarRight from "./SidebarRight";
 import OfferView from "./Offer/OfferView";
 import LoginView from "./Auth/LoginView";
-import {inject, observer, Provider} from "mobx-react";
+import {observer, Provider} from "mobx-react";
 
 class App extends React.Component {
     mainStore = new MainStore();

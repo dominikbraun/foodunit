@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {observable, action, decorate} from 'mobx';
+import {action, decorate, observable} from 'mobx';
 
 export default class FoodUnitModel {
     name = "";
