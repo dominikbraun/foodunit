@@ -16,12 +16,11 @@
 
 import React from 'react';
 import MainStore from "../stores/MainStore";
-import SidebarLeft from "./SidebarLeft/SidebarLeft";
-import SidebarRight from "./SidebarRight";
 import OfferView from "./Offer/OfferView";
 import LoginView from "./Auth/LoginView";
 import {observer, Provider} from "mobx-react";
 import LogoutView from "./Auth/LogoutView";
+import {Router} from "@reach/router";
 
 class App extends React.Component {
     mainStore = new MainStore();
@@ -32,34 +31,15 @@ class App extends React.Component {
     }
 
     render() {
-        let view;
-
-        if (this.mainStore.auth.showLoggedOut) {
-            view = <LogoutView/>;
-
-        } else if (!this.mainStore.auth.loggedIn) {
-            view = <LoginView/>;
-
-        } else if (this.mainStore.auth.loggedIn) {
-            view =  <div className="row m-0 h-100">
-                        <SidebarLeft/>
-
-                        <OfferView/>
-
-                        <SidebarRight/>
-                    </div>
-        } else {
-            view = <div>ERROR</div>;
-        }
-
-
         return (
             <Provider auth={this.mainStore.auth} foodUnit={this.mainStore.foodUnit}>
-                {view}
+                <Router>
+                    <LogoutView path="/logout"/>
+                    <LoginView default path="/login"/>
+                    <OfferView path="/offer"/>
+                </Router>
             </Provider>
         );
-
-
     }
 }
 

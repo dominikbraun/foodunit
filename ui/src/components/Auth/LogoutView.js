@@ -16,6 +16,7 @@
 
 import React from 'react';
 import {inject, observer} from "mobx-react";
+import {Link} from "@reach/router";
 
 const LogoutView = inject('auth')(observer(({auth}) => {
     return (
@@ -32,10 +33,11 @@ const LogoutView = inject('auth')(observer(({auth}) => {
                             className="text-dark link-underlined" target="_blank"
                             href="https://github.com/dominikbraun/foodunit">dominikbraun/foodunit</a></p>
                     </div>
-                    <div className="text-md text-center bg-white my-4 py-3">Noch Hunger? <a
-                        className="text-dark2 text-strong link-underlined2"
-                        href="#"
-                        onClick={() => {auth.showLoggedOut = false}}>Jetzt einloggen</a></div>
+
+                    <div className="text-md text-center bg-white my-4 py-3">
+                        Noch Hunger?
+                        <Link to="/login" className="text-dark2 text-strong link-underlined2">Jetzt einloggen</Link>
+                    </div>
                 </div>
             </div>
 

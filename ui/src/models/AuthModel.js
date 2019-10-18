@@ -16,12 +16,12 @@
 
 import {action, decorate, observable} from 'mobx';
 import Axios from 'axios';
+import {navigate} from "@reach/router"
 
 export default class AuthModel {
     mailAddress = "";
     password = "";
     loggedIn = false;
-    showLoggedOut = false;
     loginErrorMessage = "";
 
     constructor() {
@@ -82,18 +82,18 @@ function loggedIn(that) {
     that.password = "";
     that.loginErrorMessage = "";
     that.loggedIn = true;
+    navigate("/offer");
 }
 
 function loggedOut(that) {
     that.loggedIn = false;
-    that.showLoggedOut = true;
+    navigate("/logout");
 }
 
 decorate(AuthModel, {
     mailAddress: observable,
     password: observable,
     loggedIn: observable,
-    showLoggedOut: observable,
     loginErrorMessage: observable,
 
     login: action,
