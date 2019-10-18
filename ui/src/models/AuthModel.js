@@ -21,8 +21,10 @@ export default class AuthModel {
     mailAddress = "";
     password = "";
     loggedIn = false;
+    loginErrorMessage = "";
 
     constructor() {
+        // do auto login if session still valid
         let that = this;
         Axios.get("http://localhost:9292/v1/users/is-authenticated",
             {withCredentials: true}
@@ -43,30 +45,24 @@ export default class AuthModel {
             {
                 mail_addr: this.mailAddress,
                 password: this.password
-            },
-            {withCredentials: true}
-            ).then(function (response) {
+            }).then(function (response) {
 
+            console.log(response.data)
             if (response.data === true) {
                 loggedIn(that);
+            } else {
+                that.loginErrorMessage = "Login fehlgeschlagen. E-Mail oder Passwort ist falsch."
             }
         })
         .catch(function (error) {
             console.log(error);
         });
     }
-
-    changeMailAddress(mailAddress) {
-        this.mailAddress = mailAddress;
-    }
-
-    changePassword(password) {
-        this.password = password;
-    }
 }
 
 function loggedIn(that) {
     that.password = "";
+    that.loginErrorMessage = "";
     that.loggedIn = true;
 }
 
@@ -74,8 +70,7 @@ decorate(AuthModel, {
     mailAddress: observable,
     password: observable,
     loggedIn: observable,
+    loginErrorMessage: observable,
 
     login: action,
-    changeMailAddress: action,
-    changePassword: action,
 });

@@ -61,7 +61,9 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 		uid, err := c.userService.Authenticate(&login)
 
 		if err != nil && (err == user.ErrPasswordIncorrect || err == user.ErrUserNotFound) {
-			respond(w, r, http.StatusUnauthorized, err.Error())
+			// send false, not http.StatusUnauthorized as we should not control the logic by errors.
+			// wrong user / password is not a program-error.
+			respond(w, r, http.StatusOK, false)
 			return
 		} else if err != nil {
 			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())

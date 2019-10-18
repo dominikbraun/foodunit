@@ -88,6 +88,10 @@
     color: #16d39a !important;
 }
 
+.text-warning {
+    color: #ff0707 !important;
+}
+
 .text-strong {
     font-weight: 500;
 }
