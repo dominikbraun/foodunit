@@ -15,6 +15,7 @@
  */
 
 import React from "react";
+import AccountSection from "./AccountSection";
 
 export default function SidebarLeft(props) {
     return <div className="col-12 col-lg-3 col-xl-2 p-0 sidebar-left-lg bg-darker border-right">
@@ -27,11 +28,6 @@ export default function SidebarLeft(props) {
             <a className="nav-link text-md px-2 px-xl-3 py-3 rounded-0" href="create-offer.html"><i className="fas fa-share ml-1 mr-3"/>Angebot erstellen</a>
             <a className="nav-link text-md px-2 px-xl-3 py-3 rounded-0" href="my-offers.html"><i className="fas fa-layer-group ml-1 mr-3"/>Meine Angebote</a>
         </div>
-        <p className="text-light text-center text-strong text-sm mb-0 p-3">Mein Konto</p>
-        <div className="nav flex-column nav-pills side-nav">
-            <div className="nav-link text-md text-success px-2 px-xl-3 py-3 rounded-0"><i className="fas fa-medal ml-1 mr-3"/>Gesamt: 1200</div>
-            <a className="nav-link text-md px-2 px-xl-3 py-3 rounded-0" href="#"><i className="fas fa-user-circle ml-1 mr-3"/>Konto verwalten</a>
-            <a className="nav-link text-md px-2 px-xl-3 py-3 rounded-0" href="#"><i className="fas fa-sign-out-alt ml-1 mr-3"/>Ausloggen</a>
-        </div>
+        <AccountSection/>
     </div>
 }

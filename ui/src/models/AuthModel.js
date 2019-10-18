@@ -21,6 +21,7 @@ export default class AuthModel {
     mailAddress = "";
     password = "";
     loggedIn = false;
+    showLoggedOut = false;
     loginErrorMessage = "";
 
     constructor() {
@@ -45,9 +46,10 @@ export default class AuthModel {
             {
                 mail_addr: this.mailAddress,
                 password: this.password
+            },{
+                withCredentials: true
             }).then(function (response) {
 
-            console.log(response.data)
             if (response.data === true) {
                 loggedIn(that);
             } else {
@@ -58,6 +60,22 @@ export default class AuthModel {
             console.log(error);
         });
     }
+
+    logout() {
+        let that = this;
+        Axios.get("http://localhost:9292/v1/users/logout",
+            {
+                withCredentials: true
+            }).then(function (response) {
+
+            if (response.data === true) {
+                loggedOut(that);
+            }
+        })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }
 
 function loggedIn(that) {
@@ -66,10 +84,16 @@ function loggedIn(that) {
     that.loggedIn = true;
 }
 
+function loggedOut(that) {
+    that.loggedIn = false;
+    that.showLoggedOut = true;
+}
+
 decorate(AuthModel, {
     mailAddress: observable,
     password: observable,
     loggedIn: observable,
+    showLoggedOut: observable,
     loginErrorMessage: observable,
 
     login: action,
