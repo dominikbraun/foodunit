@@ -25,8 +25,10 @@ WORKDIR /foodunit
 COPY --from=0 /go/foodunit/.target/foodunit-server .
 ADD app.toml .
 
-# Run the FoodUnit server.
-CMD ["./foodunit-server", "--addr", ":9292"]
+ENV PORT 9292
 
-# By default, the server listens on port 9292 which will be exposed here.
-EXPOSE 9292
+# Run the FoodUnit server.
+CMD ./foodunit-server --addr :${PORT}
+
+# Expose the specified port.
+EXPOSE ${PORT}
