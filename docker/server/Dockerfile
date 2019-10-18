@@ -23,10 +23,10 @@ WORKDIR /foodunit
 # Copy the compiled binary from the build stage into the application directory
 # as well as the application configuration file.
 COPY --from=0 /go/foodunit/.target/foodunit-server .
-COPY app.toml .
+ADD app.toml .
 
 # Run the FoodUnit server.
-CMD ["./foodunit-server", "--addr", "9292"]
+CMD ["./foodunit-server", "--addr", ":9292"]
 
 # By default, the server listens on port 9292 which will be exposed here.
 EXPOSE 9292
