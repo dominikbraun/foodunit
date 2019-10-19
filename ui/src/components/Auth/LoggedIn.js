@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {Link, navigate} from "@reach/router";
+import {Link} from "@reach/router";
 import {LOGIN_ROUTE} from "../../util/Routes";
 import {inject, observer} from "mobx-react";
 import React from 'react';
@@ -22,8 +22,6 @@ import React from 'react';
 const LoggedIn = inject('auth')(observer(({auth, children}) => {
     if (!auth.loggedIn)
     {
-        navigate(LOGIN_ROUTE);
-
         // Todo: Better HTML / CSS for this
         return (
             <div>
