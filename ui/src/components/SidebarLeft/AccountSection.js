@@ -16,6 +16,9 @@
 
 import {inject, observer} from "mobx-react";
 import React from 'react';
+import {Link} from "@reach/router";
+import {LOGOUT_ROUTE} from "../../util/Routes";
+import DummyLink from "../DummyLink";
 
 class AccountSection extends React.Component {
 
@@ -35,10 +38,11 @@ class AccountSection extends React.Component {
                 <div className="nav flex-column nav-pills side-nav">
                     <div className="nav-link text-md text-success px-2 px-xl-3 py-3 rounded-0"><i className="fas fa-medal ml-1 mr-3"/>Gesamt: 1200</div>
                     <a className="nav-link text-md px-2 px-xl-3 py-3 rounded-0" href="#"><i className="fas fa-user-circle ml-1 mr-3"/>Konto verwalten</a>
-                    <a className="nav-link text-md px-2 px-xl-3 py-3 rounded-0" href="#" onClick={this.handleLogout}>
-                        <i className="fas fa-sign-out-alt ml-1 mr-3"/>
-                        Ausloggen
-                    </a>
+                    <DummyLink className="nav-link text-md px-2 px-xl-3 py-3 rounded-0"
+                               onClick={this.handleLogout}>
+                            <i className="fas fa-sign-out-alt ml-1 mr-3"/>
+                            Ausloggen
+                    </DummyLink>
                 </div>
             </div>
         );

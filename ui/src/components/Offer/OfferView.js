@@ -19,7 +19,7 @@ import React from "react";
 import {inject, observer} from "mobx-react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";
 import SidebarRight from "../SidebarRight";
-import {Link, navigate} from "@reach/router";
+import LoggedIn from "../Auth/LoggedIn";
 
 class OfferView extends React.Component {
 
@@ -30,39 +30,28 @@ class OfferView extends React.Component {
     }
 
     render() {
-        // Todo: put this at central lib or maybe a wrapping component?
-        if (!this.auth.loggedIn)
-        {
-            navigate("/login");
-
-            // Todo: page for this
-            return (
-                <div>
-                    Du bist nicht angemeldet. Bitte <Link to="/login">einloggen</Link>.
-                </div>
-            );
-        }
-
         return (
-            <div className="row m-0 h-100">
-                <SidebarLeft/>
-                <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
-                    <OfferListCurrent/>
-                    <OfferListOld/>
+            <LoggedIn>
+                <div className="row m-0 h-100">
+                    <SidebarLeft/>
+                    <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
+                        <OfferListCurrent/>
+                        <OfferListOld/>
 
-                    <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
-                        <div className="p-3 text-dark text-pmd">
-                            <i className="fas fa-question-circle text-primary ml-1 mr-3"/>Mit einem Angebot bieten dir deine Kollegen an, Essen bei einem Restaurant zu bestellen und alle Bestellungen dort abzuholen.
+                        <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
+                            <div className="p-3 text-dark text-pmd">
+                                <i className="fas fa-question-circle text-primary ml-1 mr-3"/>Mit einem Angebot bieten dir deine Kollegen an, Essen bei einem Restaurant zu bestellen und alle Bestellungen dort abzuholen.
+                            </div>
+                        </div>
+
+                        <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
+                            &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit" className="text-dark link-underlined" target="_blank">dominikbraun/foodunit</a><br />
+                            F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined" href="https://github.com/dominikbraun/foodunit/issues" target="_blank">&ouml;ffne ein Issue</a>.
                         </div>
                     </div>
-
-                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
-                        &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit" className="text-dark link-underlined" target="_blank">dominikbraun/foodunit</a><br />
-                        F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined" href="https://github.com/dominikbraun/foodunit/issues" target="_blank">&ouml;ffne ein Issue</a>.
-                    </div>
+                    <SidebarRight/>
                 </div>
-                <SidebarRight/>
-            </div>
+            </LoggedIn>
         );
     }
 }

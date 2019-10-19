@@ -17,6 +17,7 @@
 import {action, decorate, observable} from 'mobx';
 import Axios from 'axios';
 import {navigate} from "@reach/router"
+import {LOGOUT_ROUTE, MAIN_ROUTE} from '../util/Routes'
 
 export default class AuthModel {
     mailAddress = "";
@@ -82,12 +83,13 @@ function loggedIn(that) {
     that.password = "";
     that.loginErrorMessage = "";
     that.loggedIn = true;
-    navigate("/offer");
+
+    navigate(MAIN_ROUTE);
 }
 
 function loggedOut(that) {
     that.loggedIn = false;
-    navigate("/logout");
+    navigate(LOGOUT_ROUTE);
 }
 
 decorate(AuthModel, {
