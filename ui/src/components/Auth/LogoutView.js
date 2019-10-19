@@ -13,3 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import React from 'react';
+import {inject, observer} from "mobx-react";
+import {Link} from "@reach/router";
+
+const LogoutView = inject('auth')(observer(({auth}) => {
+    return (
+        <div className="row m-0 align-items-center h-100">
+
+            <div className="col-12 col-md-3 col-xl-4"></div>
+
+            <div className="col-12 col-md-6 col-xl-4 px-1 px-md-4 px-xl-5 py-0">
+                <div className="mx-0 mx-xl-2 my-5">
+                    <div className="bg-dark text-white text-hand text-center text-logo px-4 py-4">FoodUnit&nbsp;</div>
+                    <div className="bg-gradient px-3 py-4">
+                        <h4 className="text-lg text-dark text-strong text-center py-5">Vielen Dank &amp; bis bald!</h4>
+                        <p className="text-center text-sm">&copy; 2019 FoodUnit &mdash; <a
+                            className="text-dark link-underlined" target="_blank"
+                            href="https://github.com/dominikbraun/foodunit">dominikbraun/foodunit</a></p>
+                    </div>
+
+                    <div className="text-md text-center bg-white my-4 py-3">
+                        Noch Hunger?
+                        <Link to="/login" className="text-dark2 text-strong link-underlined2">Jetzt einloggen</Link>
+                    </div>
+                </div>
+            </div>
+
+            <div className="col-12 col-md-3 col-xl-4"></div>
+
+        </div>
+    );
+}))
+
+export default LogoutView;
