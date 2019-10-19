@@ -57,7 +57,7 @@ export function OfferListCurrent(props) {
             </tr>
             <tr>
                 <td className="align-middle pl-0 pr-3 py-4">
-                    <div className="text-hand text-lg bg-gradient rounded-0 text-dark text-center px-1 py-2">McDonald's</div>
+                    <div className="text-hand text-lg bg-gradient rounded-0 text-dark text-center px-1 py-2">Restaurant</div>
                 </td>
                 <td className="align-middle py-3">
                     <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
