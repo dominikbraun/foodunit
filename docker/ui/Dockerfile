@@ -13,6 +13,10 @@
 # limitations under the License.
 
 # FoodUnit 3 UI image (Dev version)
+#
+# The actual source files will be gathered by creating a volume that
+# maps the host's ui directory against the container's /app directory:
+# $ docker run -v ${pwd}/ui:/app ...
 
 FROM node:12.2.0-alpine
 
@@ -23,7 +27,7 @@ WORKDIR /app
 ENV PATH "/app/node_modules/.bin:$PATH"
 
 # Copy package.json into the app directory.
-COPY ui/package.json /app/package.json
+COPY package.json /app/package.json
 # Install all UI dependencies.
 RUN npm install
 RUN npm install -g react-scripts@3.0.1
