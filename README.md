@@ -5,6 +5,7 @@
 At this stage, FoodUnit 3 requires the following software:
 * Go 1.12: https://golang.org
 * Yarn 1.17: https://yarnpkg.com
+* Docker 19.03: https://docker.com
 
 ### Starting the API server
 
