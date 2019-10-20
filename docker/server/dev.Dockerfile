@@ -37,8 +37,8 @@ RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 # Run CompileDaemon, enabling Hot Reloading. It will observe a mounted
 # directory and rebuild/restart the app when a file changes.
 ENTRYPOINT CompileDaemon \
-    -build="go build -o ./.target/foodunit-server ./cmd/server/main.go" \
-    -command="./.target/foodunit-server --addr :${PORT}" \
+    -build="go build -o ./.target/server ./cmd/server/main.go" \
+    -command="./.target/server --addr :${PORT}" \
     -log-prefix=false
 
 EXPOSE ${PORT}
