@@ -21,8 +21,11 @@ WORKDIR /foodunit
 
 COPY . .
 
+ENV PORT 9292
+
 RUN ["go", "get", "github.com/dominikbraun/CompileDaemon"]
+
 ENTRYPOINT CompileDaemon \
-    -build="go build ./cmd/server/main.go" \
-    -command="./main" \
+    -build="go build -o ./.target/foodunit-server ./cmd/server/main.go" \
+    -command="./.target/foodunit-server --addr :${PORT}" \
     -log-prefix=false
