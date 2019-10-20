@@ -16,7 +16,7 @@
 
 import React from "react";
 
-// ToDo: combine both functions in one as the have similar content
+// ToDo: combine both functions in one as they have similar content
 export function OfferListCurrent(props) {
     return <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
         <h6 className="text-dark text-strong px-0 py-3">Aktuelle Angebote</h6>

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+// constants for all possible routes
+
 export const OFFERS_ROUTE = "/offer"
 export const CREATE_OFFER_ROUTE = "/create-offer"
 export const MY_OFFERS_ROUTE = "/my-offer"
