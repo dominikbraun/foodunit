@@ -17,7 +17,7 @@
 import React from 'react';
 import LoginForm from "./LoginForm";
 
-export default function (props) {
+export default function LoginView (props) {
     return (
         <div className="row m-0 align-items-center h-100">
 

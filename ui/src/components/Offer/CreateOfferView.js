@@ -15,177 +15,165 @@
  */
 
 import React from "react";
-import {inject, observer} from "mobx-react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";
 import SidebarRight from "../SidebarRight";
 import LoggedIn from "../Auth/LoggedIn";
 import {CREATE_OFFER_ROUTE} from "../../util/Routes";
 
-class CreateOfferView extends React.Component {
+export default function CreateOfferView() {
+    return (
+        <LoggedIn>
+            <div className="row m-0 h-100">
+                <SidebarLeft currentActiveRoute={CREATE_OFFER_ROUTE}/>
+                <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
+                <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
+                    <h6 className="text-dark text-strong px-0 mb-1 pt-3 pb-0">Angebot erstellen</h6>
 
-    constructor(props) {
-        super(props);
-        this.auth = props.auth;
-        this.foodUnit = props.foodUnit;
-    }
+                    <div className="row m-0">
+                        <div className="col-12 col-md-3"></div>
+                            <div className="col-12 col-md-6 text-center">
 
-    render() {
-        return (
-            <LoggedIn>
-                <div className="row m-0 h-100">
-                    <SidebarLeft currentActiveRoute={CREATE_OFFER_ROUTE}/>
-                    <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
-                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
-                        <h6 className="text-dark text-strong px-0 mb-1 pt-3 pb-0">Angebot erstellen</h6>
-
-                        <div className="row m-0">
-                            <div className="col-12 col-md-3"></div>
-                                <div className="col-12 col-md-6 text-center">
-
-                                    <h4 className="px-2 py-4 text-strong">W&auml;hle ein Restaurant</h4>
-                                    <form className="my-4" spellCheck="false">
-                                        <div className="input-group mb-3">
-                                            <div className="input-group-prepend">
-                                                <label className="input-group-text bg-light border-0 rounded-0"
-                                                       htmlFor="select-restaurant">Bestellen bei:</label>
-                                            </div>
-                                            <select className="custom-select bg-light border-0 rounded-0"
-                                                    id="select-restaurant">
-                                                <option selected>ausw&auml;hlen ...</option>
-                                                <option>Steffi's Imbiss</option>
-                                                <option>Imbiss Media</option>
-                                                <option>Asia Aroma</option>
-                                                <option>McDonald's Straubing</option>
-                                                <option>Pizzeria Venezia</option>
-                                            </select>
+                                <h4 className="px-2 py-4 text-strong">W&auml;hle ein Restaurant</h4>
+                                <form className="my-4" spellCheck="false">
+                                    <div className="input-group mb-3">
+                                        <div className="input-group-prepend">
+                                            <label className="input-group-text bg-light border-0 rounded-0"
+                                                   htmlFor="select-restaurant">Bestellen bei:</label>
                                         </div>
-                                    </form>
-
-                                    <h4 className="px-2 py-4 text-strong">Lege einen Zeitraum fest</h4>
-                                    <h6 className="text-normal text-pmd">Dies gibt den Zeitraum an, in dem deine Kollegen
-                                        bestellen k&ouml;nnen.</h6>
-                                    <div className="row mx-0 mt-4">
-                                        <div className="col-12 col-lg-5 p-0">
-                                            <form className="mx-0 my-4" spellCheck="false">
-                                                <div className="input-group w-100">
-                                                    <select className="custom-select bg-light border-0 rounded-0 text-md"
-                                                            id="from-hh">
-                                                        <option selected>HH</option>
-                                                        <option value="1">06</option>
-                                                        <option value="2">07</option>
-                                                        <option value="3">08</option>
-                                                        <option value="3">09</option>
-                                                        <option value="3">09</option>
-                                                        <option value="3">10</option>
-                                                        <option value="3">11</option>
-                                                        <option value="3">12</option>
-                                                        <option value="3">13</option>
-                                                        <option value="3">14</option>
-                                                        <option value="3">15</option>
-                                                        <option value="3">16</option>
-                                                        <option value="3">17</option>
-                                                        <option value="3">18</option>
-                                                    </select>
-                                                    <div className="input-group-append input-group-prepend">
-                                                        <label
-                                                            className="input-group-text bg-light border-0 text-md">:</label>
-                                                    </div>
-                                                    <select className="custom-select bg-light border-0 rounded-0 text-md"
-                                                            id="from-mm">
-                                                        <option selected>MM</option>
-                                                        <option>00</option>
-                                                        <option>15</option>
-                                                        <option>30</option>
-                                                        <option>45</option>
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div className="col-12 col-lg-2 p-1 text-center">
-                                            <p className="m-4">&mdash;</p>
-                                        </div>
-                                        <div className="col-12 col-lg-5 p-0">
-                                            <form className="mx-0 my-4" spellCheck="false">
-                                                <div className="input-group w-100">
-                                                    <select className="custom-select bg-light border-0 text-md" id="to-hh">
-                                                        <option selected>HH</option>
-                                                        <option value="1">06</option>
-                                                        <option value="2">07</option>
-                                                        <option value="3">08</option>
-                                                        <option value="3">09</option>
-                                                        <option value="3">09</option>
-                                                        <option value="3">10</option>
-                                                        <option value="3">11</option>
-                                                        <option value="3">12</option>
-                                                        <option value="3">13</option>
-                                                        <option value="3">14</option>
-                                                        <option value="3">15</option>
-                                                        <option value="3">16</option>
-                                                        <option value="3">17</option>
-                                                        <option value="3">18</option>
-                                                    </select>
-                                                    <div className="input-group-append input-group-prepend">
-                                                        <label
-                                                            className="input-group-text bg-light border-0 text-md">:</label>
-                                                    </div>
-                                                    <select className="custom-select bg-light border-0 rounded-0 text-md"
-                                                            id="to-mm">
-                                                        <option selected>MM</option>
-                                                        <option>00</option>
-                                                        <option>15</option>
-                                                        <option>30</option>
-                                                        <option>45</option>
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <select className="custom-select bg-light border-0 rounded-0"
+                                                id="select-restaurant">
+                                            <option selected>ausw&auml;hlen ...</option>
+                                            <option>Steffi's Imbiss</option>
+                                            <option>Imbiss Media</option>
+                                            <option>Asia Aroma</option>
+                                            <option>McDonald's Straubing</option>
+                                            <option>Pizzeria Venezia</option>
+                                        </select>
                                     </div>
+                                </form>
 
-                                    <h4 className="px-2 py-4 text-strong">Erlaubst du Bezahlung per PayPal?</h4>
-                                    <form className="mx-5 my-3 text-center" spellCheck="false">
-                                        <div className="form-check form-check-inline text-md">
-                                            <input className="form-check-input bg-light border-0" type="radio"
-                                                   name="allow-paypal" id="yes" value="yes" checked/>
-                                                <label className="form-check-label" htmlFor="yes">Ja</label>
-                                        </div>
-                                        <div className="form-check form-check-inline text-md">
-                                            <input className="form-check-input bg-light border-0" type="radio"
-                                                   name="allow-paypal" id="no" value="no"/>
-                                                <label className="form-check-label" htmlFor="no">Nein</label>
-                                        </div>
-                                    </form>
-
-                                    <button
-                                        className="btn btn-success text-md rounded-0 w-100 text-strong mt-4 mb-5 py-2">Angebot
-                                        erstellen<span className="text-md d-inline-block ml-2 text-white"><i
-                                            className="fas fa-medal mr-1"/>+50</span></button>
-
+                                <h4 className="px-2 py-4 text-strong">Lege einen Zeitraum fest</h4>
+                                <h6 className="text-normal text-pmd">Dies gibt den Zeitraum an, in dem deine Kollegen
+                                    bestellen k&ouml;nnen.</h6>
+                                <div className="row mx-0 mt-4">
+                                    <div className="col-12 col-lg-5 p-0">
+                                        <form className="mx-0 my-4" spellCheck="false">
+                                            <div className="input-group w-100">
+                                                <select className="custom-select bg-light border-0 rounded-0 text-md"
+                                                        id="from-hh">
+                                                    <option selected>HH</option>
+                                                    <option value="1">06</option>
+                                                    <option value="2">07</option>
+                                                    <option value="3">08</option>
+                                                    <option value="3">09</option>
+                                                    <option value="3">09</option>
+                                                    <option value="3">10</option>
+                                                    <option value="3">11</option>
+                                                    <option value="3">12</option>
+                                                    <option value="3">13</option>
+                                                    <option value="3">14</option>
+                                                    <option value="3">15</option>
+                                                    <option value="3">16</option>
+                                                    <option value="3">17</option>
+                                                    <option value="3">18</option>
+                                                </select>
+                                                <div className="input-group-append input-group-prepend">
+                                                    <label
+                                                        className="input-group-text bg-light border-0 text-md">:</label>
+                                                </div>
+                                                <select className="custom-select bg-light border-0 rounded-0 text-md"
+                                                        id="from-mm">
+                                                    <option selected>MM</option>
+                                                    <option>00</option>
+                                                    <option>15</option>
+                                                    <option>30</option>
+                                                    <option>45</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div className="col-12 col-lg-2 p-1 text-center">
+                                        <p className="m-4">&mdash;</p>
+                                    </div>
+                                    <div className="col-12 col-lg-5 p-0">
+                                        <form className="mx-0 my-4" spellCheck="false">
+                                            <div className="input-group w-100">
+                                                <select className="custom-select bg-light border-0 text-md" id="to-hh">
+                                                    <option selected>HH</option>
+                                                    <option value="1">06</option>
+                                                    <option value="2">07</option>
+                                                    <option value="3">08</option>
+                                                    <option value="3">09</option>
+                                                    <option value="3">09</option>
+                                                    <option value="3">10</option>
+                                                    <option value="3">11</option>
+                                                    <option value="3">12</option>
+                                                    <option value="3">13</option>
+                                                    <option value="3">14</option>
+                                                    <option value="3">15</option>
+                                                    <option value="3">16</option>
+                                                    <option value="3">17</option>
+                                                    <option value="3">18</option>
+                                                </select>
+                                                <div className="input-group-append input-group-prepend">
+                                                    <label
+                                                        className="input-group-text bg-light border-0 text-md">:</label>
+                                                </div>
+                                                <select className="custom-select bg-light border-0 rounded-0 text-md"
+                                                        id="to-mm">
+                                                    <option selected>MM</option>
+                                                    <option>00</option>
+                                                    <option>15</option>
+                                                    <option>30</option>
+                                                    <option>45</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                                <div className="col-12 col-md-3"></div>
-                            </div>
-                        </div>
-                        <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
-                            <div className="p-3 text-dark text-pmd">
-                                <i className="fas fa-question-circle text-primary ml-1 mr-3"/>Mit einem Angebot bietest
-                                du deinen Kollegen an, Essen bei einem Restaurant zu bestellen und alle Bestellungen dort
-                                abzuholen.
-                            </div>
-                        </div>
 
-                        <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
-                            &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit"
-                                                            className="text-dark link-underlined"
-                                                            target="_blank">dominikbraun/foodunit</a><br/>
-                            F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined"
-                                                                            href="https://github.com/dominikbraun/foodunit/issues"
-                                                                            target="_blank">&ouml;ffne ein Issue</a>.
+                                <h4 className="px-2 py-4 text-strong">Erlaubst du Bezahlung per PayPal?</h4>
+                                <form className="mx-5 my-3 text-center" spellCheck="false">
+                                    <div className="form-check form-check-inline text-md">
+                                        <input className="form-check-input bg-light border-0" type="radio"
+                                               name="allow-paypal" id="yes" value="yes" checked/>
+                                            <label className="form-check-label" htmlFor="yes">Ja</label>
+                                    </div>
+                                    <div className="form-check form-check-inline text-md">
+                                        <input className="form-check-input bg-light border-0" type="radio"
+                                               name="allow-paypal" id="no" value="no"/>
+                                            <label className="form-check-label" htmlFor="no">Nein</label>
+                                    </div>
+                                </form>
+
+                                <button
+                                    className="btn btn-success text-md rounded-0 w-100 text-strong mt-4 mb-5 py-2">Angebot
+                                    erstellen<span className="text-md d-inline-block ml-2 text-white"><i
+                                        className="fas fa-medal mr-1"/>+50</span></button>
+
+                            </div>
+                            <div className="col-12 col-md-3"></div>
                         </div>
                     </div>
-                    <SidebarRight/>
-                </div>
-            </LoggedIn>
-        );
-    }
-}
+                    <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
+                        <div className="p-3 text-dark text-pmd">
+                            <i className="fas fa-question-circle text-primary ml-1 mr-3"/>Mit einem Angebot bietest
+                            du deinen Kollegen an, Essen bei einem Restaurant zu bestellen und alle Bestellungen dort
+                            abzuholen.
+                        </div>
+                    </div>
 
-export default inject('foodUnit', 'auth')(observer(CreateOfferView));
+                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
+                        &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit"
+                                                        className="text-dark link-underlined"
+                                                        target="_blank">dominikbraun/foodunit</a><br/>
+                        F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined"
+                                                                        href="https://github.com/dominikbraun/foodunit/issues"
+                                                                        target="_blank">&ouml;ffne ein Issue</a>.
+                    </div>
+                </div>
+                <SidebarRight/>
+            </div>
+        </LoggedIn>
+    );
+}

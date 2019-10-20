@@ -16,6 +16,14 @@
 
 import React from "react";
 
+/**
+ * DummyLink provides a <a href component which reacts like a normal link, but it has no action.
+ * So you have to provide a onClick property.
+ *
+ * @param props are just passed to the link
+ * @returns {React.Component}
+ * @constructor
+ */
 export default function DummyLink(props) {
     return (
         <a href="#0" {...props}>

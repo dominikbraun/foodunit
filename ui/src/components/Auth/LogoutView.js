@@ -17,7 +17,7 @@
 import React from 'react';
 import {Link} from "@reach/router";
 
-export default function(props) {
+export default function LogoutView (props) {
     return (
         <div className="row m-0 align-items-center h-100">
 

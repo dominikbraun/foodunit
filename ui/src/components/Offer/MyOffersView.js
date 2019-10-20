@@ -15,191 +15,179 @@
  */
 
 import React from "react";
-import {inject, observer} from "mobx-react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";
 import SidebarRight from "../SidebarRight";
 import LoggedIn from "../Auth/LoggedIn";
 import {MY_OFFERS_ROUTE} from "../../util/Routes";
 
-class MyOffersView extends React.Component {
+export default function MyOffersView() {
+    return (
+        <LoggedIn>
+            <div className="row m-0 h-100">
+                <SidebarLeft currentActiveRoute={MY_OFFERS_ROUTE}/>
+                <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
 
-    constructor(props) {
-        super(props);
-        this.auth = props.auth;
-        this.foodUnit = props.foodUnit;
-    }
+                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
+                        <h6 className="text-dark text-strong px-0 py-3">Meine aktuellen Angebote</h6>
 
-    render() {
-        return (
-            <LoggedIn>
-                <div className="row m-0 h-100">
-                    <SidebarLeft currentActiveRoute={MY_OFFERS_ROUTE}/>
-                    <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
+                        <table className="table table-responsive-xl mb-0 text-center">
+                            <tr>
+                                <td className="align-middle pl-0 pr-3 py-4">
+                                    <div
+                                        className="text-hand text-lg bg-light rounded-0 text-dark text-center px-1 py-2">Pizzeria
+                                        Venezia
+                                    </div>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
+                                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Anzahl Bestellungen:</p>
+                                    <p className="text-md text-strong mb-0">Bisher 6</p>
+                                </td>
+                                <td className="align-middle px-0 py-3 text-center">
+                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
+                                        Angebot</a>
+                                </td>
+                            </tr>
 
-                        <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
-                            <h6 className="text-dark text-strong px-0 py-3">Meine aktuellen Angebote</h6>
+                            <tr>
+                                <td className="align-middle pl-0 pr-3 py-4">
+                                    <div
+                                        className="text-hand text-lg bg-light rounded-0 text-dark text-center px-1 py-2">Imbiss
+                                        Media
+                                    </div>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
+                                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Anzahl Bestellungen:</p>
+                                    <p className="text-md text-strong mb-0">Bisher 6</p>
+                                </td>
+                                <td className="align-middle px-0 py-3 text-center">
+                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
+                                        Angebot</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="align-middle pl-0 pr-3 py-4">
+                                    <div
+                                        className="text-hand text-lg bg-light rounded-0 text-dark text-center px-1 py-2">McDonald's
+                                    </div>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
+                                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Anzahl Bestellungen:</p>
+                                    <p className="text-md text-strong mb-0">Bisher 6</p>
+                                </td>
+                                <td className="align-middle px-0 py-3 text-center">
+                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
+                                        Angebot</a>
+                                </td>
+                            </tr>
 
-                            <table className="table table-responsive-xl mb-0 text-center">
-                                <tr>
-                                    <td className="align-middle pl-0 pr-3 py-4">
-                                        <div
-                                            className="text-hand text-lg bg-light rounded-0 text-dark text-center px-1 py-2">Pizzeria
-                                            Venezia
-                                        </div>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                                        <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Anzahl Bestellungen:</p>
-                                        <p className="text-md text-strong mb-0">Bisher 6</p>
-                                    </td>
-                                    <td className="align-middle px-0 py-3 text-center">
-                                        <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                            Angebot</a>
-                                    </td>
-                                </tr>
+                        </table>
 
-                                <tr>
-                                    <td className="align-middle pl-0 pr-3 py-4">
-                                        <div
-                                            className="text-hand text-lg bg-light rounded-0 text-dark text-center px-1 py-2">Imbiss
-                                            Media
-                                        </div>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                                        <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Anzahl Bestellungen:</p>
-                                        <p className="text-md text-strong mb-0">Bisher 6</p>
-                                    </td>
-                                    <td className="align-middle px-0 py-3 text-center">
-                                        <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                            Angebot</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="align-middle pl-0 pr-3 py-4">
-                                        <div
-                                            className="text-hand text-lg bg-light rounded-0 text-dark text-center px-1 py-2">McDonald's
-                                        </div>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                                        <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Anzahl Bestellungen:</p>
-                                        <p className="text-md text-strong mb-0">Bisher 6</p>
-                                    </td>
-                                    <td className="align-middle px-0 py-3 text-center">
-                                        <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                            Angebot</a>
-                                    </td>
-                                </tr>
-
-                            </table>
-
-                            <div className="border-top-light text-right pt-3">
-                                <a href="create-offer.html" className="btn btn-link rounded-pill text-sm">
-                                    <i className="fas fa-share mr-2"/>Angebot erstellen</a>
-                            </div>
+                        <div className="border-top-light text-right pt-3">
+                            <a href="create-offer.html" className="btn btn-link rounded-pill text-sm">
+                                <i className="fas fa-share mr-2"/>Angebot erstellen</a>
                         </div>
-
-                        <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
-                            <h6 className="text-dark text-strong px-0 py-3">Meine abgelaufenen Angebote</h6>
-
-                            <table className="table table-responsive-xl mb-0 text-center">
-                                <tr>
-                                    <td className="align-middle pl-0 pr-3 py-4">
-                                        <div
-                                            className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Pizzeria
-                                            Venezia
-                                        </div>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                                        <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Anzahl Bestellungen:</p>
-                                        <p className="text-md text-strong mb-0">Insgesamt 6</p>
-                                    </td>
-                                    <td className="align-middle px-0 py-3 text-center">
-                                        <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                            Angebot</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td className="align-middle pl-0 pr-3 py-4">
-                                        <div
-                                            className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Imbiss
-                                            Media
-                                        </div>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                                        <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Anzahl Bestellungen:</p>
-                                        <p className="text-md text-strong mb-0">Insgesamt 6</p>
-                                    </td>
-                                    <td className="align-middle px-0 py-3 text-center">
-                                        <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                            Angebot</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="align-middle pl-0 pr-3 py-4">
-                                        <div
-                                            className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">McDonald's
-                                        </div>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                                        <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                                    </td>
-                                    <td className="align-middle py-3">
-                                        <p className="text-sm mb-1">Anzahl Bestellungen:</p>
-                                        <p className="text-md text-strong mb-0">Insgesamt 6</p>
-                                    </td>
-                                    <td className="align-middle px-0 py-3 text-center">
-                                        <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                            Angebot</a>
-                                    </td>
-                                </tr>
-
-                            </table>
-                        </div>
-
-                        <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
-                            <div className="p-3 text-dark text-pmd">
-                                <i className="fas fa-question-circle text-primary ml-1 mr-3"></i>Mit einem Angebot
-                                bietest du deinen Kollegen an, Essen bei einem Restaurant zu bestellen und alle
-                                Bestellungen dort abzuholen.
-                            </div>
-                        </div>
-
-                        <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
-                            &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit"
-                                                            className="text-dark link-underlined"
-                                                            target="_blank">dominikbraun/foodunit</a><br/>
-                            F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined"
-                                                                            href="https://github.com/dominikbraun/foodunit/issues"
-                                                                            target="_blank">&ouml;ffne ein Issue</a>.
-                        </div>
-
                     </div>
-                    <SidebarRight/>
-                </div>
-            </LoggedIn>
-        );
-    }
-}
 
-export default inject('foodUnit', 'auth')(observer(MyOffersView));
+                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
+                        <h6 className="text-dark text-strong px-0 py-3">Meine abgelaufenen Angebote</h6>
+
+                        <table className="table table-responsive-xl mb-0 text-center">
+                            <tr>
+                                <td className="align-middle pl-0 pr-3 py-4">
+                                    <div
+                                        className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Pizzeria
+                                        Venezia
+                                    </div>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
+                                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Anzahl Bestellungen:</p>
+                                    <p className="text-md text-strong mb-0">Insgesamt 6</p>
+                                </td>
+                                <td className="align-middle px-0 py-3 text-center">
+                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
+                                        Angebot</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td className="align-middle pl-0 pr-3 py-4">
+                                    <div
+                                        className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Imbiss
+                                        Media
+                                    </div>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
+                                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Anzahl Bestellungen:</p>
+                                    <p className="text-md text-strong mb-0">Insgesamt 6</p>
+                                </td>
+                                <td className="align-middle px-0 py-3 text-center">
+                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
+                                        Angebot</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="align-middle pl-0 pr-3 py-4">
+                                    <div
+                                        className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">McDonald's
+                                    </div>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
+                                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
+                                </td>
+                                <td className="align-middle py-3">
+                                    <p className="text-sm mb-1">Anzahl Bestellungen:</p>
+                                    <p className="text-md text-strong mb-0">Insgesamt 6</p>
+                                </td>
+                                <td className="align-middle px-0 py-3 text-center">
+                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
+                                        Angebot</a>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
+                        <div className="p-3 text-dark text-pmd">
+                            <i className="fas fa-question-circle text-primary ml-1 mr-3"></i>Mit einem Angebot
+                            bietest du deinen Kollegen an, Essen bei einem Restaurant zu bestellen und alle
+                            Bestellungen dort abzuholen.
+                        </div>
+                    </div>
+
+                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
+                        &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit"
+                                                        className="text-dark link-underlined"
+                                                        target="_blank">dominikbraun/foodunit</a><br/>
+                        F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined"
+                                                                        href="https://github.com/dominikbraun/foodunit/issues"
+                                                                        target="_blank">&ouml;ffne ein Issue</a>.
+                    </div>
+
+                </div>
+                <SidebarRight/>
+            </div>
+        </LoggedIn>
+    );
+}
