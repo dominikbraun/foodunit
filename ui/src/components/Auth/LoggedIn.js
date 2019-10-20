@@ -19,6 +19,9 @@ import {LOGIN_ROUTE} from "../../util/Routes";
 import {inject, observer} from "mobx-react";
 import React from 'react';
 
+/**
+ * LoggedIn is a wrapper for views which should only be displayed if logged in.
+ */
 const LoggedIn = inject('auth')(({auth, children}) => {
     if (!auth.loggedIn)
     {

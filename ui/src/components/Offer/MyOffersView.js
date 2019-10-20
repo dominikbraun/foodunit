@@ -18,8 +18,9 @@ import React from "react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";
 import SidebarRight from "../SidebarRight";
 import LoggedIn from "../Auth/LoggedIn";
-import {MY_OFFERS_ROUTE} from "../../util/Routes";
+import {MY_OFFERS_ROUTE, RESTAURANT_VIEW} from "../../util/Routes";
 import Footer from "../Footer";
+import {Link} from "@reach/router";
 
 export default function MyOffersView() {
     return (
@@ -48,8 +49,7 @@ export default function MyOffersView() {
                                     <p className="text-md text-strong mb-0">Bisher 6</p>
                                 </td>
                                 <td className="align-middle px-0 py-3 text-center">
-                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                        Angebot</a>
+                                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm px-3">zum Angebot</Link>
                                 </td>
                             </tr>
 
@@ -69,8 +69,7 @@ export default function MyOffersView() {
                                     <p className="text-md text-strong mb-0">Bisher 6</p>
                                 </td>
                                 <td className="align-middle px-0 py-3 text-center">
-                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                        Angebot</a>
+                                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm px-3">zum Angebot</Link>
                                 </td>
                             </tr>
                             <tr>
@@ -88,8 +87,7 @@ export default function MyOffersView() {
                                     <p className="text-md text-strong mb-0">Bisher 6</p>
                                 </td>
                                 <td className="align-middle px-0 py-3 text-center">
-                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                        Angebot</a>
+                                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm px-3">zum Angebot</Link>
                                 </td>
                             </tr>
 
@@ -121,8 +119,7 @@ export default function MyOffersView() {
                                     <p className="text-md text-strong mb-0">Insgesamt 6</p>
                                 </td>
                                 <td className="align-middle px-0 py-3 text-center">
-                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                        Angebot</a>
+                                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm px-3">zum Angebot</Link>
                                 </td>
                             </tr>
 
@@ -142,8 +139,7 @@ export default function MyOffersView() {
                                     <p className="text-md text-strong mb-0">Insgesamt 6</p>
                                 </td>
                                 <td className="align-middle px-0 py-3 text-center">
-                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                        Angebot</a>
+                                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm px-3">zum Angebot</Link>
                                 </td>
                             </tr>
                             <tr>
@@ -161,8 +157,7 @@ export default function MyOffersView() {
                                     <p className="text-md text-strong mb-0">Insgesamt 6</p>
                                 </td>
                                 <td className="align-middle px-0 py-3 text-center">
-                                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm px-3">zum
-                                        Angebot</a>
+                                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm px-3">zum Angebot</Link>
                                 </td>
                             </tr>
 

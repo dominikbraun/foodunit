@@ -19,6 +19,9 @@ import Axios from 'axios';
 import {navigate} from "@reach/router"
 import {LOGOUT_ROUTE, MAIN_ROUTE} from '../util/Routes'
 
+/**
+ * AuthModel handles login and logout as well as auto login if there is already an existing session.
+ */
 export default class AuthModel {
     mailAddress = "";
     password = "";
@@ -78,6 +81,8 @@ export default class AuthModel {
             });
     }
 }
+
+// some private helper functions
 
 function loggedIn(that) {
     that.password = "";
