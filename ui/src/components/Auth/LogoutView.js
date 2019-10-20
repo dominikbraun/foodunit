@@ -15,10 +15,9 @@
  */
 
 import React from 'react';
-import {inject, observer} from "mobx-react";
 import {Link} from "@reach/router";
 
-const LogoutView = inject('auth')(observer(({auth}) => {
+export default function LogoutView (props) {
     return (
         <div className="row m-0 align-items-center h-100">
 
@@ -42,9 +41,6 @@ const LogoutView = inject('auth')(observer(({auth}) => {
             </div>
 
             <div className="col-12 col-md-3 col-xl-4"></div>
-
         </div>
     );
-}))
-
-export default LogoutView;
+}
