@@ -19,17 +19,23 @@ FROM golang:1.13
 RUN mkdir -p /foodunit
 WORKDIR /foodunit
 
+# PORT specifies the port the server listens on.
 ENV PORT 9292
 ENV GO111MODULE=on
 
 COPY go.mod .
 COPY go.sum .
 
+# Use the mod files in order to download all required modules.
 RUN go mod download
 COPY . .
 
+# `go get` will download CompileDaemon into /go/bin, therefore
+# it will be availaible as a CLI command.
 RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 
+# Run CompileDaemon, enabling Hot Reloading. It will observe a mounted
+# directory and rebuild/restart the app when a file changes.
 ENTRYPOINT CompileDaemon \
     -build="go build -o ./.target/foodunit-server ./cmd/server/main.go" \
     -command="./.target/foodunit-server --addr :${PORT}" \

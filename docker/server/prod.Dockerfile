@@ -37,6 +37,7 @@ WORKDIR /foodunit
 COPY --from=0 /go/foodunit/.target/foodunit-server .
 ADD app.toml .
 
+# PORT specifies the port the server listens on.
 ENV PORT 9292
 
 # Run the FoodUnit server.
