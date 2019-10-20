@@ -15,6 +15,8 @@
  */
 
 import React from "react";
+import {RESTAURANT_VIEW} from "../../../util/Routes";
+import {Link} from "@reach/router";
 
 // ToDo: combine both functions in one as they have similar content
 export function OfferListCurrent(props) {
@@ -35,7 +37,7 @@ export function OfferListCurrent(props) {
                     <p className="text-md text-strong mb-0">Dominik Braun</p>
                 </td>
                 <td className="align-middle px-0 py-3 text-center">
-                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</a>
+                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</Link>
                 </td>
             </tr>
 
@@ -52,7 +54,7 @@ export function OfferListCurrent(props) {
                     <p className="text-md text-strong mb-0">Karsten Wirler</p>
                 </td>
                 <td className="align-middle px-0 py-3 text-center">
-                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</a>
+                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</Link>
                 </td>
             </tr>
             <tr>
@@ -68,7 +70,7 @@ export function OfferListCurrent(props) {
                     <p className="text-md text-strong mb-0">Adrian Brasin</p>
                 </td>
                 <td className="align-middle px-0 py-3 text-center">
-                    <a href="restaurant.html" className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</a>
+                    <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</Link>
                 </td>
             </tr>
 
