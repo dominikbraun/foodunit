@@ -19,7 +19,7 @@ import {LOGIN_ROUTE} from "../../util/Routes";
 import {inject, observer} from "mobx-react";
 import React from 'react';
 
-const LoggedIn = inject('auth')(observer(({auth, children}) => {
+const LoggedIn = inject('auth')(({auth, children}) => {
     if (!auth.loggedIn)
     {
         // Todo: Better HTML / CSS for this
@@ -35,6 +35,6 @@ const LoggedIn = inject('auth')(observer(({auth, children}) => {
             {children}
         </React.Fragment>
     );
-}));
+});
 
 export default LoggedIn;
