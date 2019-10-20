@@ -28,10 +28,12 @@ import {
     LOGOUT_ROUTE,
     MY_OFFERS_ROUTE,
     OFFERS_ROUTE,
+    ORDERS_VIEW,
     RESTAURANT_VIEW
 } from "../util/Routes";
 import MyOffersView from "./Offer/MyOffersView";
 import RestaurantView from "./Restaurant/RestaurantView";
+import OrdersView from "./Restaurant/OrdersView";
 
 class App extends React.Component {
     mainStore = new MainStore();
@@ -51,6 +53,7 @@ class App extends React.Component {
                     <CreateOfferView path={CREATE_OFFER_ROUTE}/>
                     <MyOffersView path={MY_OFFERS_ROUTE}/>
                     <RestaurantView path={RESTAURANT_VIEW}/>
+                    <OrdersView path={ORDERS_VIEW}/>
                 </Router>
             </Provider>
         );

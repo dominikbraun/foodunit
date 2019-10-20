@@ -16,9 +16,11 @@
 
 import React from "react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";
-import SidebarRight from "../SidebarRight";
+import {SidebarRightFilled} from "../SidebarRight";
 import LoggedIn from "../Auth/LoggedIn";
 import Footer from "../Footer";
+import {Link} from "@reach/router";
+import {ORDERS_VIEW} from "../../util/Routes";
 
 export default function RestaurantView() {
     return (
@@ -43,8 +45,7 @@ export default function RestaurantView() {
                                 </p>
                             </div>
                             <div className="col-12 col-md-6 col-xl-3 text-center px-2 py-4">
-                                <a className="btn btn-info rounded-0 text-pmd mt-1 px-3 py-2" href="orders.html">Alle
-                                    Bestellungen anzeigen &rsaquo;</a>
+                                <Link to={ORDERS_VIEW} className="btn btn-info rounded-0 text-pmd mt-1 px-3 py-2">Alle Bestellungen anzeigen &rsaquo;</Link>
                             </div>
                         </div>
                     </div>
@@ -572,7 +573,7 @@ export default function RestaurantView() {
 
                     <Footer/>
                 </div>
-                <SidebarRight/>
+                <SidebarRightFilled/>
             </div>
         </LoggedIn>
     );
