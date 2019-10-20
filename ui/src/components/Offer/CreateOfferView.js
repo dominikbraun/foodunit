@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import {OfferListCurrent, OfferListOld} from "./OfferList/OfferList";
 import React from "react";
 import {inject, observer} from "mobx-react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";

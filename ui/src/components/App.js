@@ -22,6 +22,8 @@ import {observer, Provider} from "mobx-react";
 import LogoutView from "./Auth/LogoutView";
 import {Router} from "@reach/router";
 import CreateOfferView from "./Offer/CreateOfferView";
+import {CREATE_OFFER_ROUTE, LOGIN_ROUTE, LOGOUT_ROUTE, MY_OFFERS_ROUTE, OFFERS_ROUTE} from "../util/Routes";
+import MyOffersView from "./Offer/MyOffersView";
 
 class App extends React.Component {
     mainStore = new MainStore();
@@ -35,10 +37,11 @@ class App extends React.Component {
         return (
             <Provider auth={this.mainStore.auth} foodUnit={this.mainStore.foodUnit}>
                 <Router>
-                    <LogoutView path="/logout"/>
-                    <LoginView default path="/login"/>
-                    <OfferView path="/offer"/>
-                    <CreateOfferView path="/create-offer"/>
+                    <LogoutView path={LOGOUT_ROUTE}/>
+                    <LoginView default path={LOGIN_ROUTE}/>
+                    <OfferView path={OFFERS_ROUTE}/>
+                    <CreateOfferView path={CREATE_OFFER_ROUTE}/>
+                    <MyOffersView path={MY_OFFERS_ROUTE}/>
                 </Router>
             </Provider>
         );
