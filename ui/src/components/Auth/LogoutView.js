@@ -41,7 +41,6 @@ export default function LogoutView (props) {
             </div>
 
             <div className="col-12 col-md-3 col-xl-4"></div>
-
         </div>
     );
 }

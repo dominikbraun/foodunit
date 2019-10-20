@@ -19,6 +19,7 @@ import SidebarLeft from "../SidebarLeft/SidebarLeft";
 import SidebarRight from "../SidebarRight";
 import LoggedIn from "../Auth/LoggedIn";
 import {CREATE_OFFER_ROUTE} from "../../util/Routes";
+import Footer from "../Footer";
 
 export default function CreateOfferView() {
     return (
@@ -163,14 +164,7 @@ export default function CreateOfferView() {
                         </div>
                     </div>
 
-                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
-                        &copy; 2019 FoodUnit &mdash; <a href="https://github.com/dominikbraun/foodunit"
-                                                        className="text-dark link-underlined"
-                                                        target="_blank">dominikbraun/foodunit</a><br/>
-                        F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined"
-                                                                        href="https://github.com/dominikbraun/foodunit/issues"
-                                                                        target="_blank">&ouml;ffne ein Issue</a>.
-                    </div>
+                    <Footer/>
                 </div>
                 <SidebarRight/>
             </div>
