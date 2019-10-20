@@ -14,18 +14,25 @@
 
 # FoodUnit 3 API server image (Development Version)
 
-FROM golang:1.12-alpine
+FROM golang:1.13
 
 RUN mkdir -p /foodunit
 WORKDIR /foodunit
 
+ENV PORT 9292
+ENV GO111MODULE=on
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
 COPY . .
 
-ENV PORT 9292
-
-RUN ["go", "get", "github.com/dominikbraun/CompileDaemon"]
+RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 
 ENTRYPOINT CompileDaemon \
     -build="go build -o ./.target/foodunit-server ./cmd/server/main.go" \
     -command="./.target/foodunit-server --addr :${PORT}" \
     -log-prefix=false
+
+EXPOSE ${PORT}
