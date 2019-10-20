@@ -23,6 +23,7 @@ export default class MainStore {
     auth = new AuthModel();
 
     init() {
+        // currently not needed
     }
 }
 

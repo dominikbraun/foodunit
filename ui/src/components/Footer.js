@@ -16,7 +16,13 @@
 
 import React from "react";
 
-export default function OfferView() {
+/**
+ * Footer just displays copyright and a link to github.
+ * Just include it in views where needed.
+ * @returns {React.Component}
+ * @constructor
+ */
+export default function Footer() {
     return (
         <div className="mx-0 mx-xl-5 my-4 px-5 py-3 text-dark text-sm text-center">
             &copy; 2019 FoodUnit &mdash;<a href="https://github.com/dominikbraun/foodunit" className="text-dark link-underlined" target="_blank">dominikbraun/foodunit</a>

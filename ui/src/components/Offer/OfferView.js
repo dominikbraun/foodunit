@@ -33,7 +33,8 @@ export default function OfferView() {
 
                     <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
                         <div className="p-3 text-dark text-pmd">
-                            <i className="fas fa-question-circle text-primary ml-1 mr-3"/>Mit einem Angebot bieten dir deine Kollegen an, Essen bei einem Restaurant zu bestellen und alle Bestellungen dort abzuholen.
+                            <i className="fas fa-question-circle text-primary ml-1 mr-3"/>
+                            Mit einem Angebot bieten dir deine Kollegen an, Essen bei einem Restaurant zu bestellen und alle Bestellungen dort abzuholen.
                         </div>
                     </div>
 
