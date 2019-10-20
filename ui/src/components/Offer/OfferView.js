@@ -20,6 +20,7 @@ import {inject, observer} from "mobx-react";
 import SidebarLeft from "../SidebarLeft/SidebarLeft";
 import SidebarRight from "../SidebarRight";
 import LoggedIn from "../Auth/LoggedIn";
+import {OFFERS_ROUTE} from "../../util/Routes";
 
 class OfferView extends React.Component {
 
@@ -33,7 +34,7 @@ class OfferView extends React.Component {
         return (
             <LoggedIn>
                 <div className="row m-0 h-100">
-                    <SidebarLeft/>
+                    <SidebarLeft currentActiveRoute={OFFERS_ROUTE}/>
                     <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
                         <OfferListCurrent/>
                         <OfferListOld/>
