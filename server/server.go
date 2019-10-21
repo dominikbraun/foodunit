@@ -147,15 +147,15 @@ func newRouter() *chi.Mux {
 		render.SetContentType(render.ContentTypeJSON),
 	)
 	cors := cors.New(cors.Options{
-        AllowedOrigins: []string{"*"},
-        // AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
-        AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-        AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-        ExposedHeaders:   []string{"Link"},
-        AllowCredentials: true,
-        MaxAge:           300,
-    })
-    r.Use(cors.Handler)
+		AllowedOrigins: []string{"*"},
+		// AllowOriginFunc: func(r *http.Request, origin string) bool { return true },
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	})
+	r.Use(cors.Handler)
 
 	return router
 }
