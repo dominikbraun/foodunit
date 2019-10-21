@@ -25,16 +25,16 @@ class LoginForm extends React.Component {
     }
 
     handleMailAddressChange = (event) => {
-        this.auth.mailAddress = event.target.value
+        this.auth.setMailAddress(event.target.value)
     }
 
     handlePasswordChange = (event) => {
-        this.auth.password = event.target.value
+        this.auth.setPassword(event.target.value)
     }
 
     handleLogin = (event) => {
         event.preventDefault()
-        this.auth.login()
+        this.auth.onLogin()
     }
 
     render() {

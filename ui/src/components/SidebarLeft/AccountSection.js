@@ -16,8 +16,6 @@
 
 import {inject, observer} from "mobx-react";
 import React from 'react';
-import {Link} from "@reach/router";
-import {LOGOUT_ROUTE} from "../../util/Routes";
 import DummyLink from "../DummyLink";
 
 class AccountSection extends React.Component {
@@ -28,7 +26,7 @@ class AccountSection extends React.Component {
     }
 
     handleLogout = () => {
-        this.auth.logout()
+        this.auth.onLogout()
     }
 
     render() {

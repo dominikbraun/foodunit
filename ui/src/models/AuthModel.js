@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-import {action, decorate, observable} from 'mobx';
+import {action, configure, decorate, observable} from 'mobx';
 import Axios from 'axios';
 import {navigate} from "@reach/router"
 import {LOGOUT_ROUTE, MAIN_ROUTE} from '../util/Routes'
+
+// enforce the strict mode for actions -> e.g. no state modifying inside of promise without action decorator https://www.leighhalliday.com/mobx-async-actions
+configure({ enforceActions: "always" });
 
 /**
  * AuthModel handles login and logout as well as auto login if there is already an existing session.
@@ -36,7 +39,8 @@ export default class AuthModel {
         ).then(function (response) {
 
             if (response.data === true) {
-                loggedIn(that);
+                that.setLoggedIn();
+                navigate(MAIN_ROUTE);
             }
         })
         .catch(function (error) {
@@ -44,7 +48,7 @@ export default class AuthModel {
         });
     }
 
-    login() {
+    onLogin() {
         let that = this;
         Axios.post("http://localhost:9292/v1/users/login",
             {
@@ -55,46 +59,52 @@ export default class AuthModel {
             }).then(function (response) {
 
             if (response.data === true) {
-                loggedIn(that);
+
+                that.setLoggedIn();
+                navigate(MAIN_ROUTE);
             } else {
                 that.loginErrorMessage = "Login fehlgeschlagen. E-Mail oder Passwort ist falsch."
             }
-        })
-        .catch(function (error) {
+        }).catch(function (error) {
             console.log(error);
         });
     }
 
-    logout() {
+    onLogout() {
         let that = this;
         Axios.get("http://localhost:9292/v1/users/logout",
             {
                 withCredentials: true
             }).then(function (response) {
 
-            if (response.data === true) {
-                loggedOut(that);
-            }
-        })
+                if (response.data === true) {
+                    that.setLoggedOut();
+                    navigate(LOGOUT_ROUTE);
+                }
+            })
             .catch(function (error) {
                 console.log(error);
             });
     }
-}
 
-// some private helper functions
+    // actions
+    setMailAddress(mailAddress) {
+        this.mailAddress = mailAddress;
+    }
 
-function loggedIn(that) {
-    that.password = "";
-    that.loginErrorMessage = "";
-    that.loggedIn = true;
+    setPassword(password) {
+        this.password = password;
+    }
 
-    navigate(MAIN_ROUTE);
-}
+    setLoggedIn() {
+        this.password = "";
+        this.loginErrorMessage = "";
+        this.loggedIn = true;
+    }
 
-function loggedOut(that) {
-    that.loggedIn = false;
-    navigate(LOGOUT_ROUTE);
+    setLoggedOut() {
+        this.loggedIn = false;
+    }
 }
 
 decorate(AuthModel, {
@@ -103,5 +113,8 @@ decorate(AuthModel, {
     loggedIn: observable,
     loginErrorMessage: observable,
 
-    login: action,
+    setMailAddress: action,
+    setPassword: action,
+    setLoggedIn: action,
+    setLoggedOut: action,
 });
