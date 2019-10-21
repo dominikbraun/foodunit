@@ -39,6 +39,7 @@ RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 ENTRYPOINT CompileDaemon \
     -build="go build -o ./.target/server ./cmd/server/main.go" \
     -command="./.target/server --addr :${PORT}" \
-    -log-prefix=false
+    -exclude-dir=.git \
+    -log-prefix=true
 
 EXPOSE ${PORT}
