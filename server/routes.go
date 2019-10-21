@@ -18,13 +18,18 @@ package server
 import (
 	"github.com/dominikbraun/foodunit/middleware"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/cors"
+	"net/http"
+	"fmt"
 )
 
 func (s *Server) mountRoutes() {
 	r := chi.NewRouter()
 
 	r.Use(s.session.LoadAndSave)
+
+	r.Get("/dere", func(w http.ResponseWriter, r *http.Request) {
+                   	fmt.Fprintf(w, "Hello!!!")
+                   })
 
 	r.With(middleware.Authenticate(s.session)).
 		Route("/restaurants", func(r chi.Router) {

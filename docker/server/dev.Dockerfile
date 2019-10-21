@@ -13,6 +13,8 @@
 # limitations under the License.
 
 # FoodUnit 3 API server image (Development Version)
+# Build command: docker build -t srvdevimg -f docker\server\dev.Dockerfile .
+# Run command: docker run --name srvdevctr --rm -p 9595:9292 -e PORT=9292 -v ${pwd}:/foodunit srvdevimg
 
 FROM golang:1.13
 
@@ -37,8 +39,9 @@ RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 # Run CompileDaemon, enabling Hot Reloading. It will observe a mounted
 # directory and rebuild/restart the app when a file changes.
 ENTRYPOINT CompileDaemon \
-    -build="go build -o ./.target/server ./cmd/server/main.go" \
-    -command="./.target/server --addr :${PORT}" \
+    -build="go build cmd/server/main.go" \
+    -command="./main --addr :${PORT}" \
+    -directory=. \
     -exclude-dir=.git \
     -log-prefix=true
 

@@ -29,6 +29,7 @@ import (
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/dominikbraun/foodunit/storage/maria"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
@@ -155,7 +156,7 @@ func newRouter() *chi.Mux {
 		AllowCredentials: true,
 		MaxAge:           300,
 	})
-	r.Use(cors.Handler)
+	router.Use(cors.Handler)
 
 	return router
 }
