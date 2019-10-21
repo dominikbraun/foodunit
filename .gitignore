@@ -16,6 +16,8 @@
 .vscode
 
 # FoodUnit binary
+main
+main.exe
 foodunit
 foodunit.exe
 cmd/*/__debug_bin
