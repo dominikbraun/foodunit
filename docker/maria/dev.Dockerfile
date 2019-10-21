@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FoodUnit 3 MariaDB image
+# FoodUnit 3 MariaDB image (Development Version)
 
 FROM mariadb:latest
 

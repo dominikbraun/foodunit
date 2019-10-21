@@ -12,25 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FoodUnit 3 UI image (Development Version)
-#
-# The actual source files will be gathered by creating a volume that
-# maps the host's ui directory against the container's /app directory:
-# $ docker run -v ${pwd}/ui:/app ...
+# FoodUnit 3 MariaDB image (Production Version)
 
-FROM node:12.2.0-alpine
+FROM mariadb:latest
 
-RUN mkdir -p /app
-WORKDIR /app
+# PACKAGES defines the apt packages to get installed.
+ENV PACKAGES openssh-server openssh-client
 
-# PATH overrides the default PATH value.
-ENV PATH "/app/node_modules/.bin:$PATH"
-
-# Copy package.json into the app directory.
-COPY package.json /app/package.json
-# Install all UI dependencies.
-RUN npm install
-RUN npm install -g react-scripts@3.0.1
-
-# Start the UI.
-CMD ["npm", "start"]
+RUN apt-get update && apt-get install -y ${PACKAGES}
+RUN sed -i 's|^#PermitRootLogin.*|PermitRootLogin yes|g' /etc/ssh/sshd_config; \
+    echo "root:root" | chpasswd
