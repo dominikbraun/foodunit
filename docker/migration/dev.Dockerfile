@@ -13,6 +13,8 @@
 # limitations under the License.
 
 # FoodUnit 3 migration image (Development Version)
+# Build command: docker image build -t migdevimg -f docker\migration\dev.Dockerfile .
+# Run command: docker container run --name migdevctr --rm -e DSN="root:root@(localhost:3306)/foodunit?parseTime=true" --network funet  migdevimg
 
 # Start build stage
 FROM golang:1.12-alpine
@@ -46,5 +48,5 @@ ENV DROP "false"
 CMD if [ "$DROP" = "true" ]; then \
         ./foodunit-migration --dsn ${DSN}; \
     else \
-        ./foodunit-migration --dsn {$DSN} --drop-schema; \
+        ./foodunit-migration --dsn ${DSN} --drop-schema; \
     fi

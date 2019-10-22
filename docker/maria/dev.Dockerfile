@@ -14,7 +14,7 @@
 
 # FoodUnit 3 MariaDB image (Development Version)
 # Build command: docker image build -t dbdevimg -f docker/maria/dev.Dockerfile .
-# Run command: docker container run --name dbdevctr --rm -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root dbdevimg
+# Run command: docker container run --name dbdevctr --rm -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root --network funet dbdevimg
 
 FROM mariadb:latest
 
