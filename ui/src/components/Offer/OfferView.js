@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {OfferListCurrent, OfferListOld} from "./OfferList/OfferList";
-import React from "react";
-import SidebarLeft from "../SidebarLeft/SidebarLeft";
-import SidebarRight from "../SidebarRight";
-import LoggedIn from "../Auth/LoggedIn";
-import {OFFERS_ROUTE} from "../../util/Routes";
-import Footer from "../Footer";
+import OfferListCurrent, {OfferListOld} from "./OfferList/OfferList"
+import React from "react"
+import SidebarLeft from "../SidebarLeft/SidebarLeft"
+import SidebarRight from "../SidebarRight"
+import LoggedIn from "../Auth/LoggedIn"
+import {OFFERS_ROUTE} from "../../util/Routes"
+import Footer from "../Footer"
 
 export default function OfferView() {
     return (
@@ -43,5 +43,5 @@ export default function OfferView() {
                 <SidebarRight/>
             </div>
         </LoggedIn>
-    );
+    )
 }

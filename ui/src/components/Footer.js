@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from "react";
+import React from "react"
 
 /**
  * Footer just displays copyright and a link to github.
@@ -29,5 +29,5 @@ export default function Footer() {
             <br />
             F&uuml;r Feature Requests und Bug-Meldungen, <a className="text-dark link-underlined" href="https://github.com/dominikbraun/foodunit/issues" target="_blank">&ouml;ffne ein Issue</a>.
         </div>
-    );
+    )
 }

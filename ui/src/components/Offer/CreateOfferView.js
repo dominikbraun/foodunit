@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import React from "react";
-import SidebarLeft from "../SidebarLeft/SidebarLeft";
-import SidebarRight from "../SidebarRight";
-import LoggedIn from "../Auth/LoggedIn";
-import {CREATE_OFFER_ROUTE} from "../../util/Routes";
-import Footer from "../Footer";
+import React from "react"
+import SidebarLeft from "../SidebarLeft/SidebarLeft"
+import SidebarRight from "../SidebarRight"
+import LoggedIn from "../Auth/LoggedIn"
+import {CREATE_OFFER_ROUTE} from "../../util/Routes"
+import Footer from "../Footer"
 
 export default function CreateOfferView() {
     return (
@@ -169,5 +169,5 @@ export default function CreateOfferView() {
                 <SidebarRight/>
             </div>
         </LoggedIn>
-    );
+    )
 }

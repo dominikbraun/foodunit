@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import MainStore from "../stores/MainStore";
-import OfferView from "./Offer/OfferView";
-import LoginView from "./Auth/LoginView";
-import {observer, Provider} from "mobx-react";
-import LogoutView from "./Auth/LogoutView";
-import {Router} from "@reach/router";
-import CreateOfferView from "./Offer/CreateOfferView";
+import React from 'react'
+import MainStore from "../stores/MainStore"
+import OfferView from "./Offer/OfferView"
+import LoginView from "./Auth/LoginView"
+import {observer, Provider} from "mobx-react"
+import LogoutView from "./Auth/LogoutView"
+import {Router} from "@reach/router"
+import CreateOfferView from "./Offer/CreateOfferView"
 import {
     CREATE_OFFER_ROUTE,
     LOGIN_ROUTE,
@@ -30,16 +30,16 @@ import {
     OFFERS_ROUTE,
     ORDERS_VIEW,
     RESTAURANT_VIEW
-} from "../util/Routes";
-import MyOffersView from "./Offer/MyOffersView";
-import RestaurantView from "./Restaurant/RestaurantView";
-import OrdersView from "./Restaurant/OrdersView";
+} from "../util/Routes"
+import MyOffersView from "./Offer/MyOffersView"
+import RestaurantView from "./Restaurant/RestaurantView"
+import OrdersView from "./Restaurant/OrdersView"
 
 class App extends React.Component {
     mainStore = new MainStore();
 
     constructor(props) {
-        super(props);
+        super(props)
         this.mainStore.init.bind(this.mainStore)()
     }
 
@@ -56,8 +56,8 @@ class App extends React.Component {
                     <OrdersView path={ORDERS_VIEW}/>
                 </Router>
             </Provider>
-        );
+        )
     }
 }
 
-export default observer(App);
+export default observer(App)

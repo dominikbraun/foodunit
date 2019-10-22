@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-import {inject, observer} from "mobx-react";
-import React from 'react';
-import {Link} from "@reach/router";
-import {LOGOUT_ROUTE} from "../../util/Routes";
-import DummyLink from "../DummyLink";
+import {inject, observer} from "mobx-react"
+import React from 'react'
+import DummyLink from "../Base/DummyLink"
 
 class AccountSection extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.auth = props.auth;
+        super(props)
+        this.auth = props.auth
     }
 
     handleLogout = () => {
-        this.auth.logout()
+        this.auth.onLogout()
     }
 
     render() {
@@ -45,8 +43,8 @@ class AccountSection extends React.Component {
                     </DummyLink>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default inject('auth')(observer(AccountSection));
+export default inject('auth')(observer(AccountSection))

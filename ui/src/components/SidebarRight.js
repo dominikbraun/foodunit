@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from "react";
+import React from "react"
 
 export default function SidebarRight(props) {
     return <div className="col-12 col-lg-3 col-xl-2 p-0 sidebar-right-lg bg-white border-left">

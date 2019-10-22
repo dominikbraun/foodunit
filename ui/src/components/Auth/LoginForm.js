@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-import {inject, observer} from "mobx-react";
-import React from 'react';
+import {inject, observer} from "mobx-react"
+import React from 'react'
 
 class LoginForm extends React.Component {
 
     constructor(props) {
-        super(props);
-        this.auth = props.auth;
+        super(props)
+        this.auth = props.auth
     }
 
     handleMailAddressChange = (event) => {
-        this.auth.mailAddress = event.target.value
+        this.auth.setMailAddress(event.target.value)
     }
 
     handlePasswordChange = (event) => {
-        this.auth.password = event.target.value
+        this.auth.setPassword(event.target.value)
     }
 
     handleLogin = (event) => {
         event.preventDefault()
-        this.auth.login()
+        this.auth.onLogin()
     }
 
     render() {
@@ -54,8 +54,8 @@ class LoginForm extends React.Component {
 
                 <p className="text-warning login-error">{this.auth.loginErrorMessage}</p>
             </form>
-        );
+        )
     }
 }
 
-export default inject('auth')(observer(LoginForm));
+export default inject('auth')(observer(LoginForm))

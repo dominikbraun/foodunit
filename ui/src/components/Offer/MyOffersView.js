@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import React from "react";
-import SidebarLeft from "../SidebarLeft/SidebarLeft";
-import SidebarRight from "../SidebarRight";
-import LoggedIn from "../Auth/LoggedIn";
-import {MY_OFFERS_ROUTE, RESTAURANT_VIEW} from "../../util/Routes";
-import Footer from "../Footer";
-import {Link} from "@reach/router";
+import React from "react"
+import SidebarLeft from "../SidebarLeft/SidebarLeft"
+import SidebarRight from "../SidebarRight"
+import LoggedIn from "../Auth/LoggedIn"
+import {MY_OFFERS_ROUTE, RESTAURANT_VIEW} from "../../util/Routes"
+import Footer from "../Footer"
+import {Link} from "@reach/router"
 
 export default function MyOffersView() {
     return (
@@ -177,5 +177,5 @@ export default function MyOffersView() {
                 <SidebarRight/>
             </div>
         </LoggedIn>
-    );
+    )
 }
