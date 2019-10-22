@@ -39,7 +39,7 @@ WORKDIR /foodunit
 COPY --from=0 /go/foodunit/.target/foodunit-migration .
 ADD app.toml .
 
-# DSN defines the data source name in the form "user:pass@(host:port)/dbName?parseTime=true
+# DSN defines the data source name in the form "user:pass@(host:port)/dbName?parseTime=true"
 ENV DSN "root:root@(localhost:3306)/foodunit?parseTime=true"
 # DROP indicates if the table schema including all rows should be dropped ("true") or not ("false").
 ENV DROP "false"
