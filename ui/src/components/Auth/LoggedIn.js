@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import {Link} from "@reach/router";
-import {LOGIN_ROUTE} from "../../util/Routes";
-import {inject, observer} from "mobx-react";
-import React from 'react';
+import {Link} from "@reach/router"
+import {LOGIN_ROUTE} from "../../util/Routes"
+import {inject} from "mobx-react"
+import React from 'react'
 
 /**
  * LoggedIn is a wrapper for views which should only be displayed if logged in.
@@ -30,14 +30,14 @@ const LoggedIn = inject('auth')(({auth, children}) => {
             <div>
                 Du bist nicht angemeldet. Bitte <Link to={LOGIN_ROUTE}>einloggen</Link>.
             </div>
-        );
+        )
     }
 
     return (
         <React.Fragment>
             {children}
         </React.Fragment>
-    );
-});
+    )
+})
 
-export default LoggedIn;
+export default LoggedIn

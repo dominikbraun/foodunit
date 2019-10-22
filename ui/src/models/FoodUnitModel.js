@@ -14,17 +14,35 @@
  * limitations under the License.
  */
 
-import {action, decorate, observable} from 'mobx';
+import {action, configure, decorate, observable} from 'mobx'
+import Axios from "axios"
+// enforce the strict mode for actions -> e.g. no state modifying inside of promise without action decorator https://www.leighhalliday.com/mobx-async-actions
+configure({ enforceActions: "observed" })
 
 export default class FoodUnitModel {
-    name = "";
 
-    someAction(value) {
-        this.name = value;
+    offers = [];
+
+    loadOffers() {
+        let that = this
+        Axios.get("http://localhost:9292/v1/offers/active",
+            {withCredentials: true}
+        ).then(function (response) {
+
+            if (Array.isArray(response.data)) {
+                that.setOffers(response.data)
+            }
+        }).catch(function (error) {
+            console.log(error)
+        })
+    }
+
+    setOffers(offers) {
+        this.offers = offers
     }
 }
 
 decorate(FoodUnitModel, {
-    name: observable,
-    someAction: action,
-});
+    offers: observable,
+    setOffers: action,
+})

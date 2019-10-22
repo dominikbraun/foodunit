@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import {Link} from "@reach/router";
+import React from 'react'
+import {Link} from "@reach/router"
 
 export default function LogoutView (props) {
     return (
@@ -42,5 +42,5 @@ export default function LogoutView (props) {
 
             <div className="col-12 col-md-3 col-xl-4"></div>
         </div>
-    );
+    )
 }
