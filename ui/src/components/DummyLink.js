@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from "react";
+import React from "react"
 
 /**
  * DummyLink provides a <a href component which reacts like a normal link, but it has no action.
@@ -29,5 +29,5 @@ export default function DummyLink(props) {
         <a href="#0" {...props}>
             {props.children}
         </a>
-    );
+    )
 }

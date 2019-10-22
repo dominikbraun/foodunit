@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import LoginForm from "./LoginForm";
+import React from 'react'
+import LoginForm from "./LoginForm"
 
 export default function LoginView (props) {
     return (
@@ -45,5 +45,5 @@ export default function LoginView (props) {
             <div className="col-12 col-md-3 col-xl-4"></div>
 
         </div>
-    );
+    )
 }

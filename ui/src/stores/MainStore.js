@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {action, decorate, observable} from 'mobx';
-import AuthModel from "../models/AuthModel";
-import FoodUnitModel from "../models/FoodUnitModel";
+import {action, decorate, observable} from 'mobx'
+import AuthModel from "../models/AuthModel"
+import FoodUnitModel from "../models/FoodUnitModel"
 
 export default class MainStore {
     foodUnit = new FoodUnitModel();
@@ -31,4 +31,4 @@ decorate(MainStore, {
     foodUnit: observable,
     auth: observable,
     init: action
-});
+})

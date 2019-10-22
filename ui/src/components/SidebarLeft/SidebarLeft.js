@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import React from "react";
-import AccountSection from "./AccountSection";
-import {Link} from "@reach/router";
-import {CREATE_OFFER_ROUTE, MY_OFFERS_ROUTE, OFFERS_ROUTE} from "../../util/Routes";
+import React from "react"
+import AccountSection from "./AccountSection"
+import {Link} from "@reach/router"
+import {CREATE_OFFER_ROUTE, MY_OFFERS_ROUTE, OFFERS_ROUTE} from "../../util/Routes"
 
 /**
  * SidebarLeft contains navigation links
@@ -31,13 +31,13 @@ export default function SidebarLeft({currentActiveRoute}) {
         [OFFERS_ROUTE, "Aktuelle Angebote", "fa-pizza-slice"],
         [CREATE_OFFER_ROUTE, "Angebot erstellen", "fa-share"],
         [MY_OFFERS_ROUTE, "Meine Angebote", "fa-layer-group"]
-    ];
+    ]
 
     navigationLinks = navigationLinks.map((route) => {
-        let classes = "nav-link text-md px-2 px-xl-3 py-3 rounded-0";
+        let classes = "nav-link text-md px-2 px-xl-3 py-3 rounded-0"
 
         if (route[0] === currentActiveRoute) {
-            classes += " active";
+            classes += " active"
         }
 
         return <Link to={route[0]} className={classes}><i className={`fas ${route[2]} ml-1 mr-3`}/>{route[1]}</Link>
@@ -55,5 +55,5 @@ export default function SidebarLeft({currentActiveRoute}) {
             </div>
             <AccountSection/>
         </div>
-    );
+    )
 }

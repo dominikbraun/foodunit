@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import React from "react";
-import SidebarLeft from "../SidebarLeft/SidebarLeft";
-import {SidebarRightFilled} from "../SidebarRight";
-import LoggedIn from "../Auth/LoggedIn";
-import Footer from "../Footer";
-import {Link} from "@reach/router";
-import {ORDERS_VIEW} from "../../util/Routes";
+import React from "react"
+import SidebarLeft from "../SidebarLeft/SidebarLeft"
+import {SidebarRightFilled} from "../SidebarRight"
+import LoggedIn from "../Auth/LoggedIn"
+import Footer from "../Footer"
+import {Link} from "@reach/router"
+import {ORDERS_VIEW} from "../../util/Routes"
 
 export default function RestaurantView() {
     return (
@@ -576,5 +576,5 @@ export default function RestaurantView() {
                 <SidebarRightFilled/>
             </div>
         </LoggedIn>
-    );
+    )
 }

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import {action, configure, decorate, observable} from 'mobx';
-import Axios from 'axios';
+import {action, configure, decorate, observable} from 'mobx'
+import Axios from 'axios'
 import {navigate} from "@reach/router"
 import {LOGOUT_ROUTE, MAIN_ROUTE} from '../util/Routes'
 
 // enforce the strict mode for actions -> e.g. no state modifying inside of promise without action decorator https://www.leighhalliday.com/mobx-async-actions
-configure({ enforceActions: "always" });
+configure({ enforceActions: "always" })
 
 /**
  * AuthModel handles login and logout as well as auto login if there is already an existing session.
@@ -33,23 +33,23 @@ export default class AuthModel {
 
     constructor() {
         // do auto login if session still valid
-        let that = this;
+        let that = this
         Axios.get("http://localhost:9292/v1/users/is-authenticated",
             {withCredentials: true}
         ).then(function (response) {
 
             if (response.data === true) {
-                that.setLoggedIn();
-                navigate(MAIN_ROUTE);
+                that.setLoggedIn()
+                navigate(MAIN_ROUTE)
             }
         })
         .catch(function (error) {
-            console.log(error);
-        });
+            console.log(error)
+        })
     }
 
     onLogin() {
-        let that = this;
+        let that = this
         Axios.post("http://localhost:9292/v1/users/login",
             {
                 mail_addr: this.mailAddress,
@@ -60,50 +60,50 @@ export default class AuthModel {
 
             if (response.data === true) {
 
-                that.setLoggedIn();
-                navigate(MAIN_ROUTE);
+                that.setLoggedIn()
+                navigate(MAIN_ROUTE)
             } else {
                 that.loginErrorMessage = "Login fehlgeschlagen. E-Mail oder Passwort ist falsch."
             }
         }).catch(function (error) {
-            console.log(error);
-        });
+            console.log(error)
+        })
     }
 
     onLogout() {
-        let that = this;
+        let that = this
         Axios.get("http://localhost:9292/v1/users/logout",
             {
                 withCredentials: true
             }).then(function (response) {
 
                 if (response.data === true) {
-                    that.setLoggedOut();
-                    navigate(LOGOUT_ROUTE);
+                    that.setLoggedOut()
+                    navigate(LOGOUT_ROUTE)
                 }
             })
             .catch(function (error) {
-                console.log(error);
-            });
+                console.log(error)
+            })
     }
 
     // actions
     setMailAddress(mailAddress) {
-        this.mailAddress = mailAddress;
+        this.mailAddress = mailAddress
     }
 
     setPassword(password) {
-        this.password = password;
+        this.password = password
     }
 
     setLoggedIn() {
-        this.password = "";
-        this.loginErrorMessage = "";
-        this.loggedIn = true;
+        this.password = ""
+        this.loginErrorMessage = ""
+        this.loggedIn = true
     }
 
     setLoggedOut() {
-        this.loggedIn = false;
+        this.loggedIn = false
     }
 }
 
@@ -117,4 +117,4 @@ decorate(AuthModel, {
     setPassword: action,
     setLoggedIn: action,
     setLoggedOut: action,
-});
+})
