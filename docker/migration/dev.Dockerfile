@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FoodUnit 3 migration image (Production Version)
+# FoodUnit 3 migration image (Development Version)
 
 # Start build stage
 FROM golang:1.12-alpine
