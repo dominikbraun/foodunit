@@ -15,9 +15,38 @@
  */
 
 import React from "react"
-import {RESTAURANT_VIEW} from "../../../util/Routes"
+import {CREATE_OFFER_ROUTE, RESTAURANT_VIEW} from "../../../util/Routes"
 import {Link} from "@reach/router"
 import {inject, observer} from "mobx-react"
+import Table, {TableConfig} from "../../Base/Table"
+
+function getOfferTableConfig(additionalRestaurantClass, disabled) {
+    return [
+        new TableConfig("pl-0 py-4", (offer) => (
+            <div className={`text-hand text-lg rounded-0 text-dark text-center px-1 py-2 ${additionalRestaurantClass}`}>
+                {offer.restaurant.name}
+            </div>)
+        ),
+        // TODO: format date
+        new TableConfig("", (offer) => (
+            <React.Fragment>
+                <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Bestellung m&ouml;glich:</p>
+                <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{offer.valid_from}</p>
+            </React.Fragment>)
+        ),
+        new TableConfig("", (offer) => (
+            <React.Fragment>
+                <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Angebot erstellt von:</p>
+                <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{offer.owner.name}</p>
+            </React.Fragment>)
+        ),
+        new TableConfig("px-0 text-center", (offer) => (
+            <Link to={RESTAURANT_VIEW} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
+                Angebot ausw&auml;hlen
+            </Link>)
+        ),
+    ]
+}
 
 class OfferListCurrent extends React.Component {
 
@@ -25,73 +54,20 @@ class OfferListCurrent extends React.Component {
         super(props)
         this.foodUnit = props.foodUnit
         this.foodUnit.loadOffers()
+        this.tableConfig = getOfferTableConfig("bg-gradient", false)
     }
 
     render() {
-        if (this.foodUnit.offers.length === 0) {
-            return <div>No data</div>
-        }
-        console.log(this.foodUnit.offers[0].id)
-
         return (
             <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
                 <h6 className="text-dark text-strong px-0 py-3">Aktuelle Angebote</h6>
 
-                <table className="table table-responsive-xl mb-0 text-center">
-                    <tr>
-                        <td className="align-middle pl-0 pr-3 py-4">
-                            <div className="text-hand text-lg bg-gradient rounded-0 text-dark text-center px-1 py-2">Pizzeria Venezia</div>
-                        </td>
-                        <td className="align-middle py-3">
-                            <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                            <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                        </td>
-                        <td className="align-middle py-3">
-                            <p className="text-sm mb-1">Angebot erstellt von:</p>
-                            <p className="text-md text-strong mb-0">Dominik Braun</p>
-                        </td>
-                        <td className="align-middle px-0 py-3 text-center">
-                            <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</Link>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td className="align-middle pl-0 pr-3 py-4">
-                            <div className="text-hand text-lg bg-gradient rounded-0 text-dark text-center px-1 py-2">Imbiss Media</div>
-                        </td>
-                        <td className="align-middle py-3">
-                            <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                            <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                        </td>
-                        <td className="align-middle py-3">
-                            <p className="text-sm mb-1">Angebot erstellt von:</p>
-                            <p className="text-md text-strong mb-0">Karsten Wirler</p>
-                        </td>
-                        <td className="align-middle px-0 py-3 text-center">
-                            <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</Link>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="align-middle pl-0 pr-3 py-4">
-                            <div className="text-hand text-lg bg-gradient rounded-0 text-dark text-center px-1 py-2">Restaurant</div>
-                        </td>
-                        <td className="align-middle py-3">
-                            <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                            <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                        </td>
-                        <td className="align-middle py-3">
-                            <p className="text-sm mb-1">Angebot erstellt von:</p>
-                            <p className="text-md text-strong mb-0">Adrian Brasin</p>
-                        </td>
-                        <td className="align-middle px-0 py-3 text-center">
-                            <Link to={RESTAURANT_VIEW} className="btn btn-light rounded-pill text-sm">Angebot ausw&auml;hlen</Link>
-                        </td>
-                    </tr>
-
-                </table>
+                <Table config={this.tableConfig} rows={this.foodUnit.offers}/>
 
                 <div className="border-top-light text-right pt-3">
-                    <a href="create-offer.html" className="btn btn-link rounded-pill text-sm"><i className="fas fa-share mr-2"/>Angebot erstellen</a>
+                    <Link to={CREATE_OFFER_ROUTE} className="btn btn-link rounded-pill text-sm">
+                        <i className="fas fa-share mr-2"/>Angebot erstellen
+                    </Link>
                 </div>
             </div>
         )
