@@ -26,3 +26,6 @@ cmd/*/__debug_bin
 # FoodUnit config
 server.toml
 app.toml
+
+# FoodUnit DB files
+.mariadb
