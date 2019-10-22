@@ -30,12 +30,12 @@ ENV PATH "/app/node_modules/.bin:$PATH"
 ENV PORT 80
 
 # Copy package.json into the app directory.
-COPY package.json /app/package.json
+COPY ui/package.json /app/package.json
 # Install all UI dependencies.
 RUN npm install
 RUN npm install -g react-scripts@3.0.1
 
-COPY . /app
+COPY ui /app
 RUN npm build
 
 # Start final stage.
