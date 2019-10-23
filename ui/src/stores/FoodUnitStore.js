@@ -30,8 +30,6 @@ export default class FoodUnitStore {
     }
 
     loadOffers() {
-        let that = this
-
         this.offerLoader.loadActive().then((offers) => {
             runInAction(() => {
                 this.offers = offers

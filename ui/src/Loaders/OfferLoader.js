@@ -31,11 +31,9 @@ export default class OfferLoader {
      * @returns {Promise<AxiosResponse<T>>}
      */
     loadActive() {
-        let that = this
-
         return Axios.get(this.config.apiUrl +  "/offers/active",
             {withCredentials: true}
-        ).then(function (response) {
+        ).then((response) => {
 
             if (Array.isArray(response.data)) {
                 let offers = response.data
@@ -44,7 +42,7 @@ export default class OfferLoader {
                 let toAwait = []
                 offers.forEach((offer) => {
                     // complete the offer (add owner and restaurant info)
-                    toAwait.push(that.completeOffer(offer))
+                    toAwait.push(this.completeOffer(offer))
                 })
 
                 // wait for completing all offers and return all offers
