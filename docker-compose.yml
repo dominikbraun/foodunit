@@ -43,3 +43,5 @@ service:
       - foodunit_dn
 networks:
   foodunit_dn:
+    name: foodunit_dn
+    driver: bridge
