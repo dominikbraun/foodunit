@@ -19,10 +19,34 @@ import './foodunit3--custom.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 import React from "react"
+import Axios from "axios"
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const root = document.getElementById('root')
+const url = root.getAttribute('config-url')
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+/**
+ * loads config and starts the app with it
+ * @returns {Promise<void>}
+ */
+async function run() {
+    let config = await Axios.get(url).then(response => {
+        return response.data
+    }).catch(error => {
+        console.log("error loading config " + error)
+    })
+
+    if (config) {
+        ReactDOM.render(<App config={config}/>, document.getElementById('root'))
+    } else {
+        ReactDOM.render(<div>No config</div>, document.getElementById('root'))
+    }
+
+    // If you want your app to work offline and load faster, you can change
+    // unregister() to register() below. Note this comes with some pitfalls.
+    // Learn more about service workers: https://bit.ly/CRA-PWA
+    serviceWorker.unregister()
+}
+
+run().then(() => {
+    console.log("started")
+})

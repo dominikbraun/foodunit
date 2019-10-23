@@ -36,10 +36,11 @@ import RestaurantView from "./Restaurant/RestaurantView"
 import OrdersView from "./Restaurant/OrdersView"
 
 class App extends React.Component {
-    mainStore = new MainStore();
 
     constructor(props) {
         super(props)
+
+        this.mainStore = new MainStore(props.config)
         this.mainStore.init.bind(this.mainStore)()
     }
 

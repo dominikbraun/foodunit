@@ -23,18 +23,20 @@ import {LOGOUT_ROUTE, MAIN_ROUTE} from '../util/Routes'
 configure({ enforceActions: "always" })
 
 /**
- * AuthModel handles login and logout as well as auto login if there is already an existing session.
+ * AuthStore handles login and logout as well as auto login if there is already an existing session.
  */
-export default class AuthModel {
-    mailAddress = "";
-    password = "";
-    loggedIn = false;
-    loginErrorMessage = "";
+export default class AuthStore {
+    mailAddress = ""
+    password = ""
+    loggedIn = false
+    loginErrorMessage = ""
 
-    constructor() {
+    constructor(config) {
+        this.config = config
+
         // do auto login if session still valid
         let that = this
-        Axios.get("http://localhost:9292/v1/users/is-authenticated",
+        Axios.get(this.config.apiUrl +  "/users/is-authenticated",
             {withCredentials: true}
         ).then(function (response) {
 
@@ -50,7 +52,7 @@ export default class AuthModel {
 
     onLogin() {
         let that = this
-        Axios.post("http://localhost:9292/v1/users/login",
+        Axios.post(this.config.apiUrl +  "/users/login",
             {
                 mail_addr: this.mailAddress,
                 password: this.password
@@ -72,7 +74,7 @@ export default class AuthModel {
 
     onLogout() {
         let that = this
-        Axios.get("http://localhost:9292/v1/users/logout",
+        Axios.get(this.config.apiUrl +  "/users/logout",
             {
                 withCredentials: true
             }).then(function (response) {
@@ -107,7 +109,7 @@ export default class AuthModel {
     }
 }
 
-decorate(AuthModel, {
+decorate(AuthStore, {
     mailAddress: observable,
     password: observable,
     loggedIn: observable,

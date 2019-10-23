@@ -21,6 +21,7 @@ import (
 	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
 	"net/http"
+	"strconv"
 )
 
 func (c *Controller) RegisterUser() http.HandlerFunc {
@@ -148,6 +149,30 @@ func (c *Controller) SetPaypalMailAddr(session session.Manager) http.HandlerFunc
 		}
 
 		respond(w, r, http.StatusOK, true)
+		return
+	}
+}
+
+func (c *Controller) GetUser() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+		if err != nil {
+			respond(w, r, http.StatusUnprocessableEntity, ErrInvalidNumberFormat.Error())
+			return
+		}
+
+		publicUser, err := c.userService.Get(uint64(id))
+
+		if err != nil && err == user.ErrUserNotFound {
+			respond(w, r, http.StatusNotFound, err.Error())
+			return
+		} else if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
+		}
+
+		respond(w, r, http.StatusOK, publicUser)
 		return
 	}
 }

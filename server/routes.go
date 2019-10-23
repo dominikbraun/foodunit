@@ -43,6 +43,9 @@ func (s *Server) mountRoutes() {
 
 		r.Get("/confirm/{token}", s.controller.ConfirmMailAddr())
 		r.Get("/logout", s.controller.Logout(s.session))
+
+		r.With(middleware.Authenticate(s.session)).
+			Get("/{id}", s.controller.GetUser())
 	})
 
 	r.With(middleware.Authenticate(s.session)).

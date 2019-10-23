@@ -133,10 +133,10 @@ func (s *Service) Get(id uint64) (View, error) {
 
 	offerView := View{
 		ID:            offerEntity.ID,
-		Owner:         User{Name: offerEntity.Owner.Name},
+		Owner:         User{ID: offerEntity.Owner.ID},
 		ValidFrom:     offerEntity.ValidFrom,
 		ValidTo:       offerEntity.ValidTo,
-		Responsible:   User{Name: offerEntity.Responsible.Name},
+		Responsible:   User{ID: offerEntity.Responsible.ID},
 		IsPlaced:      offerEntity.IsPlaced,
 		IsCancelled:   offerEntity.IsCancelled,
 		ReadyAt:       offerEntity.ReadyAt,

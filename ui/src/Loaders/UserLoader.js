@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-import {action, decorate, observable} from 'mobx'
-import AuthStore from "./AuthStore"
-import FoodUnitStore from "./FoodUnitStore"
+import Axios from "axios"
 
-export default class MainStore {
-    foodUnit = null
-    auth = null
+export default class UserLoader {
 
     constructor(config) {
-        this.foodUnit = new FoodUnitStore(config)
-        this.auth = new AuthStore(config)
+        this.config = config
     }
 
-
-    init() {
-        // currently not needed
+    loadUser(id) {
+        return Axios.get(this.config.apiUrl +  "/users/" + id,
+            {withCredentials: true}
+        ).then(function (response) {
+            return response.data
+        }).catch(function (error) {
+            console.log(error)
+        })
     }
 }
-
-decorate(MainStore, {
-    foodUnit: observable,
-    auth: observable,
-    init: action
-})

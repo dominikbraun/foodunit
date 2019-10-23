@@ -169,3 +169,20 @@ func (s *Service) SetPaypalMailAddr(id uint64, setter PaypalMailAddrSetter) erro
 
 	return nil
 }
+
+func (s *Service) Get(id uint64) (PublicUser, error) {
+	userEntity, err := s.users.Find(id)
+
+	if err == sql.ErrNoRows {
+		return PublicUser{}, ErrUserNotFound
+	} else if err != nil {
+		return PublicUser{}, err
+	}
+
+	offerView := PublicUser{
+		ID:   userEntity.ID,
+		Name: userEntity.Name,
+	}
+
+	return offerView, nil
+}
