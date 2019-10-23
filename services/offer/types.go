@@ -34,11 +34,11 @@ type ActiveOffer struct {
 }
 
 type User struct {
-	Name string `json:"name"`
+	ID uint64 `json:"id"`
 }
 
 type Restaurant struct {
-	Name string `json:"name"`
+	ID uint64 `json:"id"`
 }
 
 type View struct {

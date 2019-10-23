@@ -101,6 +101,7 @@ WHERE o.id = ?`
 	return offer, err
 }
 
+// ToDo: Don't forget Valid-To!
 func (o *Offer) FindValidFrom(from time.Time) ([]model.Offer, error) {
 	query := `
 SELECT o.id, valid_from, valid_to, is_placed, is_cancelled, ready_at, paypal_enabled,
@@ -114,7 +115,7 @@ INNER JOIN restaurants r
 ON r.id = o.restaurant_id
 INNER JOIN users u2
 ON u2.id = o.responsible_user_id
-WHERE valid_from >= ?
+WHERE valid_from <= ?
 AND is_placed = 0`
 
 	validFrom := from.Format("2006-01-02 15:04:05")

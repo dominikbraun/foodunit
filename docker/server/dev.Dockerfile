@@ -13,15 +13,19 @@
 # limitations under the License.
 
 # FoodUnit 3 API server image (Development Version)
+# Build command: docker build -t srvdevimg -f docker/server/dev.Dockerfile .
+# Run command: docker run --name srvdevctr --rm -p 9595:9292 -e PORT=9292 -e DSN="root:root@(172.18.0.2:3306)/foodunit?parseTime=true" -v ${pwd}:/foodunit --network funet srvdevimg
 
 FROM golang:1.13
 
-RUN mkdir -p /foodunit
-WORKDIR /foodunit
-
 # PORT specifies the port the server listens on.
 ENV PORT 9292
+# DSN defines the data source name in the form "user:pass@(host:port)/dbName?parseTime=true
+ENV DSN "root:root@(localhost:3306)/foodunit?parseTime=true"
 ENV GO111MODULE=on
+
+RUN mkdir -p /foodunit
+WORKDIR /foodunit
 
 COPY go.mod .
 COPY go.sum .
@@ -37,8 +41,10 @@ RUN ["go", "get", "github.com/githubnemo/CompileDaemon"]
 # Run CompileDaemon, enabling Hot Reloading. It will observe a mounted
 # directory and rebuild/restart the app when a file changes.
 ENTRYPOINT CompileDaemon \
-    -build="go build -o ./.target/foodunit-server ./cmd/server/main.go" \
-    -command="./.target/foodunit-server --addr :${PORT}" \
-    -log-prefix=false
+    -build="go build cmd/server/main.go" \
+    -command="./main --dsn ${DSN} --addr :${PORT}" \
+    -directory=. \
+    -exclude-dir=.git \
+    -log-prefix=true
 
 EXPOSE ${PORT}

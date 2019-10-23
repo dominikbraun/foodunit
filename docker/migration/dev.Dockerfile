@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# FoodUnit 3 API server image (Production Version)
-# Build command: docker build -t srvprodimg -f docker/server/prod.Dockerfile .
-# Run command: docker run --name srvprodctr --rm -p 9292:9292 -e PORT=9292 srvprodimg
+# FoodUnit 3 migration image (Development Version)
+# Build command: docker image build -t migdevimg -f docker/migration/dev.Dockerfile .
+# Run command: docker container run --name migdevctr --rm -e DSN="root:root@(localhost:3306)/foodunit?parseTime=true" --network funet  migdevimg
 
-# Start build stage.
+# Start build stage
 FROM golang:1.12-alpine
 
 # Add git in order to clone the repository.
@@ -25,7 +25,7 @@ RUN git clone https://github.com/dominikbraun/foodunit foodunit
 WORKDIR foodunit
 
 # Build the application without the symbol table and debug information.
-RUN go build -v -ldflags="-s -w" -o ./.target/foodunit-server ./cmd/server/main.go
+RUN go build -v -ldflags="-s -w" -o ./.target/foodunit-migration ./cmd/migration/main.go
 
 # Start final stage
 FROM alpine:3.10
@@ -36,14 +36,17 @@ WORKDIR /foodunit
 
 # Copy the compiled binary from the build stage into the application directory
 # as well as the application configuration file.
-COPY --from=0 /go/foodunit/.target/foodunit-server .
+COPY --from=0 /go/foodunit/.target/foodunit-migration .
 ADD app.toml .
 
-# PORT specifies the port the server listens on.
-ENV PORT 9292
+# DSN defines the data source name in the form "user:pass@(host:port)/dbName?parseTime=true"
+ENV DSN "root:root@(localhost:3306)/foodunit?parseTime=true"
+# DROP indicates if the table schema including all rows should be dropped ("true") or not ("false").
+ENV DROP "false"
 
-# Run the FoodUnit server.
-CMD ./foodunit-server --addr :${PORT}
-
-# Expose the specified port.
-EXPOSE ${PORT}
+# Run the FoodUnit migration and drop the table schema if necessary.
+CMD if [ "$DROP" = "true" ]; then \
+        ./foodunit-migration --dsn ${DSN}; \
+    else \
+        ./foodunit-migration --dsn ${DSN} --drop-schema; \
+    fi

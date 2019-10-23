@@ -29,6 +29,7 @@ import (
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/dominikbraun/foodunit/storage/maria"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
@@ -146,6 +147,17 @@ func newRouter() *chi.Mux {
 		middleware.Recoverer,
 		render.SetContentType(render.ContentTypeJSON),
 	)
+	cors := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		// AllowOriginFunc: func(r *http.Request, origin string) bool { return true },
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: true,
+		MaxAge:           300,
+	})
+	router.Use(cors.Handler)
+
 	return router
 }
 

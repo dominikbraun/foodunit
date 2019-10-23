@@ -16,6 +16,8 @@
 .vscode
 
 # FoodUnit binary
+main
+main.exe
 foodunit
 foodunit.exe
 cmd/*/__debug_bin
@@ -24,3 +26,6 @@ cmd/*/__debug_bin
 # FoodUnit config
 server.toml
 app.toml
+
+# FoodUnit DB files
+.mariadb

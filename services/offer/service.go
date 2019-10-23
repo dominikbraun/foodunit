@@ -109,8 +109,8 @@ func (s *Service) Active() ([]ActiveOffer, error) {
 	for _, o := range offerEntities {
 		activeOffer := ActiveOffer{
 			ID:            o.ID,
-			Owner:         User{Name: o.Owner.Name},
-			Restaurant:    Restaurant{Name: o.Restaurant.Name},
+			Owner:         User{ID: o.Owner.ID},
+			Restaurant:    Restaurant{ID: o.Restaurant.ID},
 			ValidFrom:     o.ValidFrom,
 			ValidTo:       o.ValidTo,
 			PaypalEnabled: o.PaypalEnabled,

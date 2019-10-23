@@ -1,0 +1,45 @@
+version: "3.7"
+service:
+  maria:
+    build:
+      context: .
+      dockerfile: docker/maria/dev.Dockerfile
+    image: maria_di
+    ports:
+      - 3360:3306
+    volumes:
+      - .mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    network:
+      - foodunit_dn
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/dev.Dockerfile
+    image: server_di
+    ports:
+      - 9292:9292
+    volumes:
+      - .:/foodunit
+    environment:
+      - PORT=9292
+      - DSN="root:root@(maria:3306)/foodunit?parseTime=true"
+    network:
+      - foodunit_dn
+  ui:
+    build:
+      context: .
+      dockerfile: docker/ui/dev.Dockerfile
+    image: ui_di
+    ports:
+      - 8080:3000
+    volumes:
+      - ui:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    network:
+      - foodunit_dn
+networks:
+  foodunit_dn:
