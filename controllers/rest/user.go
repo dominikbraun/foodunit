@@ -17,7 +17,6 @@ package rest
 
 import (
 	"encoding/json"
-	"github.com/dominikbraun/foodunit/services/offer"
 	"github.com/dominikbraun/foodunit/services/user"
 	"github.com/dominikbraun/foodunit/session"
 	"github.com/go-chi/chi"
@@ -165,7 +164,7 @@ func (c *Controller) GetUser() http.HandlerFunc {
 
 		publicUser, err := c.userService.Get(uint64(id))
 
-		if err != nil && err == offer.ErrOfferNotFound {
+		if err != nil && err == user.ErrUserNotFound {
 			respond(w, r, http.StatusNotFound, err.Error())
 			return
 		} else if err != nil {
