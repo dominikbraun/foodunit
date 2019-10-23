@@ -30,3 +30,9 @@ type Login struct {
 type PaypalMailAddrSetter struct {
 	PaypalMailAddr string `json:"paypal_mail_addr"`
 }
+
+// PublicUser is only for userdata which every other user can see.
+type PublicUser struct {
+	ID   uint64 `json:"id"`
+	Name string `json:"name"`
+}
