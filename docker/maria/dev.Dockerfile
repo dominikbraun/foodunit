@@ -16,7 +16,9 @@
 # Build command: docker image build -t dbdevimg -f docker/maria/dev.Dockerfile .
 # Run command: docker container run --name dbdevctr -v ${pwd}/.mariadb:/var/lib/mysql --rm -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root --network funet dbdevimg
 
-FROM mariadb:latest
+# Currently, the MariaDB image doesn't support mounted host volumes with Docker Desktop.
+# As a workaround, this image will base on MySQL.
+FROM mysql:8.0
 
 # PACKAGES defines the apt packages to get installed.
 ENV PACKAGES openssh-server openssh-client

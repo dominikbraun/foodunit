@@ -14,6 +14,8 @@
 
 # FoodUnit 3 MariaDB image (Production Version)
 
+# Currently, the MariaDB image doesn't support mounted host volumes with Docker Desktop.
+# As a workaround, this image will base on MySQL.
 FROM mariadb:latest
 
 # PACKAGES defines the apt packages to get installed.
