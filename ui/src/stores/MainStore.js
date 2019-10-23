@@ -19,8 +19,14 @@ import AuthModel from "../models/AuthModel"
 import FoodUnitModel from "../models/FoodUnitModel"
 
 export default class MainStore {
-    foodUnit = new FoodUnitModel();
-    auth = new AuthModel();
+    foodUnit = null
+    auth = null
+
+    constructor(config) {
+        this.foodUnit = new FoodUnitModel(config)
+        this.auth = new AuthModel(config)
+    }
+
 
     init() {
         // currently not needed

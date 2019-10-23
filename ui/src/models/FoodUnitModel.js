@@ -16,6 +16,7 @@
 
 import {action, configure, decorate, observable} from 'mobx'
 import Axios from "axios"
+
 // enforce the strict mode for actions -> e.g. no state modifying inside of promise without action decorator https://www.leighhalliday.com/mobx-async-actions
 configure({ enforceActions: "observed" })
 
@@ -23,9 +24,13 @@ export default class FoodUnitModel {
 
     offers = [];
 
+    constructor(config) {
+        this.config = config
+    }
+
     loadOffers() {
         let that = this
-        Axios.get("http://localhost:9292/v1/offers/active",
+        Axios.get(this.config.apiUrl +  "/offers/active",
             {withCredentials: true}
         ).then(function (response) {
 
