@@ -23,9 +23,9 @@ import {LOGOUT_ROUTE, MAIN_ROUTE} from '../util/Routes'
 configure({ enforceActions: "always" })
 
 /**
- * AuthModel handles login and logout as well as auto login if there is already an existing session.
+ * AuthStore handles login and logout as well as auto login if there is already an existing session.
  */
-export default class AuthModel {
+export default class AuthStore {
     mailAddress = ""
     password = ""
     loggedIn = false
@@ -109,7 +109,7 @@ export default class AuthModel {
     }
 }
 
-decorate(AuthModel, {
+decorate(AuthStore, {
     mailAddress: observable,
     password: observable,
     loggedIn: observable,
