@@ -2,9 +2,11 @@
 
 ### Prerequisites
 
-At this stage, FoodUnit 3 requires the following software:
+Running FoodUnit 3 natively requires:
 * Go 1.12: https://golang.org
 * Yarn 1.17: https://yarnpkg.com
+
+Running FoodUnit 3 containerized requires:
 * Docker 19.03: https://docker.com
 
 ### Starting the API server
