@@ -9,21 +9,36 @@ Running FoodUnit 3 natively requires:
 Running FoodUnit 3 containerized requires:
 * Docker 19.03: https://docker.com
 
-### Starting the API server
+### Start FoodUnit natively
 
-To start the API server in development mode, use
+FoodUnit basically consists of an API server, an UI server, a migration tool and a backing database. In order to run the application natively, a local MySQL/MariaDB database is required.
 
-```shell script
-$ go run ./cmd/server/main.go --addr :9292
-```
+Copy `app.example.toml` and rename it to `app.toml`. Fill in appropriate values. Do the same thing with `ui/public/config.example.json`.
 
-or use the provided script `run-dev.sh` which will also start the frontend server.
-
-### Starting the frontend server
-
-This step isn't necessary if you've used `run-dev.sh`. Otherwise:
+If the database tables do not exists yet, run:
 
 ```shell script
-$ cd ./ui
-$ yarn serve
+$ ./run-migration.sh
 ```
+
+Then start the other components:
+
+```shell script
+$ ./run-server.sh
+$ ./run-ui.sh
+```
+
+These scripts are intended for development only.
+
+
+### Start FoodUnit containerized
+
+Just as mentioned above, copy and rename the configuration files. Then build and run the containers.
+
+```shell script
+$ docker-compose up
+```
+
+You may run the containers yourself just with `docker run`, using the environment variables and volumes specified in `docker-compose.yml`.
+
+These containers are intended for development only.
