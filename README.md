@@ -15,7 +15,7 @@ FoodUnit basically consists of an API server, an UI server, a migration tool and
 
 Copy `app.example.toml` and rename it to `app.toml`. Fill in appropriate values. Do the same thing with `ui/public/config.example.json`.
 
-If the database tables do not exists yet, run:
+If the database tables do not exist yet, run:
 
 ```shell script
 $ ./run-migration.sh
@@ -28,7 +28,7 @@ $ ./run-server.sh
 $ ./run-ui.sh
 ```
 
-These scripts are intended for development only.
+If you want to change the default values, start the component manually with the corresponding flags. These scripts are intended for development only.
 
 
 ### Start FoodUnit containerized
