@@ -15,7 +15,7 @@
  */
 
 import React from "react"
-import {CREATE_OFFER_ROUTE, RESTAURANT_VIEW} from "../../../util/Routes"
+import {CREATE_OFFER_ROUTE, OFFER_ROUTE} from "../../../util/Routes"
 import {Link} from "@reach/router"
 import {inject, observer} from "mobx-react"
 import Table, {TableConfig} from "../../Base/Table"
@@ -41,7 +41,7 @@ function getOfferTableConfig(additionalRestaurantClass, disabled) {
             </React.Fragment>)
         ),
         new TableConfig("px-0 text-center", (offer) => (
-            <Link to={RESTAURANT_VIEW} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
+            <Link to={OFFER_ROUTE + "/" + offer.id} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
                 Angebot ausw&auml;hlen
             </Link>)
         ),

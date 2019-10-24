@@ -27,7 +27,7 @@ export default class OfferLoader {
     }
 
     /**
-     * loadActive promises to loads all active Offers
+     * loadActive promises to load all active Offers
      * @returns {Promise<AxiosResponse<T>>}
      */
     loadActive() {

@@ -16,7 +16,8 @@
 
 // constants for all possible routes
 
-export const OFFERS_ROUTE = "/offer"
+export const OFFERS_ROUTE = "/offers"
+export const OFFER_ROUTE = "/offer"
 export const CREATE_OFFER_ROUTE = "/create-offer"
 export const MY_OFFERS_ROUTE = "/my-offer"
 export const RESTAURANT_VIEW = "/restaurant"

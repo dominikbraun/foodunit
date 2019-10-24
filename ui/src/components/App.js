@@ -16,7 +16,7 @@
 
 import React from 'react'
 import MainStore from "../stores/MainStore"
-import OfferView from "./Offer/OfferView"
+import OffersView from "./Offer/OffersView"
 import LoginView from "./Auth/LoginView"
 import {observer, Provider} from "mobx-react"
 import LogoutView from "./Auth/LogoutView"
@@ -27,12 +27,12 @@ import {
     LOGIN_ROUTE,
     LOGOUT_ROUTE,
     MY_OFFERS_ROUTE,
+    OFFER_ROUTE,
     OFFERS_ROUTE,
     ORDERS_VIEW,
-    RESTAURANT_VIEW
 } from "../util/Routes"
 import MyOffersView from "./Offer/MyOffersView"
-import RestaurantView from "./Restaurant/RestaurantView"
+import OfferView from "./Offer/OfferView"
 import OrdersView from "./Restaurant/OrdersView"
 
 class App extends React.Component {
@@ -50,10 +50,10 @@ class App extends React.Component {
                 <Router>
                     <LogoutView path={LOGOUT_ROUTE}/>
                     <LoginView default path={LOGIN_ROUTE}/>
-                    <OfferView path={OFFERS_ROUTE}/>
+                    <OffersView path={OFFERS_ROUTE}/>
                     <CreateOfferView path={CREATE_OFFER_ROUTE}/>
                     <MyOffersView path={MY_OFFERS_ROUTE}/>
-                    <RestaurantView path={RESTAURANT_VIEW}/>
+                    <OfferView path={`${OFFER_ROUTE}/:offerId`}/>
                     <OrdersView path={ORDERS_VIEW}/>
                 </Router>
             </Provider>
