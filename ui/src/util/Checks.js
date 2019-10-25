@@ -14,24 +14,8 @@
  * limitations under the License.
  */
 
-import Axios from "axios"
-import {checkId} from "../util/Checks"
-
-export default class RestaurantLoader {
-
-    constructor(config) {
-        this.config = config
-    }
-
-    loadRestaurant(id) {
-        checkId(id)
-
-        return Axios.get(this.config.apiUrl +  "/restaurants/" + id + "/info",
-            {withCredentials: true}
-        ).then(function (response) {
-            return response.data
-        }).catch(function (error) {
-            console.log(error)
-        })
-    }
+// TODO:  maybe navigate to a page showing that an error occured...
+export function checkId(number) {
+    if (!Number.isInteger(number))
+        throw new Error(number + " is not an integer. Only integers are allowed as id")
 }

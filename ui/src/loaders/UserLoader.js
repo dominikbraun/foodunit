@@ -15,6 +15,7 @@
  */
 
 import Axios from "axios"
+import {checkId} from "../util/Checks"
 
 export default class UserLoader {
 
@@ -23,6 +24,8 @@ export default class UserLoader {
     }
 
     loadUser(id) {
+        checkId(id)
+
         return Axios.get(this.config.apiUrl +  "/users/" + id,
             {withCredentials: true}
         ).then(function (response) {
