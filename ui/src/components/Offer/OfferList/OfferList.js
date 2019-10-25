@@ -28,12 +28,16 @@ function getOfferTableConfig(disabled) {
                 {offer.restaurant.name}
             </div>)
         ),
-        // TODO: format date
-        new TableConfig("", (offer) => (
-            <React.Fragment>
-                <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Bestellung m&ouml;glich:</p>
-                <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{offer.valid_from}</p>
-            </React.Fragment>)
+        new TableConfig("", (offer) => {
+            const options = { weekday: 'long'}
+            let today = new Date().toLocaleDateString(undefined, options)
+
+            return (
+                    <React.Fragment>
+                        <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Bestellung m&ouml;glich:</p>
+                        <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{today} {offer.restaurant.open}</p>
+                    </React.Fragment>)
+            }
         ),
         new TableConfig("", (offer) => (
             <React.Fragment>
@@ -42,7 +46,8 @@ function getOfferTableConfig(disabled) {
             </React.Fragment>)
         ),
         new TableConfig("px-0 text-center", (offer) => (
-            <Link to={OFFER_ROUTE + "/" + offer.id} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
+                                    // remove route if disabled
+            <Link to={disabled ? "" : OFFER_ROUTE + "/" + offer.id} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
                 Angebot ausw&auml;hlen
             </Link>)
         ),
