@@ -29,13 +29,14 @@ function getOfferTableConfig(disabled) {
             </div>)
         ),
         new TableConfig("", (offer) => {
-            const options = { weekday: 'long'}
-            let today = new Date().toLocaleDateString(undefined, options)
+            const options = { weekday: 'long', hour: '2-digit', minute: '2-digit'}
+            let from = new Date(Date.parse(offer.valid_from)).toLocaleDateString(undefined, options)
+            let to = new Date(Date.parse(offer.valid_to)).toLocaleDateString(undefined, options)
 
             return (
                     <React.Fragment>
                         <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Bestellung m&ouml;glich:</p>
-                        <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{today} {offer.restaurant.open}</p>
+                        <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{from} - {to}</p>
                     </React.Fragment>)
             }
         ),
