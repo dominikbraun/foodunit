@@ -13,10 +13,8 @@
 # limitations under the License.
 
 # FoodUnit 3 UI image (Development Version)
-#
-# The actual source files will be gathered by creating a volume that
-# maps the host's ui directory against the container's /app directory:
-# $ docker run -v ${pwd}/ui:/app ...
+# To build an image an run an instance manually, check out the docker-compose.yml file
+# and use the corresponding volumes, environments variables, networks etc.
 
 FROM node:12.2.0-alpine
 

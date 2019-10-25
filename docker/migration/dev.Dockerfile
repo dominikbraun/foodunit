@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # FoodUnit 3 migration image (Development Version)
-# Build command: docker image build -t migdevimg -f docker/migration/dev.Dockerfile .
-# Run command: docker container run --name migdevctr --rm -e DSN="root:root@(localhost:3306)/foodunit?parseTime=true" --network funet  migdevimg
+# To build an image an run an instance manually, check out the docker-compose.yml file
+# and use the corresponding volumes, environments variables, networks etc.
 
 # Start build stage
 FROM golang:1.12-alpine

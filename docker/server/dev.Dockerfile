@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # FoodUnit 3 API server image (Development Version)
-# Build command: docker build -t srvdevimg -f docker/server/dev.Dockerfile .
-# Run command: docker run --name srvdevctr --rm -p 9595:9292 -e PORT=9292 -e DSN="root:root@(172.18.0.2:3306)/foodunit?parseTime=true" -v ${pwd}:/foodunit --network funet srvdevimg
+# To build an image an run an instance manually, check out the docker-compose.yml file
+# and use the corresponding volumes, environments variables, networks etc.
 
 FROM golang:1.13
 

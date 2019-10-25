@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # FoodUnit 3 MariaDB image (Development Version)
-# Build command: docker image build -t dbdevimg -f docker/maria/dev.Dockerfile .
-# Run command: docker container run --name dbdevctr -v ${pwd}/.mariadb:/var/lib/mysql --rm -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root --network funet dbdevimg
+# To build an image an run an instance manually, check out the docker-compose.yml file
+# and use the corresponding volumes, environments variables, networks etc.
 
 # Currently, the MariaDB image doesn't support mounted host volumes with Docker Desktop.
 # As a workaround, this image will base on MySQL.

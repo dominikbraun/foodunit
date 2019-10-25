@@ -13,8 +13,6 @@
 # limitations under the License.
 
 # FoodUnit 3 API server image (Production Version)
-# Build command: docker build -t srvprodimg -f docker/server/prod.Dockerfile .
-# Run command: docker run --name srvprodctr --rm -p 9292:9292 -e PORT=9292 srvprodimg
 
 # Start build stage.
 FROM golang:1.12-alpine
