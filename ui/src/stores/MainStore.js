@@ -17,7 +17,7 @@
 import {action, decorate, observable} from 'mobx'
 import AuthStore from "./AuthStore"
 import FoodUnitStore from "./FoodUnitStore"
-import OfferLoader from "../Loaders/OfferLoader"
+import OfferLoader from "../loaders/OfferLoader"
 
 export default class MainStore {
     foodUnit = null
