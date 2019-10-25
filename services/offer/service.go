@@ -125,16 +125,16 @@ func (s *Service) Active() ([]Offer, error) {
 func (s *Service) Old() ([]Offer, error) {
 	offerEntities, err := s.offers.FindValidTill(time.Now().AddDate(0, 0, -1))
 
-	activeOffers := make([]Offer, 0)
+	oldOffers := make([]Offer, 0)
 
 	if err == sql.ErrNoRows {
-		return activeOffers, nil
+		return oldOffers, nil
 	} else if err != nil {
 		return nil, err
 	}
 
 	for _, o := range offerEntities {
-		activeOffer := Offer{
+		oldOffer := Offer{
 			ID:            o.ID,
 			Owner:         User{ID: o.Owner.ID},
 			Restaurant:    Restaurant{ID: o.Restaurant.ID},
@@ -143,10 +143,10 @@ func (s *Service) Old() ([]Offer, error) {
 			PaypalEnabled: o.PaypalEnabled,
 		}
 
-		activeOffers = append(activeOffers, activeOffer)
+		oldOffers = append(oldOffers, oldOffer)
 	}
 
-	return activeOffers, nil
+	return oldOffers, nil
 }
 
 func (s *Service) Get(id uint64) (View, error) {
