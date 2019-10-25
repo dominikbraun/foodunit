@@ -24,7 +24,7 @@ type Creation struct {
 	PaypalEnabled bool      `json:"paypal_enabled"`
 }
 
-type ActiveOffer struct {
+type Offer struct {
 	ID            uint64     `json:"id"`
 	Owner         User       `json:"owner"`
 	Restaurant    Restaurant `json:"restaurant"`

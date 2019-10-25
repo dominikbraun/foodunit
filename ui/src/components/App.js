@@ -46,7 +46,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <Provider auth={this.mainStore.auth} foodUnit={this.mainStore.foodUnit}>
+            <Provider offerLoader={this.mainStore.offerLoader} offerLoader={this.mainStore.offerLoader} auth={this.mainStore.auth} foodUnit={this.mainStore.foodUnit}>
                 <Router>
                     <LogoutView path={LOGOUT_ROUTE}/>
                     <LoginView default path={LOGIN_ROUTE}/>

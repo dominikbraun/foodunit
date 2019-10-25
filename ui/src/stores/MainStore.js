@@ -17,14 +17,18 @@
 import {action, decorate, observable} from 'mobx'
 import AuthStore from "./AuthStore"
 import FoodUnitStore from "./FoodUnitStore"
+import OfferLoader from "../Loaders/OfferLoader"
 
 export default class MainStore {
     foodUnit = null
     auth = null
 
+    offerLoader = null
+
     constructor(config) {
         this.foodUnit = new FoodUnitStore(config)
         this.auth = new AuthStore(config)
+        this.offerLoader = new OfferLoader(config)
     }
 
 

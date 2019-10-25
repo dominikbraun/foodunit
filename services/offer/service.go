@@ -95,10 +95,10 @@ func (s *Service) Create(c *Creation, userID uint64) error {
 	return err
 }
 
-func (s *Service) Active() ([]ActiveOffer, error) {
-	offerEntities, err := s.offers.FindValidFrom(time.Now())
+func (s *Service) Active() ([]Offer, error) {
+	offerEntities, err := s.offers.FindValid(time.Now())
 
-	activeOffers := make([]ActiveOffer, 0)
+	activeOffers := make([]Offer, 0)
 
 	if err == sql.ErrNoRows {
 		return activeOffers, nil
@@ -107,7 +107,34 @@ func (s *Service) Active() ([]ActiveOffer, error) {
 	}
 
 	for _, o := range offerEntities {
-		activeOffer := ActiveOffer{
+		activeOffer := Offer{
+			ID:            o.ID,
+			Owner:         User{ID: o.Owner.ID},
+			Restaurant:    Restaurant{ID: o.Restaurant.ID},
+			ValidFrom:     o.ValidFrom,
+			ValidTo:       o.ValidTo,
+			PaypalEnabled: o.PaypalEnabled,
+		}
+
+		activeOffers = append(activeOffers, activeOffer)
+	}
+
+	return activeOffers, nil
+}
+
+func (s *Service) Old() ([]Offer, error) {
+	offerEntities, err := s.offers.FindValidTill(time.Now().AddDate(0, 0, -1))
+
+	activeOffers := make([]Offer, 0)
+
+	if err == sql.ErrNoRows {
+		return activeOffers, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	for _, o := range offerEntities {
+		activeOffer := Offer{
 			ID:            o.ID,
 			Owner:         User{ID: o.Owner.ID},
 			Restaurant:    Restaurant{ID: o.Restaurant.ID},

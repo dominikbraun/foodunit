@@ -31,7 +31,19 @@ export default class OfferLoader {
      * @returns {Promise<AxiosResponse<T>>}
      */
     loadActive() {
-        return Axios.get(this.config.apiUrl +  "/offers/active",
+        return this._load("/offers/active")
+    }
+
+    /**
+     * loadOld promises to load all old Offers
+     * @returns {Promise<AxiosResponse<T>>}
+     */
+    loadOld() {
+        return this._load("/offers/old")
+    }
+
+    _load(apiPath) {
+        return Axios.get(this.config.apiUrl +  apiPath,
             {withCredentials: true}
         ).then((response) => {
 
@@ -42,7 +54,7 @@ export default class OfferLoader {
                 let toAwait = []
                 offers.forEach((offer) => {
                     // complete the offer (add owner and restaurant info)
-                    toAwait.push(this.completeOffer(offer))
+                    toAwait.push(this._completeOffer(offer))
                 })
 
                 // wait for completing all offers and return all offers
@@ -53,7 +65,7 @@ export default class OfferLoader {
         })
     }
 
-    async completeOffer(incompleteOffer) {
+    async _completeOffer(incompleteOffer) {
         let owner = await this.userLoader.loadUser(incompleteOffer.owner.id)
         if (owner)
             incompleteOffer.owner = owner

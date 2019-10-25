@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-import OfferListCurrent, {OfferListOld} from "./OfferList/OfferList"
+import OfferList from "./OfferList/OfferList"
 import React from "react"
 import SidebarLeft from "../SidebarLeft/SidebarLeft"
 import SidebarRight from "../SidebarRight"
 import LoggedIn from "../Auth/LoggedIn"
-import {OFFERS_ROUTE} from "../../util/Routes"
+import {CREATE_OFFER_ROUTE, OFFERS_ROUTE} from "../../util/Routes"
 import Footer from "../Footer"
+import {Link} from "@reach/router"
 
 export default function OffersView() {
     return (
@@ -28,8 +29,20 @@ export default function OffersView() {
             <div className="row m-0 h-100">
                 <SidebarLeft currentActiveRoute={OFFERS_ROUTE}/>
                 <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
-                    <OfferListCurrent/>
-                    <OfferListOld/>
+                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
+                        <h6 className="text-dark text-strong px-0 py-3">Aktuelle Angebote</h6>
+                        <OfferList/>
+                        <div className="border-top-light text-right pt-3">
+                            <Link to={CREATE_OFFER_ROUTE} className="btn btn-link rounded-pill text-sm">
+                                <i className="fas fa-share mr-2"/>Angebot erstellen
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
+                        <h6 className="text-dark text-strong px-0 py-3">Abgelaufene Angebote</h6>
+                        <OfferList old={true}/>
+                    </div>
 
                     <div className="mx-0 mx-xl-5 my-4 bg-white border rounded-0">
                         <div className="p-3 text-dark text-pmd">

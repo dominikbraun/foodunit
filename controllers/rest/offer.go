@@ -70,6 +70,20 @@ func (c *Controller) ActiveOffers() http.HandlerFunc {
 	}
 }
 
+func (c *Controller) OldOffers() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		offers, err := c.offerService.Old()
+
+		if err != nil {
+			respond(w, r, http.StatusInternalServerError, ErrProcessingFailed.Error())
+			return
+		}
+
+		respond(w, r, http.StatusOK, offers)
+		return
+	}
+}
+
 func (c *Controller) GetOffer() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))

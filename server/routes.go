@@ -52,6 +52,7 @@ func (s *Server) mountRoutes() {
 		Route("/offers", func(r chi.Router) {
 			r.Post("/create", s.controller.CreateOffer(s.session))
 			r.Get("/active", s.controller.ActiveOffers())
+			r.Get("/old", s.controller.OldOffers())
 
 			r.Route("/{id}", func(r chi.Router) {
 				r.Get("/", s.controller.GetOffer())

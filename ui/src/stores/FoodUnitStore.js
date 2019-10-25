@@ -14,31 +14,17 @@
  * limitations under the License.
  */
 
-import {action, configure, decorate, observable, runInAction} from 'mobx'
-import OfferLoader from "../Loaders/OfferLoader"
+import {configure, decorate} from 'mobx'
 
 // enforce the strict mode for actions -> e.g. no state modifying inside of promise without action decorator https://www.leighhalliday.com/mobx-async-actions
 configure({ enforceActions: "observed" })
 
 export default class FoodUnitStore {
 
-    offers = [];
-
     constructor(config) {
         this.config = config
-        this.offerLoader = new OfferLoader(config)
-    }
-
-    loadOffers() {
-        this.offerLoader.loadActive().then((offers) => {
-            runInAction(() => {
-                this.offers = offers
-            })
-        })
     }
 }
 
 decorate(FoodUnitStore, {
-    offers: observable,
-    setOffers: action,
 })
