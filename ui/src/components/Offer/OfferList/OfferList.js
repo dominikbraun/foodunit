@@ -15,24 +15,30 @@
  */
 
 import React from "react"
-import {CREATE_OFFER_ROUTE, RESTAURANT_VIEW} from "../../../util/Routes"
+import {OFFER_ROUTE} from "../../../util/Routes"
 import {Link} from "@reach/router"
 import {inject, observer} from "mobx-react"
 import Table, {TableConfig} from "../../Base/Table"
+import {runInAction} from "mobx"
 
-function getOfferTableConfig(additionalRestaurantClass, disabled) {
+function getOfferTableConfig(disabled) {
     return [
         new TableConfig("pl-0 py-4", (offer) => (
-            <div className={`text-hand text-lg rounded-0 text-dark text-center px-1 py-2 ${additionalRestaurantClass}`}>
+            <div className={`text-hand text-lg rounded-0 text-dark text-center px-1 py-2 ${disabled ? "bg-white" : "bg-gradient"}`}>
                 {offer.restaurant.name}
             </div>)
         ),
-        // TODO: format date
-        new TableConfig("", (offer) => (
-            <React.Fragment>
-                <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Bestellung m&ouml;glich:</p>
-                <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{offer.valid_from}</p>
-            </React.Fragment>)
+        new TableConfig("", (offer) => {
+            const options = { weekday: 'long', hour: '2-digit', minute: '2-digit'}
+            let from = new Date(Date.parse(offer.valid_from)).toLocaleDateString(undefined, options)
+            let to = new Date(Date.parse(offer.valid_to)).toLocaleDateString(undefined, options)
+
+            return (
+                    <React.Fragment>
+                        <p className={`text-sm mb-1 ${disabled ? "text-muted" : ""}`}>Bestellung m&ouml;glich:</p>
+                        <p className={`text-md text-strong mb-0 ${disabled ? "text-muted" : ""}`}>{from} - {to}</p>
+                    </React.Fragment>)
+            }
         ),
         new TableConfig("", (offer) => (
             <React.Fragment>
@@ -41,128 +47,51 @@ function getOfferTableConfig(additionalRestaurantClass, disabled) {
             </React.Fragment>)
         ),
         new TableConfig("px-0 text-center", (offer) => (
-            <Link to={RESTAURANT_VIEW} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
+                                    // remove route if disabled
+            <Link to={disabled ? "" : OFFER_ROUTE + "/" + offer.id} className={`btn btn-light rounded-pill text-sm ${disabled ? "disabled-all" : ""}`}>
                 Angebot ausw&auml;hlen
             </Link>)
         ),
     ]
 }
 
-class OfferListCurrent extends React.Component {
+/**
+ * OfferListCurrent displays all offers which are currently possible.
+ * It requests always the current list and doesn't cache it
+ */
+class OfferList extends React.Component {
 
     constructor(props) {
         super(props)
-        this.foodUnit = props.foodUnit
-        this.foodUnit.loadOffers()
-        this.tableConfig = getOfferTableConfig("bg-gradient", false)
+        this.offerLoader = props.offerLoader
+
+        this.tableConfig = getOfferTableConfig(this.props.old)
+
+        this.state = {offers: []}
+        this.loadOffers()
+    }
+
+    loadOffers() {
+        let loadOffersPromise = null
+        if (this.props.old)
+            loadOffersPromise = this.offerLoader.loadOld()
+        else
+            loadOffersPromise = this.offerLoader.loadActive()
+
+        loadOffersPromise.then((offers) => {
+            runInAction(() => {
+                this.setState({offers})
+            })
+        })
     }
 
     render() {
         return (
-            <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
-                <h6 className="text-dark text-strong px-0 py-3">Aktuelle Angebote</h6>
 
-                <Table config={this.tableConfig} rows={this.foodUnit.offers}/>
+                <Table config={this.tableConfig} rows={this.state.offers}/>
 
-                <div className="border-top-light text-right pt-3">
-                    <Link to={CREATE_OFFER_ROUTE} className="btn btn-link rounded-pill text-sm">
-                        <i className="fas fa-share mr-2"/>Angebot erstellen
-                    </Link>
-                </div>
-            </div>
         )
     }
 }
 
-export default inject('foodUnit')(observer(OfferListCurrent))
-
-export function OfferListOld() {
-    return <div className="mx-0 mx-xl-5 my-4 px-5 py-3 bg-white border rounded-0">
-        <h6 className="text-dark text-strong px-0 py-3">Abgelaufene Angebote</h6>
-
-        <table className="table table-responsive-xl mb-0 text-center text-muted">
-            <tr>
-                <td className="align-middle pl-0 pr-3 py-4">
-                    <div className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Pizzeria Venezia</div>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Angebot erstellt von:</p>
-                    <p className="text-md text-strong mb-0">Angela B&ouml;hm</p>
-                </td>
-                <td className="align-middle px-0 py-3 text-center">
-                    <button className="btn btn-light rounded-pill text-sm" disabled>Angebot ausw&auml;hlen</button>
-                </td>
-            </tr>
-
-            <tr>
-                <td className="align-middle pl-0 pr-3 py-4">
-                    <div className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Flying Pizza</div>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Angebot erstellt von:</p>
-                    <p className="text-md text-strong mb-0">Sebastian M&uuml;ller</p>
-                </td>
-                <td className="align-middle px-0 py-3 text-center">
-                    <button className="btn btn-light rounded-pill text-sm" disabled>Angebot ausw&auml;hlen</button>
-                </td>
-            </tr>
-            <tr>
-                <td className="align-middle pl-0 pr-3 py-4">
-                    <div className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Steffi's Imbiss</div>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Angebot erstellt von:</p>
-                    <p className="text-md text-strong mb-0">Dominik Braun</p>
-                </td>
-                <td className="align-middle px-0 py-3 text-center">
-                    <button className="btn btn-light rounded-pill text-sm" disabled>Angebot ausw&auml;hlen</button>
-                </td>
-            </tr>
-            <tr>
-                <td className="align-middle pl-0 pr-3 py-4">
-                    <div className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Flying Pizza</div>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Angebot erstellt von:</p>
-                    <p className="text-md text-strong mb-0">Angela B&ouml;hm</p>
-                </td>
-                <td className="align-middle px-0 py-3 text-center">
-                    <button className="btn btn-light rounded-pill text-sm" disabled>Angebot ausw&auml;hlen</button>
-                </td>
-            </tr>
-            <tr>
-                <td className="align-middle pl-0 pr-3 py-4">
-                    <div className="text-hand text-lg bg-white rounded-0 text-dark text-center px-1 py-2">Steffi's Imbiss</div>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Bestellung m&ouml;glich:</p>
-                    <p className="text-md text-strong mb-0">Di, 11:15 &ndash; 11:45 Uhr</p>
-                </td>
-                <td className="align-middle py-3">
-                    <p className="text-sm mb-1">Angebot erstellt von:</p>
-                    <p className="text-md text-strong mb-0">Walter Seethaler</p>
-                </td>
-                <td className="align-middle px-0 py-3 text-center">
-                    <button className="btn btn-light rounded-pill text-sm" disabled>Angebot ausw&auml;hlen</button>
-                </td>
-            </tr>
-
-        </table>
-    </div>
-}
+export default inject('offerLoader')(observer(OfferList))

@@ -15,16 +15,18 @@
  */
 
 import Axios from "axios"
+import {checkId} from "../util/Checks"
 
-export default class RestaurantLoader {
+export default class UserLoader {
 
     constructor(config) {
         this.config = config
     }
 
-    // TODO: validate id for only number everywhere
-    loadRestaurant(id) {
-        return Axios.get(this.config.apiUrl +  "/restaurants/" + id + "/info",
+    loadUser(id) {
+        checkId(id)
+
+        return Axios.get(this.config.apiUrl +  "/users/" + id,
             {withCredentials: true}
         ).then(function (response) {
             return response.data

@@ -15,15 +15,18 @@
  */
 
 import Axios from "axios"
+import {checkId} from "../util/Checks"
 
-export default class UserLoader {
+export default class RestaurantLoader {
 
     constructor(config) {
         this.config = config
     }
 
-    loadUser(id) {
-        return Axios.get(this.config.apiUrl +  "/users/" + id,
+    loadRestaurant(id) {
+        checkId(id)
+
+        return Axios.get(this.config.apiUrl +  "/restaurants/" + id + "/info",
             {withCredentials: true}
         ).then(function (response) {
             return response.data

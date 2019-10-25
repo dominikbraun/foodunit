@@ -101,8 +101,7 @@ WHERE o.id = ?`
 	return offer, err
 }
 
-// ToDo: Don't forget Valid-To!
-func (o *Offer) FindValidFrom(from time.Time) ([]model.Offer, error) {
+func (o *Offer) FindValid(now time.Time) ([]model.Offer, error) {
 	query := `
 SELECT o.id, valid_from, valid_to, is_placed, is_cancelled, ready_at, paypal_enabled,
 	u.id as "owner_user_id.id", u.name as "owner_user_id.name",
@@ -116,15 +115,46 @@ ON r.id = o.restaurant_id
 INNER JOIN users u2
 ON u2.id = o.responsible_user_id
 WHERE valid_from <= ?
+AND valid_to >= ?
 AND is_placed = 0`
 
-	validFrom := from.Format("2006-01-02 15:04:05")
+	validNow := now.Format("2006-01-02 15:04:05")
+
+	rows, err := o.DB.Queryx(query, validNow, validNow)
+	if err != nil {
+		return nil, err
+	}
+
+	return o.rowsToOffers(rows)
+}
+
+func (o *Offer) FindValidTill(to time.Time) ([]model.Offer, error) {
+	query := `
+SELECT o.id, valid_from, valid_to, is_placed, is_cancelled, ready_at, paypal_enabled,
+	u.id as "owner_user_id.id", u.name as "owner_user_id.name",
+	r.id as "restaurant_id.id", r.name as "restaurant_id.name",
+	u2.id as "responsible_user_id.id", u2.name as "responsible_user_id.name"
+FROM offers o
+INNER JOIN users u
+ON u.id = o.owner_user_id
+INNER JOIN restaurants r
+ON r.id = o.restaurant_id
+INNER JOIN users u2
+ON u2.id = o.responsible_user_id
+WHERE valid_to <= ?
+AND is_placed = 0`
+
+	validFrom := to.Format("2006-01-02 15:04:05")
 
 	rows, err := o.DB.Queryx(query, validFrom)
 	if err != nil {
 		return nil, err
 	}
 
+	return o.rowsToOffers(rows)
+}
+
+func (o Offer) rowsToOffers(rows *sqlx.Rows) ([]model.Offer, error) {
 	offers := make([]model.Offer, 0)
 
 	for rows.Next() {
