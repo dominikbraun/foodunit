@@ -1,0 +1,3 @@
+# Ignore all database files as well as binaries
+.mariadb
+.target
