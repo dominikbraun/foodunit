@@ -15,6 +15,11 @@
 # FoodUnit 3 migration image (Development Version)
 # To build an image an run an instance manually, check out the docker-compose.yml file
 # and use the corresponding volumes, environments variables, networks etc.
+#
+# This image can be built with `docker image build -t devmig -f docker/migration/dev.Dockerfile .`.
+# To execute a migration, at least the database container has to be running. If you've started the
+# database using the docker-compose.yml file, just run
+# `docker container run --name foodunit_mig_1 --rm --network foodunit_dn -e DSN="root:root@(172.18.0.2:3306)/foodunit?parseTime=true" migration`.
 
 # Start build stage
 FROM golang:1.12-alpine
@@ -42,5 +47,5 @@ COPY . .
 CMD if [ "$DROP" = "true" ]; then \
         go run cmd/migration/main.go --dsn ${DSN}; \
     else \
-        go run cmd/migration/main.go --dsn {$DSN} --drop-schema; \
+        go run cmd/migration/main.go --dsn ${DSN} --drop-schema; \
     fi
