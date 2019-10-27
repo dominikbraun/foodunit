@@ -25,6 +25,8 @@ import (
 	"strconv"
 )
 
+// CreateOffer is responsible for creating a new offer. All user-related data
+// needs to be provided by the accepted session manager.
 func (c *Controller) CreateOffer(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var creation offer.Creation
@@ -56,6 +58,7 @@ func (c *Controller) CreateOffer(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// ActiveOffers is responsible for retrieving all active offers.
 func (c *Controller) ActiveOffers() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		offers, err := c.offerService.Active()
@@ -70,6 +73,7 @@ func (c *Controller) ActiveOffers() http.HandlerFunc {
 	}
 }
 
+// OldOffers is responsible for retrieving all expired offers.
 func (c *Controller) OldOffers() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		offers, err := c.offerService.Old()
@@ -84,6 +88,7 @@ func (c *Controller) OldOffers() http.HandlerFunc {
 	}
 }
 
+// GetOffers is responsible for retrieving all required data for a given offer.
 func (c *Controller) GetOffer() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -108,6 +113,8 @@ func (c *Controller) GetOffer() http.HandlerFunc {
 	}
 }
 
+// CancelOffer is responsible for any offer cancellations. All user-related data
+// needs to be provided by the accepted session manager.
 func (c *Controller) CancelOffer(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -141,6 +148,8 @@ func (c *Controller) CancelOffer(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// MarkOrderAsPaid is responsible for setting the IsPaid property of a given order
+// to true. All user-related data needs to be provided by the accepted session manager.
 func (c *Controller) MarkOrderAsPaid(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -175,6 +184,8 @@ func (c *Controller) MarkOrderAsPaid(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// SetReadyAt is responsible for setting the IsReady property of a given offer.
+// All user-related data needs to be provided by the accepted session manager.
 func (c *Controller) SetReadyAt() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var setter offer.ReadyAtSetter

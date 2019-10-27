@@ -15,6 +15,8 @@
 // Package model provides basic domain models.
 package model
 
+// Restaurant represents a restaurant or delivery service. When a user creates
+// an offer, the offer will be associated with exactly one Restaurant.
 type Restaurant struct {
 	ID         uint64     `db:"id"`
 	Name       string     `db:"name"`
@@ -34,12 +36,16 @@ type Restaurant struct {
 	Menu       []Category `db:"menu"`
 }
 
+// Category represents a menu section or dish category. Each category is
+// associated with only one Restaurant.
 type Category struct {
 	ID     uint64 `db:"id"`
 	Name   string `db:"name"`
 	Dishes []Dish `db:"dishes"`
 }
 
+// Dish is a dish or meal offered by a restaurant. Each dish is associated
+// with only one Category.
 type Dish struct {
 	ID              uint64           `db:"id"`
 	Name            string           `db:"name"`
@@ -51,6 +57,10 @@ type Dish struct {
 	Characteristics []Characteristic `db:"characteristics"`
 }
 
+// Characteristic represents a property of a dish that can be configured individually
+// by an user, for example `pizza size`. Each dish can have multiple characteristics,
+// and each characteristic may be associated with multiple dishes (since `pizza size`
+// will exist for both `Pizza Salami` and `Pizza Margherita`).
 type Characteristic struct {
 	ID       uint64    `db:"id"`
 	Name     string    `db:"name"`
@@ -58,6 +68,8 @@ type Characteristic struct {
 	Variants []Variant `db:"variants"`
 }
 
+// Variant represents a concrete value for a characteristic, for example `28 cm` for
+// `pizza size`. It may be used for extra ingredients and therefore has a price.
 type Variant struct {
 	ID        uint64 `db:"id"`
 	Value     string `db:"value"`

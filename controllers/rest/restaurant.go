@@ -22,6 +22,7 @@ import (
 	"strconv"
 )
 
+// RestaurantInfo is responsible for retrieving information for a given restaurant.
 func (c *Controller) RestaurantInfo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -45,6 +46,10 @@ func (c *Controller) RestaurantInfo() http.HandlerFunc {
 	}
 }
 
+// RestaurantMenu is responsible for retrieving a given restaurant's menu including
+// all menu sections (categories) and all dishes.
+// The dishes don't contain all available characteristics. They can be retrieved using
+// the GetCharacteristics method.
 func (c *Controller) RestaurantMenu() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))

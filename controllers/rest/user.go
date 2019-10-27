@@ -24,6 +24,7 @@ import (
 	"strconv"
 )
 
+// RegisterUser is responsible for triggering an user registration.
 func (c *Controller) RegisterUser() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var registration user.Registration
@@ -49,6 +50,8 @@ func (c *Controller) RegisterUser() http.HandlerFunc {
 	}
 }
 
+// Login is responsible for logging in an existing user. The provided session manager
+// will create a new user session if the login has been successful.
 func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var login user.Login
@@ -81,6 +84,8 @@ func (c *Controller) Login(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// IsAuthenticated is responsible for determining whether a user is logged in or not.
+// All user-related data needs to be provided by the accepted session manager.
 func (c *Controller) IsAuthenticated(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		_, ok := session.Get(r.Context(), "authenticated").(bool)
@@ -90,6 +95,8 @@ func (c *Controller) IsAuthenticated(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// ConfirmMailAddr is responsible for confirming a user's mail address who has just
+// registered. The corresponding confirmation mail has been sent by RegisterUser.
 func (c *Controller) ConfirmMailAddr() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := chi.URLParam(r, "token")
@@ -113,6 +120,8 @@ func (c *Controller) ConfirmMailAddr() http.HandlerFunc {
 	}
 }
 
+// Logout is responsible for quitting a user session. The provided session manager will
+// remove any data associated with the particular session.
 func (c *Controller) Logout(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session.Remove(r.Context(), "authenticated")
@@ -123,6 +132,7 @@ func (c *Controller) Logout(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// SetPaypalMailAddr is responsible for setting the PaypayMailAddr property of a given user.
 func (c *Controller) SetPaypalMailAddr(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var setter user.PaypalMailAddrSetter
@@ -153,6 +163,7 @@ func (c *Controller) SetPaypalMailAddr(session session.Manager) http.HandlerFunc
 	}
 }
 
+// GetUser is responsible for retrieving all data for a given user.
 func (c *Controller) GetUser() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(chi.URLParam(r, "id"))

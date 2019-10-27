@@ -22,6 +22,7 @@ import (
 	"strconv"
 )
 
+// GetCharacteristics is responsible for retrieving a dish's characteristics.
 func (c *Controller) GetCharacteristics() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		dishID, err := strconv.Atoi(chi.URLParam(r, "id"))

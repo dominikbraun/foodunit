@@ -31,6 +31,8 @@ const (
 	DropSchemaHelp    = "Drops the existing storage schema (e. g. all tables)"
 )
 
+// main runs the migration using the provided configuration. This function
+// will panic in case an error occurs.
 func main() {
 	config := parseConfig()
 
@@ -42,6 +44,8 @@ func main() {
 	s.RunPreparation()
 }
 
+// parseConfig reads the CLI arguments/flags provided by the user. If no arguments
+// are given, the default values will be used instead.
 func parseConfig() migration.Config {
 	dsn := flag.String(DSNKey, DSNDefault, DSNHelp)
 	dropSchema := flag.Bool(DropSchemaKey, DropSchemaDefault, DropSchemaHelp)

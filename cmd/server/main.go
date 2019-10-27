@@ -31,6 +31,8 @@ const (
 	AddrHelp    = "A network address or port the server listens to."
 )
 
+// main runs the API server using the provided configuration. This function
+// will panic in case an error occurs.
 func main() {
 	config := parseConfig()
 
@@ -42,6 +44,8 @@ func main() {
 	s.Run()
 }
 
+// parseConfig reads the CLI arguments/flags provided by the user. If no arguments
+// are given, the default values will be used instead.
 func parseConfig() server.Config {
 	dsn := flag.String(DSNKey, DSNDefault, DSNHelp)
 	addr := flag.String(AddrKey, AddrDefault, AddrHelp)

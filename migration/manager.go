@@ -23,18 +23,24 @@ import (
 	"log"
 )
 
+// Config concludes important configuration values which will be consumed
+// by the migration manager.
 type Config struct {
 	Driver     string `json:"driver"`
 	DSN        string `json:"dsn"`
 	DropSchema bool   `json:"drop_schema"`
 }
 
+// Manager represents a migration manager. Using a provided database connection
+// it will migrate (i. e. create the database table schema) for all entities.
 type Manger struct {
 	db         *sqlx.DB
 	entities   []storage.Entity
 	dropSchema bool
 }
 
+// NewManager creates a new manager instance and returns a reference to it.
+// config has to be ready to use for the manager, populated with useful values.
 func NewManager(config *Config) (*Manger, error) {
 	m := Manger{}
 	var err error
@@ -58,6 +64,9 @@ func NewManager(config *Config) (*Manger, error) {
 	return &m, err
 }
 
+// RunPreparation `prepares` the database, meaning that it will create one
+// or more table for each entity, depending on their Create method. Dropping
+// each table requires an explicit opt-in flag.
 func (m *Manger) RunPreparation() {
 	var err error
 

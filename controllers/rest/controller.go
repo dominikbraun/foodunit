@@ -33,6 +33,9 @@ var (
 	ErrForbiddenAction     = errors.New("no permission for performing the action")
 )
 
+// Controller provides HTTP handling methods for executing any business logic. It
+// is the default gateway for any HTTP-related interfaces. Its main purpose is to
+// deal with incoming REST API requests.
 type Controller struct {
 	restaurantService *restaurant.Service
 	dishService       *dish.Service
@@ -41,6 +44,8 @@ type Controller struct {
 	orderService      *order.Service
 }
 
+// NewController creates a new Controller instances and returns a reference to it.
+// Each service has to be completely initialized so they're ready to use.
 func NewController(r *restaurant.Service, d *dish.Service, u *user.Service, o *offer.Service, odr *order.Service) *Controller {
 	controller := Controller{
 		restaurantService: r,
@@ -52,6 +57,7 @@ func NewController(r *restaurant.Service, d *dish.Service, u *user.Service, o *o
 	return &controller
 }
 
+// respond writes an HTTP response including a status code and a value rendered as JSON.
 func respond(w http.ResponseWriter, r *http.Request, status int, v interface{}) {
 	w.WriteHeader(status)
 	render.JSON(w, r, v)

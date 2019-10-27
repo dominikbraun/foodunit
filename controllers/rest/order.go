@@ -25,6 +25,7 @@ import (
 	"strconv"
 )
 
+// AllOrders is responsible for retrieving all user orders for a given offer.
 func (c *Controller) AllOrders() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -50,6 +51,8 @@ func (c *Controller) AllOrders() http.HandlerFunc {
 	}
 }
 
+// GetOrder is responsible for retrieving a given order. All user-related data
+// needs to be provided by the accepted session manager.
 func (c *Controller) GetOrder(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		offerID, err := strconv.Atoi(chi.URLParam(r, "id"))
@@ -80,6 +83,9 @@ func (c *Controller) GetOrder(session session.Manager) http.HandlerFunc {
 	}
 }
 
+// UpdateOrder is responsible for setting all properties (including positions)
+// of an given order. All user-related data needs to be provided by the accepted
+// session manager.
 func (c *Controller) UpdateOrder(session session.Manager) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var update order.Update

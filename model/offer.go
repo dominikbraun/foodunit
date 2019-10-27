@@ -17,6 +17,9 @@ package model
 
 import "time"
 
+// Offer represents an user's offer for ordering food for their team at
+// a restaurant. If the food won't be delivered by the restaurant/delivery
+// service, the owner of the offer is responsible for picking up the ordered food.
 type Offer struct {
 	ID            uint64     `db:"id"`
 	Owner         User       `db:"owner_user_id"`
@@ -31,6 +34,8 @@ type Offer struct {
 	Orders        []Order    `db:"orders"`
 }
 
+// Order represents an user's order for a particular offer. In most cases, there
+// will be multiple orders (i. e. multiple users ordering) at an offer.
 type Order struct {
 	ID        uint64     `db:"id"`
 	User      User       `db:"user_id"`
@@ -38,6 +43,9 @@ type Order struct {
 	IsPaid    bool       `db:"is_paid"`
 }
 
+// Position represents an order's position. It includes the actual dish ordered,
+// next to an alternative dish if the actual dish isn't available for sure.
+// A position also hold several configurations.
 type Position struct {
 	ID             uint64          `db:"id"`
 	Dish           Dish            `db:"dish_id"`
@@ -46,6 +54,10 @@ type Position struct {
 	Configurations []Configuration `db:"configurations"`
 }
 
+// Configuration represents the actual choice a user has made for a characteristic. If the
+// user orders a pizza and chooses `pizza size: 30 cm`, the order position includes
+// a Configuration saying that `pizza size` = `30 cm`. Therefore, it's simply a mapping
+// of a dish's characteristic against one ore more concrete variants.
 type Configuration struct {
 	ID             uint64         `db:"id"`
 	Characteristic Characteristic `db:"characteristic_id"`

@@ -17,6 +17,8 @@ package model
 
 import "time"
 
+// User represents an application user which will register and login in order
+// to create an offer or order food at an existing offer.
 type User struct {
 	ID             uint64    `db:"id"`
 	MailAddr       string    `db:"mail_addr"`

@@ -21,8 +21,13 @@ import (
 	"net/http"
 )
 
+// Middleware is a function which takes an HTTP handler and returns an HTTP handler.
+// The returned handler will call the provided handler when it has finished. Typically,
+// multiple middleware functions will be chained using this mechanism.
 type Middleware func(http.Handler) http.Handler
 
+// Authenticate returns a middleware checking if there is an user session for a
+// given HTTP call. Quits with a 404 response if there is no associated session.
 func Authenticate(session session.Manager) Middleware {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {

@@ -20,6 +20,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Reader prescribes methods for reading configuration values from a file, memory
+// etc. Types or functions consuming any configuration should accept a Reader instance.
 type Reader interface {
 	Get(key string) interface{}
 	GetString(key string) string
@@ -31,6 +33,8 @@ var (
 	ErrFileNotFound = errors.New("the configuration file was not found.")
 )
 
+// New creates an Reader instance which provides configuration values of a given file.
+// Returns an error in case the file wasn't found.
 func New(filename string) (Reader, error) {
 	reader := viper.New()
 
