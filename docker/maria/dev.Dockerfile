@@ -17,7 +17,7 @@
 # and use the corresponding volumes, environments variables, networks etc.
 
 # Currently, the MariaDB image doesn't support mounted host volumes with Docker Desktop.
-# As a workaround, this image will base on MySQL.
+# As a workaround, this image will base on MySQL, ironically.
 FROM mysql:8.0
 
 # PACKAGES defines the apt packages to get installed.
