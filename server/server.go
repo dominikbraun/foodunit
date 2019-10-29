@@ -29,8 +29,8 @@ import (
 	"github.com/dominikbraun/foodunit/storage"
 	"github.com/dominikbraun/foodunit/storage/maria"
 	"github.com/go-chi/chi"
-	"github.com/go-chi/cors"
 	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
 	"log"
@@ -40,12 +40,23 @@ import (
 	"time"
 )
 
+// Config concludes important configuration values which will be consumed
+// by the API server.
 type Config struct {
 	Driver string `json:"driver"`
 	DSN    string `json:"dsn"`
 	Addr   string `json:"addr"`
 }
 
+// Server represents an full-featured, executable REST API server. It is the
+// central place where all individual components are being wired up.
+//
+// It initializes and holds all storage objects as well as the business services.
+// Each service requires multiple storage objects and the server will pass its
+// own objects by reference to the corresponding services.
+//
+// Since a service assumes that the storage objects are ready to use, each storage
+// is initialized first and will then be passed to the service.
 type Server struct {
 	router  *chi.Mux
 	http    *http.Server
@@ -76,6 +87,14 @@ type Server struct {
 	controller *rest.Controller
 }
 
+// New is the actual entry point for the API server binary. It initializes all
+// server components like the internal HTTP server or the router. Most importantly,
+// it will create a database connection pool which will be passed to the storage
+// factories, and the resulting storage object will be passed to the services.
+//
+// This function is also the place where dependency injection happens: The server
+// decides which storage implementations will be used - e. g. maria.Restaurant for
+// the Server.restaurant field.
 func New(config *Config) (*Server, error) {
 	s := Server{}
 	var err error
@@ -118,6 +137,9 @@ func New(config *Config) (*Server, error) {
 	return &s, err
 }
 
+// Run starts the internal HTTP server which makes the API server listen on the
+// port specified in the passed Config instance. This function will panic in case
+// an error occurs.
 func (s *Server) Run() {
 	shutdown := make(chan os.Signal)
 	signal.Notify(shutdown, os.Interrupt)
@@ -138,6 +160,8 @@ func (s *Server) Run() {
 	}
 }
 
+// newRouter creates a new router instance which will be used as the server's router.
+// The actual API endpoints will be generated and mounted in mountRoutes.
 func newRouter() *chi.Mux {
 	router := chi.NewRouter()
 	router.Use(
@@ -147,20 +171,23 @@ func newRouter() *chi.Mux {
 		middleware.Recoverer,
 		render.SetContentType(render.ContentTypeJSON),
 	)
-	cors := cors.New(cors.Options{
-		AllowedOrigins: []string{"*"},
-		// AllowOriginFunc: func(r *http.Request, origin string) bool { return true },
+
+	corsSettings := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
 		MaxAge:           300,
 	})
-	router.Use(cors.Handler)
+
+	router.Use(corsSettings.Handler)
 
 	return router
 }
 
+// newHTTPServer creates a new HTTP server instance which will be used as the
+// server's internal HTTP server. It is configured to run on the specified port.
 func newHTTPServer(handler http.Handler, addr string) *http.Server {
 	server := http.Server{
 		Addr:    addr,

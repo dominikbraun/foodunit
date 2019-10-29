@@ -24,11 +24,15 @@ const (
 	FromName string = "FoodUnit"
 )
 
+// Service executes mail-related business logic and use cases. It is also responsible
+// for accessing the model storage under consideration of all business rules.
 type Service struct {
 	sgAPIKey string
 	users    storage.User
 }
 
+// NewService creates a new Service instance utilizing the given storage objects.
+// The storage objects need to be ready to use for the service.
 func New(sgAPIKey string, u storage.User) *Service {
 	service := Service{
 		sgAPIKey: sgAPIKey,
@@ -37,6 +41,23 @@ func New(sgAPIKey string, u storage.User) *Service {
 	return &service
 }
 
+// Send creates an e-mail and attempts to send it via the SendGrid API. It will
+// replace all placeholders of Settings.Variables in the mail subject and body.
+//
+// For instance, the subject may look like this: `Welcome to FoodUnit, {{name}}!`
+// To replace {{name}} with a real value, you should provide settings like this:
+//
+//		settings := mail.Settings{
+//			Subject: `Welcome to FoodUnit, {{name}}!`,
+//			Variables: map[string]string{
+//				"name": username,
+//			}
+//		}
+//
+//		mailService.Send(&settings)
+//
+// Send will automatically replace the map key with the associated value. Note that
+// the key must not include the curly brackets.
 func (s *Service) Send(settings *Settings) error {
 	for variable, replacement := range settings.Variables {
 		placeholder := fmt.Sprintf("{{%s}}", variable)

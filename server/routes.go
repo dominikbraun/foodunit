@@ -20,6 +20,8 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// mountRoutes creates all API routes and registers the responsible HTTP handlers.
+// The created router instance will be mounted on the server's main router.
 func (s *Server) mountRoutes() {
 	r := chi.NewRouter()
 

@@ -27,12 +27,16 @@ var (
 	ErrMenuNotFound       = errors.New("the menu could not be found")
 )
 
+// Service executes restaurant-related business logic and use cases. It is also responsible
+// for accessing the model storage under consideration of all business rules.
 type Service struct {
 	restaurants storage.Restaurant
 	categories  storage.Category
 	dishes      storage.Dish
 }
 
+// NewService creates a new Service instance utilizing the given storage objects.
+// The storage objects need to be ready to use for the service.
 func NewService(r storage.Restaurant, c storage.Category, d storage.Dish) *Service {
 	service := Service{
 		restaurants: r,
@@ -42,6 +46,8 @@ func NewService(r storage.Restaurant, c storage.Category, d storage.Dish) *Servi
 	return &service
 }
 
+// Info returns relevant meta data for an restaurant, e. g. the opening hours. It
+// won't return the restaurant's menu (see Menu for this).
 func (s *Service) Info(id uint64) (Info, error) {
 	restaurantEntity, err := s.restaurants.Find(id)
 
@@ -83,6 +89,9 @@ func (s *Service) Info(id uint64) (Info, error) {
 	return info, nil
 }
 
+// Menu returns a restaurant's menu including all categories or menu sections and
+// their individual dishes. However, the dish characteristics are not included here
+// due to performance reasons.
 func (s *Service) Menu(id uint64) (Menu, error) {
 	categoryEntities, err := s.categories.FindByRestaurant(id)
 

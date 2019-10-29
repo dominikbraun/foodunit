@@ -26,12 +26,16 @@ var (
 	ErrVariantsNotFound        = errors.New("the variants for the characteristics could not be found")
 )
 
+// Service executes dish-related business logic and use cases. It is also responsible
+// for accessing the model storage under consideration of all business rules.
 type Service struct {
 	dishes          storage.Dish
 	characteristics storage.Characteristic
 	variants        storage.Variant
 }
 
+// NewService creates a new Service instance utilizing the given storage objects.
+// The storage objects need to be ready to use for the service.
 func NewService(d storage.Dish, c storage.Characteristic, v storage.Variant) *Service {
 	service := Service{
 		dishes:          d,
@@ -41,6 +45,7 @@ func NewService(d storage.Dish, c storage.Characteristic, v storage.Variant) *Se
 	return &service
 }
 
+// GetCharacteristics returns all characteristics of a given dish.
 func (s *Service) GetCharacteristics(dishID uint64) ([]Characteristic, error) {
 	characteristicEntities, err := s.characteristics.FindByDish(dishID)
 

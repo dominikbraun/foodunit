@@ -12,6 +12,7 @@
 // Package dish provides services and types for Dish-related data.
 package dish
 
+// Variant is the API output for model.Variant.
 type Variant struct {
 	ID        uint64 `jsom:"id"`
 	Value     string `json:"value"`
@@ -19,6 +20,7 @@ type Variant struct {
 	Price     uint   `json:"price"`
 }
 
+// Characteristic is the API output for model.Characteristic.
 type Characteristic struct {
 	ID       uint64    `json:"id"`
 	Name     string    `json:"name"`

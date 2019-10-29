@@ -15,6 +15,7 @@
 // Package user provides services and types for User-related data.
 package user
 
+// Registration represents a user registration.
 type Registration struct {
 	MailAddr       string `json:"mail_addr"`
 	Name           string `json:"name"`
@@ -22,16 +23,18 @@ type Registration struct {
 	Password       string `json:"password"`
 }
 
+// Login represents an user's attempt to authenticate himself.
 type Login struct {
 	MailAddr string `json:"mail_addr"`
 	Password string `json:"password"`
 }
 
+// PaypalMailAddrSetter is a setter type for the PaypalMailAddr property.
 type PaypalMailAddrSetter struct {
 	PaypalMailAddr string `json:"paypal_mail_addr"`
 }
 
-// PublicUser is only for userdata which every other user can see.
+// PublicUser is the public representation of an user (i. e. profile).
 type PublicUser struct {
 	ID   uint64 `json:"id"`
 	Name string `json:"name"`

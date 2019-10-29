@@ -12,6 +12,8 @@
 // Package dish provides services and types for sending mails.
 package mail
 
+// Settings provides basic configuration values for sending an e-mail.
+// It also holds placeholders which will be replaced with the mapped values.
 type Settings struct {
 	From      string            `json:"from"`
 	To        string            `json:"to"`
