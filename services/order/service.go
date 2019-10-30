@@ -28,6 +28,8 @@ var (
 	ErrActionNotAllowed = errors.New("the action is not allowed")
 )
 
+// Service executes order-related business logic and use cases. It is also responsible
+// for accessing the model storage under consideration of all business rules.
 type Service struct {
 	offers          storage.Offer
 	orders          storage.Order
@@ -38,6 +40,8 @@ type Service struct {
 	variants        storage.Variant
 }
 
+// NewService creates a new Service instance utilizing the given storage objects.
+// The storage objects need to be ready to use for the service.
 func NewService(o storage.Offer, odr storage.Order, p storage.Position, c storage.Configuration, d storage.Dish, chr storage.Characteristic, v storage.Variant) *Service {
 	service := Service{
 		offers:          o,
@@ -51,6 +55,8 @@ func NewService(o storage.Offer, odr storage.Order, p storage.Position, c storag
 	return &service
 }
 
+// GetAll returns all orders for the offer identified by offerID. This will
+// also include the individual order positions as well as the user configurations.
 func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 	orderEntities, err := s.orders.FindByOffer(offerID)
 
@@ -74,6 +80,8 @@ func (s *Service) GetAll(offerID uint64) ([]Order, error) {
 	return orders, nil
 }
 
+// Get returns the particular order a user (identified by userID) has made at
+// an given offer (identified by offerID).
 func (s *Service) Get(offerID, userID uint64) (Order, error) {
 	orderEntity, err := s.orders.FindByOfferAndUser(offerID, userID)
 
@@ -88,6 +96,8 @@ func (s *Service) Get(offerID, userID uint64) (Order, error) {
 	return order, err
 }
 
+// buildOrder creates an order.Order object out of a model.Order object. This
+// includes all order positions and all configurations for each position.
 func (s *Service) buildOrder(orderEntry *model.Order) (Order, error) {
 	order := Order{
 		ID:     orderEntry.ID,
@@ -136,6 +146,8 @@ func (s *Service) buildOrder(orderEntry *model.Order) (Order, error) {
 	return order, nil
 }
 
+// loadConfigurations returns the particular configurations a user has
+// created for a given position.
 func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error) {
 	configurationEntities, err := s.configurations.FindByPosition(positionID)
 
@@ -180,6 +192,10 @@ func (s *Service) loadConfigurations(positionID uint64) ([]Configuration, error)
 	return configurations, nil
 }
 
+// Update updates an user's order. The current updating mechanism does not
+// PUT/DELETE/UPDATE a particular order position - instead, the whole order
+// will be stored.
+// As a consequence, to receive the order, the last stored order is returned.
 func (s *Service) Update(order *Update) error {
 	_, err := s.orders.FindByOfferAndUser(order.OfferID, order.UserID)
 
@@ -231,6 +247,9 @@ func (s *Service) Update(order *Update) error {
 	return nil
 }
 
+// MarkAsPaid marks an order identified by orderID at an offer identified by
+// offerID as paid. The only person allowed to mark an order as paid is the
+// offer's owner.
 func (s *Service) MarkAsPaid(offerID, orderID, userID uint64) error {
 	err := s.orders.MarkAsPaid(orderID)
 

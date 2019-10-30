@@ -44,12 +44,16 @@ var (
 	ErrTokenInvalid            = errors.New("the confirmation token is invalid")
 )
 
+// Service executes user-related business logic and use cases. It is also responsible
+// for accessing the model storage under consideration of all business rules.
 type Service struct {
 	appConfig   config.Reader
 	users       storage.User
 	mailService *mail.Service
 }
 
+// NewService creates a new Service instance utilizing the given storage objects.
+// The storage objects need to be ready to use for the service.
 func NewService(r config.Reader, u storage.User, m *mail.Service) *Service {
 	service := Service{
 		appConfig:   r,
@@ -59,6 +63,8 @@ func NewService(r config.Reader, u storage.User, m *mail.Service) *Service {
 	return &service
 }
 
+// Register stores a new user, creates a confirmation token and sends a corresponding
+// confirmation e-mail.
 func (s *Service) Register(r *Registration) (bool, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(r.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -99,6 +105,8 @@ func (s *Service) Register(r *Registration) (bool, error) {
 	return true, nil
 }
 
+// generateToken generates a simple confirmation token which will be used for
+// confirming a new user account.
 func (s *Service) generateToken(mailAddr string) string {
 	data := []byte(mailAddr)
 	hash := md5.Sum(data)
@@ -106,6 +114,8 @@ func (s *Service) generateToken(mailAddr string) string {
 	return fmt.Sprintf("%x", hash)
 }
 
+// sendConfirmationMail sends the actual confirmation e-mail. The mail subject and
+// body will be read from the global application configuration.
 func (s *Service) sendConfirmationMail(name, mailAddr, token string) error {
 	from := s.appConfig.GetString(confirmationMailFrom)
 	subj := s.appConfig.GetString(confirmationMailSubject)
@@ -126,6 +136,9 @@ func (s *Service) sendConfirmationMail(name, mailAddr, token string) error {
 	return err
 }
 
+// Authenticate will authenticate a user by comparing given login data with the
+// stored password hash. Authenticate is not responsible for creating a session,
+// this will be done by the session manager if the authentication was successful.
 func (s *Service) Authenticate(l *Login) (uint64, error) {
 	userEntity, err := s.users.FindByMailAddr(l.MailAddr)
 
@@ -146,6 +159,8 @@ func (s *Service) Authenticate(l *Login) (uint64, error) {
 	return userEntity.ID, nil
 }
 
+// ConfirmMailAddr will confirm the mail address (and therefore the user account)
+// that is associated with the given token.
 func (s *Service) ConfirmMailAddr(token string) error {
 	err := s.users.ConfirmUser(token)
 
@@ -158,6 +173,7 @@ func (s *Service) ConfirmMailAddr(token string) error {
 	return nil
 }
 
+// SetPaypalMailAddr sets the PayPal mail address of the user identified by id.
 func (s *Service) SetPaypalMailAddr(id uint64, setter PaypalMailAddrSetter) error {
 	err := s.users.SetPaypalMailAddr(id, setter.PaypalMailAddr)
 
@@ -170,6 +186,7 @@ func (s *Service) SetPaypalMailAddr(id uint64, setter PaypalMailAddrSetter) erro
 	return nil
 }
 
+// Get returns all relevant meta data for an user identified by id.
 func (s *Service) Get(id uint64) (PublicUser, error) {
 	userEntity, err := s.users.Find(id)
 

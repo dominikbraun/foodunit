@@ -39,6 +39,8 @@ var (
 	ErrActionNotAllowed   = errors.New("the action is not allowed")
 )
 
+// Service executes offer-related business logic and use cases. It is also responsible
+// for accessing the model storage under consideration of all business rules.
 type Service struct {
 	appConfig   config.Reader
 	restaurants storage.Restaurant
@@ -49,6 +51,8 @@ type Service struct {
 	mailService *mail.Service
 }
 
+// NewService creates a new Service instance utilizing the given storage objects.
+// The storage objects need to be ready to use for the service.
 func NewService(r config.Reader, res storage.Restaurant, u storage.User, o storage.Offer, odr storage.Order, p storage.Position, m *mail.Service) *Service {
 	service := Service{
 		appConfig:   r,
@@ -62,6 +66,7 @@ func NewService(r config.Reader, res storage.Restaurant, u storage.User, o stora
 	return &service
 }
 
+// Create creates a new offer whose owner is the user identified by userID.
 func (s *Service) Create(c *Creation, userID uint64) error {
 	userEntity, err := s.users.Find(userID)
 
@@ -95,6 +100,8 @@ func (s *Service) Create(c *Creation, userID uint64) error {
 	return err
 }
 
+// Active returns all active offers. An offer is considered to be active if
+// the current time is between the offer's start and end timestamps.
 func (s *Service) Active() ([]Offer, error) {
 	offerEntities, err := s.offers.FindValid(time.Now())
 
@@ -122,6 +129,8 @@ func (s *Service) Active() ([]Offer, error) {
 	return activeOffers, nil
 }
 
+// Old returns all expired offers. An offer is considered to be old if the
+// current time is between the offer's start and end timestamps.
 func (s *Service) Old() ([]Offer, error) {
 	offerEntities, err := s.offers.FindValidTill(time.Now().AddDate(0, 0, -1))
 
@@ -149,6 +158,8 @@ func (s *Service) Old() ([]Offer, error) {
 	return oldOffers, nil
 }
 
+// Get returns all meta data for the offer identified with id. This data does
+// not include the orders associated with the offer.
 func (s *Service) Get(id uint64) (View, error) {
 	offerEntity, err := s.offers.Find(id)
 
@@ -173,6 +184,9 @@ func (s *Service) Get(id uint64) (View, error) {
 	return offerView, nil
 }
 
+// Cancel triggers the cancellation of an offer, ensuring that the triggering
+// user is the owner of the particular offer. All users that have ordered food
+// at this offer will receive a notification mail instantly.
 func (s *Service) Cancel(offerID, userID uint64) error {
 	offer, err := s.offers.Find(offerID)
 
@@ -226,6 +240,9 @@ func (s *Service) Cancel(offerID, userID uint64) error {
 	return nil
 }
 
+// sendCancellationMail sends an e-mail to the specified receiver. It will inform
+// the receiver that an offer he has ordered at has been cancelled. The mail subject
+// and body will be read from the global application configuration.
 func (s *Service) sendCancellationMail(name, mailAddr, owner, restaurant string) error {
 	from := s.appConfig.GetString(cancellationMailFrom)
 	subj := s.appConfig.GetString(cancellationMailSubject)
@@ -247,6 +264,8 @@ func (s *Service) sendCancellationMail(name, mailAddr, owner, restaurant string)
 	return err
 }
 
+// SetReadyAt sets the timestamp indicating when the orders can be picked up
+// at the restaurant or will be delivered by the delivery service.
 func (s *Service) SetReadyAt(id uint64, setter ReadyAtSetter) error {
 	err := s.offers.SetReadyAt(id, setter.ReadyAt)
 

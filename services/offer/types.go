@@ -17,6 +17,7 @@ package offer
 
 import "time"
 
+// Creation represents the creation of a new offer.
 type Creation struct {
 	Restaurant    uint64    `json:"restaurant_id"`
 	ValidFrom     time.Time `json:"valid_from"`
@@ -24,6 +25,7 @@ type Creation struct {
 	PaypalEnabled bool      `json:"paypal_enabled"`
 }
 
+// Offer is the API output for model.Offer.
 type Offer struct {
 	ID            uint64     `json:"id"`
 	Owner         User       `json:"owner"`
@@ -33,14 +35,17 @@ type Offer struct {
 	PaypalEnabled bool       `json:"paypal_enabled"`
 }
 
+// User is the API output for model.User.
 type User struct {
 	ID uint64 `json:"id"`
 }
 
+// Restaurant is the API output for model.Restaurant.
 type Restaurant struct {
 	ID uint64 `json:"id"`
 }
 
+// View represents an offer view.
 type View struct {
 	ID            uint64    `json:"id"`
 	Owner         User      `json:"owner"`
@@ -53,6 +58,7 @@ type View struct {
 	PaypalEnabled bool      `json:"paypal_enabled"`
 }
 
+// ReadAtSetter represents a setter type for the ReadyAt property.
 type ReadyAtSetter struct {
 	ReadyAt time.Time `json:"ready_at"`
 }

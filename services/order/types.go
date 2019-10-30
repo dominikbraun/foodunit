@@ -15,6 +15,7 @@
 // Package order provides services and types for Order-related data.
 package order
 
+// Order is the API output for model.Order.
 type Order struct {
 	ID        uint64     `json:"id"`
 	User      User       `json:"user"`
@@ -23,10 +24,12 @@ type Order struct {
 	Total     uint       `json:"total"`
 }
 
+// User is the API output for model.User.
 type User struct {
 	Name string `json:"name"`
 }
 
+// Position is the API output for model.Position.
 type Position struct {
 	ID             uint64          `json:"id"`
 	Dish           Dish            `json:"dish"`
@@ -35,30 +38,35 @@ type Position struct {
 	Configurations []Configuration `json:"configurations"`
 }
 
+// Dish is the API output for model.Dish.
 type Dish struct {
 	ID    uint64 `json:"id"`
 	Name  string `json:"name"`
 	Price uint   `json:"price"`
 }
 
+// Configuration is the API output for model.Configuration.
 type Configuration struct {
 	CharacteristicName string    `json:"characteristic_name"`
 	Multiple           bool      `json:"multiple"`
 	Variants           []Variant `json:"variants"`
 }
 
+// Variant is the API output for model.Variant.
 type Variant struct {
 	ID    uint64 `json:"id"`
 	Value string `json:"value"`
 	Price uint   `json:"price"`
 }
 
+// Update represents an order update.
 type Update struct {
 	OfferID   uint64           `json:"offer_id"`
 	UserID    uint64           `json:"user_id"`
 	Positions []UpdatePosition `json:"positions"`
 }
 
+// UpdatePosition represents an position in an order update.
 type UpdatePosition struct {
 	DishID            uint64                `json:"dish_id"`
 	AlternativeDishID uint64                `json:"alternative_dish_id"`
@@ -66,6 +74,7 @@ type UpdatePosition struct {
 	Note              string                `json:"note"`
 }
 
+// UpdateConfiguration represents an configuration of an update position.
 type UpdateConfiguration struct {
 	CharacteristicID uint64   `json:"characteristic_id"`
 	VariantIDs       []uint64 `json:"variant_ids"`
