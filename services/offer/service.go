@@ -172,6 +172,7 @@ func (s *Service) Get(id uint64) (View, error) {
 	offerView := View{
 		ID:            offerEntity.ID,
 		Owner:         User{ID: offerEntity.Owner.ID},
+		Restaurant:    Restaurant{ID: offerEntity.Restaurant.ID},
 		ValidFrom:     offerEntity.ValidFrom,
 		ValidTo:       offerEntity.ValidTo,
 		Responsible:   User{ID: offerEntity.Responsible.ID},
