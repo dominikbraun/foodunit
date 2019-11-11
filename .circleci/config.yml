@@ -8,6 +8,15 @@ jobs:
       GO111MODULE: on
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+            - go-mod-v1-
+      - run: go mod install
+      - save_cache:
+          key: go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+          paths:
+            - /go/pkg
 workflows:
   version: 2
   all-builds:
