@@ -24,6 +24,12 @@ jobs:
           key: git-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ".git"
+      - run: go build -v -ldflags="-s -w" -o .target/foodunit-server cmd/server/main.go
+      - run:
+          name: Run FoodUnit API server
+          environment:
+            PORT: 9292
+          command: ./.target/foodunit-server --addr :$PORT
 workflows:
   version: 2
   all-builds:
