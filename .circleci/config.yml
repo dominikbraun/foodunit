@@ -22,6 +22,8 @@ jobs:
             - /go/pkg
       - save_cache:
           key: git-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ".git"
 workflows:
   version: 2
   all-builds:
