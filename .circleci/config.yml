@@ -53,7 +53,7 @@ jobs:
             curl --retry 10 --retry-delay 1 -X GET http://localhost:$PORT/status
 
   ui-build:
-    executor: go-container
+    executor: node-container
     working_directory: /go/src/github.com/dominikbraun/foodunit
     steps:
       - checkout
