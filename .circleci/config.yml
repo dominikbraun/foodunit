@@ -37,8 +37,8 @@ jobs:
           environment:
             PORT: 9292
           command: |
-            sleep 5
-            curl --retry 10 --retry-delay 2 -X GET http://localhost:$PORT/status
+            sleep 1
+            curl --retry 10 --retry-delay 1 -X GET http://localhost:$PORT/status
 workflows:
   version: 2
   all-builds:
