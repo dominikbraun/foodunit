@@ -26,6 +26,7 @@ cmd/*/__debug_bin
 # FoodUnit config
 server.toml
 app.toml
+!.circleci/app.toml
 
 # FoodUnit DB files
 .mariadb
