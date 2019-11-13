@@ -54,9 +54,9 @@ jobs:
 
   ui-build:
     executor: node-container
-    working_directory: ./ui
     steps:
       - checkout
+      - cd ./ui
       - restore_cache:
           keys:
             - node-modules-v1-{{ .Branch }}-{{ checksum "package.json" }}
