@@ -25,6 +25,7 @@ jobs:
           paths:
             - ".git"
       - run: go build -v -ldflags="-s -w" -o .target/foodunit-server cmd/server/main.go
+      - run: cp .circleci/app.toml .
       - run:
           name: Run FoodUnit API server
           environment:
