@@ -1,8 +1,16 @@
 version: 2
-jobs:
-  server-build:
+
+executors:
+  go-container:
     docker:
       - image: circleci/golang:1.12
+    environment:
+      CGO_ENABLED: 0
+      GO111MODULE: "on"
+
+jobs:
+  server-build:
+    executor: go-container
     working_directory: /go/src/github.com/dominikbraun/foodunit
     environment:
       GO111MODULE: "on"
