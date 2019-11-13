@@ -56,14 +56,13 @@ jobs:
     executor: node-container
     steps:
       - checkout
-      - run: cd ./ui
       - restore_cache:
           keys:
-            - node-modules-v1-{{ .Branch }}-{{ checksum "package.json" }}
+            - node-modules-v1-{{ .Branch }}-{{ checksum "ui/package.json" }}
             - node-modules-v1-
-      - run: yarn install
+      - run: cd ./ui && yarn install
       - save_cache:
-          key: node-modules-v1-{{ .Branch }}-{{ checksum "package.json" }}
+          key: node-modules-v1-{{ .Branch }}-{{ checksum "ui/package.json" }}
           paths:
             - node_modules
 
