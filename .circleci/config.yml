@@ -31,6 +31,12 @@ jobs:
           environment:
             PORT: 9292
           command: ./.target/foodunit-server --addr :$PORT
+          background: true
+      - run:
+          name: Check if API server is up and running
+          command: |
+            sleep 5
+            curl --retry 10 --retry-delay 2 -X GET http://localhost:$PORT/status
 workflows:
   version: 2
   all-builds:
