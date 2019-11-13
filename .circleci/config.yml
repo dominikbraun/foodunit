@@ -54,7 +54,6 @@ jobs:
 
   ui-build:
     executor: node-container
-    working_directory: /go/src/github.com/dominikbraun/foodunit
     steps:
       - checkout
       - restore_cache:
