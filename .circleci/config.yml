@@ -1,8 +1,16 @@
-version: 2
-jobs:
-  server-build:
+version: 2.1
+
+executors:
+  go-container:
     docker:
       - image: circleci/golang:1.12
+    environment:
+      CGO_ENABLED: 0
+      GO111MODULE: "on"
+
+jobs:
+  server-build:
+    executor: go-container
     working_directory: /go/src/github.com/dominikbraun/foodunit
     environment:
       GO111MODULE: "on"
@@ -24,6 +32,21 @@ jobs:
           key: git-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ".git"
+      - run: go build -v -ldflags="-s -w" -o .target/foodunit-server cmd/server/main.go
+      - run: cp .circleci/app.toml .
+      - run:
+          name: Run FoodUnit API server
+          environment:
+            PORT: 9292
+          command: ./.target/foodunit-server --addr :$PORT
+          background: true
+      - run:
+          name: Check if API server is up and running
+          environment:
+            PORT: 9292
+          command: |
+            sleep 1
+            curl --retry 10 --retry-delay 1 -X GET http://localhost:$PORT/status
 workflows:
   version: 2
   all-builds:
