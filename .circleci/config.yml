@@ -8,12 +8,16 @@ executors:
       CGO_ENABLED: 0
       GO111MODULE: "on"
 
+  node-container:
+    docker:
+      - image: circleci/node:12.9.1-browsers
+    environment:
+      NODE_ENV: "development"
+
 jobs:
   server-build:
     executor: go-container
     working_directory: /go/src/github.com/dominikbraun/foodunit
-    environment:
-      GO111MODULE: "on"
     steps:
       - checkout
       - restore_cache:
@@ -47,8 +51,24 @@ jobs:
           command: |
             sleep 1
             curl --retry 10 --retry-delay 1 -X GET http://localhost:$PORT/status
+
+  ui-build:
+    executor: node-container
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-v1-{{ .Branch }}-{{ checksum "ui/package.json" }}
+            - node-modules-v1-
+      - run: cd ./ui && yarn install
+      - save_cache:
+          key: node-modules-v1-{{ .Branch }}-{{ checksum "ui/package.json" }}
+          paths:
+            - node_modules
+
 workflows:
   version: 2
   all-builds:
     jobs:
       - server-build
+      - ui-build
