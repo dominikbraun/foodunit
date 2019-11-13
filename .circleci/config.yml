@@ -54,6 +54,7 @@ jobs:
 
   ui-build:
     executor: node-container
+    working_directory: ./ui
     steps:
       - checkout
       - restore_cache:
