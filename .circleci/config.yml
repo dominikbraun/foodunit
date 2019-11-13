@@ -34,6 +34,8 @@ jobs:
           background: true
       - run:
           name: Check if API server is up and running
+          environment:
+            PORT: 9292
           command: |
             sleep 5
             curl --retry 10 --retry-delay 2 -X GET http://localhost:$PORT/status
