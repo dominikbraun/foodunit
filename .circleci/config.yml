@@ -109,8 +109,8 @@ jobs:
               QUERY: "SELECT id FROM test"
           command: |
             sudo apt-get install default-mysql-client
-            mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < .circleci/dummy.sql
-            mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE --execute="$QUERY"
+            mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < .circleci/dummy.sql
+            mysql -h 127.0.0.1 -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE --execute="$QUERY"
 
 workflows:
   version: 2
