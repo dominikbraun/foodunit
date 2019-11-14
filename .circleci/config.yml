@@ -112,8 +112,8 @@ jobs:
               QUERY: "SELECT id FROM test"
           command: |
             sudo apt-get install default-mysql-client
-            mysql -h 127.0.0.1 -u $MYSQL_USER -p $MYSQL_PASSWORD foodunit < .circleci/dummy.sql
-            mysql -h 127.0.0.1 -u $MYSQL_USER -p $MYSQL_PASSWORD foodunit --execute="$QUERY"
+            mysql -h 127.0.0.1 -u user -p user foodunit < .circleci/dummy.sql
+            mysql -h 127.0.0.1 -u user -p user foodunit --execute="$QUERY"
 
 workflows:
   version: 2
