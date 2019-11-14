@@ -18,9 +18,12 @@ executors:
     docker:
       - image: circleci/golang:1.12
       - image: circleci/mysql:8.0.4
-    environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: foodunit
+        command: [--default-authentication-plugin=mysql_native_password]
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: foodunit
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
 
 jobs:
   server-build:
@@ -91,7 +94,7 @@ jobs:
           paths:
             - /go/pkg
       - save_cache:
-          key: - git-v1-{{ .Branch }}-{{ .Revision }}
+          key: git-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ".git"
       - run:
@@ -109,8 +112,8 @@ jobs:
               QUERY: "SELECT id FROM test"
           command: |
             sudo apt-get install default-mysql-client
-            mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < .circleci/dummy.sql
-            mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE --execute="$QUERY"
+            mysql -h 127.0.0.1 -u user -puser foodunit < .circleci/dummy.sql
+            mysql -h 127.0.0.1 -u user -puser foodunit --execute="$QUERY"
 
 workflows:
   version: 2
