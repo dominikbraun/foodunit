@@ -14,6 +14,17 @@ executors:
     environment:
       NODE_ENV: "development"
 
+<<<<<<< HEAD
+=======
+  go-mysql-container:
+    docker:
+      - image: circleci/golang:1.12
+      - image: circleci/mysql:8.0.4
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: foodunit
+
+>>>>>>> master
 jobs:
   server-build:
     executor: go-container
@@ -66,9 +77,54 @@ jobs:
           paths:
             - node_modules
 
+<<<<<<< HEAD
+=======
+  migration-build:
+    executor: go-mysql-container
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+            - go-mod-v1-{{ .Branch }}-
+            - go-mod-v1-
+            - git-v1-{{ .Branch }}-{{ .Revision }}
+            - git-v1-{{ .Branch }}
+      - run: go mod download
+      - save_cache:
+          key: go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+          paths:
+            - /go/pkg
+      - save_cache:
+          key: - git-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ".git"
+      - run:
+          name: Wait for MySQL service
+          command: |
+            for i in `seq 1 10`; do
+              nc -z 127.0.0.1 3306 && echo "MySQL is running." && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo "MySQL is not reachable or took too long." && exit 1
+      - run:
+          name: Install MySQL CLI and run query
+          environment:
+              QUERY: "SELECT id FROM test"
+          command: |
+            sudo apt-get install default-mysql-client
+            mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < .circleci/dummy.sql
+            mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE --execute="$QUERY"
+
+>>>>>>> master
 workflows:
   version: 2
   all-builds:
     jobs:
+<<<<<<< HEAD
+=======
+      - migration-build
+>>>>>>> master
       - server-build
       - ui-build
