@@ -18,12 +18,12 @@ executors:
     docker:
       - image: circleci/golang:1.12
       - image: circleci/mysql:8.0.4
-      command: [--default-authentication-plugin=mysql_native_password]
-      environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: foodunit
-          MYSQL_USER: user
-          MYSQL_PASSWORD: user
+        command: [--default-authentication-plugin=mysql_native_password]
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: foodunit
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
 
 jobs:
   server-build:
