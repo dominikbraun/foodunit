@@ -91,7 +91,7 @@ jobs:
           paths:
             - /go/pkg
       - save_cache:
-          key: - git-v1-{{ .Branch }}-{{ .Revision }}
+          key: git-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - ".git"
       - run:
