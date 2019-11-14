@@ -14,8 +14,6 @@ executors:
     environment:
       NODE_ENV: "development"
 
-<<<<<<< HEAD
-=======
   go-mysql-container:
     docker:
       - image: circleci/golang:1.12
@@ -24,7 +22,6 @@ executors:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: foodunit
 
->>>>>>> master
 jobs:
   server-build:
     executor: go-container
@@ -77,8 +74,6 @@ jobs:
           paths:
             - node_modules
 
-<<<<<<< HEAD
-=======
   migration-build:
     executor: go-mysql-container
     steps:
@@ -117,14 +112,10 @@ jobs:
             mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < .circleci/dummy.sql
             mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE --execute="$QUERY"
 
->>>>>>> master
 workflows:
   version: 2
   all-builds:
     jobs:
-<<<<<<< HEAD
-=======
       - migration-build
->>>>>>> master
       - server-build
       - ui-build
