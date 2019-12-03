@@ -1,8 +1,124 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+
+executors:
+  go-container:
     docker:
-        - image: circleci/ruby:2.4.1
+      - image: circleci/golang:1.12
+    environment:
+      CGO_ENABLED: 0
+      GO111MODULE: "on"
+
+  node-container:
+    docker:
+      - image: circleci/node:12.9.1-browsers
+    environment:
+      NODE_ENV: "development"
+
+  go-mysql-container:
+    docker:
+      - image: circleci/golang:1.12
+      - image: circleci/mysql:8.0.4
+        command: [--default-authentication-plugin=mysql_native_password]
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: foodunit
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+
+jobs:
+  server-build:
+    executor: go-container
+    working_directory: /go/src/github.com/dominikbraun/foodunit
     steps:
       - checkout
-      - run: echo "FU 3 CI Test"
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+            - go-mod-v1-{{ .Branch }}-
+            - go-mod-v1-
+            - git-v1-{{ .Branch }}-{{ .Revision }}
+            - git-v1-{{ .Branch }}
+      - run: go mod download
+      - save_cache:
+          key: go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+          paths:
+            - /go/pkg
+      - save_cache:
+          key: git-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ".git"
+      - run: go build -v -ldflags="-s -w" -o .target/foodunit-server cmd/server/main.go
+      - run: cp .circleci/app.toml .
+      - run:
+          name: Run FoodUnit API server
+          environment:
+            PORT: 9292
+          command: ./.target/foodunit-server --addr :$PORT
+          background: true
+      - run:
+          name: Check if API server is up and running
+          environment:
+            PORT: 9292
+          command: |
+            sleep 1
+            curl --retry 10 --retry-delay 1 -X GET http://localhost:$PORT/status
+
+  ui-build:
+    executor: node-container
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-v1-{{ .Branch }}-{{ checksum "ui/package.json" }}
+            - node-modules-v1-
+      - run: cd ./ui && yarn install
+      - save_cache:
+          key: node-modules-v1-{{ .Branch }}-{{ checksum "ui/package.json" }}
+          paths:
+            - node_modules
+
+  migration-build:
+    executor: go-mysql-container
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+            - go-mod-v1-{{ .Branch }}-
+            - go-mod-v1-
+            - git-v1-{{ .Branch }}-{{ .Revision }}
+            - git-v1-{{ .Branch }}
+      - run: go mod download
+      - save_cache:
+          key: go-mod-v1-{{ .Branch }}-{{ checksum "go.mod" }}
+          paths:
+            - /go/pkg
+      - save_cache:
+          key: git-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ".git"
+      - run:
+          name: Wait for MySQL service
+          command: |
+            for i in `seq 1 10`; do
+              nc -z 127.0.0.1 3306 && echo "MySQL is running." && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo "MySQL is not reachable or took too long." && exit 1
+      - run:
+          name: Install MySQL CLI and run query
+          environment:
+              QUERY: "SELECT id FROM test"
+          command: |
+            sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u user -puser foodunit < .circleci/dummy.sql
+            mysql -h 127.0.0.1 -u user -puser foodunit --execute="$QUERY"
+
+workflows:
+  version: 2
+  all-builds:
+    jobs:
+      - migration-build
+      - server-build
+      - ui-build

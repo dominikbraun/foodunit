@@ -1,0 +1,7 @@
+ #
+ # FoodUnit 3 Dummy App Configuration
+ #
+ # This file will be loaded every time a CI job runs the API server.
+ # The CI job will check if the server is up and running by calling /status.
+ # Since this does not require any configuration, this file may be empty.
+ #

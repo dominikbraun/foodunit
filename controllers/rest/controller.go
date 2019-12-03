@@ -62,3 +62,10 @@ func respond(w http.ResponseWriter, r *http.Request, status int, v interface{}) 
 	w.WriteHeader(status)
 	render.JSON(w, r, v)
 }
+
+// Status simply returns `true` indicating that the server is up and running.
+func (c *Controller) Status() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		respond(w, r, http.StatusOK, true)
+	}
+}

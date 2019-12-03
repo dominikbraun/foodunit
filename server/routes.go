@@ -79,5 +79,7 @@ func (s *Server) mountRoutes() {
 		})
 	})
 
+	r.Get("/status", s.controller.Status())
+
 	s.router.Mount("/v1", r)
 }
