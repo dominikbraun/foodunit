@@ -50,7 +50,7 @@ function OfferInfo(props) {
 
 function RestaurantHeader(props) {
     return (
-        <div className="mx-0 mx-xl-5 my-4 bg-gradient rounded-0">
+        <>
             <div className="py-4">
                 <h1 className="text-hand text-xl text-center text-dark px-2 pt-5 pb-4">{props.restaurant.name}</h1>
             </div>
@@ -66,18 +66,14 @@ function RestaurantHeader(props) {
                 <div className="col-12 col-lg-6 col-xl-3 text-sm text-dark text-center px-2 py-3"><i
                     className="fas fa-phone mr-2"/>{props.restaurant.phone}
                 </div>
-                <div className="col-12 col-lg-6 col-xl-3 text-dark text-center p-3 p-lg-1 input-group">
-                    <div className="input-group-prepend">
-                                        <span
-                                            className="input-group-text border-0 rounded-0 px-3 bg-white text-dark text-md"><i
-                                            className="fas fa-search"/></span>
-                    </div>
-                    <input type="text"
-                           className="form-control h-100 bg-white text-dark pl-0 pr-3 text-sm border-0 rounded-0"
-                           placeholder="Gericht suchen"/>
-                </div>
             </div>
+        </>
+    )
+}
 
+function MenuCardNavigator(props) {
+    return (
+        <div className="row m-0 bg-pre-dark">
             <ul className="nav nav-dark bg-pre-dark d-block d-lg-flex">
                 <li className="nav-item text-md"><a className="nav-link py-2" href="#">Klassiker</a></li>
                 <li className="nav-item text-md"><a className="nav-link py-2" href="#">F&uuml;r
@@ -90,6 +86,16 @@ function RestaurantHeader(props) {
                 <li className="nav-item text-md"><a className="nav-link py-2" href="#">Alkoholfreie
                     Getr&auml;nke</a></li>
             </ul>
+            <div className="col-12 col-lg-6 col-xl-3 text-dark text-center p-3 p-lg-1 input-group ml-auto">
+                <div className="input-group-prepend">
+                                                    <span
+                                                        className="input-group-text border-0 rounded-0 px-3 bg-white text-dark text-md"><i
+                                                        className="fas fa-search"/></span>
+                </div>
+                <input type="text"
+                       className="form-control h-100 bg-white text-dark pl-0 pr-3 text-sm border-0 rounded-0"
+                       placeholder="Gericht suchen"/>
+            </div>
         </div>
     )
 }
@@ -135,7 +141,10 @@ class OfferView extends React.Component {
                     <SidebarLeft currentActiveRoute={OFFER_ROUTE}/>
                     <div className="col-12 col-lg-6 col-xl-8 px-1 px-md-4 mx-auto">
                         <OfferInfo offer={this.state.offer}/>
-                        <RestaurantHeader restaurant={this.state.offer.restaurant}/>
+                        <div className="mx-0 mx-xl-5 my-4 bg-gradient rounded-0">
+                            <RestaurantHeader restaurant={this.state.offer.restaurant}/>
+                            <MenuCardNavigator/>
+                        </div>
 
                         <div className="mx-0 mx-xl-5 my-4 px-5 py-2 bg-white border rounded-0">
                             <h4 className="text-dark text-strong mb-0 px-0 py-5">Burger &amp; Nuggets</h4>
