@@ -19,7 +19,6 @@ import {OFFER_ROUTE} from "../../../util/Routes"
 import {Link} from "@reach/router"
 import {inject, observer} from "mobx-react"
 import Table, {TableConfig} from "../../Base/Table"
-import {runInAction} from "mobx"
 
 function getOfferTableConfig(disabled) {
     return [
@@ -79,17 +78,13 @@ class OfferList extends React.Component {
             loadOffersPromise = this.offerLoader.loadActive()
 
         loadOffersPromise.then((offers) => {
-            runInAction(() => {
-                this.setState({offers})
-            })
+            this.setState({offers})
         })
     }
 
     render() {
         return (
-
-                <Table config={this.tableConfig} rows={this.state.offers}/>
-
+            <Table config={this.tableConfig} rows={this.state.offers}/>
         )
     }
 }
