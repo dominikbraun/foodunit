@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "mobx": "^5.14.0",
     "mobx-react": "^6.1.4",
     "react": "^16.10.2",
