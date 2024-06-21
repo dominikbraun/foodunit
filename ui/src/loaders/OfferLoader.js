@@ -17,6 +17,7 @@
 import Axios from "axios"
 import UserLoader from "./UserLoader"
 import RestaurantLoader from "./RestaurantLoader"
+import {checkId} from "../util/Checks"
 
 export default class OfferLoader {
 
@@ -42,24 +43,30 @@ export default class OfferLoader {
         return this._load("/offers/old")
     }
 
+    loadOne(id) {
+        checkId(id)
+        return this._load(`/offers/${id}`)
+    }
+
     _load(apiPath) {
         return Axios.get(this.config.apiUrl +  apiPath,
             {withCredentials: true}
         ).then((response) => {
-
-            if (Array.isArray(response.data)) {
-                let offers = response.data
-
-                // save promises to wait for full finish of all offers
-                let toAwait = []
-                offers.forEach((offer) => {
-                    // complete the offer (add owner and restaurant info)
-                    toAwait.push(this._completeOffer(offer))
-                })
-
-                // wait for completing all offers and return all offers
-                return Promise.all(toAwait).then(() => offers)
+            if (!Array.isArray(response.data)) {
+                response.data = [response.data]
             }
+            console.log(response.data)
+            let offers = response.data
+
+            // save promises to wait for full finish of all offers
+            let toAwait = []
+            offers.forEach((offer) => {
+                // complete the offer (add owner and restaurant info)
+                toAwait.push(this._completeOffer(offer))
+            })
+
+            // wait for completing all offers and return all offers
+            return Promise.all(toAwait).then(() => offers)
         }).catch(function (error) {
             console.log(error)
         })

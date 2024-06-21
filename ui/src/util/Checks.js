@@ -16,6 +16,6 @@
 
 // TODO:  maybe navigate to a page showing that an error occured...
 export function checkId(number) {
-    if (!Number.isInteger(number))
+    if (!/^\d+$/.test(""+number))
         throw new Error(number + " is not an integer. Only integers are allowed as id")
 }
